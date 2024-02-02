@@ -75,44 +75,44 @@ onMounted(()=>{
 
 
 // 预约输入赔率或者盘口
-watch(() => pre_odds_value, (new_) => {
-  if (active_index.toString().indexOf('market') > -1) {  // 篮球才可以用键盘输入预约盘口
-    try {
-      pre_odds_value.value = pre_odds_value.value + ''
-      if (pre_odds_value.value.indexOf(".") > -1 && pre_odds_value.value.split('.')[1]) {//篮球盘口小数点后面必须是5的倍数，如果非5的倍数，四舍五入
-        let pointAfterValue = pre_odds_value.value.split('.')[1].substr(0, 1)
-        if (pointAfterValue <= 5) {
-          pre_odds_value.value = pre_odds_value.value.split('.')[0] + '.5'
-        } else {
-          pre_odds_value.value = Number(pre_odds_value.value.split('.')[0]) + 1 + ''
-        }
-      }
-      let index = active_index.toString().split('market')[1]
-      let value_show = view_ctr_obj[BetData.bet_list[index]].bs
-      const isdaxiao = ['Over', 'Under'].includes(lodash.get(value_show, 'hps[0].hl[0].ol[0].ot'));
-      if (isdaxiao) {
-        if (+pre_odds_value.value > 400) {
-          pre_odds_value.value = '400'
-        }
-      } else {
-        if (+pre_odds_value.value < -99.5) {
-          pre_odds_value.value = '-99.5'
-        } else if (+pre_odds_value.value > 99.5) {
-          pre_odds_value.value = '+99.5'
-        }
-      }
-      useMittEmit(MITT_TYPES.EMIT_CHANGE_MARKET, pre_odds_value.value);
-    } catch (error) {
-      console.error(error)
-    }
-  } else {
-    if (new_ > 355) {
-      pre_odds_value.value = '355'
-    } else {
-      useMittEmit(MITT_TYPES.EMIT_CHANGE_ODDS, pre_odds_value.value);
-    }
-  }
-})
+// watch(() => pre_odds_value, (new_) => {
+//   if (active_index.toString().indexOf('market') > -1) {  // 篮球才可以用键盘输入预约盘口
+//     try {
+//       pre_odds_value.value = pre_odds_value.value + ''
+//       if (pre_odds_value.value.indexOf(".") > -1 && pre_odds_value.value.split('.')[1]) {//篮球盘口小数点后面必须是5的倍数，如果非5的倍数，四舍五入
+//         let pointAfterValue = pre_odds_value.value.split('.')[1].substr(0, 1)
+//         if (pointAfterValue <= 5) {
+//           pre_odds_value.value = pre_odds_value.value.split('.')[0] + '.5'
+//         } else {
+//           pre_odds_value.value = Number(pre_odds_value.value.split('.')[0]) + 1 + ''
+//         }
+//       }
+//       let index = active_index.toString().split('market')[1]
+//       let value_show = view_ctr_obj[BetData.bet_list[index]].bs
+//       const isdaxiao = ['Over', 'Under'].includes(lodash.get(value_show, 'hps[0].hl[0].ol[0].ot'));
+//       if (isdaxiao) {
+//         if (+pre_odds_value.value > 400) {
+//           pre_odds_value.value = '400'
+//         }
+//       } else {
+//         if (+pre_odds_value.value < -99.5) {
+//           pre_odds_value.value = '-99.5'
+//         } else if (+pre_odds_value.value > 99.5) {
+//           pre_odds_value.value = '+99.5'
+//         }
+//       }
+//       useMittEmit(MITT_TYPES.EMIT_CHANGE_MARKET, pre_odds_value.value);
+//     } catch (error) {
+//       console.error(error)
+//     }
+//   } else {
+//     if (new_ > 355) {
+//       pre_odds_value.value = '355'
+//     } else {
+//       useMittEmit(MITT_TYPES.EMIT_CHANGE_ODDS, pre_odds_value.value);
+//     }
+//   }
+// })
 
 // watch(() => money.value, (new_) => {
 //   let emit_name = 'EMIT_INPUT_BET_MONEY'
@@ -125,6 +125,7 @@ watch(() => pre_odds_value, (new_) => {
 watch(() => active_index, (new_) => {
   if (money.value) delete_all.value = true;
 })
+
 // 点击键盘
 const _handleKeyPress = (e) => {
   e.preventDefault();

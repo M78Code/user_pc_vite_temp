@@ -180,7 +180,7 @@ export default {
 
 .voice-wrap {
   width: 0.4rem;
-  height: 0.2rem;
+  height: 0.36rem;
   position: absolute;
   bottom: 0.04rem;
   right: 0;

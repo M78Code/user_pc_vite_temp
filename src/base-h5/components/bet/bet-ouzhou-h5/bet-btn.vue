@@ -63,28 +63,24 @@ const set_bet_single_change = () => {
   }
 }
 
-
+// 计算合集
 const bet_total = computed(()=> state =>{
   let sum = 0
   if (BetData.is_bet_single) {
-    if (BetData.is_bet_merge) {
-      BetData.bet_single_list.forEach(item => {
-        sum += item.bet_amount*1
-      });
-      return sum
-    }
-    sum = BetData.bet_amount*1
+    sum = BetData.bet_single_list.reduce((pre, cur) => {
+      return pre*1 + cur.bet_amount*1;
+    }, 0)
     return sum
   }
   if (!BetData.is_bet_single) {
     if (BetViewDataClass.bet_order_status === 1) {
-        BetViewDataClass.bet_special_series.forEach((item)=>{
-            sum += (item.bet_amount ? item.bet_amount : 0)*1
-        })
+      sum = BetViewDataClass.bet_special_series.reduce((pre, cur) => {
+        return pre*1 + (cur.bet_amount ? cur.bet_amount : 0)*1
+      }, 0)
     } else {
-        BetViewDataClass.orderNo_bet_single_obj.forEach((item)=>{
-            sum += mathJs.divide(item.seriesBetAmount, 100)*1
-        })
+      sum = BetViewDataClass.orderNo_bet_single_obj.reduce((pre, cur) => {
+        return pre*1 + mathJs.divide(item.seriesBetAmount, 100)*1
+      }, 0)
     }
   }
 })

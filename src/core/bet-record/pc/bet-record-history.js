@@ -1,5 +1,4 @@
 import { ref } from "vue"
-import { columns } from "./util.js"
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { api_betting } from "src/api/index.js";
@@ -24,8 +23,6 @@ class BetRecord {
     this.api_url = api_betting.post_getOrderList
     this.table_data = []
     this.records = {}
-    // table列表columns
-    this.columns = columns
     //是否在加载中
     this.loading = true
     // 投注记录版本变更
@@ -38,8 +35,6 @@ class BetRecord {
     this.reset()
     // 切换提示语
     this.set_tip_msg(number)
-    // 更改columns
-    this.set_columns(number)
     // 更改api
     this.set_api_url(number)
     // 通知 重新获取数据 
@@ -51,25 +46,6 @@ class BetRecord {
   set_table_data(value) {
     this.table_data = value
     this.set_bet_record_version()
-  }
-
-  // 更改columns
-  set_columns(number) {
-    if (number == 1) {
-      this.columns[5] = {
-        name: 'return',
-        label: i18n_t("common.donate_win"),
-        align: 'center',
-        field: 'return'
-      }
-    } else {
-      this.columns[5] = {
-        name: 'highestWin',
-        label: i18n_t("common.maxn_amount_val"),
-        align: 'center',
-        field: 'highestWin'
-      }
-    }
   }
 
   // 更改api

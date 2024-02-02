@@ -6,7 +6,7 @@
       <q-table :rows="BetRecordHistory.table_data" 
       style="max-height:calc(100vh - 17rem)" 
       :rows-per-page-options="[0]" 
-      :columns="BetRecordHistory.columns"
+      :columns="columns[BetRecordHistory.selected]"
       :bordered="false"
       row-key="orderNo" hide-pagination >
         <template v-slot:no-data>
@@ -310,32 +310,12 @@ const match_type = {
   2: i18n_t("list.list_today_play_title"),
   3: i18n_t("menu.match_winner")
 }
-const { columns, tableData, loading, handle_fetch_order_list } = useGetOrderList()
+
 const labelClick = (row) => {
   console.log(row)
 }
 
-// 监听tab 切换表格头数据
-watch(() => props.current_tab, (newVal) => {
-  tableData.value = []
-  if (newVal == 'settled') {
-    columns.value[5] = {
-      name: 'return',
-      label: i18n_t("common.donate_win"),
-      align: 'center',
-      field: 'return'
-    }
-    handle_fetch_order_list({ orderStatus: 1, timeType: 1 })
-  } else {
-    columns.value[5] = {
-      name: 'highestWin',
-      label: i18n_t("common.maxn_amount_val"),
-      align: 'center',
-      field: 'highestWin'
-    }
-    handle_fetch_order_list({ orderStatus: 0 })
-  }
-})
+
 const getTableData = (params) => {
   handle_fetch_order_list(params)
 }
@@ -611,6 +591,106 @@ const cancelSuccess = () => {
   BetRecordHistory.handle_fetch_order_list()
 }
 
+
+/**
+ * table  columns
+ */
+ const base_columns = [
+  {
+    name: 'sn',
+    label: computed(()=>{ return i18n_t("bet_record.number")}),
+    align: 'center',
+    field: 'sn',
+    headerStyle: 'width: 18px',
+    sortable: true
+  },
+  {
+    name: 'datails',
+    align: 'left',
+    label: computed(()=>{ return i18n_t("ouzhou.record.datails")}),
+    field: 'datails',
+    sortable: true
+  },
+  {
+    name: 'bettingType',
+    label: computed(()=>{ return i18n_t("bet_record.betting_play")}),
+    align: 'left',
+    field: 'bettingType'
+  },
+  { name: 'detail', 
+    label: computed(()=>{ return i18n_t("bet_record.options")}) , 
+    align: 'left', 
+    field: 'detail' 
+  }
+]
+const columns = reactive({
+  0: [
+    ...base_columns,
+    {
+      name: 'totalStake',
+      label: computed(()=>{ return i18n_t("bet_record.bets_forehead")}),
+      align: 'left',
+      field: 'totalStake'
+    },
+    {
+      name: 'highestWin',
+      label: computed(()=>{ return i18n_t("common.maxn_amount_val")}),
+      align: 'left',
+      field: 'highestWin'
+    },
+    {
+      name: 'status',
+      label: computed(()=>{ return i18n_t("bet_record.status")}),
+      align: 'left',
+      field: 'status'
+      // sortable: true,
+    }
+  ],
+  1: [
+  ...base_columns,
+    {
+      name: 'totalStake',
+      label: computed(()=>{ return i18n_t("bet_record.bets_forehead")}),
+      align: 'left',
+      field: 'totalStake'
+    },
+    {
+      name: 'return',
+      label: computed(()=>{ return i18n_t("common.donate_win")}),
+      align: 'center',
+      field: 'return'
+    },
+    {
+      name: 'status',
+      label: computed(()=>{ return i18n_t("bet_record.status")}),
+      align: 'left',
+      field: 'status'
+      // sortable: true,
+    }
+  ],
+  2: [
+  ...base_columns,
+    {
+      name: 'totalStake',
+      label: computed(()=>{ return i18n_t("bet.bet_book_stake")}),
+      align: 'left',
+      field: 'totalStake'
+    },
+    {
+      name: 'highestWin',
+      label: computed(()=>{ return i18n_t("common.maxn_amount_val")}),
+      align: 'left',
+      field: 'highestWin'
+    },
+    {
+      name: 'status',
+      label: computed(()=>{ return i18n_t("bet_record.status")}),
+      align: 'left',
+      field: 'status'
+      // sortable: true,
+    }
+  ]
+})
 </script>
 
 <style lang="scss" scoped>

@@ -1,6 +1,6 @@
 <template>
   <div class="bet-pre-appoint">
-    <div v-if="ref_data.computed_appoint_ball_head !== ''" class="row yb-flex-center book-content">
+    <div v-if="item.marketValue != ''" class="row yb-flex-center book-content">
       <!--预-->
       <div class="col-2 center yb-fontsize12">{{ i18n_t('bet.bet_dish') }}</div>
       <!--此处为盘口区域，-->
@@ -601,11 +601,18 @@ const set_computed_appoint_ball_head = () => {
   } else if (props.item.sportId == 2) {
     if (!lodash_.isNull(ref_data.appoint_ball_head)) {
       //这里判断
-      // if(ref_data.appoint_ball_head < this.min_head_value){
-      //   ref_data.appoint_ball_head = this.min_head_value;
+      if(ref_data.appoint_ball_head*1 < 50.5){
+        ref_data.appoint_ball_head = 50.5
+      }
+      if(ref_data.appoint_ball_head*1 > 400.5){
+        ref_data.appoint_ball_head = 400.5
+      }
+      // console.log()
+      // if(ref_data.appoint_ball_head*1 < ref_data.min_head_value){
+      //   ref_data.appoint_ball_head = ref_data.min_head_value;
       // }else
-      // if(ref_data.appoint_ball_head > this.max_head_value){
-      //   ref_data.appoint_ball_head = this.max_head_value;
+      // if(ref_data.appoint_ball_head*1 > ref_data.max_head_value){
+      //   ref_data.appoint_ball_head = ref_data.max_head_value;
       // }
       ball_head = ref_data.appoint_ball_head;
     }

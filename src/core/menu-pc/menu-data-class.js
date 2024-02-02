@@ -206,7 +206,7 @@ class MenuData {
         early_list.push(item)
       }
     })
-  
+    
 
     let mew_menu_list_res = lodash.get(BaseData,'mew_menu_list_res',[]) || []
     
@@ -249,7 +249,19 @@ class MenuData {
     if(IS_FOR_NEIBU_TEST){
       left_list.splice(e_sports_index , 0 ,esports_obj)
     }
-
+    /**
+     * 电竞菜单存在 滚球增加电子竞技
+     */
+    if(left_list.map(n=>{return n.mi}).includes(2000)){
+      const dianjing_list = BaseData.dianjing_sublist.map(n=>{
+        const ct = n.sl?.filter(m=>{return `${n.mi}1` == m.mi})?.[0]?.ct || 0;
+        return {
+          ...n,
+          ct:ct
+        }
+      })
+      in_play_list = [...in_play_list,...dianjing_list]
+    }
     this.kemp_list = kemp_list
     this.hot_list = hot_list
     this.early_list = early_list
