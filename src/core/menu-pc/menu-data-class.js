@@ -485,7 +485,12 @@ class MenuData {
     //   text = 'match-champion'
     // }
     if (this.menu_root == 1) {
-      text = 'match-play-common'
+      if(this.is_eports_csid(obj.csid)){
+        text = 'match-play-esports'
+      }
+      else{
+        text = 'match-play-common'
+      }
     }
     PageSource.set_page_source(text)
 

@@ -23,7 +23,7 @@
             </span>
           </div> -->
           <!-- 赛事渲染信息 -->
-          <div class="s-w-i-inner" v-if="defer_render(index)">
+          <div class="s-w-i-inner">
             <slot :match_item="get_match_item(match_mid)" :mid="match_mid" :index="index"></slot>
           </div>
         </div>

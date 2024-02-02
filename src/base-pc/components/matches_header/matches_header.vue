@@ -241,7 +241,7 @@ const set_tab_list = (news_) =>{
 			checked_current_tab({value:MenuData.mid_menu_result.filter_tab})
 		}else{
 			let index = tab_list.value.findIndex(val=>{
-				return val.value == store.filterTab.value
+				return val.value == store.filterTab?.value
 			})
 			checked_current_tab(tab_list.value[index == -1? 0 : index])
 		}

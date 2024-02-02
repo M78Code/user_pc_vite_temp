@@ -270,7 +270,7 @@ watch(() => odds_value.value, () => {
   get_odd_append_value(odd_item.value);
 })
 
-watch(() => props.match, () => {
+watch(() => props.match.hps, () => {
   let ol_list = get_ollist_no_close(props.odd_field);
   if(ol_list.length > 0){
     if([11,18,19].includes(+lodash.get(props.current_tab_item, 'id'))){
@@ -347,6 +347,7 @@ const get_odd_status = () => {
 
 // on转换html
 const transfer_on = (odd_item) => {
+  // console.log(1111111)
 
   const current_tab_item_id = lodash.get(props.current_tab_item, 'id')
   
