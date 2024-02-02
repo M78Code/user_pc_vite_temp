@@ -204,6 +204,12 @@ const set_bet_order_list = (bet_list, is_single) => {
             if(!hsw.includes(cur_odds)){
                 bet_s_obj.marketTypeFinally = 'EU'
             }
+
+            // 单关 非合并 并且勾选了常用金额 需要保存金额
+            if( BetData.is_regular_amount && !BetData.is_bet_merge){
+                BetData.set_regular_amount(item.bet_amount)
+            }
+
             // 预约投注 设置预约盘口值
             if(BetData.is_bet_pre){
                 if(bet_s_obj.marketValue) {
@@ -392,18 +398,18 @@ const get_lastest_market_info = (type) => {
                             }
 
                             // 红绿升降
-                            bet_item.red_green = ''
-                            if(bet_item.odds == odds.oddsValue ){
-                                bet_item.red_green = 'red_up'
-                            }else
-                            if(bet_item.odds > odds.oddsValue ){
-                                bet_item.red_green = 'green_down'
-                            }
+                            // bet_item.red_green = ''
+                            // if(bet_item.odds == odds.oddsValue ){
+                            //     bet_item.red_green = 'red_up'
+                            // }else
+                            // if(bet_item.odds > odds.oddsValue ){
+                            //     bet_item.red_green = 'green_down'
+                            // }
 
                             // 赔率 10w位
-                            bet_item.odds = odds.oddsValue
+                            // bet_item.odds = odds.oddsValue
                             //最终赔率
-                            bet_item.oddFinally = compute_value_by_cur_odd_type(odds.oddsValue,obj.playId, item.odds_hsw, item.csisportIdd)
+                            // bet_item.oddFinally = compute_value_by_cur_odd_type(odds.oddsValue,obj.playId, item.odds_hsw, item.csisportIdd)
 
                             // 投注项类型
                             bet_item.ot = odds.oddsType
@@ -439,24 +445,24 @@ const get_lastest_market_info = (type) => {
                                 }
                             }
 
-                            if(bet_item.red_green){
-                                // 有值才去清理
-                                setTimeout(() => {
-                                    // 清除红绿升降
-                                    let single_list = []
-                                    // 单关 切 有投注项
-                                    if(BetData.is_bet_single){
-                                    single_list = BetData.bet_single_list || []
-                                    } else {
-                                    single_list = BetData.bet_s_list || []
-                                    }
-                                    let ol_obj_index = single_list.findIndex(obj_ => obj_.playOptionsId == odds.id )
-                                    if(ol_obj_index || ol_obj_index == 0 ){
-                                        bet_item.red_green = ''
-                                        BetData.set_ws_message_bet_info(bet_item,ol_obj_index)
-                                    }
-                                }, 3000);
-                            }
+                            // if(bet_item.red_green){
+                            //     // 有值才去清理
+                            //     setTimeout(() => {
+                            //         // 清除红绿升降
+                            //         let single_list = []
+                            //         // 单关 切 有投注项
+                            //         if(BetData.is_bet_single){
+                            //         single_list = BetData.bet_single_list || []
+                            //         } else {
+                            //         single_list = BetData.bet_s_list || []
+                            //         }
+                            //         let ol_obj_index = single_list.findIndex(obj_ => obj_.playOptionsId == odds.id )
+                            //         if(ol_obj_index || ol_obj_index == 0 ){
+                            //             bet_item.red_green = ''
+                            //             BetData.set_ws_message_bet_info(bet_item,ol_obj_index)
+                            //         }
+                            //     }, 3000);
+                            // }
                         }
                     }
                 })
@@ -1052,7 +1058,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
     BetData.set_bet_mode(-1)
     // 重置金额为 0
     BetData.set_bet_amount(0)
-    BetData.set_is_bet_pre(false)
+    // BetData.set_is_bet_pre(false)
     BetViewDataClass.set_bet_before_message({})
 
     // 没有走数据仓库 提示数据失效
@@ -1211,6 +1217,19 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         bet_obj.marketTypeFinally = 'EU'
     }
 
+    // 单关 只有一条数据的时候 需要设置 常用金额
+    if(BetData.is_bet_single ){
+        if(BetData.is_regular_amount && (!BetData.is_bet_merge || !BetData.bet_single_list.length)){
+            bet_obj.bet_amount = BetData.regular_amount
+        } else {
+            // 需要清空已有的常用金额数据
+            BetData.bet_single_list.filter(item=>{
+                item.bet_amount = ''
+            })
+        }
+    }
+    // console.error('投注项内容：',bet_obj)
+
     // 冠军 
     if(bet_obj.bet_type == 'guanjun_bet'){
         bet_obj.handicap = ol_obj.on
@@ -1294,7 +1313,7 @@ const set_play_name = ({hl_obj,hn_obj,mid_obj,ol_obj,other}) => {
         }else{
             let hpn = lodash_.get(mid_obj.play_obj,`hpid_${hpid}.hpn`,play_name)
             // 冠军玩法 部分玩法hpid相同 
-            if(other.bet_type == 'guanjun_bet'){
+            if(other.bet_type == 'guanjun_bet' || other.is_kemp){
                 let hpn_list = lodash_.get(mid_obj,`hpsPns`,[])
                 if(hpn_list.length < 1){
                     hpn_list = lodash_.get(mid_obj,`hps`,[])

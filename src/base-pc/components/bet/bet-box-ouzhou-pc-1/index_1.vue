@@ -23,7 +23,7 @@
             <span v-else class="merge-checkbox ml-4"></span> 
           </div>
           <!-- 单关 串关 切换 -->
-          <div class="f-e-c ml-16" @click.prevent="show_single_change()" v-if="!MenuData.is_kemp() && is_serial()">
+          <div class="f-e-c ml-16" @click.prevent="show_single_change()" v-if="!MenuData.is_kemp()">
             <span v-if="BetData.is_bet_single">{{ i18n_t('bet.bet_one_') }}</span>
             <span v-if="!BetData.is_bet_single">{{ i18n_t('bet.bet_series') }}</span>
 
@@ -165,7 +165,7 @@ const show_merge_change = () => {
 }
 // 判断当前投注项内 是否有不允许串关的 有的话把串关按钮干掉
 const is_serial = computed(() => state => {
-    return BetData.bet_single_list.filter(i => i.is_serial == false).length
+    return !BetData.bet_single_list.filter(i => i.is_serial == true).length
 });
 
 // 使用ResizeObserver来监听高度变化

@@ -6,7 +6,7 @@
         :rows="BetRecordHistory.table_data" 
         style="max-height:calc(100vh - 270px)" 
         :rows-per-page-options="[0]" 
-        :columns="BetRecordHistory.columns"
+        :columns="columns[BetRecordHistory.selected]"
         row-key="orderNo" 
         separator="cell" 
         hide-pagination
@@ -70,8 +70,12 @@
                       <!-- <div class="record-detail-icon">
                         <sport-icon :sport_id="cts_mid.includes(props.row.managerCode*1) ? item.sportId == 1 ? '90': 91  : item.sportId" key_name="pc-left-menu-bg-image" size="18" class="icon"  style="margin:0 10px"/>
                       </div> -->
-                      <span>[{{item.sportName}}] {{ item.matchName }}</span>
-                      <span v-if="item.matchDay">{{ item.matchDay }} {{ item.batchNo }}</span>
+                      <div class="flex item_name">
+                        <span>[{{item.sportName}}] {{ item.matchName }}</span>
+                        <span v-if="props.row.preOrder" class="pre_text">{{ i18n_t('bet.bet_book_confirm') }}</span>
+                      </div>
+                      <span v-if="[1001,1004].includes(item.sportId*1)">{{ item.matchDay }} {{ item.batchNo }}</span>
+                      <span v-if="[1011,1002,1009,1010].includes(item.sportId*1)">{{ item.batchNo }}</span>
                       <span v-if="item.matchType !=3" style="color:#8A8986">{{ item.matchInfo }}</span>
                       <span>
                           <span v-if="item.matchType != 3 && ![1001,1002,1009,1010,1011].includes(item.sportId*1)">{{matchType(item.matchType, props.row.langCode)}}</span>
@@ -523,6 +527,106 @@ const cancelSuccess = () => {
   })
   BetRecordHistory.handle_fetch_order_list()
 }
+
+/**
+ * table  columns
+ */
+const base_columns = [
+  {
+    name: 'sn',
+    label: computed(()=>{ return i18n_t("bet_record.number")}),
+    align: 'center',
+    field: 'sn',
+    headerStyle: 'width: 18px',
+    sortable: true
+  },
+  {
+    name: 'datails',
+    align: 'left',
+    label: computed(()=>{ return i18n_t("ouzhou.record.datails")}),
+    field: 'datails',
+    sortable: true
+  },
+  {
+    name: 'bettingType',
+    label: computed(()=>{ return i18n_t("bet_record.betting_play")}),
+    align: 'left',
+    field: 'bettingType'
+  },
+  { name: 'detail', 
+    label: computed(()=>{ return i18n_t("bet_record.options")}) , 
+    align: 'left', 
+    field: 'detail' 
+  }
+]
+const columns = reactive({
+  0: [
+    ...base_columns,
+    {
+      name: 'totalStake',
+      label: computed(()=>{ return i18n_t("bet_record.bets_forehead")}),
+      align: 'left',
+      field: 'totalStake'
+    },
+    {
+      name: 'highestWin',
+      label: computed(()=>{ return i18n_t("common.maxn_amount_val")}),
+      align: 'left',
+      field: 'highestWin'
+    },
+    {
+      name: 'status',
+      label: computed(()=>{ return i18n_t("bet_record.status")}),
+      align: 'left',
+      field: 'status'
+      // sortable: true,
+    }
+  ],
+  1: [
+  ...base_columns,
+    {
+      name: 'totalStake',
+      label: computed(()=>{ return i18n_t("bet_record.bets_forehead")}),
+      align: 'left',
+      field: 'totalStake'
+    },
+    {
+      name: 'return',
+      label: computed(()=>{ return i18n_t("common.donate_win")}),
+      align: 'center',
+      field: 'return'
+    },
+    {
+      name: 'status',
+      label: computed(()=>{ return i18n_t("bet_record.status")}),
+      align: 'left',
+      field: 'status'
+      // sortable: true,
+    }
+  ],
+  2: [
+  ...base_columns,
+    {
+      name: 'totalStake',
+      label: computed(()=>{ return i18n_t("bet.bet_book_stake")}),
+      align: 'left',
+      field: 'totalStake'
+    },
+    {
+      name: 'highestWin',
+      label: computed(()=>{ return i18n_t("common.maxn_amount_val")}),
+      align: 'left',
+      field: 'highestWin'
+    },
+    {
+      name: 'status',
+      label: computed(()=>{ return i18n_t("bet_record.status")}),
+      align: 'left',
+      field: 'status'
+      // sortable: true,
+    }
+  ]
+})
 </script>
 
 <style lang="scss" scoped>
@@ -538,6 +642,13 @@ const cancelSuccess = () => {
     align-items: flex-start;
     position: relative;
     margin-left: 18px;
+  }
+  .item_name {
+    justify-content: space-between;
+    width: 100%;
+    .pre_text {
+      color: var(--q-gb-t-c-2);
+    }
   }
 
   .item-result {

@@ -3,7 +3,7 @@
 -->
 
 <template>
-  <div class="match-item-wrap" :class="{standard:standard_edition == 2}">
+  <div class="match-item-wrap" :class="{standard:standard_edition == 2, vr_basketball_match_item_wrap: VR_CTR.state.virtual_current_sub_menuid == 1004}">
     <div class="test-line" v-if="show_debugger_line">
       {{match_item.batchNo +'-'+ match_item.mid}}
     </div>
@@ -14,7 +14,7 @@
         'items-center':standard_edition == 1
       }">
       <!-- 赛事信息 -->
-      <div class="team-w-container" v-if="standard_edition == 2">
+      <div class="team-w-container" :class="{vr_basketball_team_w_container: VR_CTR.state.virtual_current_sub_menuid == 1004}" v-if="standard_edition == 2">
         <div class="match-play-count standard row justify-between items-center">
           <!-- 比赛时间 -->
           <div class="match-play-left row justify-start items-center">
@@ -25,24 +25,25 @@
                 {{match_item.show_time}}'
               </div>
             </div>
-            <!-- 固定60秒 -->
-            <div v-if="match_item.csid == 1004 && match_item.mmp != 'PREGAME'" class="time-wrap icon-s-wrap"
-              :class="{whistle:[2,11].includes(+match_item.match_status)}"
-              v-show="match_item.match_status == 0 && !is_basketball_score">
-              <div class="time">
-                60
-              </div>
-            </div>
-            <!-- live -->
-            <div v-if="match_item.csid == 1004" class="live-icon-pre icon-s-wrap"
-              v-show="match_item.match_status == 1 || is_basketball_score">
-              live
-            </div>
-            <!-- 结束 -->
-            <div v-if="match_item.csid == 1004" class="finally icon-s-wrap"
-              v-show="match_item.match_status == 2">
-              Fin.
-            </div>
+            <template v-if="match_item.csid == 1004">
+                <!-- 固定60秒 -->
+                <div v-if="match_item.mmp != 'PREGAME'"
+                     class="time-wrap icon-s-wrap"
+                    :class="{whistle:[2,11].includes(+match_item.match_status)}"
+                    v-show="match_item.match_status == 0 && !is_basketball_score">
+                  <div class="time">
+                    60
+                  </div>
+                </div>
+                <!-- live -->
+                <div class="live-icon-pre icon-s-wrap" v-show="match_item.match_status == 1 || is_basketball_score">
+                  live
+                </div>
+                <!-- 结束 -->
+                <div class="finally icon-s-wrap" v-show="match_item.match_status == 2">
+                  Fin.
+                </div>
+            </template>
             <!-- 视频icon -->
             <div class="play-icon-wrapper yb-flex-center"
               @click="switch_match_handle(i,match_item)">
@@ -75,15 +76,15 @@
       </div>
       <!-- 玩法 -->
       <div class="row items-center shrink-0 justify-between m-c-container"
-        :class="{standard:standard_edition == 2,simple:standard_edition == 1}"
+        :class="{standard:standard_edition == 2,simple:standard_edition == 1, vr_basketball_m_c_container: VR_CTR.state.virtual_current_sub_menuid == 1004}"
       >
         <!--专业版-->
         <div class="profession" v-if="standard_edition == 2">
           <!--标准版赔率容器-->
           <div class="standard-odd-l-w" v-touch-pan.horizontal.prevent.mouse="odd_wrapper_pan"
-            :class="{'status2':standard_odd_status == 1}" v-if="standard_edition == 2">
+            :class="{'status2':standard_odd_status == 1, vr_basketball_standard_odd_l_w: VR_CTR.state.virtual_current_sub_menuid == 1004}" v-if="standard_edition == 2">
             <!--标准版-->
-            <div class="standard-odd-list row">
+            <div class="standard-odd-list row" :class="{vr_basketball_standard_odd_list: VR_CTR.state.virtual_current_sub_menuid == 1004}">
               <!-- 右边盘口组件 -->
               <template v-if="match_item">
                 <ScoreList :match_info="match_item"></ScoreList>
@@ -124,6 +125,8 @@ import ImageCacheLoad from "src/core/public-cache-image/public-cache-image.vue";
 import { IconWapper } from 'src/components/icon'
 import ScoreList from 'src/base-h5/components/match-container/template/ouzhou/components/score-list.vue';
 
+import VR_CTR from 'src/core/vr/vr-sports/virtual-ctr'
+
 export default {
   mixins:[virtual_sports_match_item_mixin],
   components:{
@@ -134,6 +137,11 @@ export default {
     'icon-wapper': IconWapper,
     ScoreList
   },
+  setup(){
+    return {
+      VR_CTR
+    }
+  }
 }
 </script>
 
@@ -180,6 +188,27 @@ export default {
     height: 0.9rem;
   }
 
+  &.vr_basketball_match_item_wrap{
+    height: 100%;
+    padding: 0px 0 0px 0px;
+    width: 100%;
+    // background-color: pink;
+    display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+
+    .match-data-item{
+      width: 100%;
+      // background-color: orange;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    // background-color: red;
+    }
+  }
+
   .test-line {
     position: absolute;
     right: 0;
@@ -208,6 +237,17 @@ export default {
       width: 50%;
       padding-right: 10px;
       border-right: 1px solid rgba(88,88,88,.1);
+    }
+
+    .vr_basketball_team_w_container{
+      width: 40%;
+      padding-top: 0px;
+      padding-left: 10px;
+      // display: flex;
+      // flex-direction: column;
+      // justify-content: center;
+      // align-items: center;
+      // background-color: red;
     }
 
     .team-wrapper {
@@ -256,7 +296,6 @@ export default {
       align-items: center;
       &.standard {
         width: 1.92rem;
-
         .score-wrap {
           padding-top: 0.13rem;
           width: 0.4rem;
@@ -314,6 +353,18 @@ export default {
       }
     }
 
+
+    .vr_basketball_m_c_container{
+      &.standard {
+        width: 60%;
+        height: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+
     &.standard {
       // height: 1.07rem;
     }
@@ -321,6 +372,7 @@ export default {
     .profession {
       // padding-top: 0.13rem;
       // height: 1.21rem;
+      width: 100%;
       overflow: hidden;
       position: relative;
 
@@ -351,6 +403,10 @@ export default {
           transform: translateX(-1.84rem);
           -webkit-transform: translateX(-1.84rem);
         }
+      }
+
+      .vr_basketball_standard_odd_l_w{
+        width: 100%;
       }
     }
 
@@ -404,6 +460,10 @@ export default {
           height: 0.46rem;
         }
       }
+    }
+
+    .vr_basketball_standard_odd_list{
+      width: 100%;
     }
 
     .border-radius4 {
@@ -498,7 +558,7 @@ export default {
     border-radius: 0.1rem;
     // background-color: #FFB001;
     font-size: 0.11rem;
-    color: #ffffff;
+    // color: #ffffff;
     text-align: center;
     font-style: italic;
   }

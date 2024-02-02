@@ -1339,7 +1339,8 @@
     "yes": "Yes",
     "day": "",
     "match_parlay": "Parlay",
-    "no_score_data": "No score data yet"
+    "no_score_data": "No score data yet",
+    "match_cancellation": "Match cancellation"
   },
   "match_main": {
     "cut_off": "Bet Closed",

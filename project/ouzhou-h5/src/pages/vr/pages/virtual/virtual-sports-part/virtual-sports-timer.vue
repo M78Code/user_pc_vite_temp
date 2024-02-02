@@ -31,13 +31,13 @@ export default {
 
 <style lang="scss" scoped>
 .v-s-timer {
-  min-width: 1.4rem;
-  height: 1.4rem;
+  min-width: 1.6rem;
+  height: 1.6rem;
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 0.38rem;
+  margin-bottom: 0.1rem;
   .circle-time-wrapper svg path{
     stroke: var(--q-gb-bg-c-1);
   }
@@ -50,8 +50,8 @@ export default {
     }
 
   .v-timer-inner {
-    width: 1.4rem;
-    height: 1.4rem;
+    width: 1.6rem;
+    height: 1.6rem;
     background-color: rgba(0, 0, 0, 0.6);
     border-radius: 50%;
     line-height: 1;
@@ -73,7 +73,7 @@ export default {
   }
 
   .graphic-wrapper {
-    width: 1.4rem;
+    width: 1.6rem;
     height: 100%;
     position: absolute;
     top: 0;
@@ -91,7 +91,7 @@ export default {
   .count-wrap {
     position: absolute;
     left: 50%;
-    bottom: 0.25rem;
+    bottom: 0.35rem;
     display: flex;
     justify-content: center;
     transform: translateX(-50%);
@@ -107,7 +107,7 @@ export default {
       padding: 0 0.1rem;
       // background-color: rgba(0, 0, 0, 0.6);
       border-radius: 0.15rem;
-      font-size: 0.14rem;
+      font-size: 0.13rem;
       color: #F5F8FA;
       // backdrop-filter: blur(5px);
       letter-spacing: 0.02rem;

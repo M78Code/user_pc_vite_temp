@@ -175,7 +175,6 @@ export default {
     });
     onUnmounted(() => {
       ws_destroyed_common()
-      handle_destroyed();
       mitt_list.forEach(item => item());
       clearTimeout(timer);
     });

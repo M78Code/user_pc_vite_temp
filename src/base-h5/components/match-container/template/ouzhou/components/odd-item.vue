@@ -4,7 +4,7 @@
 
 <template>
   <div style="display: none;">{{ BetData.bet_data_class_version }}</div>
-  <div :class="['odd-item', {active: BetData?.bet_oid_list?.includes(odd_item.oid) }]" @click="set_old_submit">
+  <div :class="['odd-item', {active: BetData?.bet_oid_list?.includes(odd_item.oid), vr_basketball_active: BetData?.bet_oid_list?.includes(odd_item.oid) && VR_CTR.state.virtual_current_sub_menuid == 1004}]" @click="set_old_submit">
     <template v-if="is_show_template"> <span class="template">-</span> </template>
     <!-- 锁 -->
     <img v-else-if="is_lock" class="lock" :src="odd_lock_ouzhou" alt="lock">
@@ -31,6 +31,7 @@ import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive
 import { odd_lock_ouzhou, ouzhou_hps_up, ouzhou_hps_down } from 'src/base-h5/core/utils/local-image.js'
 import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, compute_value_by_cur_odd_type, MenuData, use_sports_play_title } from "src/output/index.js"
 import { useMittOn, MITT_TYPES } from  "src/core/mitt"
+import VR_CTR from 'src/core/vr/vr-sports/virtual-ctr'
 
 const props = defineProps({
   // 赔率 hps
@@ -229,6 +230,21 @@ onUnmounted(() => {
     border-radius: 2px;
     .odd {
       background: linear-gradient(0deg, rgba(255, 112, 0, 0.10) 0%, rgba(255, 112, 0, 0.10) 100%), #FFF;
+    }
+    .hpn{
+      position: relative;
+      top: 0px;
+      color: #1A1A1A;
+    }
+  }
+
+  &.vr_basketball_active{
+    color: var(--q-gb-t-c-2);
+    border-radius: 2px;
+    .odd {
+      // height: 100%;
+      background: linear-gradient(0deg, rgba(255, 112, 0, 0.10) 0%, rgba(255, 112, 0, 0.10) 100%), #FFF;
+      // background-color: orange;
     }
     .hpn{
       position: relative;

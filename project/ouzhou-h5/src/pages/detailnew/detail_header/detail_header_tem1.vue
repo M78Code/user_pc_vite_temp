@@ -63,7 +63,7 @@ import matchStage from "src/base-h5/components/match/match-stage.vue";  // 详�
 // import countingDown from 'src/base-h5/components/common/counting-down.vue'   // 赛事进行中每秒变化的计时器
 import {  api_common } from "src/api/index.js";
 import MatchCollect from 'src/core/match-collect'
-import { LOCAL_PROJECT_FILE_PREFIX ,compute_css_obj,MenuData } from "src/output/index.js";
+import { LOCAL_PROJECT_FILE_PREFIX ,compute_css_obj,MenuData, is_eports_csid } from "src/output/index.js";
 import matchScore from "./match-score/index.vue"
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { i18n_tc } from "src/boot/i18n";
@@ -87,24 +87,35 @@ const props = defineProps({
  * @param {String} id 球类id
  * @return {}
  */
- const format_type = ( id ) => {
+const format_type = ( id ) => {
   id = id ||+MenuData.menu_mi.value;
-  //如果是赛事详情直接进
-  if (props.get_match_detail?.csid ){
+
+  const { csid } = props.get_match_detail
+
+  if(is_eports_csid(csid) || MenuData.is_esports()){
+    id = +MenuData.menu_mi.value;
+  }else{
     id = 100 + Number(props.get_match_detail?.csid)
   }
-  // 如果是电子赛事
-  if (MenuData.is_esports() ){
-    id = +MenuData.menu_mi.value;
-  }
+  
   return oz_sprite_bg_images_postion[id]
+
+  // //如果是赛事详情直接进
+  // if (props.get_match_detail?.csid ){
+  //   id = 100 + Number(props.get_match_detail?.csid)
+  // }
+  // // 如果是电子赛事
+  // if (MenuData.is_esports() ){
+  //   id = +MenuData.menu_mi.value;
+  // }
+  // return oz_sprite_bg_images_postion[id]
 }
 /**
-     * @description: 设置发球方绿点显示
-     * @param {Object} item 赛事对象
-     * @param {Object} side 'home'主队  'away'客队
-     * @return {Boolean} 是否显示发球方
-     */
+ * @description: 设置发球方绿点显示
+ * @param {Object} item 赛事对象
+ * @param {Object} side 'home'主队  'away'客队
+ * @return {Boolean} 是否显示发球方
+ */
 const set_serving_side = (item, side) => {
   return item.ms == 1 && item.mat == side;
 }
