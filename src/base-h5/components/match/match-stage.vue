@@ -42,7 +42,7 @@
         {{ (detail_data.mmp == '999' && route.name == 'result') ? i18n_t(`mmp[${detail_data.csid}][${detail_data.mmp}]`) : i18n_t(`ms[${detail_data.ms}]`)  }}
       </span>
       <span v-else>
-        <!-- 显示 赛事阶段和赛事时间 -->
+        <!-- 显示 赛事阶段和赛事时间22 -->
         <component
           :is="componentId"
           :detail_data="detail_data"
@@ -165,4 +165,5 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+</style>

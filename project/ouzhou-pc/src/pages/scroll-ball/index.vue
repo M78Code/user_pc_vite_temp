@@ -57,7 +57,7 @@ import match_list_card from "src/core/match-list-pc/match-card/match-list-card-c
 import MenuData from "src/core/menu-pc/menu-data-class.js";
 import { mounted_fn, handle_destroyed, load_data_state, on_refresh } from "src/core/match-list-pc/match-list-composition.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
-import { MatchDataWarehouse_PC_List_Common as MatchListData, GlobalAccessConfig, PageSourceData, compute_css_obj, useMittOn,useMittEmit, MITT_TYPES, LayOutMain_pc } from "src/output/index.js";
+import { MatchDataWarehouse_PC_List_Common as MatchListData,MatchDataWarehouse_PC_Detail_Common, GlobalAccessConfig, PageSourceData, compute_css_obj, useMittOn,useMittEmit, MITT_TYPES, LayOutMain_pc } from "src/output/index.js";
 import use_match_list_ws from 'src/core/match-list-pc/composables/match-list-ws.js'
 import "../match-list/match_list.scss";
 const { page_source } = PageSourceData;
@@ -98,21 +98,21 @@ export default {
             })
             if (mids_arr.length) {
                 const mid_index = mids_arr.findIndex(item => item == MatchListCardDataClass.current_mid.value)
-                useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, mids_arr[mid_index >= 0 ? mid_index : 0]);
+                const match=MatchListData.get_quick_mid_obj(mids_arr[mid_index >= 0 ? mid_index : 0])
+                MatchDataWarehouse_PC_Detail_Common.set_match_details(match, [])
+                useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS,match.mid );
             }
         }
         function refresh() {
             useMittOn(MITT_TYPES.EMIT_FETCH_MATCH_LIST, { is_socket: true })
         }
+        mounted_fn();
         onMounted(() => {
             LayOutMain_pc.set_oz_show_right(true)
             LayOutMain_pc.set_oz_show_left(false)
-            mounted_fn();
-            MatchListCardDataClass_match_list_card_key_arr()
         });
         onUnmounted(() => {
             ws_destroyed()
-            handle_destroyed()
         })
         onActivated(() => {
             LayOutMain_pc.set_oz_show_right(true)
@@ -123,7 +123,7 @@ export default {
         }
         watch(
             MatchListCardDataClass.list_version,
-            (list_version) => {
+            () => {
                 MatchListCardDataClass_match_list_card_key_arr()
                 proxy?.$forceUpdate()
             }

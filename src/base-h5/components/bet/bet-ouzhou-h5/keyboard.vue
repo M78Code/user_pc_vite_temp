@@ -4,10 +4,10 @@
 -->
 <template>
   <div class="keyboard" :class="{'is_max_money':is_max_money}" @click.stop="_handleKeyPress($event)" style="opacity: 1;" @touchmove.prevent>
-    <div v-show="false"> {{ UserCtr.user_version }} --
-      {{ BetData.bet_data_class_version }}-{{ BetViewDataClass.bet_view_version }} - {{ BetData.active_index }}</div>
+    <div v-show="false"> {{ UserCtr.user_version }}
+      {{ BetData.bet_data_class_version }}-{{ BetViewDataClass.bet_view_version }}</div>
     <div class="key-row row">
-      <div class="key-cell" data-num="qon">
+      <div class="key-cell" :class="{'disable': is_pre_disable()}" data-num="qon">
         <span>+</span>{{BetData.user_max_min_money.qon}}
       </div>
       <div class="key-cell" data-num="1">1</div>
@@ -15,7 +15,7 @@
       <div class="key-cell" data-num="3">3</div>
     </div>
     <div class="key-row row">
-      <div class="key-cell" data-num="qtw">
+      <div class="key-cell" :class="{'disable': is_pre_disable()}" data-num="qtw">
         <span>+</span>{{BetData.user_max_min_money.qtw}}
       </div>
       <div class="key-cell" data-num="4">4</div>
@@ -23,7 +23,7 @@
       <div class="key-cell" data-num="6">6</div>
     </div>
     <div class="key-row row">
-      <div class="key-cell" data-num="qth">
+      <div class="key-cell" :class="{'disable': is_pre_disable()}" data-num="qth">
         <span>+</span>{{BetData.user_max_min_money.qth}}
       </div>
       <div class="key-cell" data-num="7">7</div>
@@ -31,7 +31,7 @@
       <div class="key-cell" data-num="9">9</div>
     </div>
     <div class="key-row row">
-      <div class="key-cell max_text" data-num="max">
+      <div class="key-cell max_text" :class="{'disable': is_pre_disable()}" data-num="max">
         MAX
       </div>
       <div class="key-cell" data-num=".">.</div>
@@ -46,7 +46,7 @@
 
 <script setup>
 
-import { ref, reactive, onMounted, watch } from 'vue';
+import { ref, reactive, onMounted, watch, computed } from 'vue';
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
@@ -269,7 +269,7 @@ const _handleNumberKey = (num) => {
   if (typeof BetData.active_index === 'string') {
     // 此处为预约盘口 赔率相关输入
     if(BetData.is_bet_pre && BetData.active_index.includes('odds') || BetData.active_index.includes('handicap')) {
-      
+
       if(BetData.active_index.includes('odds')) {
         let odds = !ref_pre_book.appoint_odds_value ? (num === '0' ? '0.' : num) : ref_pre_book.appoint_odds_value + num
         let s_length = odds.substring(odds.indexOf(".") + 1).length // 0. 后面输入的字符长度  最多只保留两位
@@ -337,6 +337,17 @@ const _handleNumberKey = (num) => {
   BetData.set_bet_amount(money_)
 }
 
+const is_pre_disable = computed(() => state => {
+  if (BetData.is_bet_pre) {
+    if (typeof BetData.active_index === 'string') {
+      return true
+    } else {
+      return false
+    }
+  }
+  return false
+})
+
 
 </script>
 
@@ -365,7 +376,13 @@ const _handleNumberKey = (num) => {
   background: var(--q-bg-c-2);
   font-size: .22rem;
   font-weight: 500;
-  border-top: 1px solid var(--q-gb-bd-c-1)
+  border-top: 1px solid var(--q-gb-bd-c-1);
+  &.disable {
+    background: var(--q-gb-bg-c-10);
+    pointer-events: none;
+    color: var(--q-gb-t-c-9) !important;
+
+  }
 }
 .key-cell {
   &:first-child { // 左侧第一排MAX的样式

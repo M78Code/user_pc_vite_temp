@@ -33,17 +33,19 @@
           <div class="virtual-menu-list" ref='virtual_menu_list'>
             <div class="tabs-bar">
               <div class="tabs-bar-nav" ref="scroll_main">
-                <div class="tabs-tab"
-                     ref="scroll_box"
-                     v-for="(tab, i) in sub_menu_list" :key="i"
-                     :class="[sub_menu_i == i ? 'tabs-active' : '']"
-                     @click="virtual_menu_changed(i)"
-                >
-                  <div class="sport-icon-wrap" :style="compute_css_obj({key:sub_menu_i == i ? 'menu-sport-active-image' : 'menu-sport-icon-image', position:format_type({...tab,mi:`3${tab.field1}`})})" >
-                    <img v-if="false" class="menu-new-icon" src="image/bw3/svg/virtual-sports/new.svg" />
+                <template v-for="(tab, i) in sub_menu_list" :key="i">
+                  <div class="tabs-tab"
+                      ref="scroll_box"
+                      v-if="!BaseData?.filterSport_arr.includes(tab.field1)"
+                      :class="[sub_menu_i == i ? 'tabs-active' : '']"
+                      @click="virtual_menu_changed(i)"
+                  >
+                    <div class="sport-icon-wrap" :style="compute_css_obj({key:sub_menu_i == i ? 'menu-sport-active-image' : 'menu-sport-icon-image', position:format_type({...tab,mi:`3${tab.field1}`})})" >
+                      <img v-if="false" class="menu-new-icon" src="image/bw3/svg/virtual-sports/new.svg" />
+                    </div>
+                    <span>VR{{ tab.name }}</span>
                   </div>
-                  <span>VR{{ tab.name }}</span>
-                </div>
+                </template>
               </div>
             </div>
           </div>

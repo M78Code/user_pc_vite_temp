@@ -17,13 +17,13 @@
         
         <div class="cursor re f-e-c bet-text">
            <!--  单关 合并 切换 -->
-          <div class="f-e-c" @click.prevent="show_merge_change()" v-if="BetData.is_bet_single&&!MenuData.is_vr()">
+          <div class="f-e-c" @click.prevent="show_merge_change()" v-if="BetData.is_bet_single&&!MenuData.is_vr()&&!MenuData.is_eports_csid(MenuData.current_ball_type)">
             {{ i18n_t('bet.merge') }} 
             <span v-if="BetData.is_bet_merge" class="icon-arrow icon-arrow-merge ml-4"></span>
             <span v-else class="merge-checkbox ml-4"></span> 
           </div>
           <!-- 单关 串关 切换 -->
-          <div class="f-e-c ml-16" @click.prevent="show_single_change()" v-if="!MenuData.is_kemp()">
+          <div class="f-e-c ml-16" @click.prevent="show_single_change()" v-if="!MenuData.is_kemp()&&(BetData.is_bet_single&&!lodash.get(BetData.bet_single_list,'[0].is_serial')||!BetData.is_bet_single)">
             <span v-if="BetData.is_bet_single">{{ i18n_t('bet.bet_one_') }}</span>
             <span v-if="!BetData.is_bet_single">{{ i18n_t('bet.bet_series') }}</span>
 

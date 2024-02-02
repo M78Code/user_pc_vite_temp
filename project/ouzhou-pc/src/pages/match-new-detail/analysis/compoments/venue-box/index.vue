@@ -125,8 +125,6 @@ watch(
   (val) => {
 
     if (val) {
-     
-      console.log(route.params, "params");
       if (MenuData.is_esports()||[101,102,100,103].includes(Number(props.detail_info?.csid))) {
         tab_click("video");
         return;
