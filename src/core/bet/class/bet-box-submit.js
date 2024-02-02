@@ -396,7 +396,14 @@ const get_lastest_market_info = (type) => {
                             if(type == 'submit_bet' && bet_item.ot != odds.oddsType){
                                 bet_item.hl_hs = 11
                             }
-
+                            // 预约投注编辑中 盘口赔率发生变化
+                            if( BetData.bet_pre_appoint_id == bet_item.playOptionsId ){
+                                BetData.set_bet_appoint_obj_playOptionId(odds.id)
+                                let pre_id = lodash_.get(BetData.bet_pre_obj,'custom_id','')
+                                if(pre_id == bet_item.playOptionsId){
+                                    BetData.bet_pre_obj.custom_id = odds.id
+                                }
+                            }
                             // 红绿升降
                             // bet_item.red_green = ''
                             // if(bet_item.odds == odds.oddsValue ){
@@ -1242,7 +1249,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
             })
         }
     }
-    // console.error('投注项内容：',bet_obj)
+    console.error('投注项内容：',bet_obj)
 
     // 冠军 
     if(bet_obj.bet_type == 'guanjun_bet'){
@@ -1427,9 +1434,10 @@ const set_market_id_to_ws = () => {
     }
     // 获取盘口id
     hid = bet_list.map(item => item.marketId)
+    hid = lodash_.uniq(hid);
     // 获取赛事id
     mid = bet_list.map(item => item.matchId)
-
+    mid = lodash_.uniq(mid);
 
     obj.hid = hid.join(',')
     obj.mid = mid.join(',')
