@@ -9,6 +9,7 @@
   }
   .details_data {
     width: 100%;
+    background:var(--q-match-details-box-shadow);
   }
   .details_data_load {
     width: 100%;
@@ -406,6 +407,7 @@
   box-shadow: none !important;
   // 宽度100% fix bug 53860
   width: 100%;
+  margin-top: 4px;
 }
 
 :deep(.handicap-item) {

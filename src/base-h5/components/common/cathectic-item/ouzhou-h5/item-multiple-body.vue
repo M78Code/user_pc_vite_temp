@@ -45,7 +45,7 @@
                 [<span v-if="data_b.seriesType != '3' && item.matchType != 4" v-html="i18n_t(`matchtype.${item.matchType}`)"></span>]
                 {{item.playName}}
               <!-- 优化后的赔率 -->
-              <span class="oddfinally" v-if="!data_b.acCode"><span>&nbsp;@&thinsp;{{format_odds(item.oddFinally, item.sportId)}}</span></span>
+              <span class="oddfinally" v-if="!data_b.acCode"><span>&thinsp;{{format_odds(item.oddFinally, item.sportId)}}</span></span>
             </p>
             <!-- managerCode=4 代表电竞 orderStatus=1 是已结算 -->
             <p class="col-8 text-left yb_fontsize10 item-order" v-if="data_b.managerCode == 4&&data_b.orderStatus == 1">

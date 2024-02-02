@@ -3,7 +3,7 @@
     <div v-show="false">{{ MatchListCardDataClass.list_version }}
     </div>
     <div class="flex flex-start items-center">
-    <!-- {{ match_style_obj.data_tpl_id }} -->
+      <!-- {{ match_style_obj.data_tpl_id }} -->
       <!-- 赛事基础信息 -->
       <div class="basic-col"
         :style="`width:${match_list_tpl_size.process_team_width}px !important;height:80px !important;`">
@@ -23,19 +23,24 @@
       <!-- 比分板 -->
       <div v-tooltip="{ content: i18n_t('common.score_board') }" class="score-board"
         :style="`width:${match_list_tpl_size.media_width}px !important;`">
-        <!-- 图片资源有问题，先用文字替代  -->
-        <div class="video" v-if="+lodash.get(match, 'mms') > 1"
-          @click="jump_to_details('video')"
-          :style="compute_css_obj({ key: current_mid == match.mid && MenuData.is_scroll_ball() ? 'pc-img-match-list-video' : 'pc-img-match-info-video0' })">
-        </div>
-        <div v-else-if="+lodash.get(match, 'mvs') > -1"
-          @click="jump_to_details('animal')"
-          :style="compute_css_obj({ key: current_mid == match.mid && MenuData.is_scroll_ball() ? 'pc-home-score-active' : 'pc-home-score-board' })">
-        </div>
-        <div v-else @click="jump_to_details('score')"
-        :style="compute_css_obj({ key: current_mid == match.mid && MenuData.is_scroll_ball() ? 'pc-home-list-score-active' : 'pc-home-list-score' })"
-        >
-        </div>
+        <template v-if="MenuData.is_eports_csid(match.csid)">
+          <!-- 电竞只有视频 并且还是开始状态才有 -->
+          <div class="video" v-if="get_match_status(match.ms)" @click="jump_to_details('video')"
+            :style="compute_css_obj({ key: current_mid == match.mid && MenuData.is_scroll_ball() ? 'pc-img-match-list-video' : 'pc-img-match-info-video0' })">
+          </div>
+        </template>
+        <template v-else>
+          <!-- 图片资源有问题，先用文字替代   -->
+          <div class="video" v-if="+lodash.get(match, 'mms') > 1" @click="jump_to_details('video')"
+            :style="compute_css_obj({ key: current_mid == match.mid && MenuData.is_scroll_ball() ? 'pc-img-match-list-video' : 'pc-img-match-info-video0' })">
+          </div>
+          <div v-else-if="+lodash.get(match, 'mvs') > -1" @click="jump_to_details('animal')"
+            :style="compute_css_obj({ key: current_mid == match.mid && MenuData.is_scroll_ball() ? 'pc-home-score-active' : 'pc-home-score-board' })">
+          </div>
+          <div v-else @click="jump_to_details('score')"
+            :style="compute_css_obj({ key: current_mid == match.mid && MenuData.is_scroll_ball() ? 'pc-home-list-score-active' : 'pc-home-list-score' })">
+          </div>
+        </template>
       </div>
     </div>
     <div class="flex" v-if="is_score">
@@ -54,7 +59,7 @@
 <script>
 import { computed, watch, inject } from 'vue';
 import { MatchFooterScoreFullVersionWapper as MatchFooterScore } from "src/base-pc/components/match-list/match-footer-score/index.js"
-import { MenuData, MatchDataWarehouse_PC_Detail_Common as MatchDataWarehouseInstance } from "src/output/index.js";
+import { MenuData, MatchDataWarehouse_PC_Detail_Common as MatchDataWarehouseInstance, get_match_status } from "src/output/index.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import { socket_remove_match } from "src/core/match-list-pc/match-list-composition.js";
 import { MatchBasisInfo101FullVersionWapper as BasisInfo101 } from 'src/base-pc/components/match-list/match-basis-info/template-101/index.js'
@@ -88,11 +93,11 @@ export default {
     const { csid } = match.value || {}
     let current_mid = MatchListCardDataClass.current_mid;
     let handicap_list = computed(() => {
-      try{
-        const _list=match_tpl_info.value?.get_current_odds_list(MatchListCardDataClass.get_csid_current_hpids(csid),MatchListCardDataClass.list_version.value)
+      try {
+        const _list = match_tpl_info.value?.get_current_odds_list(MatchListCardDataClass.get_csid_current_hpids(csid), MatchListCardDataClass.list_version.value)
         return _list
-      }catch(e){
-        console.log(match_tpl_info.value,e,'jiffy')
+      } catch (e) {
+        console.log(match_tpl_info.value, e, 'jiffy')
       }
       return []
     });
@@ -139,7 +144,7 @@ export default {
     //   }
     // })
     function jump_to_details(type) {
-      const { tid, csid, mid,ms } = match.value;
+      const { tid, csid, mid, ms } = match.value;
       MatchListCardDataClass.set_current_mid(mid);
       if (MenuData.is_scroll_ball()) {
         // 控制右侧比分板
@@ -156,7 +161,7 @@ export default {
             csid: csid,
             type: type
           },
-          query:{ms}  // 传多个ms  提前判断是否需要显示右侧
+          query: { ms }  // 传多个ms  提前判断是否需要显示右侧
         })
       }
     }
@@ -170,6 +175,7 @@ export default {
       compute_css_obj,
       handicap_list,
       match,
+      get_match_status,
       MenuData,
       current_mid,
       match_style_obj,
@@ -192,9 +198,11 @@ export default {
     background: var(--q-gb-bg-c-10);
   }
 }
+
 .score {
   width: 17px;
 }
+
 .other-play-tab {
   height: 32px;
   display: flex;
