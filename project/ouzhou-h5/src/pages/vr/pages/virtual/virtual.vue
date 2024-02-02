@@ -189,7 +189,7 @@ export default {
         text-align: center;
         display: flex;
         align-items: center;
-        padding: 0 0.05rem 0 0.03rem;
+        padding: 0 0.1rem 0 0.03rem;
         margin-right: 0.1rem;
         .main-menu-right-symbol{
             font-family: 'Akrobat';
