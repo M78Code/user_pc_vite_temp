@@ -1281,7 +1281,7 @@ class MatchMeta {
     this.compute_current_matchs()
 
     // 复刻版 base-virtual-list 组件 不需要走下面的逻辑
-    // if (project_name !== 'app-h5') {
+    if (project_name !== 'app-h5') {
       if (!is_virtual) {
         // 清除虚拟计算信息
         VirtualList.clear_virtual_info()
@@ -1297,7 +1297,7 @@ class MatchMeta {
         // 计算所需渲染数据
         this.compute_page_render_list({ scrollTop: scroll_top, merge, type })
       }
-    // }
+    }
 
     // 重置数据为空状态
     this.set_page_match_empty_status({ state: false })
