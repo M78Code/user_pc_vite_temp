@@ -28,7 +28,7 @@
         {{ i18n_t(`ms[${detail_data.ms}]`) }}
       </span>
       <span v-else>
-        <!-- 显示 赛事阶段和赛事时间 -->
+        <!-- 显示 赛事阶段和赛事时间111 -->
         <component
           :is="playComponent[`stage_child_${detail_data.csid}`]"
           :detail_data="detail_data"

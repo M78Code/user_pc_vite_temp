@@ -26,7 +26,6 @@
               </div>
             </div>
             <template v-if="match_item.csid == 1004">
-              <!-- {{ match_item }} --- {{is_basketball_score}}---cc -->
                 <!-- 固定60秒 -->
                 <div v-if="match_item.mmp == 'PREGAME'"
                      class="time-wrap icon-s-wrap"
@@ -37,7 +36,6 @@
                   <div class="time" v-show="match_item.show_time">
                     {{match_item.show_time}}'
                   </div>
-
                 </div>
 
                 <!-- live -->
@@ -46,11 +44,13 @@
                   <span class="span_live">LIVE</span>
                   <span class="span_show_time" v-show="match_item.show_time">{{match_item.show_time}}'</span>
                 </div>
+
                 <!-- 结束 -->
                 <div class="finally icon-s-wrap" v-show="match_item.match_status == 2">
                   <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/vr/referee.png`" alt="">
                   <span>{{match_item.show_time}}'</span>
                 </div>
+
             </template>
             <!-- 视频icon -->
             <div class="play-icon-wrapper yb-flex-center"
@@ -179,6 +179,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+
+.score-list{
+  height: 100%;
+  // background-color: red;
+}
 
 
 @keyframes dir_remind_animate {
