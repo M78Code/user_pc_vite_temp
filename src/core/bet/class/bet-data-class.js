@@ -633,6 +633,12 @@ this.bet_appoint_ball_head= null */
   
   set_bet_appoint_obj_playOptionId(val) {
     this.bet_pre_appoint_id = val
+    if(val){
+      // 选中了预约单 清空投注金额
+      this.bet_single_list.forEach(item=>{
+        item.bet_amount = ''
+      })
+    }
     this.set_bet_data_class_version()
   }
 
@@ -652,7 +658,7 @@ this.bet_appoint_ball_head= null */
   set_bet_pre_obj(val){
     // custom_id 投注项id
     this.bet_pre_obj = val
-    console.error('sssss',this.bet_pre_obj)
+    // console.error('sssss',this.bet_pre_obj)
   }
   
   // 设置 是否已投注
@@ -1245,9 +1251,9 @@ this.bet_appoint_ball_head= null */
             let ws_ol_obj = (item.ol||[]).find(obj => ol_obj.playOptionsId == obj.oid ) || {}
             // WS推送中包含 投注项中的投注项内容
             // console.error('推送码：',obj.cmd)
-            // console.error('ws-坑位',item.hn, '------ 投注项坑位',ol_obj.placeNum)
-            // console.error('ws-盘口 状态',item.hs, 'ws-投注项 状态',ws_ol_obj.os)
-            // console.error('ws-投注项 赔率',ws_ol_obj.ov, '------ 投注项赔率',ol_obj.odds )
+            console.error('ws-坑位',item.hn, '------ 投注项坑位',ol_obj.placeNum)
+            console.error('ws-盘口 状态',item.hs, 'ws-投注项 状态',ws_ol_obj.os)
+            console.error('ws-投注项 赔率',ws_ol_obj.ov, '------ 投注项赔率',ol_obj.odds )
             // console.error('定时器',time_out)
             clearTimeout(time_out)
             // console.error('清除定时器',time_out)
