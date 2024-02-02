@@ -60,17 +60,41 @@
         </div>
         
         <div class="team-wrapper" @click="goto_details(match_item)" :class="{standard:standard_edition == 2}">
-          <!-- 战队名称 -->
-          <div class="team-title" :class="{over:[2,11].includes(+match_item.match_status)}">
-            <div class="ellipsis">{{match_item.teams ? match_item.teams[0] : ''}}</div>
-            <div class="team-score">{{ match_item.home || 0 }}</div>
-          </div>
-          <div class="team-title" :class="{over:[2,11].includes(+match_item.match_status)}">
-            <div class="ellipsis">
-              {{match_item.teams ? match_item.teams[1] : ''}}
+
+          <template v-if="VR_CTR.state.virtual_current_sub_menuid == 1004">
+            <div class="team-wrapper_left">
+              <span>{{ i+1 }}</span>  
             </div>
-            <div class="team-score">{{ match_item.away || 0 }}</div>
-          </div>
+
+            <!-- 战队名称 -->
+            <div class="team-wrapper_right">
+              <div class="team-title" :class="{over:[2,11].includes(+match_item.match_status)}">
+                <div class="ellipsis">{{match_item.teams ? match_item.teams[0] : ''}}</div>
+                <div class="team-score">{{ match_item.home || 0 }}</div>
+              </div>
+              <div class="team-title" :class="{over:[2,11].includes(+match_item.match_status)}">
+                <div class="ellipsis">
+                  {{match_item.teams ? match_item.teams[1] : ''}}
+                </div>
+                <div class="team-score">{{ match_item.away || 0 }}</div>
+              </div>
+            </div>
+          </template>
+
+          <template v-else>
+            <div class="team-title" :class="{over:[2,11].includes(+match_item.match_status)}">
+              <div class="ellipsis">{{match_item.teams ? match_item.teams[0] : ''}}</div>
+              <div class="team-score">{{ match_item.home || 0 }}</div>
+            </div>
+            <div class="team-title" :class="{over:[2,11].includes(+match_item.match_status)}">
+              <div class="ellipsis">
+                {{match_item.teams ? match_item.teams[1] : ''}}
+              </div>
+              <div class="team-score">{{ match_item.away || 0 }}</div>
+            </div>
+          </template>
+
+
 
         </div>
       </div>
@@ -241,22 +265,45 @@ export default {
 
     .vr_basketball_team_w_container{
       width: 40%;
+      height: 100%;
       padding-top: 0px;
       padding-left: 10px;
-      // display: flex;
-      // flex-direction: column;
-      // justify-content: center;
-      // align-items: center;
-      // background-color: red;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center ;
+      // background-color: orange;
+      .match-play-count{
+        width: 100%;
+      }
+
+      .team-wrapper{
+          width: 100%;
+      }
     }
 
     .team-wrapper {
       flex: 1;
       // font-weight: bold;
       display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      align-items: flex-start;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      .team-wrapper_left{
+        padding-right: 10px;
+        // background-color: red;
+        span{
+          font-size: 12px;
+        }
+      }
+      .team-wrapper_right{
+        width: 95%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        // background-color: red;
+      }
       &.standard {
         .team-title {
           width: 100%;
