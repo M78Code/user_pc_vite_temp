@@ -270,7 +270,7 @@ class VirtualList {
           if (match.is_show_league) special_height += -22
         }
       } else {
-        if (index === 0 && [1,3].includes(+menu_lv_v1)) special_height += 25
+        if (index === 0 && [1,3].includes(+menu_lv_v1)) special_height += 20
       }
     }
     return special_height

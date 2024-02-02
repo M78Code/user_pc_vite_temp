@@ -19,7 +19,7 @@ import { computed, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import lodash from 'lodash';
 
-import MenuData from 'src/core/menu-pc/menu-data-class.js'
+import MenuData from "src/core/menu-pc-yazhou/menu-data-class.js";
 import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card-class.js'
 import {
   recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_sportid_zhedie
@@ -39,11 +39,17 @@ const props = defineProps({
 })
 const cur_title_info = computed(() => {
   let { card_type = 'no_start_title', csna, match_count } = props.card_style_obj;
+  let num = ''
+  MenuData.in_play_list.map(item => {
+    if (item.mif == (+props.card_style_obj.csid + 100)) {
+      num = item.ct
+    }
+  })
   let title_obj = {
     //球种标题
     sport_title: {
       name: csna,
-      match_count: lodash.get(MatchListCardData, `sport_match_count.csid_${props.card_style_obj.csid}.count`),
+      match_count: lodash.get(MatchListCardData, `sport_match_count.csid_${props.card_style_obj.csid}.count`) || num,
       show_num: MenuData.menu_root != 400 && route.name != "search",
       func_name: recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_sportid_zhedie
     },

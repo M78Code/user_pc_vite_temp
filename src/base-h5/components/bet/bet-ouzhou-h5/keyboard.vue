@@ -5,7 +5,7 @@
 <template>
   <div class="keyboard" :class="{'is_max_money':is_max_money}" @click.stop="_handleKeyPress($event)" style="opacity: 1;" @touchmove.prevent>
     <div v-show="false"> {{ UserCtr.user_version }} --
-      {{ BetData.bet_data_class_version }}-{{ BetViewDataClass.bet_view_version }}</div>
+      {{ BetData.bet_data_class_version }}-{{ BetViewDataClass.bet_view_version }} - {{ BetData.active_index }}</div>
     <div class="key-row row">
       <div class="key-cell" data-num="qon">
         <span>+</span>{{BetData.user_max_min_money.qon}}
@@ -180,7 +180,8 @@ const _handleKeyPress = (e) => {
 const _handleDecimalPoint = () => {
   // 此处为预约盘口 赔率相关输入
   if (typeof BetData.active_index === 'string') {
-    if (BetData.is_bet_pre && BetData.active_index.includes(['odds', 'handicap'])) {
+
+    if (BetData.is_bet_pre && BetData.active_index.includes('odds') || BetData.active_index.includes('handicap')) {
 
       if(BetData.active_index.includes('odds')) {
         let odds = ref_pre_book.appoint_odds_value.toString()
@@ -195,6 +196,7 @@ const _handleDecimalPoint = () => {
       }
       return
     }
+    return
   }
 
   //超过最大金额  显示最大金额 
@@ -235,7 +237,9 @@ const _handleDeleteKey = () => {
 
   // 此处为预约盘口 赔率相关输入
   if (typeof BetData.active_index === 'string') {
-    if (BetData.is_bet_pre && BetData.active_index.includes(['odds', 'handicap'])) {
+
+    if (BetData.is_bet_pre && BetData.active_index.includes('odds') || BetData.active_index.includes('handicap')) {
+
       if(BetData.active_index.includes('odds')) {
         let odds = ref_pre_book.appoint_odds_value.toString()
         odds = odds ? odds.substring(0, odds.length - 1) : 0
@@ -247,6 +251,7 @@ const _handleDeleteKey = () => {
       }
       return
     }
+    return
   }
 
   let money_ = BetData.bet_amount.toString()
@@ -263,7 +268,8 @@ const _handleNumberKey = (num) => {
   if (!num) return
   if (typeof BetData.active_index === 'string') {
     // 此处为预约盘口 赔率相关输入
-    if(BetData.is_bet_pre && BetData.active_index.includes(['odds', 'handicap'])) {
+    if(BetData.is_bet_pre && BetData.active_index.includes('odds') || BetData.active_index.includes('handicap')) {
+      
       if(BetData.active_index.includes('odds')) {
         let odds = !ref_pre_book.appoint_odds_value ? (num === '0' ? '0.' : num) : ref_pre_book.appoint_odds_value + num
         let s_length = odds.substring(odds.indexOf(".") + 1).length // 0. 后面输入的字符长度  最多只保留两位
@@ -281,6 +287,7 @@ const _handleNumberKey = (num) => {
       }
       return
     }
+    return
   }
 
 
