@@ -852,11 +852,12 @@ export default {
           url = '//'+url
         }
         // 电竞只有视频
-        if(MenuData.is_esports()){
+        if(MenuData.is_esports()||[101,102,100,103].includes(Number(match.csid))){
            url = match.vurl
         }
         //校验url是否可以打开
         this.check_url(url, res => {
+         
           if(res || BUILDIN_CONFIG.NODE_ENV == "development"){
             callback('play-video',url)
           } else {
