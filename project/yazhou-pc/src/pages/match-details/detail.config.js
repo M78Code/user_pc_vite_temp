@@ -74,7 +74,7 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
   // 当前所选的玩法集子项id
   const tabs_active_index = ref(MatchDetailCalss.current_category_id);
   // 当前所选的玩法集子项id
-  const uuid = ref(uid);
+  // const uuid = ref(uid);
   /** 语言变化 */
   const get_lang_change = ref(UserCtr.lang);
   // //播放类型

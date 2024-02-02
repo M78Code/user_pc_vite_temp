@@ -156,7 +156,6 @@ class BetData {
     //需要预约的盘口
     /* this bet_appoint_odds_value= null;
 this.bet_appoint_ball_head= null */
-    this.pre_bet_list = null;
     //输入框最小值 备注 (预约投注用)
     this.pre_min_odd_value = -1;
     //聊天室来源跟单盘口状况eu
@@ -211,6 +210,9 @@ this.bet_appoint_ball_head= null */
     this.bet_keyboard_show = true;
     // 投注项 ID + 坑位
     this.bet_oid_obj = {}
+
+    // 当前预约的投注项id
+    this.bet_pre_appoint_id = ''
 
     // 获取缓存信息
     this.set_loacl_config()
@@ -623,6 +625,17 @@ this.bet_appoint_ball_head= null */
     this.set_bet_data_class_version()
   }
 
+  // 设置是否预约
+  set_is_bet_pre(val) {
+    this.is_bet_pre = val
+    this.set_bet_data_class_version()
+  }
+  
+  set_bet_appoint_obj_playOptionId(val) {
+    this.bet_pre_appoint_id = val
+    this.set_bet_data_class_version()
+  }
+
   // 设置预约投注盘口信息
   set_bet_appoint_obj(val) {
     this.bet_appoint_obj = val
@@ -638,7 +651,8 @@ this.bet_appoint_ball_head= null */
   // 设置预约投注项内容 用于投注时合并
   set_bet_pre_obj(val){
     // custom_id 投注项id
-    this.bet_pre_obj[val.custom_id] = val
+    this.bet_pre_obj = val
+    console.error('sssss',this.bet_pre_obj)
   }
   
   // 设置 是否已投注
@@ -1008,18 +1022,7 @@ this.bet_appoint_ball_head= null */
     this.deviceType = val
   }
 
-  // 设置是否预约
-  set_is_bet_pre(val) {
-    this.is_bet_pre = val
-    this.set_bet_data_class_version()
-  }
-  
-  set_bet_appoint_obj_playOptionId(val) {
-    this.bet_pre_appoint_id = val
-    this.set_bet_data_class_version()
-  }
-
-   //设置输入框最小值
+  //设置输入框最小值
   set_pre_min_odd_value(val){
     this.bet_pre_min_odd_value = val
     this.set_bet_data_class_version()

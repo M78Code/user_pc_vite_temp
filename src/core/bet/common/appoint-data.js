@@ -30,6 +30,7 @@ const btn_reduce = ( obj ) => {
   // 最小值
   if(odds_val <= min_odds){
     ref_pre_book.appoint_odds_value = min_odds
+    set_bet_obj_config()
     return 
   }
   // 获取 修改幅度值
@@ -42,6 +43,7 @@ const btn_reduce = ( obj ) => {
   }
 
   ref_pre_book.appoint_odds_value = format_money(odds_new_) 
+  set_bet_obj_config()
 }
 
 /*
@@ -68,6 +70,7 @@ const btn_add = ( obj ) => {
   }
 
   ref_pre_book.appoint_odds_value = format_money(odds_new_) 
+  set_bet_obj_config()
   return ref_pre_book.appoint_odds_value
 }
 
@@ -265,6 +268,7 @@ const sub_handle = (item, index = 1) => {
     }
   }
   set_computed_appoint_ball_head(item)
+  set_bet_obj_config()
   console.error('球头减');
   nextTick(() => {
     search_odds_value_by_ball_head(item);
@@ -276,7 +280,6 @@ const sub_handle = (item, index = 1) => {
  * @return {undefined} undefined
  */
 const search_odds_value_by_ball_head = (item) => {
-  console.error('sssssss')
   let head = ref_pre_book.appoint_ball_value;
   let appoint_ob = lodash_.get(BetData, 'bet_appoint_obj', {}) || {};
   if (!Object.keys(appoint_ob).length || lodash_.isNull(appoint_ob.marketList)) return;
@@ -392,22 +395,22 @@ const set_computed_appoint_ball_head = (item) => {
 
 // 设置投注信息
 const set_bet_obj_config = (item) => {
-  // const obj = {
-  //   marketValue: ref_pre_book.appoint_ball_value, // 盘口值
-  //   oddFinally: ref_pre_book.appoint_odds_value, // 预约赔率
-  //   custom_id: lodash_.get(item,'playOptionsId'), // 投注项id
-  //   odds: math_js.multiply(ref_pre_book.appoint_odds_value, 100000), // 投注项赔率
-  // }
-  // BetData.set_bet_pre_obj(obj)
+  const obj = {
+    marketValue: ref_pre_book.appoint_ball_value, // 盘口值
+    oddFinally: ref_pre_book.appoint_odds_value, // 预约赔率
+    custom_id: BetData.bet_pre_appoint_id, // 投注项id
+    odds: math_js.multiply(ref_pre_book.appoint_odds_value, 100000), // 投注项赔率
+  }
+  BetData.set_bet_pre_obj(obj)
 
   // 设置预约投注数据
-  let pre_data = {
-    marketValue: ref_pre_book.appoint_ball_value, // 盘口值
-    oid: lodash_.get(item,'playOptionsId'), // 投注项id
-    pre_odds: math_js.multiply(ref_pre_book.appoint_odds_value, 100000), // 投注项赔率
-    pre_oddFinally:  ref_pre_book.appoint_odds_value, // 预约赔率
-  }
-  BetData.set_bet_single_list_obj(pre_data)
+  // let pre_data = {
+  //   marketValue: ref_pre_book.appoint_ball_value, // 盘口值
+  //   oid: lodash_.get(item,'playOptionsId'), // 投注项id
+  //   pre_odds: math_js.multiply(ref_pre_book.appoint_odds_value, 100000), // 投注项赔率
+  //   pre_oddFinally:  ref_pre_book.appoint_odds_value, // 预约赔率
+  // }
+  // BetData.set_bet_single_list_obj(pre_data)
 
 }
 
