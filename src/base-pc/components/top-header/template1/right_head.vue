@@ -301,10 +301,9 @@ export default defineComponent({
     }
     // 点击其他位置关闭弹框及初始化状态
     function hide_search(e) {
-      // console.log('e', e.target.className);
       const target_class_list = ['search-input change_width', 'icon-close', 'tab', 'tab active', 'windows desktop landscape', 'bet-title', 'f-b-c bet-content', 'middle_info_tab diff', 'middle_info_tab'];
       if (is_focus.value && SearchPCClass.search_isShow) {
-        if (!target_class_list.includes(e.target.className)) {
+        if (e.target.className && !target_class_list.includes(e.target.className)) {
           SearchPCClass.set_search_isShow(false);
           is_focus.value = false;
           keyword.value = ''
@@ -315,10 +314,6 @@ export default defineComponent({
     const clear_keyword = () => {
       keyword.value = ''
       get_search_data(keyword.value)
-      // useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE, {
-      //   type: 'init',
-      //   text: keyword.value
-      // })
     }
     // 关闭搜索状态清空值
     const close = () => {
@@ -347,11 +342,6 @@ export default defineComponent({
       document.removeEventListener('click', hide_search)
       emit_list.map(i=>i())
     })
-    //监听输入框内容改变
-    // watch(() => keyword.value, (val) => {
-    //   console.log('watchxxxxxxx')
-    //   get_search_data(val)
-    // })
     return {
       keyword,
       SearchPCClass,

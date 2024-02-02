@@ -1281,7 +1281,7 @@ class MatchMeta {
     this.compute_current_matchs()
 
     // 复刻版 base-virtual-list 组件 不需要走下面的逻辑
-    // if (project_name !== 'app-h5') {
+    if (project_name !== 'app-h5') {
       if (!is_virtual) {
         // 清除虚拟计算信息
         VirtualList.clear_virtual_info()
@@ -1297,7 +1297,7 @@ class MatchMeta {
         // 计算所需渲染数据
         this.compute_page_render_list({ scrollTop: scroll_top, merge, type })
       }
-    // }
+    }
 
     // 重置数据为空状态
     this.set_page_match_empty_status({ state: false })
@@ -1721,6 +1721,29 @@ class MatchMeta {
     // 设置仓库渲染数据
     this.handle_update_match_info({ list: data, merge: 'cover', warehouse })
   }
+
+   // 不需要重置的属性
+   no_reset_attribute (match, warehouse) {
+    let result = {}
+    const item = warehouse.get_quick_mid_obj(match.mid)
+    if (item) {
+      Object.assign(result, {
+        hps: item.hps || [], // 主赔率
+        hps15Minutes: item.hps15Minutes || [], // 15 分钟赔率
+        hpsBold: item.hpsBold || [], // 15 波胆赔率
+        hpsCompose: item.hpsCompose || [], // 15 特色组合赔率
+        hpsCorner: item.hpsCorner || [], // 角球赔率
+        hpsOutright: item.hpsOutright || [], // 冠军玩法赔率
+        hpsOvertime: item.hpsOvertime || [], // 加时赔率
+        hpsPenalty: item.hpsPenalty || [], // 点球大战赔率
+        hpsPromotion: item.hpsPromotion || [], // 晋级赔率
+        hpsPunish: item.hpsPunish || [], // 罚牌赔率
+        hpsAdd: item.hpsAdd || [] // 其他球种赔率
+      })
+    }
+    return result
+  }
+
   /**
    * @description 更新对应赛事
    * @param { list } 赛事数据 
@@ -1761,7 +1784,15 @@ class MatchMeta {
     const { list = [], warehouse = MatchDataBaseH5 } = config
     // ws 订阅
     // this.set_ws_active_mids({ list: list, warehouse })
-    warehouse.clear()
+    // ws 触发的赛事新增 赔率不需要重置
+    if (this.is_ws_trigger) {
+      list.map(t => {
+        const hps_data = this.no_reset_attribute(t, warehouse)
+        return Object.assign({}, t, hps_data)
+      })
+    } else {
+      warehouse.clear()
+    }
     // 设置仓库渲染数据
     warehouse.set_list(list)
     this.is_ws_trigger = false
