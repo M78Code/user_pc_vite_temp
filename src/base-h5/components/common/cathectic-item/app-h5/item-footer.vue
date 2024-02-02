@@ -63,7 +63,7 @@
     <label>{{ i18n_t('app_h5.cathectic.bet_status') }}：</label>
     <template>
       <!-- 预约中、预约失效页 -->
-      <span v-if="BetRecordClass.selected === 1 || BetRecordClass.selected === 2">
+      <span v-if="BetRecordClass.selected === 1 || BetRecordClass.selected === 2" class="opac">
         <template v-if="[2, 3].includes(data_f.preOrderStatus)"> <span class="font-style">{{ i18n_t('pre_record.booked_fail') }}</span> </template>
         <template v-else-if="[4].includes(data_f.preOrderStatus)"><span class="font-style">{{ i18n_t('pre_record.canceled') }}</span> </template>
         <template v-else><span class="font-style-blue">{{ i18n_t('pre_record.booking') }}</span> </template>
@@ -231,6 +231,9 @@ p {
   line-height: 2;
   display: flex;
   justify-content: space-between;
+}
+.opac {
+  opacity: 0.8;
 }
 .acount {
       color: var(--q-gb-bg-c-13);
