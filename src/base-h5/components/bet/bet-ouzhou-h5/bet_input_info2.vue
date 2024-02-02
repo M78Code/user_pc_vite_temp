@@ -28,12 +28,11 @@
 
 <script setup>
 import lodash_ from "lodash"
-import { onMounted, onUnmounted, reactive, ref,watch } from "vue"
+import { onMounted, onUnmounted, reactive, ref,watch, nextTick } from "vue"
 import { MITT_TYPES, useMittOn, formatMoney, UserCtr } from "src/output/index.js"
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js"
 import mathJs from 'src/core/bet/common/mathjs.js'
-import { nextTick } from "licia";
 
 const props = defineProps({
     item: {
@@ -45,12 +44,13 @@ const props = defineProps({
     },
 })
 //监听串关数据
-watch(() =>BetData.bet_single_list.length, (new_) => {
-    //如果只有一条数据 默认激活 第一条数据输入框
-    if (new_ == 1){
-        BetData.set_active_index(0) 
-    }
-},{deep:true,immediate:true})
+// watch(() =>BetData.bet_single_list.length, (new_) => {
+//     //如果只有一条数据 默认激活 第一条数据输入框
+//     if (new_ == 1){
+//         BetData.set_active_index(0) 
+//     }
+// },{deep:true,immediate:true})
+
 const input_click = (item, index, event) => {
     event.preventDefault()
     BetData.set_bet_amount(item.bet_amount)

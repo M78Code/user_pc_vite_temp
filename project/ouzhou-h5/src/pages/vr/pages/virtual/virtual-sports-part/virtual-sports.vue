@@ -68,7 +68,7 @@
           <div
               class="v-sports-main-list"
               :class="{'v-sports-main-list-style': standard_edition === 1}"
-              :style="{'padding-bottom': '0'}"
+              :style="{'padding-bottom': '50px'}"
           >
 
             <!-- 虚拟体育足球赛事列表 -->

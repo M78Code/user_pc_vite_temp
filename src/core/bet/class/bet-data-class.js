@@ -13,6 +13,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";
 import { SessionStorage } from "src/core/utils/common/module/web-storage.js";
 import betViewDataClass from "./bet-view-data-class.js";
 
+let time_out = null
 
 class BetData {
   constructor() {
@@ -307,10 +308,13 @@ this.bet_appoint_ball_head= null */
   /**
    * 设置 是否使用常用金额
    */
-  set_regular_amount() {
+  set_is_regular_amount() {
     this.is_regular_amount = !this.is_regular_amount
-    useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY)
     this.set_bet_data_class_version()
+  }
+
+  set_regular_amount(val) {
+    this.regular_amount = val
   }
 
   /**
@@ -846,11 +850,6 @@ this.bet_appoint_ball_head= null */
   // 设置投注金额
   set_bet_amount(val) {
     this.bet_amount = val;
-    
-    // 设置常用投注金额
-    if(val>0){
-      this.regular_amount = this.bet_amount
-    }
     this.set_bet_data_class_version()
   }
 
@@ -1203,7 +1202,6 @@ this.bet_appoint_ball_head= null */
     let mid_list = []
     // 投注项盘口id
     let market_list = []
-    let time_out = null
 
     let single_list = []
     // 单关 切 有投注项
@@ -1243,11 +1241,16 @@ this.bet_appoint_ball_head= null */
             // 查询ws投注项 中 匹配到的投注项id 
             let ws_ol_obj = (item.ol||[]).find(obj => ol_obj.playOptionsId == obj.oid ) || {}
             // WS推送中包含 投注项中的投注项内容
+            // console.error('推送码：',obj.cmd)
             // console.error('ws-坑位',item.hn, '------ 投注项坑位',ol_obj.placeNum)
             // console.error('ws-盘口 状态',item.hs, 'ws-投注项 状态',ws_ol_obj.os)
             // console.error('ws-投注项 赔率',ws_ol_obj.ov, '------ 投注项赔率',ol_obj.odds )
+            // console.error('定时器',time_out)
+            clearTimeout(time_out)
+            // console.error('清除定时器',time_out)
             // 有坑位 并且 坑位变更 
             if(item.hn != ol_obj.placeNum && ol_obj.placeNum){
+              // console.error('坑位变化',item.hn,ol_obj.placeNum)
               // 获取最新的盘口值
               get_lastest_market_info()
               // 有坑位的数据 对 坑位 和 投注项类型 进行定位 取值 页面渲染
@@ -1260,6 +1263,7 @@ this.bet_appoint_ball_head= null */
             }
             // 盘口状态，玩法级别 0：开 1：封 2：关 11：锁
             if(item.hs != 0 ) {
+              // console.error('盘口失效',item.hs)
               // 直接更新状态 设置关盘
               ol_obj.hl_hs = item.hs
               ol_obj.red_green = ''
@@ -1278,7 +1282,7 @@ this.bet_appoint_ball_head= null */
 
   // ws变更 带来的 投注项数据的变更
   set_ws_change_odds_info(item,ws_ol_obj,ol_obj) {
-    // console.error('---------------------------')
+    // console.error('------------ 来了 ---------------')
     if(ws_ol_obj.ov){
       // "odds": item.odds,  // 赔率 万位
       // "oddFinally": compute_value_by_cur_odd_type(item.odds, '', '', item.sportId),  //赔率
@@ -1315,13 +1319,17 @@ this.bet_appoint_ball_head= null */
       ol_obj.oddFinally = compute_value_by_cur_odd_type(ws_ol_obj.ov*1, ol_obj.playId, ol_obj.odds_hsw, ol_obj.sportId)
       // 更新投注项内容
       this.set_ws_message_bet_info(ol_obj)
-
+      // 清除数据 不然会用前面的数据 重新更新
+      ol_obj.time_out = Date.now()
+      // console.error('1-----time_out----------', ol_obj.time_out,time_out)
       // 3秒后清除 红升绿降
-      // time_out = setTimeout(()=>{
-      setTimeout(()=>{
+      time_out = setTimeout(()=>{
+      // setTimeout(()=>{
         ol_obj.red_green = ''
+        // console.error('3秒后清除----------', ol_obj.time_out)
         this.set_ws_message_bet_info(ol_obj)
       },3000)
+      // console.error('2-----time_out----------',time_out)
     }
   }
 
@@ -1476,6 +1484,7 @@ this.bet_appoint_ball_head= null */
     } else {
       single_name = 'bet_s_list'
     }
+    
     const array_list = lodash_.cloneDeep(lodash_.get(this,single_name))
     // ol_os: ol_obj.os, // 投注项状态 1：开 2：封 3：关 4：锁
     // hl_hs: hl_obj.hs || ol_obj._hs, // 盘口状态，玩法级别 0：开 1：封 2：关 11：锁
@@ -1487,6 +1496,7 @@ this.bet_appoint_ball_head= null */
 
     // 锁盘
     let obj = array_list.find( item => item.mid_mhs == 11 || item.hl_hs == 11 || item.ol_os == 4 ) || {}
+    // console.error('锁盘---------',obj.mid_mhs,obj.hl_hs,obj.ol_os)
     if(obj.playOptionsId){
       BetViewDataClass.set_bet_expired(false)
       BetViewDataClass.set_bet_before_message({code:200, message:"bet.bet_upd"})
@@ -1497,6 +1507,7 @@ this.bet_appoint_ball_head= null */
 
     // 封盘 关盘
     let obj_ = array_list.find( item => [1,2].includes(item.mid_mhs *1) || [1,2].includes(item.hl_hs *1) || [2,3].includes(item.ol_os *1) ) || {}
+    // console.error('封盘 关盘---------',obj_.mid_mhs,obj_.hl_hs,obj_.ol_os)
     if(obj_.playOptionsId){
       BetViewDataClass.set_bet_expired(true)
       BetViewDataClass.set_bet_before_message({code:"0402001", message:"bet_message.m_0402001"})
@@ -1507,6 +1518,7 @@ this.bet_appoint_ball_head= null */
 
     // 开盘
     let obj_o = array_list.find( item => item.mid_mhs == 0 && item.hl_hs == 0 && item.ol_os == 1 ) || {}
+    // console.error('开盘---------',obj_o.mid_mhs,obj_o.hl_hs,obj_o.ol_os)
     if(obj_o.playOptionsId){
       BetViewDataClass.set_bet_expired(false)
       BetViewDataClass.set_bet_before_message({})

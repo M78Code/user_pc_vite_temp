@@ -204,6 +204,12 @@ const set_bet_order_list = (bet_list, is_single) => {
             if(!hsw.includes(cur_odds)){
                 bet_s_obj.marketTypeFinally = 'EU'
             }
+
+            // 单关 非合并 并且勾选了常用金额 需要保存金额
+            if( BetData.is_regular_amount && !BetData.is_bet_merge){
+                BetData.set_regular_amount(item.bet_amount)
+            }
+
             // 预约投注 设置预约盘口值
             if(BetData.is_bet_pre){
                 if(bet_s_obj.marketValue) {
@@ -1037,7 +1043,7 @@ const set_error_message_config = (res ={},type,order_state) => {
  * @returns 
  */
 const set_bet_obj_config = (params = {}, other = {}) => {
-    // console.error('投注项需要数据', params, 'other', other);
+    console.error('投注项需要数据', params, 'other', other);
     // 切换投注状态
     const { oid, _hid, _hn, _mid } = params
 
@@ -1211,6 +1217,17 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         bet_obj.marketTypeFinally = 'EU'
     }
 
+    // 单关 只有一条数据的时候 需要设置 常用金额
+    if(BetData.is_bet_single ){
+        if(BetData.is_regular_amount && (!BetData.is_bet_merge || !BetData.bet_single_list.length)){
+            bet_obj.bet_amount = BetData.regular_amount
+        } else {
+            // 需要清空已有的常用金额数据
+            BetData.bet_single_list.filter(item=>{
+                item.bet_amount = ''
+            })
+        }
+    }
     // console.error('投注项内容：',bet_obj)
 
     // 冠军 

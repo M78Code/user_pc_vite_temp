@@ -462,8 +462,11 @@ class UserCtr {
     callback && callback(obj);
   }
 
-  // 获取用户余额
-  get_balance() {
+  /**
+   * 获取用户余额
+   * @param {*} is_try 错误是否尝试 默认尝试一次
+   */
+  get_balance(is_try=true) {
     api_account
       .check_balance({ uid: this.user_info.userId })
       .then((res) => {
@@ -473,8 +476,8 @@ class UserCtr {
         }
       })
       .catch((err) => {
-        //添加错误补偿逻辑
-        this.get_balance()//走一次补偿逻辑
+        //添加错误补偿逻辑 //不可以无限尝试
+        is_try&&this.get_balance(false)//走一次补偿逻辑
         console.error(err);
       });
   }
