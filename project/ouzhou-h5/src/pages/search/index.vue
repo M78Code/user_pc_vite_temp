@@ -156,7 +156,7 @@
 											<div class="flex_1" v-else>
 												<img class="lock" :src="odd_lock_ouzhou" alt="lock">
 											</div>
-											<template v-if="!sports_id.includes(i.csid)">
+											<template v-if="!sports_id.includes(i.csid) && get_odd_os(lodash.get(i, 'hps[0].hl[0].ol[2]', '')) != 0">
 												<div class="flex_1"
 													v-if="lodash.get(i, 'hps[0].hl.length', '') > 0 && lodash.get(i, 'hps[0].hl[0].ol[1].ov', '') && lodash.get(i, 'hps[0].hl[0].ol[1].os', '') === 1">
 													<div>{{ i18n_t('ouzhou.search.dogfall') }}</div>

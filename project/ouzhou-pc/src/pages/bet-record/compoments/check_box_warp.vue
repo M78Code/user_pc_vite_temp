@@ -2,7 +2,7 @@
     <div class="check_box_warp">
         <div class="check_item" v-for="(item, index) in list" :key="index" @click="check(item)">
           <span :class="{active: currentVal == item.value}"></span>
-          <p>{{ item.label }}</p>
+          <p>{{ i18n_t(item.label) }}</p>
         </div>
     </div>
 </template>
