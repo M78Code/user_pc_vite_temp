@@ -409,5 +409,9 @@
     }
   
   }
+
+  .text-flow-none {
+    margin-right: 0.1rem;
+  }
   </style>
  

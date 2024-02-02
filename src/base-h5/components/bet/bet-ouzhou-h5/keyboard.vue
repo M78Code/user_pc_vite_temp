@@ -223,7 +223,6 @@ const _handleDeleteKey = () => {
 
 // 数字建
 const _handleNumberKey = (num) => {
-  
   if (!num) return
   let money_ = BetData.bet_amount || 0
   if (['qon', 'qtw', 'qth','qfo','qfi'].includes(num)) {
