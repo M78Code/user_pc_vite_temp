@@ -23,8 +23,8 @@
       <!-- 比分板 -->
       <div v-tooltip="{ content: i18n_t('common.score_board') }" class="score-board"
         :style="`width:${match_list_tpl_size.media_width}px !important;`">
-        <!-- 图片资源有问题，先用文字替代  -->
-        <div class="video" v-if="+lodash.get(match, 'mms') > 1"
+        <!-- 图片资源有问题，先用文字替代  电竞只有视频 -->
+        <div class="video" v-if="+lodash.get(match, 'mms') > 1||MenuData.is_eports_csid(match.csid)"
           @click="jump_to_details('video')"
           :style="compute_css_obj({ key: current_mid == match.mid && MenuData.is_scroll_ball() ? 'pc-img-match-list-video' : 'pc-img-match-info-video0' })">
         </div>
