@@ -84,6 +84,8 @@ const bet_total = computed(()=> state =>{
         return pre*1 + mathJs.divide(item.seriesBetAmount, 100)*1
       }, 0)
     }
+    return sum.toFixed(2).replace(/(\.\d)0$/,'$1')
+
   }
 })
 
