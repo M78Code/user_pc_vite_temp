@@ -1614,7 +1614,6 @@ class MatchMeta {
    * @description 删除赛事不能防抖， 删除赛事会同时同事多个 C102 , 但只有一个状态 为 999 
    */
   handle_remove_match(data) {
-
     // mhs === 2  || mmp === 999 为关盘 则移除赛事
     const { cd: { mid = '', mhs = 0, mmp = 1, ms = 110 } } = data
     if (mhs == 2 || mmp == '999' || !this.is_valid_match(ms)) {
