@@ -216,7 +216,7 @@ function resetStatus() {
 
 .component.odd-ol-item{
   width: 100%;
-  height: .58rem;
+  // height: .58rem;
   display: flex;
   align-items: center;
   justify-content: center;

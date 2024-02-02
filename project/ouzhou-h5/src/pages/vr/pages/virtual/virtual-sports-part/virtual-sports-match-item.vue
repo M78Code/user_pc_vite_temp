@@ -279,31 +279,37 @@ export default {
 
       .team-wrapper{
           width: 100%;
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+
+          .team-wrapper_left{
+            padding-right: 10px;
+            // background-color: red;
+            span{
+              font-size: 12px;
+            }
+          }
+          .team-wrapper_right{
+            width: 95%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            // background-color: red;
+          }
       }
     }
 
     .team-wrapper {
       flex: 1;
       // font-weight: bold;
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
-      .team-wrapper_left{
-        padding-right: 10px;
-        // background-color: red;
-        span{
-          font-size: 12px;
-        }
-      }
-      .team-wrapper_right{
-        width: 95%;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: flex-start;
-        // background-color: red;
-      }
+      // display: flex;
+      // flex-direction: row;
+      // justify-content: space-between;
+      // align-items: center;
+      
       &.standard {
         .team-title {
           width: 100%;
