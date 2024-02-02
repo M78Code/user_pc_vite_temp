@@ -1331,9 +1331,12 @@ class UserCtr {
         let param = {
           token: this.get_user_token()
         }
+        let config = {
+          lang: this.lang
+        }
         this.send_gcuuid3 = uid();
         param.gcuuid = this.send_gcuuid3;
-        const res = await api_common.queryFestivalBanner(param)
+        const res = await api_common.queryFestivalBanner(param, config)
         if (this.send_gcuuid3 != res.gcuuid) { return };
         const data = lodash.get(res, 'data')
         if (res && res.code == 200 && data) {
@@ -1367,9 +1370,12 @@ class UserCtr {
         let param = {
           token: this.get_user_token()
         }
+        let config = {
+          lang: this.lang
+        }
         this.send_gcuuid4 = uid();
         param.gcuuid = this.send_gcuuid4;
-        const res = await api_account.get_BannersUrl(param)
+        const res = await api_account.get_BannersUrl(param, config)
         if (this.send_gcuuid4 != res.gcuuid) return;
         if (res && lodash.get(res, 'code') == 200 && lodash.get(res, 'data')) {
           let arr = lodash.cloneDeep(lodash.get(res, 'data')), arr1 = [], arr2 = [], obj3 = '', obj4 = '';
