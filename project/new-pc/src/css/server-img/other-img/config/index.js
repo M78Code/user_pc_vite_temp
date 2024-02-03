@@ -97,4 +97,20 @@ export default {
     "pc-15-minutes-tips-active": {
       default: "pc-15-minutes-tips-active"
     },
+    //设置 近期开赛时间图标
+    "set-up-time": {
+      default: "set-up-time"
+    },
+    //列表附加玩法默认展示图标
+    "set-up-playing -method": {
+      default: "set-up-playing -method"
+    },
+    //设置列表附加玩法配置图标
+    "set-up-configuration": {
+      default: "set-up-configuration"
+    },
+    //设置-附加盘图标
+    "set-up-additional-disk": {
+      default: "set-up-additional-disk"
+    },
 };

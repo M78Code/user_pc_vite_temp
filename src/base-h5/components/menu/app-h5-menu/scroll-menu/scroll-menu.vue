@@ -40,6 +40,8 @@ import {scrollMenuEvent} from "../utils";
 import MatchFold from 'src/core/match-fold'
 import { useMittEmit, MITT_TYPES ,useMittOn} from "src/core/mitt/index.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
+import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
+
 const ref_data = reactive({
     emit_lsit:{}
 })
@@ -81,6 +83,8 @@ const emits = defineEmits(['changeList','changeMenu'])
 */
 function set_menu_lv2(item = {},event) {
   try {
+  //重置搜索状态
+  MatchResponsive.set_is_search(false)
   //重置全部状态
   MatchFold.set_all_csid_fold_status(false)
   // 重置折叠对象

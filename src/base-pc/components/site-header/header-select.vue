@@ -150,10 +150,7 @@ const settings_items = ref([
           // 近期开赛
           id: 4,
           name: i18n_t("common.match_soon_filtr"),
-          icon: {
-            day: compute_css_obj('public/image/yabo/svg/icon-skin.svg'),
-            night: compute_css_obj('public/image/yabo/svg/icon-skin-night.svg'),
-          },
+          icon: 'set-up-time',
           value_arr: [
                 { label: i18n_t('common.all'), title: i18n_t('common.all'), value: null },
                 { label: i18n_t('filter.select_time.3h'), title: '3' + i18n_t('common.hour'), value: 3 },
@@ -167,10 +164,7 @@ const settings_items = ref([
           //列表附加玩法默认展示
           id: 5,
           name: '列表附加玩法默认展示',
-          icon: {
-            // day: require('public/image/yabo/svg/additional-plays.svg'),
-            // night: require('public/image/yabo/svg/additional-plays.svg')
-          },
+          icon: 'set-up-playing -method',
           value_arr: [],
           type: 'switch'
         },
@@ -178,10 +172,7 @@ const settings_items = ref([
           //列表附加玩法配置
           id: 6,
           name: '列表附加玩法配置',
-          icon: {
-            // day: require('public/image/yabo/svg/additional-plays-cfg.svg'),
-            // night: require('public/image/yabo/svg/additional-plays-cfg.svg')
-          },
+          icon: 'set-up-configuration',
           value_arr: [
             // 3行展示
             { label: '3行展示', label1: '3行展示', value: 3, icon: '', id: 1 },
@@ -198,10 +189,7 @@ const settings_items = ref([
           //附加盘
           id: 7,
           name: i18n_t("match_info.append"),
-          icon: {
-            // day: require('public/image/yabo/svg/additional-disk.svg'),
-            // night: require('public/image/yabo/svg/additional-disk.svg')
-          },
+          icon: 'set-up-additional-disk',
           value_arr: [],
           type: 'switch'
         },
