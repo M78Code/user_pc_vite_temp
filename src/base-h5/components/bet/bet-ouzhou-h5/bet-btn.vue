@@ -17,8 +17,10 @@
       </div>
 
       <div class="place_bet"  @click="place_bet">
-        <span>{{i18n_t('bet_record.bet_val')}}</span> 
-        <span class="right_amount">{{bet_total()}}</span>
+        <span>{{i18n_t('bet_record.bet_val')}}</span>
+        <span v-show="BetData.is_bet_single" class="right_amount">{{ bet_total() }}</span>
+        <span v-show="!BetData.is_bet_single" class="right_amount">{{ bet_total_befor() }}</span>
+        
       </div>
     </div>
   <div style="display:none">{{ BetData.bet_data_class_version }} -{{UserCtr.user_version}}-{{ BetViewDataClass.bet_view_version }}</div>
@@ -62,6 +64,8 @@ const set_bet_single_change = () => {
   }
 }
 
+
+
 // 计算合集
 const bet_total = computed(()=> state =>{
   let sum = 0
@@ -74,6 +78,7 @@ const bet_total = computed(()=> state =>{
      sum = sum.replace(/(\.\d)0$/,'$1')
     return sum
   }
+  
   if (!BetData.is_bet_single) {
     if (BetViewDataClass.bet_order_status === 1) {
       sum = BetViewDataClass.bet_special_series.reduce((pre, cur) => {
@@ -89,6 +94,13 @@ const bet_total = computed(()=> state =>{
   }
 })
 
+const bet_total_befor = computed(()=> status => {
+  // 获取串关投注的数据
+  let bet_total_money = BetViewDataClass.bet_special_series.reduce((pre, cur) => {
+    return pre*1 + (cur.bet_amount * cur.count || 0)*1;
+  }, 0)
+  return bet_total_money
+})
 
 </script>
 
