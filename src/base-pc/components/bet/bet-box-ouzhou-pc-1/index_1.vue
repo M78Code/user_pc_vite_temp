@@ -16,8 +16,8 @@
         <!-- {{BetData.is_bet_single}}-{{ BetData.is_bet_merge }} -->
         
         <div class="cursor re f-e-c bet-text">
-           <!--  单关 合并 切换 -->
-          <div class="f-e-c" @click.prevent="show_merge_change()" v-if="BetData.is_bet_single&&!MenuData.is_vr()&&!MenuData.is_eports_csid(MenuData.current_ball_type)">
+           <!--  单关 合并 切换  电竞没有合并 -->
+          <div class="f-e-c" @click.prevent="show_merge_change()" v-if="BetData.is_bet_single&&!MenuData.is_vr()&&!MenuData.is_esports()&&!MenuData.is_eports_csid(MenuData.current_ball_type)">
             {{ i18n_t('bet.merge') }} 
             <span v-if="BetData.is_bet_merge" class="icon-arrow icon-arrow-merge ml-4"></span>
             <span v-else class="merge-checkbox ml-4"></span> 
