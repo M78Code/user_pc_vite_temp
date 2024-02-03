@@ -36,7 +36,8 @@
   
     <!-- 单关/串关 切换 -->
     <div @click="set_bet_single" class="bet-single f-c-c font600" :class="{'disabled': MenuData.is_kemp() || !is_bet_special,'font16':BetData.is_bet_single,'font14':!BetData.is_bet_single, }">
-      <p>{{ !BetData.is_bet_single ? '单关投注':'+串' }}</p>
+      <p v-if="!BetData.is_bet_single">单关投注</p>
+      <div v-else class="bet-chuan"><div class="bet-add-icon" :style="compute_css_obj({ key: 'h5-strand-add-icon' })"></div> 串</div>
     </div>
 
   </div>
@@ -63,7 +64,7 @@ import BetViewDataClass from 'src/core/bet/class/bet-view-data-class.js'
 import { submit_handle } from "src/core/bet/class/bet-box-submit.js"
 import { useMittEmit, MITT_TYPES,useMittOn } from "src/core/mitt/index.js"
 import mathJs from 'src/core/bet/common/mathjs.js'
-import { UserCtr ,format_money2,compute_local_project_file_path,MenuData} from "src/output/index.js"
+import { UserCtr ,format_money2,compute_local_project_file_path,MenuData, compute_css_obj} from "src/output/index.js"
 import { odds_table } from "src/core/constant/common/module/csid.js"
 import { i18n_tc } from "src/boot/i18n.js"
 import { useRoute,useRouter } from "vue-router"
@@ -351,6 +352,14 @@ const set_confirm = () => {
 </style>
 
 <style scoped lang="scss">
+.bet-chuan {
+  display: flex;
+  justify-content: space-between;
+}
+.bet-add-icon {
+  width: 16px;
+  height: 16px;
+}
 .reserve{
   width: calc(100% - 0.1rem);
   background: var(--q-gb-bg-c-22);
