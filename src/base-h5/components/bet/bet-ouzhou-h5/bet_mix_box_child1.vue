@@ -28,7 +28,10 @@
                           </span>
                           <span v-else>[{{ i18n_t(`odds.EU`) }}]</span>
                         </div>
-                        <div>
+                        <div class="nonebox4-content-right" v-if="items.is_serial">
+                          <span class="bet-disabled">{{ i18n_t('bet.invalidation2') }}</span>
+                        </div>
+                        <div v-else>
                             <div class="nonebox4-content-right" v-if="!([2,3].includes(items.ol_os*1) || [1,2].includes(items.hl_hs*1) || [1,2].includes(items.mid_mhs*1))">
                               <div class="nonebox4-content-right-profit" :class="{'red-up':items.red_green == 'red_up','green-down':items.red_green == 'green_down'}">
                                 {{compute_value_by_cur_odd_type(items.odds,items.playId,items.odds_hsw,items.sportId)}}
@@ -319,13 +322,13 @@
       }
     }
     .bet-disabled{
-      width: .5rem;
       text-align: center;
       height: .26rem;
       display: inline-block;
       border-radius: 0.02rem;
       background: var(--q-gb-bg-c-19);
       font-size: 0.12rem;
+      padding: 0 .1rem;
       font-weight: 500;
       letter-spacing: 0px;
       color: var(--q-gb-t-c-3);
