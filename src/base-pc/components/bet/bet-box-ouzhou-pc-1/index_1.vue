@@ -105,7 +105,7 @@
 </template>
 
 <script setup>
-import { reactive, ref, onMounted, watchEffect, onBeforeUnmount, computed } from "vue"
+import { reactive, ref, onMounted, watchEffect, onBeforeUnmount, computed, nextTick } from "vue"
 import { MenuData, UserCtr, format_money2} from "src/output/index.js"
 import BetData from "src/core/bet/class/bet-data-class.js"
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js"
@@ -116,7 +116,6 @@ import betResult from "./components/bet-result.vue"  // 投注结果
 import betMixResult from "./components/bet-mix-result.vue"  // 串关投注结果
 import betSpecialInput from "./components/bet-special-input.vue"
 import BetMultipleInput from "./components/bet-multiple-input.vue"
-import { nextTick } from "licia"
 
 
 const ref_data = reactive({
