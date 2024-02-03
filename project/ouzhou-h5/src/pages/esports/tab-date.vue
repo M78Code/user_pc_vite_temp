@@ -19,6 +19,7 @@
 import {
     ref,
 } from "vue";
+import BetData from "src/core/bet/class/bet-data-class.js";
 const emit = defineEmits(["changeDate"]);
 const scrollDateRef = ref(null);
 const props = defineProps({
@@ -37,6 +38,10 @@ const props = defineProps({
  * @param {*} index 
  */
 const changeDatetab = (item, index) =>{
+    // 冠军页面需要切换到单关
+    if(item.menuType == 100 &&  item.val == 100 ){
+        BetData.set_is_bet_single('single')
+    }
     emit("changeDate",item,index)
 }
 </script>

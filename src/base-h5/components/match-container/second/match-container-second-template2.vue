@@ -209,40 +209,44 @@ export default defineComponent({
     }
 
     .select-play{
-      .q-btn{
+      :deep(.q-btn){
         line-height: 22px;
-      }
-      :deep(.q-btn__content){
-        color: var(--q-gb-t-c-18);
-        font-size: 0.1rem;
-        
-        .q-btn-dropdown__arrow-container{
-          display: none;
+        .q-focus-helper{
+          background: transparent;
         }
-        .icon-close{
-          margin-right: 4px;
-          transform: rotate(45deg);
-        }
-        .label{
-          color: #949AB6;
-        }
-        .active-item{
-          display: flex;
-          align-items: center;
-          .label{
-            color: #179cff;
-            border-color: #179cff;
+        .q-btn__content{
+          color: var(--q-gb-t-c-18);
+          font-size: 0.1rem;
+          
+          .q-btn-dropdown__arrow-container{
+            display: none;
           }
-          .q-icon {
-            position: relative;
-            top: -0.5px;
-            transform: rotateZ(-180deg);
-            &.icon-triangle1:before{
+          .icon-close{
+            margin-right: 4px;
+            transform: rotate(45deg);
+          }
+          .label{
+            color: #949AB6;
+          }
+          .active-item{
+            display: flex;
+            align-items: center;
+            .label{
               color: #179cff;
+              border-color: #179cff;
+            }
+            .q-icon {
+              position: relative;
+              top: -0.5px;
+              transform: rotateZ(-180deg);
+              &.icon-triangle1:before{
+                color: #179cff;
+              }
             }
           }
         }
       }
+     
     }
   }
 

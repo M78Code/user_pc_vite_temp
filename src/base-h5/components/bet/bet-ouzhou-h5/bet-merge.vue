@@ -9,6 +9,7 @@
       <img class="" v-if="BetData.is_bet_merge" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/select_a.svg`" alt="" />
       <img class="" v-else :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/select_b.svg`" alt="" />
       <span class="del-info-name">{{ i18n_t('bet.bet_merge') }}</span>
+      <img @click.stop="open_toast()" class="" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/rules3.svg`" alt="" />
     </div>
     <div class="del-info-select" v-else></div>
     
@@ -24,6 +25,7 @@
 <script setup>
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { LOCAL_PROJECT_FILE_PREFIX, MenuData } from "src/output/index.js";
+import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 
 // 常用金额
 const set_is_regular_amount = () => {
@@ -39,6 +41,10 @@ const set_is_bet_merge = () => {
   }else {
     BetData.set_active_index(0)
   }
+}
+
+const open_toast = () => {
+  useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `<div>${i18n_t('tips.msg1')}</div><div>${i18n_t('tips.msg2')}</div>`)
 }
 
 </script>
