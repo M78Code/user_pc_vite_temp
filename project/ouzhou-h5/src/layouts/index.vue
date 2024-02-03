@@ -7,7 +7,15 @@
     <!-- 顶部菜单 -->
     <TopMenuWapper />
     <q-page-container id="ouzhou-h5" class="page_container" >
-      <router-view />
+
+      <!-- <router-view /> -->
+
+      <router-view v-slot="{ Component }">
+        <keep-alive :include="keep_comps">
+          <component :is="Component" />
+        </keep-alive>
+      </router-view>
+
     </q-page-container>
     <div class="footer" id="page-footer">
        <!-- 投注框 -->
@@ -24,13 +32,7 @@
 </template>
 
 <script setup>
-import {
-  ref,
-  onMounted,
-  onUnmounted,
-  watch,
-  nextTick
-} from "vue";
+import { ref, computed, onMounted, onUnmounted, watch, nextTick } from "vue";
 import { useRoute } from 'vue-router'
 
 import { TopMenuWapper } from "src/base-h5/components/top-menu/"
@@ -45,10 +47,13 @@ import UserCtr from "src/core/user-config/user-ctr.js";
 import TokenInvalid from "./token-invalid.vue"
 import toast from "src/base-h5/components/common/toast.vue"
 
+import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
+
+import "./index.scss"
+
 var tou_show = ref(true)
 const is_token_invalid_show = ref(false); // token失效
 
-let routerPath = ref<String>('')
 const route = useRoute()
 watch(() => route.path,newRoute => {
   tou_show.value = false
@@ -57,8 +62,12 @@ watch(() => route.path,newRoute => {
   }
 })
 
+// 缓存组件名称
+const keep_comps = computed(() => {
+  return MatchResponsive.keep_comps.value
+})
 
-import "./index.scss"
+
 
 const inner_height = window.innerHeight;  // 视口高度
 

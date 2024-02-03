@@ -40,7 +40,7 @@
 
 <script setup>
 import { useRoute } from 'vue-router';
-import { ref, onMounted, watch, computed, onUnmounted } from 'vue' 
+import { ref, onMounted, watch, computed, onUnmounted, onActivated } from 'vue' 
 import lodash from 'lodash'
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import VirtualList from "src/core/match-list-h5/match-class/virtual-list.js";
@@ -101,11 +101,12 @@ const get_index_f_data_source = (mid) => {
 const handler_match_container_scroll = lodash.debounce(($ev) => {
   const scrollTop = lodash.get($ev.target, 'scrollTop', 0)
   scroll_top.value = scrollTop
+  MatchResponsive.set_scroll_top(scrollTop)
   const length = lodash.get(MatchMeta.complete_matchs, 'length', 0)
   if (is_static.value || length < 17) return
   if (scrollTop === 0 || (prev_scroll.value === 0 &&  Math.abs(scrollTop) >= 200) || Math.abs(scrollTop - prev_scroll.value) >= 200) {
     prev_scroll.value = scrollTop
-    MatchMeta.compute_page_render_list({ scrollTop: $ev.target.scrollTop, type: 2, is_again: false, merge: 'cover' })
+    MatchMeta.compute_page_render_list({ scrollTop, type: 2, is_again: false, merge: 'cover' })
     if (!is_esports.value) get_match_base_hps()
   }
 }, 300)
@@ -122,12 +123,22 @@ const get_match_base_hps = lodash.debounce(() => {
  */
 const goto_top = () => {
   MatchMeta.set_prev_scroll(0)
+  MatchResponsive.set_scroll_top(0)
   let timer = setTimeout(() => {
     scroll_top.value = 0
     container.value && container.value.scrollTo({ top: 0 });
     clearTimeout(timer)
     timer = null
   }, 100)
+}
+
+// 缓存激活 回到上一次保存位置
+onActivated(() => {
+  container_scroll(MatchResponsive.scroll_top.value)
+})
+
+const container_scroll = (val) => {
+  container.value && container.value.scrollTo({ top: val ?? 0 });
 }
 
 // 是否虚拟计算逻辑

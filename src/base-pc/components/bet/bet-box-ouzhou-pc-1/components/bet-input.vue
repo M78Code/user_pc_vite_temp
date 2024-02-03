@@ -8,17 +8,17 @@
                     <div class="font14">{{i18n_t('bet.bet_one_')}}</div>
                     <div class="font12 h12">
                         <span class="font400 mr-10 text-8A8986-i"> {{ i18n_t('common.maxn_amount_val') }}</span>
-                        <span class="text-8A8986-i font500" v-if="[1].includes(items.playId*1)"> 
-                            {{ formatMoney(mathJs.subtract(mathJs.multiply(items.bet_amount,items.oddFinally), items.bet_amount))  }} 
+                        <span class="text-8A8986-i font500"  v-if="BetData.is_bet_pre && BetData.bet_pre_appoint_id == items.playOptionsId"> 
+                            {{ formatMoney(mathJs.subtract(mathJs.multiply(items.bet_amount,ref_pre_book.appoint_odds_value), items.bet_amount)) }}
                         </span>
-                        <span class="text-8A8986-i font500" v-else>
-                            {{ formatMoney(mathJs.subtract(mathJs.multiply(items.bet_amount,items.oddFinally),(UserCtr.odds.cur_odds == 'HK' ? 0 : items.bet_amount))) }} 
+                        <span class="text-8A8986-i font500"   v-else>
+                            {{ formatMoney(mathJs.subtract(mathJs.multiply(items.bet_amount,items.oddFinally), items.bet_amount)) }}
                         </span>
                     </div>
                 </div>
         
-                <div>
-                    <input class="bet-input" v-model="ref_data.money" type="text" @input="set_win_money" @click="show_quick_amount(true)" @focus="stop_drap_fn(false)" @blur="stop_drap_fn(true)" @keydown.enter="keydown($event)"
+                <div>  
+                    <input class="bet-input" :v-model="ref_data.money==0?'':ref_data.money" type="text" @input="set_win_money" @click="show_quick_amount(true)" @focus="stop_drap_fn(false)" @blur="stop_drap_fn(true)" @keydown.enter="keydown($event)"
                     :placeholder="placeholder" maxLength="11"  />
                 </div>
             
@@ -43,6 +43,8 @@ import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { useMittEmit,useMittOn,MITT_TYPES,UserCtr,formatMoney, format_money3 } from "src/output/index.js"
 import { submit_handle } from "src/core/bet/class/bet-box-submit.js"
 import mathJs from 'src/core/bet/common/mathjs.js'
+import { ref_pre_book } from "src/core/bet/common/appoint-data.js"
+
 const props = defineProps({
     items:{},
 })

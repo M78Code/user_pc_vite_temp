@@ -4,7 +4,7 @@
     <div>
       <q-table 
         :rows="BetRecordHistory.table_data" 
-        style="max-height:calc(100vh - 270px)" 
+        style="max-height:calc(100vh - 316px)" 
         :rows-per-page-options="[0]" 
         :columns="columns[BetRecordHistory.selected]"
         row-key="orderNo" 
@@ -15,7 +15,7 @@
           <div class="detail-loading" v-if="BetRecordHistory.loading">
             <loading-ing />
           </div>
-          <div class="no-data" style="height:calc(100vh - 270px)" v-else>
+          <div class="no-data" style="height:calc(100vh - 316px)" v-else>
             <div class="c">
               <img class="no-data-icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/no-data.svg`" alt="" srcset="">
               <div style="text-align: center;color:#A1A3A5;font-weight: 500;">{{i18n_t('common.no_data')}}</div>
@@ -621,12 +621,6 @@ const columns = reactive({
       label: computed(()=>{ return i18n_t("bet.bet_book_stake")}),
       align: 'left',
       field: 'totalStake'
-    },
-    {
-      name: 'highestWin',
-      label: computed(()=>{ return i18n_t("common.maxn_amount_val")}),
-      align: 'left',
-      field: 'highestWin'
     },
     {
       name: 'status',

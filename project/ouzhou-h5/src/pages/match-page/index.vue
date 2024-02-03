@@ -16,6 +16,16 @@
     <MatchContainer v-else/>
   </div>
 </template>
+
+
+<script>
+// 注册 name 用于缓存
+import { defineComponent } from 'vue'
+export default defineComponent({
+  name: 'matchList'
+})
+</script>
+
 <script setup>
 import { onMounted, onUnmounted, ref } from "vue"
 import tabDate from './components/tab-date.vue';
@@ -142,13 +152,14 @@ const onTabChange = (val) => {
   switch (store.tabActive) {
     case 'Matches':
       clearSessionStorageData()
-      if(!store.menu_time){
+      //常规日期请求参数
+      if(!MenuData.match_date_tab_index){
         MenuData.set_current_lv1_menu('2');
         MatchMeta.set_prev_scroll(0)
         MatchMeta.set_origin_match_data()
       }else{
-        MatchMeta.filter_match_by_time(store.menu_time)
-        MatchMeta.get_target_match_data({ md: store.menu_time })
+        MatchMeta.filter_match_by_time(MenuData.match_date_tab_md)
+        MatchMeta.get_target_match_data({ md: MenuData.match_date_tab_md})
       }
       break
     case 'League':

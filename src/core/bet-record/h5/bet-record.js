@@ -1,6 +1,6 @@
 import { ref } from "vue"
 import { useMittEmit, MITT_TYPES } from  "src/core/mitt/index.js"
-import { filter_early_list, filter_invalid_list } from  "./util.js"
+import { filter_early_list } from  "./util.js"
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { api_betting } from "src/api/index.js";
 import lodash from 'lodash';
@@ -47,26 +47,22 @@ class BetRecord {
   set_list_data(value) {
     // 没有 提前结算或已失效按钮的项目,使用list_data作为数据源(复刻版H5)
     this.list_data = value
-
     // 有提前结算或已失效按钮的项目(欧洲H5),使用early_money_list作为数据源
-    // filter_invalid_list过滤已失效     filter_early_list过滤提前结算
-    const filter_func = this.selected === 2 ? filter_invalid_list : filter_early_list
-    this.early_money_list = filter_func(value, this.is_early)
-
+    this.early_money_list = filter_early_list(value, this.is_early, this.selected)
     this.set_bet_record_version()
   }
 
   // 设置提前结算按钮
   set_is_early(value) {
     this.is_early = value
-    this.early_money_list = filter_early_list(this.list_data, value)
+    this.early_money_list = filter_early_list(this.list_data, value, this.selected)
     this.set_bet_record_version()
   }
 
   // 点击已失效按钮
   set_is_invalid(value) {
     this.is_invalid = value
-    this.early_money_list = filter_invalid_list(this.list_data, value)
+    this.early_money_list = filter_early_list(this.list_data, value, this.selected)
     this.set_bet_record_version()
   }
 
@@ -125,8 +121,6 @@ class BetRecord {
       } else if (res.code == '0401038') {
         this.is_limit = true
         return
-      } else {
-        return;
       }
       //容错处理，接口再调一次 (极端情况下，条件多次成立，触发接口限频)
       // if (size < 5 && size > 0 && lodash.get(res, 'data.hasNext') == true) {
@@ -137,8 +131,7 @@ class BetRecord {
       // }
     }).catch(err => {
       this.is_loading = false;
-      console.error(err)
-      return;
+      this.set_bet_record_version()
     });
   }
 

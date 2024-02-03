@@ -57,6 +57,9 @@ class MenuData {
     this.current_lv_1_menu_i = 2;
     this.current_lv_2_menu_i = '';
     this.current_lv_2_menu_mi = ref('0');
+    //常规日期请求参数
+    this.match_date_tab_index = 0;
+    this.match_date_tab_md = "";
     //电竞日期
     this.current_lv_3_menu = {
       field1:"",
@@ -136,7 +139,9 @@ class MenuData {
     // const session_info = SessionStorage.get(menu_h5);
     let session_info = LocalStorage.get(menu_h5);
     //常规球种
-    menu_list = IS_FOR_NEIBU_TEST?[...BaseData.left_menu_base_mi,{mi:400,ct:1},{mi:2000,ct:0},{mi:300,ct:0}]:[...BaseData.left_menu_base_mi,{mi:400,ct:1}];
+    menu_list = IS_FOR_NEIBU_TEST?[...BaseData.left_menu_base_mi,{mi:400,ct:1},...[BaseData.is_mi_2000_open?{mi:2000,ct:0}:""],...[BaseData.is_mi_300_open?{mi:300,ct:0}:""]]:[...BaseData.left_menu_base_mi,{mi:400,ct:1}];
+    //清除空对象
+    menu_list = menu_list.filter(n=>n);
     //二期测试环境全放开
     // menu_list = [...BaseData.left_menu_base_mi,{mi:400,ct:1},{mi:2000,ct:0},{mi:300,ct:0}];
     menu_arr = menu_list.map((item)=>{return +item.mi});
@@ -215,7 +220,7 @@ class MenuData {
     this.update();
   }
   /**
-   * 
+   * 电竞日期请求参数
    * @param {*} mi 
    * @returns 
    */
@@ -225,6 +230,16 @@ class MenuData {
       ...(item || {})
     }
     this.date_tab_index = item.index || 0;
+    this.update();
+  }
+  /**
+   * 常规请求参数
+   * @param {*} mi 
+   * @returns 
+   */
+  set_match_date_tab(obj){
+    this.match_date_tab_index = obj.index || 0;
+    this.match_date_tab_md = obj.md || "";
     this.update();
   }
   // 根据菜单id 获取对应的euid
@@ -423,6 +438,8 @@ class MenuData {
     this.collect_id = "";
     this.home_menu = 'featured';
     this.match_menu = 'Matches';
+    this.match_date_tab_index = 0;
+    this.match_date_tab_md = "";
     this.collect_menu = '';
     this.result_menu =  0;
     this.date_tab_index = 0;

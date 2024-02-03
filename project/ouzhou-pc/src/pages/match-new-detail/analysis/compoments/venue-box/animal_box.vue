@@ -279,7 +279,8 @@ const video_leave = () => {
   // display: none !important;
 }
 .box-bc :deep(.xl-screen-wrap) {
-  // display: none !important;
+  display: none !important;
 }
+
 
 </style>

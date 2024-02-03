@@ -5,6 +5,7 @@ import WsMan from "src/core/data-warehouse/ws/ws-ctr/ws-man.js"
 import { nextTick } from "vue";
 
 let time_out = null
+let time_cmd = {}
 
 class BetWsMessage {
   constructor(){
@@ -125,10 +126,34 @@ class BetWsMessage {
           case 'C105':
           // 投注项 盘口赔率推送
           case 'C106':
-            clearTimeout(time_out)
-            time_out = setTimeout(() => {
-              this.MSG_C106(data)
-            }, 10);
+            // 上一次推送的数据 和下一次推送数据的间隔 20毫米内
+            // 如果上一次是106 下一次是105 时间在20毫米内 不使用105数据
+            // 如果上一次是106 下一次还是106 那么使用106数据
+            // 如果上一次是105 下一次 都是用
+           
+            let obj = {
+              time : Date.now(),
+              cmd : ws_cmd
+            }
+
+            if( time_cmd.cmd ) {
+             
+              if(time_cmd.cmd == 'C106' ){
+                if( ws_cmd == 'C106' ){
+                  this.MSG_C106(data)
+                }else{
+                  if( (obj.time - time_cmd.time) > 20 ){
+                    this.MSG_C106(data)
+                  }
+                }
+              }
+
+              if(time_cmd.cmd == 'C105' ){
+                this.MSG_C106(data)
+              }
+            } 
+            
+            time_cmd = obj
             break;
           // 注单状态
           case 'C201':

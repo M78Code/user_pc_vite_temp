@@ -39,7 +39,7 @@
 </template>
 <script setup>
 
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 
 // ouzhou-h5 赛事组件
 import MatchContainerMainTemplate1 from "src/base-h5/components/match-container/template/ouzhou/match-container-main-template1.vue"; 
@@ -54,12 +54,18 @@ import { BaseVirtualList } from 'src/base-h5/components/base-virtual-list'
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 
 import { is_kemp, is_results } from 'src/base-h5/mixin/menu.js'
-import { standard_edition } from 'src/base-h5/mixin/userctr.js'
 import { MenuData } from 'src/output/index.js';
+
+import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 
 
 const matchs_data = computed(() => {
   return MatchMeta.current_matchs
+})
+
+onMounted(() => {
+  // 只有进入 赛事列表就设置 赛事组件为缓存级别
+  MatchResponsive.set_keep_comps(['matchList', 'inPlay'])
 })
 
 </script>

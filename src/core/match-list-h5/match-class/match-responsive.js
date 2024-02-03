@@ -33,7 +33,7 @@ class MatchResponsive {
     this.popular_league = ref({})
     // 次要玩法展开映射
     this.secondary_unfold_map = ref({})
-    //是否欧洲版联赛详情
+    // 是否欧洲版联赛详情
     this.is_league_detail = ref(false);
     //是否展示 未搜索到赛事
     this.is_search = ref(false)
@@ -45,6 +45,26 @@ class MatchResponsive {
   set_is_search(val){
     console.log(val)
     this.is_search.value = val
+    // 赛事列表滚动距离
+    this.scroll_top = ref(0)
+    // 缓存的组件名称
+    this.keep_comps = ref([])
+  }
+
+  /**
+   * @description 设置缓存的组件名称
+   * @param {*} val 
+   */
+  set_keep_comps (val) {
+    this.keep_comps.value = val
+  }
+
+  /**
+   * @description 设置赛事列表滚动距离
+   * @param {*} val 
+   */
+  set_scroll_top (val) {
+    this.scroll_top.value = val
   }
 
 

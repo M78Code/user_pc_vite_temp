@@ -8,7 +8,7 @@
   <div class="item-footer yb_px14 yb_pt8 row yb_fontsize12">
     <!-- 左 -->
     <div class="col-4">
-      <p class="top-p">{{i18n_t('bet.bet_val')}}</p>
+      <p class="top-p">{{i18n_t('ouzhou.bet.book_bet_amount')}}</p>
       <p class="yb_fontsize14 money-p fw_700" v-if="data_f.orderAmountTotal">{{format_money2(data_f.orderAmountTotal)}}</p>
     </div>
 
