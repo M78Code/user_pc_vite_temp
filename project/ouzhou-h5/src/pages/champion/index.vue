@@ -58,7 +58,7 @@ onMounted(async () => {
   UserCtr.set_cur_odds("EU");
   // 冠军设置为单关投注
   BetData.set_is_bet_single('single')
-  BetData.set_is_bet_merge()
+  
   MenuData.set_current_lv1_menu(400);
 //   MatchMeta.set_origin_match_data()
   MatchMeta.get_champion_match()
