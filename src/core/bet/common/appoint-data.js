@@ -231,11 +231,11 @@ const computed_keyboard_handicap = (val) => {
   let max_ball_head = 400.5;
   let res = val
   if (val <= min_ball_head) {
-    res = format_money(min_odds)
+    res = format_money(min_ball_head)
     useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('pre_record.market_error_info')}`)
   }
   if (val >= max_ball_head) {
-    res = format_money(max_odds)
+    res = format_money(max_ball_head)
     useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('pre_record.market_error_info_max')}`)
   }
   ref_pre_book.appoint_ball_value = res

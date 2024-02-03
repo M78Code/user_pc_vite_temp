@@ -177,7 +177,8 @@ export default defineComponent({
     .counting-title{
       // margin-left: -0.35rem;
     }
-    .counting-down-wrap{
+    .counting{
+      color: var(--q-gb-t-c-14);
       // margin-left: 0.7rem;
       // transform: translateX(80%);
     }

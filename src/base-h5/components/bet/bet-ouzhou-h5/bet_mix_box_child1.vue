@@ -28,7 +28,7 @@
                           </span>
                           <span v-else>[{{ i18n_t(`odds.EU`) }}]</span>
                         </div>
-                        <div class="nonebox4-content-right" v-if="items.is_serial">
+                        <div class="nonebox4-content-right" v-if="items.is_serial && !BetData.is_bet_single">
                           <span class="bet-disabled">{{ i18n_t('bet.invalidation2') }}</span>
                         </div>
                         <div v-else>
