@@ -30,11 +30,9 @@
                 <i
                   class="icon settings-icon"
                   :style="
-                    compute_css_obj({ key: 'pc-search-icon' })
+                    compute_css_obj({ key: settings.icon})
                   "
                 ></i>
-                <!-- <i class="icon settings-icon" :style="compute_css_obj({key:'pc-home-list-score-active'})"></i> -->
-                <!-- <i class="icon settings-icon" :style="compute_css_obj({key:'icon-setting'})"></i> -->
               </q-item-section>
 
               <!-- 设置项 名称 -->
