@@ -352,7 +352,6 @@ const transfer_on = (odd_item) => {
   const current_tab_item_id = lodash.get(props.current_tab_item, 'id')
   
   let on = odd_item.onb || odd_item.on;
-  // console.log("MenuData.is_vr()=======>", MenuData.is_vr())
   // 根据单子 55237 把增加下面逻辑
   if(MenuData.is_vr()){
     on = odd_item.on || odd_item.onb;
