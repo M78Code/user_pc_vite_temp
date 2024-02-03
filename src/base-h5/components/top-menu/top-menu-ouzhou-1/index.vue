@@ -11,7 +11,7 @@
     </div>
   </template>
   <template v-else>
-    <div class="top_header" id="top-header-oz">
+    <div class="top_header" id="top-header-oz" @click.stop>
       <div class="top_info">
         <template v-if="get_route_name == 'category' || get_route_name == 'result'">
           <detail-top-info />
