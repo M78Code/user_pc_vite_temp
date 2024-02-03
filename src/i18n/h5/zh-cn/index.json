@@ -33,7 +33,8 @@
      },
      "bet": {
          "place_bet": "下注",
-         "limit":"限额"
+         "limit":"限额",
+         "book_bet_amount": "预约投注额"
      },
      "menu": {
          "collect": "收藏",

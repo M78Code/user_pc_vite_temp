@@ -161,6 +161,10 @@ const set_ref_data_bet_money = () => {
         .content-b {
             display: flex;
             align-items: center;
+
+            .money-number{
+                color: #1a1a1a;
+            }
         }
         .input_place{
             color:  #8A8986;
