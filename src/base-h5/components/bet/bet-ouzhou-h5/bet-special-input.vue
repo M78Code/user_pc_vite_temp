@@ -20,8 +20,14 @@
     <div class="bet_single_detail f-b-c">
       <div class="content-b" @click="input_click">
         <span v-if="items.bet_amount" class="yb_fontsize20 money-number">{{ items.bet_amount }}</span>
-        <span class="yb_fontsize14 limit-txt" v-show="!items.bet_amount">{{ i18n_t('app_h5.bet.limit')}}<em class="number_family">{{ items.min_money }}-{{ format_money3(items.max_money) }}</em></span>
+        <span class="yb_fontsize14 limit-txt" v-show="!items.bet_amount">{{ i18n_t('ouzhou.bet.limit')}}<em class="number_family">{{ items.min_money }}-{{ format_money3(items.max_money) }}</em></span>
         <span class="money-span" ref="money_span" v-if="items.show_quick" :style="{ opacity: '1' }"></span>
+
+        <!-- <span class="icon-delete del_btn_money" @click="del_btn_money()"></span> -->
+        <!-- /**
+          等UI补充删除串单 单个输入框金额icon
+        */ -->
+
       </div>
     </div>
   </div>
@@ -70,6 +76,25 @@ onMounted(() => {
     emitter_1: useMittOn(MITT_TYPES.EMIT_INPUT_BET_MONEY, change_money_handle).off,
   }
 })
+
+
+/**
+ *@description 单个输入框金额删除按钮
+ *@param {Number} _index input下标
+ */
+const del_btn_money = (_index) => {
+
+  /***
+   * 
+   *  
+   * 
+   */
+  
+
+
+  
+}
+
 
 /**
  *@description 金额改变事件
@@ -237,6 +262,12 @@ const alertRules = (id) => {
     .limit-txt {
       color: #8A8986;
       //font-size: 0.16rem;
+    }
+    .del_btn_money{
+      right: 0.1rem;
+      display: inline-block;
+      width: auto;
+      position: absolute;
     }
     &:hover {
       border-color: var(--q-gb-t-c-1);

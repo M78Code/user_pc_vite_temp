@@ -1005,7 +1005,7 @@ const set_error_message_config = (res ={},type,order_state) => {
                     // 预约订单确认
                     obj = {
                         code: '200',
-                        message: "bet.bet_order_book_info2"
+                        message: "bet.bet_booked"
                     }
                     // matchInfo + playName + i18
                     useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${matchInfo} ${playName} ${i18n_t('bet.bet_booked')}`);
@@ -1206,8 +1206,8 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         playId: hn_obj.hpid || ol_obj._hpid, //玩法ID
         playName: set_play_name(play_config), //玩法名称
         dataSource: mid_obj.cds, //数据源
-        home: mid_obj.mhn || '', //主队名称
-        away: mid_obj.man || '', //客队名称
+        home: mid_obj.mhn || (mid_obj.teams.length>0?mid_obj.teams[0]:''), //主队名称
+        away: mid_obj.man || (mid_obj.teams.length>1?mid_obj.teams[1]:''), //客队名称
         ot: ol_obj.ot, //投注項类型
         placeNum: hl_obj.hn || '', //盘口坑位
         // 以下为 投注显示或者逻辑计算用到的参数

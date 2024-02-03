@@ -633,6 +633,12 @@ this.bet_appoint_ball_head= null */
   
   set_bet_appoint_obj_playOptionId(val) {
     this.bet_pre_appoint_id = val
+    if(val){
+      // 选中了预约单 清空投注金额
+      this.bet_single_list.forEach(item=>{
+        item.bet_amount = ''
+      })
+    }
     this.set_bet_data_class_version()
   }
 
@@ -652,7 +658,7 @@ this.bet_appoint_ball_head= null */
   set_bet_pre_obj(val){
     // custom_id 投注项id
     this.bet_pre_obj = val
-    console.error('sssss',this.bet_pre_obj)
+    // console.error('sssss',this.bet_pre_obj)
   }
   
   // 设置 是否已投注
@@ -698,27 +704,37 @@ this.bet_appoint_ball_head= null */
 
   // 检查串关中 是否可以 串关的数据
   check_bet_s_list_special(){
-    let bet_s_list = lodash_.cloneDeep(this.bet_single_list)
+    let single_list = []
+    let single_name = []
+    // 单关 切 有投注项
+    if(this.is_bet_single){
+      single_list = lodash_.cloneDeep(this.bet_single_list) || []
+      single_name = 'bet_single_list'
+    } else {
+      single_list = lodash_.cloneDeep(this.bet_s_list) || []
+      single_name = 'bet_s_list'
+    }
+
     // 获取投注项中 有哪些赛事id是重复的 
-    // 对重复的赛事id 加入不能串关的字段 
-    let match_id_list = bet_s_list.map(item => item.matchId)
+    let match_id_list = single_list.map(item => item.matchId)
     let match_obj = this.get_match_count(match_id_list)
 
     let match_list = []
+    // 对重复的赛事id 加入不能串关的字段 
     for(let obj in match_obj){
       if(match_obj[obj] > 1){
         match_list.push(obj)
       }
     }
 
-    bet_s_list.filter(item=> {
+    single_list.filter( item => {
       // 重复的赛事不能串关 
       if(match_list.includes(item.matchId) || this.check_bet_option_special(item)){
         item.is_serial = true
       }
     })
 
-    this.bet_s_list = lodash_.cloneDeep(bet_s_list)
+    this[single_name] = lodash_.cloneDeep(single_list)
   }
 
   // 设置 切换单关/串关切换
@@ -1125,29 +1141,29 @@ this.bet_appoint_ball_head= null */
   // 删除投注项
   // oid 投注项id  index 投注项下标
   set_delete_bet_info(oid,index) {
+    console.error('删除投注项')
     let single = false
     let single_list = []
     let cur_index = 0
+    let single_name = ''
     // 删除投注项中的数据
     if(this.is_bet_single){
-      single = true
-      cur_index = this.bet_single_list.findIndex(i => i.playOptionsId == oid)
-      if (cur_index < 0) return
-      this.bet_single_list.splice(index,1)
-      single_list = this.bet_single_list
-    }else{
-      cur_index = this.bet_s_list.findIndex(i => i.playOptionsId == oid)
-      if (cur_index < 0) return
-      this.bet_s_list.splice(index,1)
-      single_list = this.bet_s_list
+      single_list = this.bet_single_list || []
+      single_name = 'bet_single_list'
+    } else {
+      single_list = this.bet_s_list || []
+      single_name = 'bet_s_list'
     }
-    
-    // 获取oid在投注项id集合中的位置
-    let index_ = this.bet_oid_list.findIndex(item => item == oid)
-    if(index_ != -1){
-      this.bet_oid_list.splice(index_,1)
+
+    // 获取需要删除的投注项id 在列表做的下标
+    cur_index = single_list.findIndex(i => i.playOptionsId == oid )
+
+    if ( cur_index >= 0 ) {
+      single_list.splice(index,1)
     }
-    this.set_bet_data_class_version()
+
+    this[single_name] = single_list
+  
     // 删除后的数据 是否可以去获取限额
     let single_length = single_list.length
     
@@ -1245,9 +1261,9 @@ this.bet_appoint_ball_head= null */
             let ws_ol_obj = (item.ol||[]).find(obj => ol_obj.playOptionsId == obj.oid ) || {}
             // WS推送中包含 投注项中的投注项内容
             // console.error('推送码：',obj.cmd)
-            // console.error('ws-坑位',item.hn, '------ 投注项坑位',ol_obj.placeNum)
-            // console.error('ws-盘口 状态',item.hs, 'ws-投注项 状态',ws_ol_obj.os)
-            // console.error('ws-投注项 赔率',ws_ol_obj.ov, '------ 投注项赔率',ol_obj.odds )
+            console.error('ws-坑位',item.hn, '------ 投注项坑位',ol_obj.placeNum)
+            console.error('ws-盘口 状态',item.hs, 'ws-投注项 状态',ws_ol_obj.os)
+            console.error('ws-投注项 赔率',ws_ol_obj.ov, '------ 投注项赔率',ol_obj.odds )
             // console.error('定时器',time_out)
             clearTimeout(time_out)
             // console.error('清除定时器',time_out)

@@ -7,7 +7,10 @@
        <div class="size_16 color_a1a1">{{i18n_t('bet.bet')}}</div>
         <div class="size_14">
             <span>{{i18n_t('bet.total_win2')}}</span>
-            <span class="margin_left_4">
+            <span class="margin_left_4" v-if="BetData.is_bet_pre && BetData.bet_pre_appoint_id == item.playOptionsId">
+                {{ formatMoney(mathJs.subtract(mathJs.multiply(item.bet_amount,ref_pre_book.appoint_odds_value), item.bet_amount)) }}
+            </span>
+            <span class="margin_left_4" v-else>
                 {{ formatMoney(mathJs.subtract(mathJs.multiply(item.bet_amount,item.oddFinally), item.bet_amount)) }}
             </span>
         </div>
@@ -33,6 +36,7 @@ import {MITT_TYPES,useMittOn,formatMoney,UserCtr } from "src/output/index.js"
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js"
 import mathJs from 'src/core/bet/common/mathjs.js'
+import { ref_pre_book } from "src/core/bet/common/appoint-data.js"
 
 const props = defineProps({
     item: {
@@ -157,6 +161,10 @@ const set_ref_data_bet_money = () => {
         .content-b {
             display: flex;
             align-items: center;
+
+            .money-number{
+                color: #1a1a1a;
+            }
         }
         .input_place{
             color:  #8A8986;

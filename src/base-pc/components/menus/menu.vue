@@ -177,6 +177,12 @@ const jump_func = (payload ={},type) => {
     lv2_mi: payload.mi +''+ 2, // 二级菜单id
     menu_type: type, // 左侧热门或者赛种
   }
+
+  // vr 电竞 切换到 常规赛事 需要清空投注项内容
+  if( MenuData.is_esports() || MenuData.is_vr() ){
+    BetData.set_clear_bet_info()
+  }
+
   //太多了 后续做优化
   MenuData.set_menu_root(202, true)
   MenuData.set_is_collect(false)
@@ -190,8 +196,6 @@ const jump_func = (payload ={},type) => {
     filter_tab: 4001
   }
   MenuData.set_mid_menu_result(mid_config)
-
-  BetData.set_clear_bet_info()
 
   nextTick(()=>{
     useMittEmit(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE,payload.mi)
@@ -229,6 +233,7 @@ const esportsClick = ()=>{
   MenuData.set_mid_menu_result(mid_config)
 
   BetData.set_clear_bet_info()
+  BetData.set_is_bet_merge('no_merge')
 
   nextTick(()=>{
     useMittEmit(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE, 2100)
@@ -263,6 +268,7 @@ const esportsClick = ()=>{
   MenuData.set_mid_menu_result(mid_config)
 
   BetData.set_clear_bet_info()
+  BetData.set_is_bet_merge('no_merge')
 
   nextTick(()=>{
     useMittEmit(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE, 31001)
@@ -295,7 +301,6 @@ const outrights = () => {
     current_mi: '401'
   }
   MenuData.set_mid_menu_result(mid_config)
-
 
   BetData.set_is_bet_single('single')
 

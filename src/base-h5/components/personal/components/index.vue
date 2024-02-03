@@ -45,6 +45,15 @@
           </template>
         </collapse>
         <div v-show="false">{{UserCtr.user_version}}</div>
+        <!-- 排序 -->
+        <div class="sort_item" v-for="(setting,idx) in sortData" :key="setting.title">
+          <img class="icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/sort.png`" alt="" />
+          <span>{{ i18n_t(setting.title) }}</span>
+          <div class="switch"> 
+            <span class="bg" :style="{left: UserCtr.sort_type == setting.options[0].value ? 0 : '50px'}"></span>
+            <span v-for="s in setting.options" :key="s" @click="handel_sort(s,idx)" :class="{active: UserCtr.sort_type == s.value}">{{ i18n_t(`${s.title}`) }}</span>
+          </div>  
+        </div> 
         <!-- Odds Settings -->
         <collapse v-model="s_visible" :title="`${i18n_t('ouzhou.setting_menu.odds_setting')}`">
           <template v-slot:title_icon>
@@ -60,15 +69,7 @@
             </div> 
           </template> 
         </collapse> 
-        <!-- 排序 -->
-        <div class="sort_item" v-for="(setting,idx) in sortData" :key="setting.title">
-          <img class="icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/sort.png`" alt="" />
-          <span>{{ i18n_t(setting.title) }}</span>
-          <div class="switch"> 
-            <span class="bg" :style="{left: UserCtr.sort_type == setting.options[0].value ? 0 : '50px'}"></span>
-            <span v-for="s in setting.options" :key="s" @click="handel_sort(s,idx)" :class="{active: UserCtr.sort_type == s.value}">{{ i18n_t(`${s.title}`) }}</span>
-          </div>  
-        </div> 
+
       </section> 
     </q-scroll-area> 
   </div>
@@ -210,6 +211,7 @@ onMounted(() => {
 // 金额显示与隐藏
 const on_show_money = (flag) => {
   show.value = flag
+  UserCtr.set_show_balance(flag)
 }
 // 切换语言
 const on_change_lang = (key) => {
@@ -438,7 +440,8 @@ const goto_announcement = () => {
       margin-right: 160px;
     }
     .switch{
-      position: relative;
+      position: absolute;
+      right: 30px;
       height: 30px;
       display: flex;
       align-items: center;

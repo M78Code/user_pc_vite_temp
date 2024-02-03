@@ -29,11 +29,10 @@
           <span class="match-detail-head-name m-10">v</span>
           <span class="home-vs-away" :title="detail_info?.man">{{
             detail_info?.man
-          }}{{ detail_info?.csid }}</span>
+          }}</span>
         </div>
         <div class="analysis-top-right" v-if="!MenuData.is_esports()&&![101,102,100,103].includes(Number(detail_info?.csid))">
           <!-- 视频图标 -->
-          {{ detail_info?.csid }}+++
           <img
             v-if="cur_video_icon.type"
             :src="show_type && show_type != 'animal' ? video_active : video"

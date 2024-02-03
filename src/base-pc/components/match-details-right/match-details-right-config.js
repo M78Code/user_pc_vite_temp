@@ -872,9 +872,10 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
             //同步赛事时间
             update_match_time({ mid, mst, mstst, mststs });
             let { media_type, play_id } = allData.details_params;
+            // if(allData.mid)
             MatchDetailCalss.set_play_media( {
               mid: data.mid,
-              media_type:'auto',
+              media_type:  MatchDetailCalss.play_media.media_type || 'auto',
               play_id,
               time: new Date() * 1,
             })
