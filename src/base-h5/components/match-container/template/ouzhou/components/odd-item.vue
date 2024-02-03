@@ -5,6 +5,7 @@
 <template>
   <div style="display: none;">{{ BetData.bet_data_class_version }}</div>
   <div :class="['odd-item', {active: BetData?.bet_oid_list?.includes(odd_item.oid), vr_basketball_active: BetData?.bet_oid_list?.includes(odd_item.oid) && VR_CTR.state.virtual_current_sub_menuid == 1004}]" @click="set_old_submit">
+    <!-- 显示 - -->
     <template v-if="is_show_template"> <span class="template">-</span> </template>
     <!-- 锁 -->
     <img v-else-if="is_lock" class="lock" :src="odd_lock_ouzhou" alt="lock">
@@ -12,7 +13,12 @@
     <div v-else :class="['odd',  { 'up': is_up,  'down': is_down}]"> 
       <!-- 赔率 -->
         <span v-if="is_show_title" class="title">{{ odd_item.onb }}</span>
-        <span>
+        <!-- 封盘 显示球头 加 锁 -->
+        <template v-if="is_close">
+          <img class="lock" :src="odd_lock_ouzhou" alt="lock">
+        </template>
+        <!-- 正常显示 -->
+        <span v-else>
           <span class="hpn" v-if="show_hpn">{{ get_item_hpn(odd_item) }}</span> {{ get_odd_os(odd_item) }} 
           <!-- 绿升icon -->
           <img class="hps_img" v-if="is_up" :src="get_icon('up')" alt="">
@@ -76,6 +82,17 @@ const virtual_odds_state = ref(0)
 // 是否显示标题
 const is_show_title = computed(() => {
   return get_current_hpid() != 1 && !props.show_hpn
+})
+
+// 是否锁盘 
+const is_lock = computed(() => {
+  return props.odd_item.os != 1 || props.item_hs !== 0 || props.match_info.mhs !== 0 || virtual_odds_state.value == 1
+})
+
+// 是否封盘
+const is_close = computed(() => {
+  return false
+  // return props.match_info.mhs === 1 || props.item_hs === 1
 })
 
 // 是否显示 -
@@ -158,11 +175,6 @@ const get_item_hpn = (s) => {
   }
   return result
 }
-
-// 是否锁盘 
-const is_lock = computed(() => {
-  return props.odd_item.os != 1 || props.item_hs !== 0 || props.match_info.mhs !== 0 || virtual_odds_state.value == 1
-})
 
 const get_icon = (type) => {
   let img_src = ''
