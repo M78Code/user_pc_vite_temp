@@ -68,7 +68,7 @@
 <script setup>
 import { onMounted, ref, computed } from "vue";
 import lodash_ from "lodash";
-
+import { api_details } from "src/api";
 import FootBallStats from "./compoments/football_stats.vue";
 import BasketBallStats from "./compoments/basketball_stats.vue";
 import switchTeam from "./compoments/switch-team.vue";
@@ -77,6 +77,7 @@ import { useMittOn, MITT_TYPES } from "src/core/mitt";
 import {
   MatchDataWarehouse_PC_Detail_Common as MatchDataWarehouseInstance,
 } from "src/output/index.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 
 // const props =  defineProps({
@@ -85,7 +86,7 @@ import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/mat
 //     default: () => {}
 //   },
 // })
-
+const { user_info } = UserCtr; // 用户数据
 let detail_info = ref({});
 const active = ref(1);
 const tabList = ref([
@@ -108,12 +109,36 @@ const get_detail_info = (mid) => {
   console.log(infomation, "infomation");
   // 存入本地，点击大屏视频的时候使用
   sessionStorage.setItem('DETAIL_INFO', JSON.stringify(infomation))
-  detail_info.value = infomation
+  // 电竞数据
+  if ([100,101,102,103].includes(+infomation.csid)) {
+    // 使用元数据的数据没有播放视频链接，需调用一下接口获取详情
+    if (!infomation.ms&&infomation.ms!==0) {
+      get_detail_data(infomation.mid)
+    }else{
+      detail_info.value = infomation
+    }
+  }else{
+    detail_info.value = infomation
+  }
+ 
 
  
  
   // setInterval(function (){
   // },2000)
+}
+
+// 获取电竞数据
+const get_detail_data = (mid)=>{
+  const params = {
+      mid,
+      cuid: user_info.userId,
+      t: new Date().getTime(),
+    };
+    api_details.get_match_detail_ESMatchInfo(params).then(res=>{
+      detail_info.value = res.data
+    })
+
 }
 
 // const show_page = ref(false)

@@ -84,15 +84,15 @@ const is_show_title = computed(() => {
   return get_current_hpid() != 1 && !props.show_hpn
 })
 
-// 是否锁盘 
+// 是否锁盘  mhs： 0 开,  1 封,  2 关,  11 锁
 const is_lock = computed(() => {
-  return props.odd_item.os != 1 || props.item_hs !== 0 || props.match_info.mhs !== 0 || virtual_odds_state.value == 1
+  return props.odd_item.os != 1 || [2,11].includes(+props.item_hs) || [2,11].includes(+props.match_info.mhs) || virtual_odds_state.value == 1
+  // return props.odd_item.os != 1 || props.item_hs !== 0 || props.match_info.mhs !== 0 || virtual_odds_state.value == 1
 })
 
 // 是否封盘
 const is_close = computed(() => {
-  return false
-  // return props.match_info.mhs === 1 || props.item_hs === 1
+  return props.match_info.mhs == 1 || props.item_hs == 1
 })
 
 // 是否显示 -
@@ -189,7 +189,7 @@ const get_icon = (type) => {
 const set_old_submit = () => {
   const ol = props.odd_item
   const { match_data_type = 'h5_list' } = props.match_info
-  if (is_lock.value) return
+  if (is_lock.value || is_close.value) return
   // MatchResponsive.set_active_odd(`${props.match_id}_${ol.oid}`)
   const {oid,_hid,_hn,_mid } = ol
   let params = {
