@@ -86,6 +86,7 @@ import {LOCAL_PROJECT_FILE_PREFIX,format_money2,MenuData } from "src/output/inde
 import VMarquee from 'src/base-h5/components/marquee/marquee.vue'
 import BaseData from "src/core/base-data/base-data.js";
 import BUILDIN_CONFIG from "app/job/output/env/index.js";
+import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 const { PROJECT_NAME,IS_FOR_NEIBU_TEST } = BUILDIN_CONFIG;
 //语言设置
 const lang = ref(UserCtr.lang)
@@ -192,6 +193,7 @@ const handel_sort = async(s, idx) => {
   //     useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t('msg.msg_nodata_07'))
   //   })
   // }
+  MatchResponsive.set_keep_comps([])
   UserCtr.set_sort_type(s.value);
 }
 

@@ -1,6 +1,6 @@
 <!-- 赛况 -->
 <script setup name="Match">
-import Statistics from "../../statistics.vue"       // 统计
+import Statistics from "../../Statistics.vue"       // 统计
 import incident from "./incident.vue"
 </script>
 

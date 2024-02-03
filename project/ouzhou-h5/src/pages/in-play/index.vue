@@ -9,6 +9,15 @@
     <MatchContainer />
   </div>
 </template>
+
+<script>
+// 注册 name 用于缓存
+import { defineComponent } from 'vue'
+export default defineComponent({
+  name: 'inPlay'
+})
+</script>
+
 <script setup>
 import lodash from 'lodash'
 import scrollMenu from 'src/base-h5/components/top-menu/top-menu-ouzhou-1/scroll-menu/scroll-menu.vue';
