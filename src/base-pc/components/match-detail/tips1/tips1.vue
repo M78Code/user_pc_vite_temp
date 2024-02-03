@@ -4,7 +4,8 @@
  * @Description:
 -->
 <template>
-    <div class="tips-icon relative-position" @click.stop v-if="id_dict.includes(playId)" @click="click_popup"   @mouseleave="img_mouseleave">
+    <div class="tips-icon relative-position" @click.stop v-if="id_dict.includes(playId)" @click="click_popup"
+          @mouseleave="img_mouseleave">
       <!-- 说明主体 -->
       <q-menu v-model="is_show" anchor="bottom left" self="top left" :content-class="`tips-body-match  ${popup_class}`">
         <!-- 箭头 fifteen-arrow十五分钟单独加样式 夜间模式使用 -->
@@ -145,6 +146,10 @@ export default {
   width: 14px;
   height: 14px;
   background-size: 100%;
+  background-image: url($SCSSPROJECTPATH+"/image/svg/y0_details_info.svg");
+     &:hover {
+        background-image: url($SCSSPROJECTPATH+"/image/svg/y0_details_info_focus.svg");
+    }
 }
 </style>
 <style lang="scss">
