@@ -146,12 +146,21 @@ export const calc_text_only_status = (data_b) => {
 }
 
 // 根据状态过滤，显示提前结算的列表
-export const filter_early_list = (list_data, bol) => {
+export const filter_early_list = (list_data, bol, _index) => {
     let all_list = lodash.cloneDeep(list_data)
     if (bol) {
         lodash.forEach(all_list, (list_data, key) => {
             list_data.data = lodash.filter(list_data.data, item => {
-                return item.enablePreSettle
+                if(_index === 0) {
+                    // 未结算(提前结算) enablePreSettle:true
+                    return item.enablePreSettle
+                } else if(_index === 1) {
+                    // 已结算(提前结算) preBetAmount > 0
+                    return item.preBetAmount > 0
+                } else if(_index === 2) {
+                    // 预约(已失效) preOrderStatus: 2,3,4
+                    return [2,3,4].includes(item.preOrderStatus)
+                }
             })
             if (!list_data.data.length) {
                 delete all_list[key]
@@ -161,19 +170,4 @@ export const filter_early_list = (list_data, bol) => {
     return all_list
 }
 
-// 根据状态过滤，显示已失效的列表
-export const filter_invalid_list = (list_data, bol) => {
-    let all_list = lodash.cloneDeep(list_data)
-    if (bol) {
-        lodash.forEach(all_list, (list_data, key) => {
-            list_data.data = lodash.filter(list_data.data, item => {
-                return [2,3,4].includes(item.preOrderStatus)
-            })
-            if (!list_data.data.length) {
-                delete all_list[key]
-            }
-        })
-    }
-    return all_list
-}
 
