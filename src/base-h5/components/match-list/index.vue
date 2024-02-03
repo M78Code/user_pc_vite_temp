@@ -204,6 +204,7 @@ const clear_timer = () => {
     display: block;
   }
   .search_tips{
+    border-top: 2px solid var(--q-gb-bd-c-1);
     position: absolute;
     top: 0;
     background: #fff;
