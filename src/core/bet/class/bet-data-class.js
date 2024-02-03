@@ -753,6 +753,7 @@ this.bet_appoint_ball_head= null */
     }
     // 合并 切换到 串关
     if (this.is_bet_single && this.is_bet_merge) {
+      this.bet_s_list = lodash_.cloneDeep(this.bet_single_list)
       // 检查并设置不能串关的数据
       this.check_bet_s_list_special()
 
@@ -1504,7 +1505,13 @@ this.bet_appoint_ball_head= null */
       single_name = 'bet_s_list'
     }
     
-    const array_list = lodash_.cloneDeep(lodash_.get(this,single_name))
+    const array_list = lodash_.cloneDeep(lodash_.get(this,single_name)) || []
+
+    // 没有数据 
+    if(!array_list.length){
+      this.set_bet_data_class_version()
+      return
+    }
     // ol_os: ol_obj.os, // 投注项状态 1：开 2：封 3：关 4：锁
     // hl_hs: hl_obj.hs || ol_obj._hs, // 盘口状态，玩法级别 0：开 1：封 2：关 11：锁
     // mid_mhs: ol_obj._mhs, // 赛事级别盘口状态（0:active 开盘, 1:suspended 封盘, 2:deactivated 关盘,11:锁盘状态）
