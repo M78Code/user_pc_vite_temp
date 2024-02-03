@@ -2,6 +2,7 @@ import {ref,onUnmounted} from 'vue'
 import { api_common } from "src/api/index.js";
 import video from "src/core/video/video.js"; // 视频相关公共方法
 import { MatchDetailCalss, useMittEmit, MITT_TYPES,LOCAL_PROJECT_FILE_PREFIX ,into_video_anima_event } from "src/output/index.js"
+import { create_gcuuid } from "src/core/uuid/index.js";
 
 import BUILDIN_CONFIG from "app/job/output/env/index.js";
 
@@ -97,7 +98,7 @@ onUnmounted(clear_timer1_)
             check_url(media_src);
           } else {
             let param = {};
-            send_gcuuid = uid();
+            send_gcuuid = create_gcuuid();
             param.gcuuid = send_gcuuid;
             api_common.getVideoReferurl(param).then((res) => {
               if (send_gcuuid != res.gcuuid) return;
@@ -152,7 +153,7 @@ onUnmounted(clear_timer1_)
       mid: match_id.value,
       type: "Animation",
     };
-    send_gcuuid = uid();
+    send_gcuuid = create_gcuuid();
     params.gcuuid = send_gcuuid;
 
     api_common.videoAnimationUrl(params).then((result) => {

@@ -6,9 +6,9 @@
           width: `${(volumn + start_percentage) * 100}%`
       }"></div>
       <div class="start" ref="start" 
-           :style="{
+            :style="{
               left: `${volumn * 100}%`
-           }"
+            }"
            @touchstart.stop="handle_start" @touchmove.stop="handle_move" @touchend.stop="handle_end">
       </div>
     </div>
