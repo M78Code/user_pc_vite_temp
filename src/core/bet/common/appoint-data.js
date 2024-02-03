@@ -470,5 +470,6 @@ export {
   add_handle,
   ref_pre_book,
   set_ref_data,
-  computed_keyboard_odds
+  computed_keyboard_odds,
+  computed_keyboard_handicap
 }
