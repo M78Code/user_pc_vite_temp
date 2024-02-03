@@ -270,7 +270,7 @@ watch(() => odds_value.value, () => {
   get_odd_append_value(odd_item.value);
 })
 
-watch(() => props.match.hps, () => {
+watch(() => props.match?.hps, () => {
   let ol_list = get_ollist_no_close(props.odd_field);
   if(ol_list.length > 0){
     if([11,18,19].includes(+lodash.get(props.current_tab_item, 'id'))){
@@ -352,6 +352,7 @@ const transfer_on = (odd_item) => {
   const current_tab_item_id = lodash.get(props.current_tab_item, 'id')
   
   let on = odd_item.onb || odd_item.on;
+  // console.log("MenuData.is_vr()=======>", MenuData.is_vr())
   // 根据单子 55237 把增加下面逻辑
   if(MenuData.is_vr()){
     on = odd_item.on || odd_item.onb;
