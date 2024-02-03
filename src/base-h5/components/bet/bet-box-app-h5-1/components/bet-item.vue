@@ -29,7 +29,7 @@
                         </div>
                     </div>
                     <div class="text-flow-none" v-else>
-                        {{ `${teamsShow(items)} ${items.handicap}` }} 
+                        {{ items.handicap }} 
                         <em v-if="items.handicap_hv" class="ty-span">{{items.handicap_hv}}</em>
                     </div> 
                 </div>
@@ -111,6 +111,7 @@ const set_delete = () => {
 }
 
 const teamsShow = computed(()=> state =>{
+    console.log('这里！', state)
     let corner_ball = ["111","114","115","116","117","118","119","122","123","124","226","227","228","229"]
     let penalty_hpid = ["307","309","310","311","312","313","314","315","316","317","318","319","320","321","322","323","125","230"]
     if (corner_ball.includes(state.playId) || penalty_hpid.includes(state.playId)) {
