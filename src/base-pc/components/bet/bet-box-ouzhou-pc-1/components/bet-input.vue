@@ -18,7 +18,7 @@
                 </div>
         
                 <div>  
-                    <input class="bet-input" :v-model="ref_data.money==0?'':ref_data.money" type="text" @input="set_win_money" @click="show_quick_amount(true)" @focus="stop_drap_fn(false)" @blur="stop_drap_fn(true)" @keydown.enter="keydown($event)"
+                    <input class="bet-input" v-model="ref_data.money" type="text" @input="set_win_money" @click="show_quick_amount(true)" @focus="stop_drap_fn(false)" @blur="stop_drap_fn(true)" @keydown.enter="keydown($event)"
                     :placeholder="placeholder" maxLength="11"  />
                 </div>
             
@@ -87,7 +87,7 @@ onMounted(() => {
     //     show_quick_amount(true)
     // }
 
-    ref_data.money = props.items.bet_amount
+    ref_data.money = props.items.bet_amount || ''
       // 监听 限额变化
     ref_data.emit_lsit = {
         emitter_1: useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money).off,
@@ -160,7 +160,7 @@ const keydown = (e) => {
 
 // 输入金额数据更新
 const set_ref_data_bet_money_update = () => {
-    ref_data.money = props.items.bet_amount
+    ref_data.money = props.items.bet_amount || ''
 }
 
 // 限额改变 修改限额内容
@@ -196,7 +196,7 @@ const set_ref_data_bet_money = () => {
 
 // 输入判断
 const set_win_money = () => {
-    ref_data.money = Number(ref_data.money) ? Number(ref_data.money) : 0
+    ref_data.money = Number(ref_data.money) ? Number(ref_data.money) : ''
     // 输入控制
     if( ref_data.money < ref_data.max_money &&  ref_data.money < UserCtr.balance){
         BetData.set_bet_obj_amount(ref_data.money,props.items.playOptionsId)
@@ -206,7 +206,7 @@ const set_win_money = () => {
         if(UserCtr.balance < ref_data.max_money){
             money_a = UserCtr.balance
         }
-        ref_data.money = money_a
+        ref_data.money = money_a || ''
         BetData.set_bet_obj_amount(money_a,props.items.playOptionsId)
     }
 }
