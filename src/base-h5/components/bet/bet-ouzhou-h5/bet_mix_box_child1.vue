@@ -230,6 +230,7 @@
   .nonebox4-content-left-content-text-three{
     font-size: 0.16rem;
     color: var(--q-gb-t-c-3);
+    width: 78%;
     // overflow: hidden;
     // text-overflow: ellipsis;
     // white-space: nowrap;
