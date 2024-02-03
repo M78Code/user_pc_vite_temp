@@ -14,7 +14,7 @@
        <div class="info_right size_14" @click.stop="input_click(items, index, $event)">
         <div class="content-b " :class="{'active':BetData.active_index == index}">
             <span v-if="valueModel" class="yb_fontsize20 money-number">{{ valueModel }}</span>
-            <span class="money-span" ref="money_span" v-if="BetData.active_index == index" :style="{ opacity:  '1' }"></span>
+            <span class="money-span" ref="money_span" v-if="BetData.active_index == index && !readonly" :style="{ opacity:  '1' }"></span>
             <!-- <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">{{ i18n_t('app_h5.bet.limit')}} {{ format_money(ref_data.min_money) }}~{{format_money(ref_data.max_money) }}</span> -->
           </div>
           
@@ -42,6 +42,10 @@ const props = defineProps({
     valueModel: {
         default: 0,
         type: Number || String
+    },
+    readonly: {
+        default: false,
+        type: Boolean
     }
 })
 
