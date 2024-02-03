@@ -124,7 +124,7 @@ watch(() => expected_profit.value, (_new, _old) => {
 
 onMounted(() => {
   // 计算提前结算按钮是否显示
-  // calc_show.value = (props.item.seriesType === '1' && props.item.enablePreSettle)
+  calc_show.value = (props.item.seriesType === '1' && props.item.enablePreSettle)
   //  /10true[1-6]+/.test("" + lodash.get(UserCtr.user_info, 'settleSwitch')  + props.item.enablePreSettle + status.value);
 
 
@@ -153,7 +153,7 @@ onMounted(() => {
       return
     }
     // 有当前单号
-    calc_show.value = true
+    // calc_show.value = true
     let _maxCashout = props.item.maxCashout
     if (moneyData && moneyData.orderStatus === 0) {
       if (moneyData.preSettleMaxWin !=  props.item.maxCashout) {

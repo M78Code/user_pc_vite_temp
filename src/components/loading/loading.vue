@@ -44,7 +44,7 @@
 .la-line-scale {
   display: block;
   font-size: 0;
-  color:  var(--q-gb-t-c-2);
+  color:  var(--q-gb-t-c-1);
 }
 .la-line-scale > div {
   display: inline-block;

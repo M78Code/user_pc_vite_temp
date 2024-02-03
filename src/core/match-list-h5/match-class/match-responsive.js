@@ -35,6 +35,16 @@ class MatchResponsive {
     this.secondary_unfold_map = ref({})
     // 是否欧洲版联赛详情
     this.is_league_detail = ref(false);
+    //是否展示 未搜索到赛事
+    this.is_search = ref(false)
+  }
+  /**
+   * @description 设置是否展示未搜索到赛事
+   * @param {Boolean} val
+  */
+  set_is_search(val){
+    console.log(val)
+    this.is_search.value = val
     // 赛事列表滚动距离
     this.scroll_top = ref(0)
     // 缓存的组件名称
@@ -56,6 +66,7 @@ class MatchResponsive {
   set_scroll_top (val) {
     this.scroll_top.value = val
   }
+
 
   /**
    * @description 设置欧洲版联赛详情

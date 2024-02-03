@@ -16,8 +16,11 @@
     </template>
 
     <template v-else>
+      <div v-if="is_search" class="search_tips">
+        <span>未搜索到相关赛事</span>
+      </div>
       <!-- 非收藏页 -->
-      <NoData class="data-get-empty1" v-if='match_is_empty && !is_collect' :which='which' height='400'></NoData>
+      <NoData class="data-get-empty1" v-else-if='match_is_empty && !is_collect' :which='which' height='400'></NoData>
 
       <!-- 收藏页 -->
       <NoData class="data-get-empty2" v-else-if='match_is_empty && is_collect' :which='menu_type === 28 ? "noMatch" : "collect"' height='400'></NoData>
@@ -43,6 +46,8 @@ import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, PROJECT_NAME } from "src/output/index.js"
 import { is_collect, menu_type } from 'src/base-h5/mixin/menu.js'
 import { standard_edition } from 'src/base-h5/mixin/userctr.js'
+import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
+
 
 import SList from "src/base-h5/components/skeleton/skeleton-list.vue" 
 import SecondaryDescription from "src/base-h5/components/match-list/components/secondary-description.vue" 
@@ -139,6 +144,10 @@ const on_listeners = () => {
   };
 };
 
+const is_search = computed(() => {
+  return MatchResponsive.is_search.value
+})
+
 // 移除相关事件监听
 const off_listeners = () => {
   Object.values(emitters.value).map((x) => x());
@@ -193,6 +202,18 @@ const clear_timer = () => {
   justify-content: center;
   &.skeleton_page{
     display: block;
+  }
+  .search_tips{
+    position: absolute;
+    top: 0;
+    background: #fff;
+    height: 44px;
+    width: 100%;
+    display: flex;
+    align-items: center;//上下对齐
+		justify-content: center;//两端对齐
+    color: #afb3c8;
+    font-size: 14px;
   }
 }
 </style>
