@@ -21,7 +21,7 @@
           @click="details_collect(get_detail_data)">
         </div>
         <img v-if="show" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/refresh.png`" alt="" 
-              class="refresh" :class="[status ? 'ani-rotate':'' ]" @click="handle_refresh">
+              class="refresh" :class="[status ? 'ani-rotate':'' ]" @click="details_refresh">
 
         <!-- todo 后面判断项目名称 -->
         <!-- <div class="det-ref" :class="{ 'refreshing': refreshing, 'refreshing-common': MenuData.get_menu_type() !== 3000 }"
@@ -33,7 +33,7 @@
 </template>
 
 <script setup>
-import { computed, onBeforeUnmount, ref } from 'vue';
+import { computed, onBeforeUnmount, ref, onBeforeMount } from 'vue';
 import { useRoute, useRouter } from "vue-router"
 import lodash from 'lodash'
 
@@ -43,7 +43,7 @@ import GlobalAccessConfig from "src/core/access-config/access-config.js"
 import { api_common } from "src/api/index.js";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import { i18n_t } from "src/boot/i18n.js";
-import { MatchDataWarehouse_H5_Detail_Common as matchDetailData, MenuData,compute_css_obj } from "src/output/index.js";
+import { MatchDataWarehouse_H5_Detail_Common as matchDetailData, MenuData,compute_css_obj, project_name } from "src/output/index.js";
 import { create_gcuuid } from "src/core/uuid/index.js";
 import BetData from 'src/core/bet/class/bet-data-class.js'
 import CommonHeader1Subscribe from "./common-header1-subscribe/common-header1-subscribe";
@@ -59,10 +59,13 @@ const props = defineProps({
     default: 'bet'
   }
 })
+
+const CommonRefresh = new CommonHeader1Subscribe()
+
 // 是否显示刷新按钮
-const show = ref(CommonHeader1Subscribe.instance.show_refresh)
+const show = ref(null)
 // 控制刷新动画状态
-const status = ref(CommonHeader1Subscribe.instance.refresh_status);
+const status = ref(null);
 const route = useRoute()
 const router = useRouter()
 // 获取详情数据
@@ -76,7 +79,7 @@ const favorite_loading = ref(false)
 const timer1_ = ref(null)
 
 const handle_refresh = () => {
-  CommonHeader1Subscribe.instance.change_status(true);
+  CommonRefresh.change_status(true);
 }
 
 /**
@@ -97,7 +100,7 @@ const listener = (key, value) => {
   }
   status.value = value;
 }
-CommonHeader1Subscribe.instance.init(listener);
+CommonRefresh.init(listener);
 
 const clear_timer1_ = () => {
   if (timer1_.value) {
@@ -107,6 +110,7 @@ const clear_timer1_ = () => {
 }
 const cancel_ref = lodash.debounce(() => {
   refreshing.value = false;
+  CommonRefresh.change_status(false);
 }, 200)
 onBeforeUnmount(() => cancel_ref.cancel())
 
@@ -143,6 +147,7 @@ onBeforeUnmount(() => go_to_back.cancel())
  * @return {Undefined} undefined
  */
 const details_refresh = () => {
+  CommonRefresh.change_status(true);
   if (refreshing.value) return;
   // 赛果详情页
   const curr_tab = props.view_tab
@@ -244,6 +249,13 @@ const open = (position) => {
 // 是否是电竞
 const is_DJ_show = computed(() => MenuData.get_menu_type() == 3000 || (MenuData.get_menu_type() == 28 && [100, 101, 102, 103, 104].includes(+lodash.get(get_detail_data.value, 'csid'))))
 
+onBeforeMount(()=>{
+  if(project_name == 'app-h5'){
+    CommonRefresh.change_show_status(true)
+  }
+  show.value = CommonRefresh.show_refresh
+  status.value = CommonRefresh.refresh_status
+})
 </script>
 
 <script>
