@@ -138,7 +138,8 @@
         "no_search_rezult": "没有发现结果。请尝试另一个搜索词。",
         "dogfall": "平局",
         "search_history": "搜索历史",
-        "No results": "无搜索结果"
+        "No results": "无搜索结果",
+        "search_tips": "未搜索到相关赛事"
      },
      "bet_col": {
       "bet_col_1": {
@@ -455,6 +456,9 @@
       "highlights": "精彩集锦",
       "events": "赛事事件",
       "technical_statistics":"技术统计"
+    },
+    "search": {
+      "search_tips": "未搜索到相关赛事"
     }
   },
   "ac_rules": {
