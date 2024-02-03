@@ -16,8 +16,8 @@
         <!-- {{BetData.is_bet_single}}-{{ BetData.is_bet_merge }} -->
         
         <div class="cursor re f-e-c bet-text">
-           <!--  单关 合并 切换 -->
-          <div class="f-e-c" @click.prevent="show_merge_change()" v-if="BetData.is_bet_single&&!MenuData.is_vr()&&!MenuData.is_eports_csid(MenuData.current_ball_type)">
+           <!--  单关 合并 切换  电竞没有合并 -->
+          <div class="f-e-c" @click.prevent="show_merge_change()" v-if="BetData.is_bet_single&&!MenuData.is_vr()&&!MenuData.is_esports()&&!MenuData.is_eports_csid(MenuData.current_ball_type)">
             {{ i18n_t('bet.merge') }} 
             <span v-if="BetData.is_bet_merge" class="icon-arrow icon-arrow-merge ml-4"></span>
             <span v-else class="merge-checkbox ml-4"></span> 
@@ -105,7 +105,7 @@
 </template>
 
 <script setup>
-import { reactive, ref, onMounted, watchEffect, onBeforeUnmount, computed } from "vue"
+import { reactive, ref, onMounted, watchEffect, onBeforeUnmount, computed, nextTick } from "vue"
 import { MenuData, UserCtr, format_money2} from "src/output/index.js"
 import BetData from "src/core/bet/class/bet-data-class.js"
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js"
@@ -116,7 +116,6 @@ import betResult from "./components/bet-result.vue"  // 投注结果
 import betMixResult from "./components/bet-mix-result.vue"  // 串关投注结果
 import betSpecialInput from "./components/bet-special-input.vue"
 import BetMultipleInput from "./components/bet-multiple-input.vue"
-import { nextTick } from "licia"
 
 
 const ref_data = reactive({

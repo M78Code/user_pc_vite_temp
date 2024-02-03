@@ -1206,8 +1206,8 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         playId: hn_obj.hpid || ol_obj._hpid, //玩法ID
         playName: set_play_name(play_config), //玩法名称
         dataSource: mid_obj.cds, //数据源
-        home: mid_obj.mhn || (mid_obj.teams.length>0?mid_obj.teams[0]:''), //主队名称
-        away: mid_obj.man || (mid_obj.teams.length>1?mid_obj.teams[1]:''), //客队名称
+        home: mid_obj.mhn , //主队名称
+        away: mid_obj.man , //客队名称
         ot: ol_obj.ot, //投注項类型
         placeNum: hl_obj.hn || '', //盘口坑位
         // 以下为 投注显示或者逻辑计算用到的参数
@@ -1514,7 +1514,7 @@ const get_handicap = (ol_obj,hl_obj,mid_obj,other) => {
             hv = ''
         }else
         // 独赢 罚牌玩法 / 加时赛 / 冠军
-        if( [126,135,136,310,111].includes(ol_obj._hpid*1)) {
+        if( [126,129,135,136,310,111,333].includes(ol_obj._hpid*1)) {
             if(ol_obj.ots == 'T1'){
                 text = mid_obj.mhn 
             }
@@ -1526,7 +1526,7 @@ const get_handicap = (ol_obj,hl_obj,mid_obj,other) => {
             }
         }else
         // 让球 
-        if([33,113,306].includes(ol_obj._hpid*1)) {
+        if([33,113,128,130,306,308,334].includes(ol_obj._hpid*1)) {
             if(ol_obj.ots == 'T1'){
                 text = mid_obj.mhn 
             }
