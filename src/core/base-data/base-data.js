@@ -671,18 +671,18 @@ class BaseData {
         // 电子体育关 所有都关
         // 电子足球开 赛种都关闭 电子足球也关 
         if(openElectronicFootball){
-          if( filterSport.includes('-1') && filterSport.includes('-2') && filterSport.includes('-3') ){
+          // if( filterSport.includes('-1') && filterSport.includes('-2') && filterSport.includes('-3') ){
             filter_list.push(90) 
-          }
+          // }
         }
         // 篮球同上
         if(openElectronicBasketball){
-          if( filterSport.includes('-4')){
+          // if( filterSport.includes('-4')){
             filter_list.push(91) 
-          }
+          // }
         }
       }else{
-        filter_list = [90,91]
+        filter_list = []
       }
 
       // 是否有电子足球
@@ -690,10 +690,10 @@ class BaseData {
       // 是否有电子篮球  
       let basketball = true
 
-      if(filter_list.includes(90)){
+      if(!filter_list.includes(90)){
         football = false
       }
-      if(filter_list.includes(91)){
+      if(!filter_list.includes(91)){
         basketball = false
       }
       // 设置状态
