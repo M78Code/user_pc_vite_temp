@@ -13,7 +13,7 @@
       <q-slide-transition>
         <div v-show="detail_show_info && presettleorderdetail_data.length" class="slider-wrap">
           <template v-for="(item, index) in presettleorderdetail_data" :key="index">
-            <div class="body-main">
+            <div class="body-main number_family">
                 <!-- 单号、日期 -->
                 <p>
                   <label class="number"  @click="copy">
