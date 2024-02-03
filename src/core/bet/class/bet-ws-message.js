@@ -122,13 +122,13 @@ class BetWsMessage {
             this.MSG_C104(data);
             break;
           // 赛事 盘口赔率推送
-          case 'C105':
+          // case 'C105':
           // 投注项 盘口赔率推送
           case 'C106':
-            clearTimeout(time_out)
-            time_out = setTimeout(() => {
+            // clearTimeout(time_out)
+            // time_out = setTimeout(() => {
               this.MSG_C106(data)
-            }, 10);
+            // }, 10);
             break;
           // 注单状态
           case 'C201':
