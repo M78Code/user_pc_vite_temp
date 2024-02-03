@@ -37,6 +37,10 @@ class MatchResponsive {
     this.is_league_detail = ref(false);
     //是否展示 未搜索到赛事
     this.is_search = ref(false)
+    // 赛事列表滚动距离
+    this.scroll_top = ref(0)
+    // 缓存的组件名称
+    this.keep_comps = ref([])
   }
   /**
    * @description 设置是否展示未搜索到赛事
@@ -46,9 +50,9 @@ class MatchResponsive {
     console.log(val)
     this.is_search.value = val
     // 赛事列表滚动距离
-    this.scroll_top = ref(0)
+    this.scroll_top.value = 0
     // 缓存的组件名称
-    this.keep_comps = ref([])
+    this.keep_comps.value = []
   }
 
   /**
