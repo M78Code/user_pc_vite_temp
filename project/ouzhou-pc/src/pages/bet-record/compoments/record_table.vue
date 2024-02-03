@@ -623,12 +623,6 @@ const columns = reactive({
       field: 'totalStake'
     },
     {
-      name: 'highestWin',
-      label: computed(()=>{ return i18n_t("common.maxn_amount_val")}),
-      align: 'left',
-      field: 'highestWin'
-    },
-    {
       name: 'status',
       label: computed(()=>{ return i18n_t("bet_record.status")}),
       align: 'left',

@@ -16,6 +16,16 @@
     <MatchContainer v-else/>
   </div>
 </template>
+
+
+<script>
+// 注册 name 用于缓存
+import { defineComponent } from 'vue'
+export default defineComponent({
+  name: 'matchList'
+})
+</script>
+
 <script setup>
 import { onMounted, onUnmounted, ref } from "vue"
 import tabDate from './components/tab-date.vue';

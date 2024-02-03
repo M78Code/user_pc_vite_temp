@@ -17,8 +17,8 @@
                     </div>
                 </div>
         
-                <div>
-                    <input class="bet-input" v-model="ref_data.money" type="text" @input="set_win_money" @click="show_quick_amount(true)" @focus="stop_drap_fn(false)" @blur="stop_drap_fn(true)" @keydown.enter="keydown($event)"
+                <div>  
+                    <input class="bet-input" :v-model="ref_data.money==0?'':ref_data.money" type="text" @input="set_win_money" @click="show_quick_amount(true)" @focus="stop_drap_fn(false)" @blur="stop_drap_fn(true)" @keydown.enter="keydown($event)"
                     :placeholder="placeholder" maxLength="11"  />
                 </div>
             
