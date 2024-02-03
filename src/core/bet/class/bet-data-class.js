@@ -753,6 +753,7 @@ this.bet_appoint_ball_head= null */
     }
     // 合并 切换到 串关
     if (this.is_bet_single && this.is_bet_merge) {
+      this.bet_s_list = lodash_.cloneDeep(this.bet_single_list)
       // 检查并设置不能串关的数据
       this.check_bet_s_list_special()
 
