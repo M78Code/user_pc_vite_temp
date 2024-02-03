@@ -51,7 +51,7 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import { UserCtr, compute_local_project_file_path } from "src/output/index.js";
-import { btn_reduce, btn_add, ref_pre_book,add_handle,sub_handle,set_ref_data, computed_keyboard_odds, computed_keyboard_handicap } from "src/core/bet/common/appoint-data.js"
+import { btn_reduce, btn_add, ref_pre_book,add_handle,sub_handle,set_ref_data, computed_keyboard_odds } from "src/core/bet/common/appoint-data.js"
 import lodash_ from 'lodash'
 
 
