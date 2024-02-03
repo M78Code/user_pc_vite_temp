@@ -35,7 +35,18 @@ class MatchResponsive {
     this.secondary_unfold_map = ref({})
     //是否欧洲版联赛详情
     this.is_league_detail = ref(false);
+    //是否展示 未搜索到赛事
+    this.is_search = ref(false)
   }
+  /**
+   * @description 设置是否展示未搜索到赛事
+   * @param {Boolean} val
+  */
+  set_is_search(val){
+    console.log(val)
+    this.is_search.value = val
+  }
+
 
   /**
    * @description 设置欧洲版联赛详情
