@@ -115,8 +115,7 @@ template {
   .body-title {
     display: flex;
     justify-content: space-around;
-    font-weight: bold;
-    font-size: 0.14rem;
+    font-size: 0.17rem;
     line-height: 3;
     span {
       white-space: nowrap;
@@ -138,7 +137,7 @@ template {
   }
   .body-main {
     margin-top: 0.1rem;
-    font-size: .12rem;
+    font-size: .14rem;
     p {
       line-height: 2;
       display: flex;

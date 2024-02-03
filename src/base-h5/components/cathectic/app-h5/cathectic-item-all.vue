@@ -206,6 +206,7 @@ template {
   width: 100%;
   border-radius: 0.1rem;
   background-color: var(--q-gb-bg-c-23);
+  background-position: center 32%;
   background-size: cover;
   overflow: hidden;
   margin: 0 0 0.1rem;
