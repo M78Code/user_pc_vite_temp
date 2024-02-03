@@ -125,14 +125,14 @@ watch(() => expected_profit.value, (_new, _old) => {
 
 onMounted(() => {
   // 计算提前结算按钮是否显示
-  // calc_show.value = (BetRecordClass.selected === 0 && props.item_data.seriesType === '1' && props.item_data.enablePreSettle)
+  calc_show.value = (BetRecordClass.selected === 0 && props.item_data.seriesType === '1' && props.item_data.enablePreSettle)
   //  /10true[1-6]+/.test("" + lodash.get(UserCtr.user_info, 'settleSwitch') + BetRecordClass.selected + props.item_data.enablePreSettle + status.value);
 
   // 接口：当 enablePreSettle=true && hs = 0  提前结算显示高亮， 当 enablePreSettle=true && hs != 0  显示置灰， 当 enablePreSettle=false 不显示
-  ordervos_ = lodash.get(props.item_data, "orderVOS[0]", {});
-  if (ordervos_.hs != 0) {
-    status.value = 5;
-  }
+  // ordervos_ = lodash.get(props.item_data, "orderVOS[0]", {});
+  // if (ordervos_.hs != 0) {
+  //   status.value = 5;
+  // }
 
   /**
    * 监听轮询提前结算列表数据
@@ -155,7 +155,7 @@ onMounted(() => {
       return
     }
     // 有当前单号
-    calc_show.value = true
+    // calc_show.value = true
     let _maxCashout = props.item_data.maxCashout
     if (moneyData && moneyData.orderStatus === 0) {
       if (moneyData.preSettleMaxWin !=  props.item_data.maxCashout) {

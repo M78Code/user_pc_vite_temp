@@ -15,16 +15,17 @@
                     @click="changeTab(index,$event,item)">
                     <!-- <img v-show="item.img" :src="item.img" /> -->
                     <span v-if="item.tid !== '0'" class="sport-icon-wrap"
-                      :style="compute_css_obj({key: activeOn === index ? 'league-sport-active-image' : 'league-sport-icon-image', position:format_type(item)})"></span>
+                      :style="compute_css_obj({key: activeOn === index ? 'league-sport-active-image' :UserCtr.theme == 'theme-1'?'league-sport-icon-atnight-image':'league-sport-icon-image', position:format_type(item)})"></span>
                     {{ item.name }}
                 </li>
-							<div v-show="!drawerRight" class="search-tab-content-img" @click="drawerRight = true"
+							<div v-show="!drawerRight" class="search-tab-content-img" @click="handler_search"
 							>
 									<img :src="search" />
 							</div>
             </ul>
             <div class="search" v-show="drawerRight">
                 <input class="search-input" type="text" v-model="keyword" @input="handler_search_match" :placeholder="i18n_t('ouzhou.search.placeholder')" />
+                <img class="clear_search" @click="clear_input" :src="icon_cancel " alt="">
                 <span @click="reset">{{ i18n_t('common.cancel') }}</span>
             </div>
             <!-- <div class="search-tab-content-img" @click="searchClick">
@@ -49,14 +50,17 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref  } from "vue";
 import lodash from 'lodash'
 import search from "./img/search.svg";
+import icon_cancel from "./img/icon_cancel.png";
 import {scrollMenuEvent} from "../utils";
 // import {  menu_lv2 } from 'src/base-h5/mixin/menu.js'
-import  screenModal from './screen-modal.vue';
+// import  screenModal from './screen-modal.vue';
 // import { MenuData } from "src/output/index.js";
-import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt";
+// import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt";
+import { theme_list, theme_map } from "src/core/theme/"
+import UserCtr from "src/core/user-config/user-ctr.js"
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 import { i18n_t, compute_css_obj,league_sprite_images_postion,MenuData  } from "src/output/index.js";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
@@ -141,17 +145,29 @@ const props = defineProps({
 const drawerRight = ref(false)
 const searchTab = ref(null)
 const keyword = ref('')
-const emitters = ref({});
+// const emitters = ref({});
 
 const activeOn = ref(0);//默认值
-const league_data = ref([])
-
+// const league_data = ref([])
 /**
  * @description 搜索赛事
  */
 const handler_search_match = lodash.debounce(() => {
     MatchMeta.filter_match_by_name(keyword.value)
 }, 1000)
+/**
+ * @description 搜索
+ */
+const handler_search = ()=>{
+    drawerRight.value = true;
+    MatchResponsive.set_is_search(true)
+}
+/**
+ * @description: 清空搜索框
+ */
+const clear_input = ()=>{
+    keyword.value = '';
+}
 
 /**
  * @description: 联赛转化背景
@@ -227,6 +243,7 @@ const reset = () => {
 	drawerRight.value = false;
 	keyword.value = '';
     MatchMeta.filter_match_by_name('')
+    MatchResponsive.set_is_search(false)
 }
 // 键入回车换行
 function key_down(event) {
@@ -339,7 +356,13 @@ function key_down(event) {
 		padding-left: 0.12rem;
         background: var(--q-gb-bg-c-41);
         color: var(--q-gb-t-c-18);
+
 	}
+    .clear_search{
+        position: absolute;
+        right: 45px;
+        top: 11px;
+    }
 	::placeholder {
 		color: var(--q-gb-t-c-16);
 	}
