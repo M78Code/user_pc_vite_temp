@@ -75,7 +75,12 @@
             <!-- <popup-handicap /> -->
            <!-- 设置浮层弹窗 -->
            <div>
-           <p @click="show_g_settings = !show_g_settings">设置</p>
+           <!-- 设置 -->
+           <div class="setup-wrap row items-center justify-between" 
+                @click="show_g_settings = !show_g_settings">
+           <p>{{i18n_t('common.set')}}</p>
+           <p class="yb-icon-arrow" :class="{active:show_g_settings}"></p>
+           </div>
            <g-settings class="settings" v-if="show_g_settings" :show_settings="show_g_settings" :el="'.iframe-settings'"
                 :settings_items="settings_items" @auto_close="show_g_settings = !show_g_settings"></g-settings>
            </div>
