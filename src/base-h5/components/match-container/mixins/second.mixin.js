@@ -198,6 +198,8 @@ export default defineComponent({
       }
       // 重置所选的更多玩法选项
       this.select_second_item = {}
+
+      this.current_tab_item.hps = []
       
 
       // 滚动次要玩法选中项到屏幕显示区域
