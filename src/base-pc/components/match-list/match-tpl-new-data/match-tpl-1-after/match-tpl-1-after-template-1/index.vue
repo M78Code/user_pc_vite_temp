@@ -45,7 +45,7 @@
         <!-- 视频按钮 -->
         <div class="media-col"></div>
       </div>
-      <template v-if="has_other_play">
+      <template v-if="match.has_other_play">
         <!-- 角球玩法tab -->
         <div class="other-play-tab">
           <!-- <div class="process-col"></div> -->
