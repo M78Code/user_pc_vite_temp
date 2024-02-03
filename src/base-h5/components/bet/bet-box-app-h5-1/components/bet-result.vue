@@ -4,7 +4,7 @@
         <div class="f-b-s bet-content">
             <div class="fw-s-s bet-left">
                 <div class="w-100 f-s-c text-1a1 m-b-6">
-                    <span class="text-flow-none color000 font500">{{ `${items.teamName} ${items.playOptionName}`}}</span> 
+                    <span class="text-flow-none color000 font500">{{ items.playOptionName }}</span> 
                     <span class="bet-market mx-4 text-ff7">{{ items.marketValue }}</span>
                 </div>
                 <div class="w-100 font12 content">

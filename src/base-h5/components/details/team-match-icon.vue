@@ -7,10 +7,12 @@
   <div class="match-icon" v-if="detail_data.mvs > -1 || (detail_data.mms > 1 && [1,2,7,10,110].includes(detail_data.ms*1))">
     <div class="match-icon-item" v-if="detail_data.mms > 1" @click="icon_click_muUrl({match:detail_data, source:main_source})">
       <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/live_app.svg`" alt />
-      {{ i18n_t('match_info.video_live') }}</div>
+      {{ i18n_t('match_info.video_live') }}
+    </div>
     <div class="match-icon-item" v-if="detail_data.mvs > -1 && lodash.get(UserCtr, 'user_info.ommv')" @click="icon_click_animationUrl({match:detail_data, source:main_source})">
       <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/animate_app.svg`" alt />
-      {{i18n_t('match_info.animation_live') }}</div>
+      {{i18n_t('match_info.animation_live') }}
+    </div>
   </div>
   <div class='team-match-icon' style="color: #fff;" v-if="false">
     <div class="icon-wrap">
