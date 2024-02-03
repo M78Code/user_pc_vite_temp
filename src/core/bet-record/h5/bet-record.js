@@ -121,8 +121,6 @@ class BetRecord {
       } else if (res.code == '0401038') {
         this.is_limit = true
         return
-      } else {
-        return;
       }
       //容错处理，接口再调一次 (极端情况下，条件多次成立，触发接口限频)
       // if (size < 5 && size > 0 && lodash.get(res, 'data.hasNext') == true) {
@@ -133,8 +131,7 @@ class BetRecord {
       // }
     }).catch(err => {
       this.is_loading = false;
-      console.error(err)
-      return;
+      this.set_bet_record_version()
     });
   }
 
