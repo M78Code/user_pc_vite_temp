@@ -17,7 +17,7 @@
 
     <template v-else>
       <div v-if="is_search" class="search_tips">
-        <span>未搜索到相关赛事</span>
+        <span>{{ i18n_t('app_h5.search.search_tips') }}</span>
       </div>
       <!-- 非收藏页 -->
       <NoData class="data-get-empty1" v-else-if='match_is_empty && !is_collect' :which='which' height='400'></NoData>
