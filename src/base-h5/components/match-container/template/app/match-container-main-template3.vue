@@ -950,7 +950,7 @@ export default {
   .odd-list-inner {
     height: 0.2rem;
     width: 100%;
-    padding: 0.05rem 2% 0 2%;
+    padding: 5px 2% 0 2%;
     display: flex;
     justify-content: space-between;
     position: relative;
@@ -984,8 +984,8 @@ export default {
       }
 
       &.result {
-        padding-top: 0.05em;
-        padding-bottom: 0.14rem;
+        padding-top: 5px;
+        padding-bottom: 8px;
       }
     }
 
