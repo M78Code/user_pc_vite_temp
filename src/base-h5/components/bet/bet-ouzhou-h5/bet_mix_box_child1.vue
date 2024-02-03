@@ -4,7 +4,7 @@
 -->
 
 <template>
-  <div v-show="false">{{ BetData.bet_data_class_version }}-{{items.red_green}}{{UserCtr.user_version}} </div>
+  <div v-show="false">{{ BetData.bet_data_class_version }}-{{items.red_green}}-{{UserCtr.user_version}} </div>
     <div class="bet-mix-show">
       <div class="nonebox4-content">
           <div class="nonebox4-content-left">
@@ -12,7 +12,7 @@
                   <span class="icon-delete nonebox4-content-left-content-xian" @click.stop="del_bet_options"></span>
                   <div class="nonebox4-content-left-info">
                     <div class="nonebox4-content-left-content-text">
-                      
+                       <!-- {{ items.ol_os }}-{{ items.hl_hs  }}-{{ items.mid_mhs }} -->
                       <div class="nonebox4-content-left-content-text-one">
                         <div class="nonebox4-content-left-content-text-one-tit">
                           <!-- vr 单独处理 222-->
@@ -29,7 +29,7 @@
                           <span v-else>[{{ i18n_t(`odds.EU`) }}]</span>
                         </div>
                         <div>
-                            <div class="nonebox4-content-right" v-if="items.ol_os == 1 && items.hl_hs == 0 && items.mid_mhs == 0">
+                            <div class="nonebox4-content-right" v-if="!([2,3].includes(items.ol_os*1) || [1,2].includes(items.hl_hs*1) || [1,2].includes(items.mid_mhs*1))">
                               <div class="nonebox4-content-right-profit" :class="{'red-up':items.red_green == 'red_up','green-down':items.red_green == 'green_down'}">
                                 {{compute_value_by_cur_odd_type(items.odds,items.playId,items.odds_hsw,items.sportId)}}
                               </div>
@@ -62,7 +62,6 @@
                           <div class="bet-odds-edit">
                             <span class="bet-odds-reduce" :class="{begray:ref_pre_book.appoint_ball_value <= 0}" v-touch-repeat:0:300.mouse.enter.space="() => {sub_handle(items)}">-</span>
                             <bet-input-info3 :items="items" :valueModel="ref_pre_book.appoint_ball_value" :index="'pre_handicap' + index"></bet-input-info3>
-                            <!-- <input class="bet-odds-number" v-model="ref_pre_book.appoint_ball_value" /> -->
                             <span class="bet-odds-add" :class="{begray:ref_pre_book.appoint_ball_value >= check_ball_maxmin(items)}" v-touch-repeat:0:300.mouse.enter.space="() => {add_handle(items)}">+</span> 
                           </div>
                         </div>                    
@@ -72,14 +71,13 @@
                           <div class="bet-odds-edit">
                             <span class="bet-odds-reduce" :class="{begray:ref_pre_book.appoint_odds_value == ref_pre_book.min_odds_value}" v-touch-repeat:0:300.mouse.enter.space="() => {btn_reduce(items)}">-</span>
                             <bet-input-info3 :items="items" :valueModel="ref_pre_book.appoint_odds_value" :index="'pre_odds' + index"></bet-input-info3>
-                            <!-- <input class="bet-odds-number" type="number" v-model="ref_pre_book.appoint_odds_value" /> -->
                             <span class="bet-odds-add" :class="{begray:ref_pre_book.appoint_odds_value >= 355}" v-touch-repeat:0:300.mouse.enter.space="() => {btn_add(items)}">+</span> 
                           </div>
                           <span class="delete-appoint icon-delete" @click="set_no_show_appoint()"></span>
                         </div>
                       </div>
-                  
                     </div>
+
                     <div class="appoint-cursor" v-if="!ref_data.show_appoint && BetData.is_bet_single && BetData.bet_pre_list.includes(items.playOptionsId)" @click="set_show_appoint">
                      +{{i18n_t('pre_record.book')}}
                     </div>
