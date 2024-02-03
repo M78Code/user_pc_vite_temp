@@ -1514,7 +1514,7 @@ const get_handicap = (ol_obj,hl_obj,mid_obj,other) => {
             hv = ''
         }else
         // 独赢 罚牌玩法 / 加时赛 / 冠军
-        if( [126,129,135,136,310,111,333].includes(ol_obj._hpid*1)) {
+        if( [111,119,126,129,135,136,310,311,333].includes(ol_obj._hpid*1)) {
             if(ol_obj.ots == 'T1'){
                 text = mid_obj.mhn 
             }
@@ -1526,7 +1526,7 @@ const get_handicap = (ol_obj,hl_obj,mid_obj,other) => {
             }
         }else
         // 让球 
-        if([33,113,128,130,306,308,334].includes(ol_obj._hpid*1)) {
+        if([33,113,121,128,130,306,308,334].includes(ol_obj._hpid*1)) {
             if(ol_obj.ots == 'T1'){
                 text = mid_obj.mhn 
             }
