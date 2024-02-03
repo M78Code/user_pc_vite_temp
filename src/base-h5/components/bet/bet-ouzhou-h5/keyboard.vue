@@ -285,8 +285,8 @@ const _handleNumberKey = (num) => {
         if (ball.includes(".") && s_length > 1) {
           ball = ball.substring(0, ball.indexOf(".") + 3);// 最多只保留小数点两位
         }
-        // computed_keyboard_handicap(ball*1)
-        ref_pre_book.appoint_ball_value = ball*1
+        computed_keyboard_handicap(ball*1)
+        // ref_pre_book.appoint_ball_value = ball*1
       }
       return
     }

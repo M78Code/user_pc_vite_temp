@@ -175,14 +175,14 @@ const add_handle = (item, index = 1) => {
       if (ref_pre_book.appoint_ball_head >= max_rang) {
         ref_pre_book.appoint_ball_head = max_rang
         //给出弹框提示（已为最高预约盘口值，请重新调整）
-        useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('bet.bet_header_hight_adjust')}`)
+        useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('pre_record.market_error_info_max')}`)
       }
       //大小球
     } else {
       if (ref_pre_book.appoint_ball_head >= max_big) {
         ref_pre_book.appoint_ball_head = max_big
         //给出弹框提示（已为最高预约盘口值，请重新调整）
-        useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('bet.bet_header_hight_adjust')}`)
+        useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('pre_record.market_error_info_max')}`)
       }
     }
     //篮球
@@ -194,13 +194,13 @@ const add_handle = (item, index = 1) => {
       if (ref_pre_book.appoint_ball_head >= max_let) {
         ref_pre_book.appoint_ball_head = max_let
         //给出弹框提示（已为最高预约盘口值，请重新调整）
-        useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('bet.bet_header_hight_adjust')}`)
+        useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('pre_record.market_error_info_max')}`)
       }
     } else {
       if (ref_pre_book.appoint_ball_head >= max_small) {
         ref_pre_book.appoint_ball_head = max_small
         //给出弹框提示（已为最高预约盘口值，请重新调整）
-        useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('bet.bet_header_hight_adjust')}`)
+        useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('pre_record.market_error_info_max')}`)
       }
     }
   }
@@ -227,8 +227,19 @@ const computed_keyboard_odds = (val) => {
 }
 
 const computed_keyboard_handicap = (val) => {
-  let max_rang = 10;
-  let max_big = 30;
+  let min_ball_head = -99.5;
+  let max_ball_head = 400.5;
+  let res = val
+  if (val <= min_ball_head) {
+    res = format_money(min_odds)
+    useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('pre_record.market_error_info')}`)
+  }
+  if (val >= max_ball_head) {
+    res = format_money(max_odds)
+    useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('pre_record.market_error_info_max')}`)
+  }
+  ref_pre_book.appoint_ball_value = res
+  set_bet_obj_config()
 }
 
 
@@ -261,11 +272,11 @@ const sub_handle = (item, index = 1) => {
       console.error('ref_pre_book.appoint_ball_head====', ref_pre_book.appoint_ball_head);
       console.error('basic_score===', ref_pre_book.basic_score);
       //给出弹框提示（已为最低预约盘口值，请重新调整）
-      useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('bet.bet_header_adjust')}`)
+      useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('pre_record.market_error_info')}`)
     } else if (FOOTBALL_PLAY_LET_BALL.includes(item.playId)) {
       if (ref_pre_book.appoint_ball_head <= mix_rang) {
         ref_pre_book.appoint_ball_head = mix_rang
-        useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('bet.bet_header_adjust')}`)
+        useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('pre_record.market_error_info')}`)
       }
     }
     else
@@ -279,13 +290,13 @@ const sub_handle = (item, index = 1) => {
       if (ref_pre_book.appoint_ball_head < mix_let) {
         ref_pre_book.appoint_ball_head = mix_let
         //给出弹框提示（已为最低预约盘口值，请重新调整）
-        useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('bet.bet_header_adjust')}`)
+        useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('pre_record.market_error_info')}`)
       }
     } else {
       if (ref_pre_book.appoint_ball_head < mix_small) {
         ref_pre_book.appoint_ball_head = mix_small
         //给出弹框提示（已为最低预约盘口值，请重新调整）
-        useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('bet.bet_header_adjust')}`)
+        useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('pre_record.market_error_info')}`)
       }
     }
   }
@@ -470,5 +481,6 @@ export {
   add_handle,
   ref_pre_book,
   set_ref_data,
-  computed_keyboard_odds
+  computed_keyboard_odds,
+  computed_keyboard_handicap
 }

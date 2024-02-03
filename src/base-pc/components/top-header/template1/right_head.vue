@@ -194,13 +194,13 @@ export default defineComponent({
       i18n: ['odds.EU', 'odds.HK'],
       params: ['EU', 'HK']
     },
-    {
-      type: "sort",
-      title: "bet_record.settled_time",
-      index: UserCtr.sort_type || 1,// footer_menu.hot time
-      i18n: ['set.match_sort', 'set.time_sort'],
-      params: [1, 2]
-    }
+    // {
+    //   type: "sort",
+    //   title: "bet_record.settled_time",
+    //   index: UserCtr.sort_type || 1,// footer_menu.hot time
+    //   i18n: ['set.match_sort', 'set.time_sort'],
+    //   params: [1, 2]
+    // }
       // {
       //   title: 'Bet Slip',
       //   index: 'ANY',

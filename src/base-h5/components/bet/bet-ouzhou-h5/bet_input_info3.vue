@@ -50,6 +50,7 @@ const props = defineProps({
 })
 
 const input_click = (items, index, evnet) => {
+    if(props.readonly) return
     BetData.set_active_index(index)
     nextTick(() => {
         BetData.set_bet_keyboard_show(true)
