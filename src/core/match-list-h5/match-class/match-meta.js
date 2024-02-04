@@ -4,6 +4,8 @@
  */
 import { ref } from 'vue'
 import lodash from 'lodash'
+import { uid } from "quasar";
+import axios_debounce_cache from "src/core/http/debounce-module/";
 import { api_common, api_match_list, api_match, api_home, api_analysis } from "src/api/index.js";
 import BaseData from 'src/core/base-data/base-data.js'
 import UserCtr from 'src/core/user-config/user-ctr.js'
@@ -31,6 +33,8 @@ class MatchMeta {
     this.tid_map_mids = {}
     // 接口取消标识
     this.axios_cancel = {}
+    // 接口 timer
+    this.axios_debounce_timer = null
   }
 
   init() {
@@ -1666,7 +1670,7 @@ class MatchMeta {
     }
   }
   /**
-   * @description 获取赛事赔率    TODO:  废弃 待删除
+   * @description 获取赛事赔率
    * @param { mids } mids
    * @param { Object } other 其他参数， 比如 次要玩法拉取
    * @param {  } warehouse 仓库
@@ -1680,6 +1684,7 @@ class MatchMeta {
     if (MenuData.is_esports()) return
     // 竞足409 不需要euid
     const params = {
+      gcuuid: uid(),
       mids: mids.length > 0 ? mids : match_mids,
       cuid: UserCtr.get_uid(),
       sort: UserCtr.sort_type,
@@ -1694,9 +1699,36 @@ class MatchMeta {
       params.versionNewStatus = 'matcheHandpick';
       params.sort = 1;
     }
-    let res = ''
+   
     // 取消上一次的  限频重新请求逻辑
     this.axios_cancel['mids'] && this.axios_cancel['mids']()
+
+    const by_mids_debounce_cache = axios_debounce_cache.get_match_base_info_by_mids;
+    if (by_mids_debounce_cache && by_mids_debounce_cache["ENABLED"]) {
+      const info = by_mids_debounce_cache.can_send_request({
+        ...params,
+      });
+      if (info?.can_send) {
+        //直接发请求    单次数 请求的方法
+        this.handler_match_by_mids(params, warehouse)
+      } else {
+        // 记录timer
+        clearTimeout(this.axios_debounce_timer);
+        this.axios_debounce_timer = setTimeout(() => {
+          //直接发请求    单次数 请求的方法
+          this.handler_match_by_mids(params, warehouse)
+          this.axios_debounce_timer = null
+        }, info?.delay_time || 1000);
+      }
+    } else {
+      //直接发请求    多 次数  循环请求 的方法
+      this.handler_match_by_mids(params, warehouse)
+    }
+  }
+
+  // 赛事赔率请求
+  async handler_match_by_mids (params, warehouse = MatchDataBaseH5) {
+    let res = ''
     if (MenuData.is_esports()) {
       res = await this.handler_axios_loop_func({ http: api_common.get_esports_match_by_mids, params, key: 'get_esports_match_by_mids', axios_key: "mids" })
     } else {
@@ -1727,7 +1759,7 @@ class MatchMeta {
   }
 
    // 不需要重置的属性
-   no_reset_attribute (match, warehouse) {
+   no_reset_attribute (match, warehouse = MatchDataBaseH5) {
     let result = {}
     const item = warehouse.get_quick_mid_obj(match.mid)
     if (item) {

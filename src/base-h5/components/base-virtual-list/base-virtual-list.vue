@@ -10,7 +10,7 @@
       <div class="pillarDom" :style="{ height: `${pillarDomHeight}px` }"></div>
       <div class="contentList" :style="styleTranslate" ref="contentListRef">
         <!-- :data-mid="item.mid" :data-index="index" :data-source-index="item.source_index" -->
-        <div class="item" v-for="item, index in renderData" :key="get_match_key(item)" :mid="item.mid">
+        <div class="item" v-for="item, index in renderData" :key="item.mid" :mid="item.mid">
           <slot name="default" :item="item" :index="index"></slot>
         </div>
         <!-- 到底了容器-->

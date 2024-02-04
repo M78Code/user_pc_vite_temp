@@ -251,24 +251,45 @@ export function usedetailData(route) {
       };
       let send_gcuuid = uid();
       params.gcuuid = send_gcuuid;
-      const res = await get_detail_category(params);
-      // 添加接口节流
-      let gcuuid = lodash.get(res, "gcuuid");
-      if (gcuuid && send_gcuuid != gcuuid) {
-        return;
-      }
+      let obj_ = {
+        // axios api对象
+        axios_api:get_detail_category,
+        // axios api对象参数
+        params: params,
+        // 唯一key值
+        key: "get_detail_category",
+        error_codes: ["0401038"],
+        // axios中then回调方法
+        fun_then: async(res) => {
+          // 添加接口节流
+          let gcuuid = lodash.get(res, "gcuuid");
+          if (gcuuid && send_gcuuid != gcuuid) {
+            return;
+          }
+          category_list.value = res.data || [];
+          const list = res.data?.filter((i) => i.marketName);
+          if (list) {
+            tabList.value = list.map((item) => ({
+              ...item,
+              label: item.marketName,
+              value: item.orderNo,
+            }));
+          }
+    
+          await get_detail_lists();
+         
+        },
+        // axios中catch回调方法
+        fun_catch: (e) => {
+          console.log(e);
+        },
+        // 最大循环调用次数(异常时会循环调用),默认3次
+        max_loop: 3,
+        // 异常调用时延时时间,毫秒数,默认1000
+        timers: 1100,
+      };
+      axios_api_loop(obj_);
 
-      category_list.value = res.data || [];
-      const list = res.data?.filter((i) => i.marketName);
-      if (list) {
-        tabList.value = list.map((item) => ({
-          ...item,
-          label: item.marketName,
-          value: item.orderNo,
-        }));
-      }
-
-      await get_detail_lists();
     } catch (error) {
       console.error("get_detail_category", error);
     }

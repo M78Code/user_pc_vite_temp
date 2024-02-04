@@ -376,7 +376,7 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
       fun_then: (res) => {
         set_details_loading_time_record("ok");
         // 检查gcuuid
-        // if (state.send_gcuuid != res.config.gcuuid) return;
+        //  if (state.send_gcuuid != res.config.gcuuid) return;
         // 玩法列表数据处理
         get_match_details(res);
       },
@@ -600,12 +600,17 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
   const get_category_list = (callback) => {
     //sportId 球类id、mid 赛事id
     let params = { sportId: route.params.csid, mid: route.params.mid };
-    
+    state.send_gcuuid = params.gcuuid = create_gcuuid();
     const _obj = {
       axios_api: api_details.get_category_list,
       error_codes: ["0401038"],
       params: params,
       fun_then: (res) => {
+         // 添加接口节流
+         let gcuuid = lodash.get(res, "gcuuid");
+         if (gcuuid && state.send_gcuuid != gcuuid) {
+           return;
+         }
         if (!MatchDataWarehouseInstance) {
           return;
         }
