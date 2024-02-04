@@ -374,7 +374,7 @@ export default {
 
 .all-league-title{
   display: flex;
-  height: 30px;
+  height: 25px;
   background: var(--q-gb-bg-c-25);
   padding: 0 10px;
   align-items: center;
@@ -704,7 +704,7 @@ export default {
 
   /* **************联赛展示********************** -S*/
   .league {
-    height: 23px;
+    height: 25px;
     border-radius: 0.08rem 0.08rem 0 0;
     // padding: 0 0.1rem;
     background-color: var(--q-gb-bg-c-18);
@@ -950,7 +950,7 @@ export default {
   .odd-list-inner {
     height: 0.2rem;
     width: 100%;
-    padding: 0.05rem 2% 0 2%;
+    padding: 5px 2% 0 2%;
     display: flex;
     justify-content: space-between;
     position: relative;
@@ -984,8 +984,8 @@ export default {
       }
 
       &.result {
-        padding-top: 0.05em;
-        padding-bottom: 0.14rem;
+        padding-top: 5px;
+        padding-bottom: 8px;
       }
     }
 
