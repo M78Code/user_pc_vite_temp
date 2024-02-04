@@ -662,7 +662,6 @@ class BaseData {
         }
       });
       this.dianjing_sublist = [...esport_menu];
-      
       // openElectronicTy 电子体育 openElectronicFootball 电子足球 openElectronicBasketball 电子篮球  filterSport 关闭的赛种
       let {openElectronicTy,openElectronicFootball,openElectronicBasketball,filterSport} = lodash_.get(UserCtr,'user_info',{})
       let filter_list = []
@@ -671,15 +670,15 @@ class BaseData {
         // 电子体育关 所有都关
         // 电子足球开 赛种都关闭 电子足球也关 
         if(openElectronicFootball){
-          // if( filterSport.includes('-1') && filterSport.includes('-2') && filterSport.includes('-3') ){
+          if(!(filterSport.includes('-1') && filterSport.includes('-2') && filterSport.includes('-3')) ){
             filter_list.push(90) 
-          // }
+          }
         }
         // 篮球同上
         if(openElectronicBasketball){
-          // if( filterSport.includes('-4')){
+          if(!filterSport.includes('-4')){
             filter_list.push(91) 
-          // }
+          }
         }
       }else{
         filter_list = []
@@ -745,7 +744,6 @@ class BaseData {
       } else {
         this.is_mi_2000_open = false;
       }
-
       // 判断有没有 vr数据
       // vr数据菜单（紧急开关） vr商户开关
       if (!this.vr_mi_config.length || !this.is_mi_300_open_int) {
