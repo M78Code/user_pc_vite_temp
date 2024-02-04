@@ -170,7 +170,6 @@ class BetWsMessage {
   // 赛事订阅盘口赔率变更 修改投注项变更
   // 投注项变更
   MSG_C106(obj) {
-    console.error('obj.cmd',obj.cmd)
     let config = obj.cd
     config.cmd = obj.cmd
     BetData.set_bet_c106_change(config)

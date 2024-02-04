@@ -1268,6 +1268,7 @@ class MatchMeta {
         is_meta: false,
         estimateHeight: MatchUtils.get_default_estimateHeight(match),
         is_show_league: MatchUtils.get_match_is_show_league(index, target_data),
+        is_show_secondary_play: MatchUtils.get_match_is_show_secondary_play(match),
         is_show_ball_title: MatchUtils.get_match_is_show_ball_title(index, target_data),
         is_show_border_radius: MatchUtils.get_is_show_border_radius(index, target_data),
       })
@@ -1741,7 +1742,8 @@ class MatchMeta {
     MatchResponsive.set_is_http_update_info(true)
     data.forEach(t => {
       // 获取赛事的让球方 0未找到让球方 1主队为让球方 2客队为让球方
-      t.handicap_index = MatchUtils.get_handicap_index_by(t);
+      t.handicap_index = MatchUtils.get_handicap_index_by(t)
+      t.is_show_secondary_play = MatchUtils.get_match_is_show_secondary_play(t)
       const item = lodash.find(this.complete_matchs, (match) => match.mid === t.mid)
       // 默认高度  match  接口  和  by_mids  接口 有时候 返回的 次要玩法开关不一致 ， 故重计算下
       // MatchFold.set_match_show_tab(t)
