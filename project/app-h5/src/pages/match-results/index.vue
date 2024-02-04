@@ -58,11 +58,11 @@ import MatchFold from 'src/core/match-fold/index.js'
 import { MenuData,compute_local_project_file_path } from "src/output/index.js"
 import { useMittEmit, MITT_TYPES } from "src/core/mitt";
 import { dateTabList } from "src/base-h5/components/menu/app-h5-menu/utils";
-import BaseData from "src/core/base-data/base-data.js";
+// import BaseData from "src/core/base-data/base-data.js";
 import setectLeague from 'src/base-h5/components/tutorial/navigation-bar/setect-league.vue'
 import MatchContainer from "src/base-h5/components/match-list/index.vue";
 import {api_common } from "src/api/index.js";
-
+import { dianjing_sublist } from "src/output/module/constant-utils.js"
 const inner_height = window.innerHeight;  // 视口高度
 const switchMenu = [
     {
@@ -107,7 +107,8 @@ const menu_list = computed(()=>{
             arr = MenuData.menu_list.map(item=>{return {...item,sport_id:+item.mi-100,result_mi:+item.mi-100}});
             break;
         case 1:
-            arr = BaseData.dianjing_sublist.map(item=>{return {...item,sport_id:+item.mi-2000,result_mi:+item.mi}});
+            // arr = BaseData.dianjing_sublist.map(item=>{return {...item,sport_id:+item.mi-2000,result_mi:+item.mi}});
+            arr = dianjing_sublist().map(item=>{return {...item,sport_id:+item.mi-2000,result_mi:+item.mi}});
             break;
         case 2:
             arr = MenuData.get_menu_lvmi_special_list(300).map(item=>{return {...item,sport_id:+item.mi-30000,result_mi:+item.mi}});

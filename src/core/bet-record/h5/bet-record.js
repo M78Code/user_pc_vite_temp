@@ -188,7 +188,9 @@ class BetRecord {
     let tempList = []
     lodash.forEach(this.list_data, (value, key) => {
       lodash.forEach(value.data, (item) => {
+        if(item.seriesType === '1') { //单关、足篮才有提前结算
           tempList.push(item.orderNo)
+        }
       })
     })
     if (tempList.length === 0) return;

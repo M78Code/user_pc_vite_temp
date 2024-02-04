@@ -240,6 +240,8 @@ const _handleDeleteKey = () => {
 
     if (BetData.is_bet_pre && BetData.active_index.includes('odds') || BetData.active_index.includes('handicap')) {
 
+      if (ref_pre_book.appoint_ball_value == '-' || ref_pre_book.appoint_ball_value == '+') return
+
       if(BetData.active_index.includes('odds')) {
         let odds = ref_pre_book.appoint_odds_value.toString()
         odds = odds ? odds.substring(0, odds.length - 1) : 0
@@ -247,6 +249,11 @@ const _handleDeleteKey = () => {
       } else {
         let ball = ref_pre_book.appoint_ball_value.toString()
         ball = ball ? ball.substring(0, ball.length - 1) : 0
+        // 判断是否有正负号 如有有保留
+        if (ball == '-' || ball == '+') {
+          ref_pre_book.appoint_ball_value = ball
+          return
+        }
         ref_pre_book.appoint_ball_value = ball ? ball*1 : 0
       }
       return

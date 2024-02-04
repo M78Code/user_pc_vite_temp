@@ -1,7 +1,7 @@
 //  // api详情
 import { api_details } from "src/api";
 import lodash from "lodash";
-import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache.js";
+import axios_debounce_cache from "src/core/http/debounce-module/";
 import { update_match_time } from "src/core/bet/common-helper/module/common-sport.js";
 import axios_api_loop from "src/core/http/axios-loop.js"
 import {

@@ -56,6 +56,7 @@ import { format_odds, format_currency, formatTime, useMittEmit, useMittOn,  MITT
 import { i18n_t, i18n_tc } from "src/boot/i18n.js"
 import UserCtr from "src/core/user-config/user-ctr.js"
 import { api_betting } from 'src/api/index';
+import math_js from "src/core/bet/common/mathjs.js"
 
 const props = defineProps({
   item: {},
@@ -75,6 +76,8 @@ let bet_pre_code = ref('')
 let front_settle_amount = ref('')
 // 根据轮询获取的最新预计返还金额
 let expected_profit = ref(0)
+// 结算金额
+let cashout_stake = ref(0)
 // 工具方法
 // let utils = ref(utils)
 // 接口调用次数计数 // 概率，用于计算钮下的预计返还（盈利），注意，查询订单记录接口是直接返回的金额，而ws推送返回的是概率，所以概率更新了需要重新计算钮下的预计返还（盈利）
@@ -103,11 +106,6 @@ const is_only_fullbet = computed(() => {
   return props.item.preSettleBetAmount != null && props.item.preSettleBetAmount <= min_bet_money && expected_profit.value >= 1
 })
 
-// 提前结算投注额,四舍五入取整
-const cashout_stake = computed(() => {
-  let pba = props.item.preSettleBetAmount || 0
-  return pba < min_bet_money ? +min_bet_money : +pba;
-})
 
 // 单关最低投注金额
 const min_bet_money = computed(() => {
@@ -124,7 +122,7 @@ watch(() => expected_profit.value, (_new, _old) => {
 
 onMounted(() => {
   // 计算提前结算按钮是否显示
-  calc_show.value = (props.item.seriesType === '1' && props.item.enablePreSettle)
+  // calc_show.value = (props.item.seriesType === '1' && props.item.enablePreSettle)
   //  /10true[1-6]+/.test("" + lodash.get(UserCtr.user_info, 'settleSwitch')  + props.item.enablePreSettle + status.value);
 
 
@@ -153,16 +151,14 @@ onMounted(() => {
       return
     }
     // 有当前单号
-    // calc_show.value = true
-    let _maxCashout = props.item.maxCashout
-    if (moneyData && moneyData.orderStatus === 0) {
-      if (moneyData.preSettleMaxWin !=  props.item.maxCashout) {
-        _maxCashout = moneyData.preSettleMaxWin
-      }
-    }
-    let _percentage = cashout_stake.value / parseInt(props.item.preSettleBetAmount)
-    //四舍五入至小数点第二位
-    expected_profit.value =  Math.round(_maxCashout * _percentage * 100) / 100
+    calc_show.value = true
+
+    // 预计返还（盈利）
+    expected_profit.value =  moneyData.preSettleMaxWin
+    
+    // 结算金额(投注金额 - 已结算金额)
+    let preBetAmount = moneyData.preBetAmount || 0
+    cashout_stake.value = math_js.subtract(moneyData.betAmount, preBetAmount)
   }).off;
 
   // 处理ws订单状态推送
@@ -195,7 +191,6 @@ const c201_handle = ({ orderNo, orderStatus }) => {
  *@description 提前结算提交事件
  */
 const submit_early_settle = () => {
-  if (cashout_stake.value < 0.01) return;
   status.value = 3;
   unSuccessTips.value = false
   bet_pre_code.value = ''
