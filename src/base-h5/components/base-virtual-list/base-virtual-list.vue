@@ -129,7 +129,7 @@ const end = computed(() => {
  */
 const contentListOffset = ref(0)
 const styleTranslate = computed(() => {
-  return `transform:translate(0,${contentListOffset.value}px)`
+  return `transform:translate3d(0,${contentListOffset.value}px,0)`
 })
 /**
  * 当前视口需要显示的数据
@@ -437,6 +437,7 @@ onUnmounted(() => {
   right: 0;
   padding-bottom: 6px;
 
+  // transform-style: preserve-3d;
   // will-change: transform;
   .loading-more-container {
     width: 100%;

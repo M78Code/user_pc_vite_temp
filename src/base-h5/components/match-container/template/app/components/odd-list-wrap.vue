@@ -136,76 +136,77 @@
         <img class="slide_icon slide_icon_l animate-effect" :src="slide_icon_1" alt="" v-if="is_show_scroll_dir(0)">
       </template> -->
     </template>
-    <!-- 标准版 波胆玩法盘口赔率组件 -->
-    <div v-else-if="[18].includes(+lodash.get(current_tab_item, 'id'))" class="correct_style">
-      <!-- 波胆玩法 标题 -->
-      <div class="correct_style_title">
-        <div>
-          <span>{{match.mhn}}</span>
-          <span>{{ i18n_t('football_playing_way.full_time_draw')}}</span>
-          <span>{{match.man}}</span>
+    <template v-else>
+      <!-- 标准版 波胆玩法盘口赔率组件 -->
+      <div v-if="[18].includes(+lodash.get(current_tab_item, 'id'))" class="correct_style">
+        <!-- 波胆玩法 标题 -->
+        <div class="correct_style_title">
+          <div>
+            <span>{{match.mhn}}</span>
+            <span>{{ i18n_t('football_playing_way.full_time_draw')}}</span>
+            <span>{{match.man}}</span>
+          </div>
+          <div>
+            <span>{{match.mhn}}</span>
+            <span>{{ i18n_t('football_playing_way.half_time_draw')}}</span>
+            <span>{{match.man}}</span>
+          </div>
         </div>
-        <div>
-          <span>{{match.mhn}}</span>
-          <span>{{ i18n_t('football_playing_way.half_time_draw')}}</span>
-          <span>{{match.man}}</span>
-        </div>
-      </div>
-      <!-- 波胆玩法 盘口赔率 -->
-      <div class="hps-bold-main-container">
-        <div class="hps-bold-container" :key="hp_i+'hp_i_i_bold'" v-for="(hp_item,hp_i) of bold_all_list">
-          <div class="hps-bold-other-left" :key="main_i+'main_i_bold'" v-for="(main_item,main_i) of get_bold_ol_list(hp_item,hp_i)">
-            <div  v-for="(ol_item,ol_item_i) of main_item" :key="ol_item_i+'ol_item_i_bold'" :class="['odd-wrap-hps-bold-other', {hold_other:ol_item.otd == -1}]">
-              <odd-column-item
-                :placeholder="ol_item.placeholder"
-                :n_s="standard_edition"
-                :ol_list_item="ol_item"
-                :match="match"
-                :odd_field="hp_item"
-                :hl_hs="get_hl_hs(hp_item)"
-                :current_tab_item="current_tab_item"
-                :invoke_source="invoke_source"
-              />
+        <!-- 波胆玩法 盘口赔率 -->
+        <div class="hps-bold-main-container">
+          <div class="hps-bold-container" :key="hp_i+'hp_i_i_bold'" v-for="(hp_item,hp_i) of bold_all_list">
+            <div class="hps-bold-other-left" :key="main_i+'main_i_bold'" v-for="(main_item,main_i) of get_bold_ol_list(hp_item,hp_i)">
+              <div  v-for="(ol_item,ol_item_i) of main_item" :key="ol_item_i+'ol_item_i_bold'" :class="['odd-wrap-hps-bold-other', {hold_other:ol_item.otd == -1}]">
+                <odd-column-item
+                  :placeholder="ol_item.placeholder"
+                  :n_s="standard_edition"
+                  :ol_list_item="ol_item"
+                  :match="match"
+                  :odd_field="hp_item"
+                  :hl_hs="get_hl_hs(hp_item)"
+                  :current_tab_item="current_tab_item"
+                  :invoke_source="invoke_source"
+                />
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <!-- 标准版 5分钟 盘口赔率组件 -->
-    <div v-else-if="[19].includes(+lodash.get(current_tab_item, 'id'))" class="five-minutes-to-play">
-      <div class="odd-wrap-hps-bold-other"
-           :key="ol_item_i_five+'ol_item_i_five'" v-for="(ol_item,ol_item_i_five) of get_five_minutes_ol_list(five_minutes_all_list)"
-           :class="{
-             lastBestTwoOddWraps:[1172,1192].includes(+lodash.get(ol_item, 'otd')),
-             lastFiveOddWraps:[1173,1193].includes(+lodash.get(ol_item, 'otd')),
-             second_half: lodash.get(ol_item, 'ot') === '46-50',
-             kill_shot: lodash.get(ol_item, 'ot') === 'ClutchGoal' && lodash.get(ol_item, 'os') === 1,
-             'ClutchGoal-os-3': lodash.get(ol_item, 'ot') === 'ClutchGoal' && [1,2,7,10].includes(+match['ms']),
-           }"
-      >
-        <odd-column-item
-          :placeholder="ol_item.placeholder"
-          :n_s="standard_edition"
-          :ol_list_item="ol_item"
-          :match="match"
-          :odd_field="five_minutes_all_list"
-          :hl_hs="get_hl_hs(five_minutes_all_list)"
-          :current_tab_item="current_tab_item"
-          :invoke_source="invoke_source"
-        />
-      </div>
-      <!--  5分钟 图标  -->
-      <div class="team-t-title-w" v-if="[1,3,5,7,8,9].includes(+match.csid) && lodash.size(lodash.get(five_minutes_all_list, 'hl[0].ol'))">
-        <img @click="info_icon_click($event,match.mid)"
-        class="img" :src="compute_img_url(show_tips?'icon-tips':'icon-tips-u')"
-             >
-        <span class="ellipsis">
-          {{[1,2,7,10].includes(+match['ms']) ? i18n_t('football_playing_way.minutes_of_the_Xth_goal', {goalnr: minutes_of_the_Xth_goal}) : i18n_t('football_playing_way.any_goal')}}
-        </span>
-      </div>
+      <!-- 标准版 5分钟 盘口赔率组件 -->
+      <div v-else-if="[19].includes(+lodash.get(current_tab_item, 'id'))" class="five-minutes-to-play">
+        <div class="odd-wrap-hps-bold-other"
+            :key="ol_item_i_five+'ol_item_i_five'" v-for="(ol_item,ol_item_i_five) of get_five_minutes_ol_list(five_minutes_all_list)"
+            :class="{
+              lastBestTwoOddWraps:[1172,1192].includes(+lodash.get(ol_item, 'otd')),
+              lastFiveOddWraps:[1173,1193].includes(+lodash.get(ol_item, 'otd')),
+              second_half: lodash.get(ol_item, 'ot') === '46-50',
+              kill_shot: lodash.get(ol_item, 'ot') === 'ClutchGoal' && lodash.get(ol_item, 'os') === 1,
+              'ClutchGoal-os-3': lodash.get(ol_item, 'ot') === 'ClutchGoal' && [1,2,7,10].includes(+match['ms']),
+            }"
+        >
+          <odd-column-item
+            :placeholder="ol_item.placeholder"
+            :n_s="standard_edition"
+            :ol_list_item="ol_item"
+            :match="match"
+            :odd_field="five_minutes_all_list"
+            :hl_hs="get_hl_hs(five_minutes_all_list)"
+            :current_tab_item="current_tab_item"
+            :invoke_source="invoke_source"
+          />
+        </div>
+        <!--  5分钟 图标  -->
+        <div class="team-t-title-w" v-if="[1,3,5,7,8,9].includes(+match.csid) && lodash.size(lodash.get(five_minutes_all_list, 'hl[0].ol'))">
+          <img @click="info_icon_click($event,match.mid)"
+          class="img" :src="compute_img_url(show_tips?'icon-tips':'icon-tips-u')"
+              >
+          <span class="ellipsis">
+            {{[1,2,7,10].includes(+match['ms']) ? i18n_t('football_playing_way.minutes_of_the_Xth_goal', {goalnr: minutes_of_the_Xth_goal}) : i18n_t('football_playing_way.any_goal')}}
+          </span>
+        </div>
 
-    </div>
-
+      </div>
+    </template>
   </div>
 </template>
  
