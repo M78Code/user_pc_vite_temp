@@ -4,7 +4,7 @@ import { fileds_map_common } from "src/output/module/constant-utils.js";
 import { useMittEmit, MITT_TYPES  } from "src/core/mitt/index.js"
 import LayOutMain_pc from "src/core/layout/index.js";
 import BetViewDataClass from "./bet-view-data-class.js"
-import { get_score_config,get_query_bet_amount_esports_or_vr,get_query_bet_amount_common,get_lastest_market_info } from "./bet-box-submit.js"
+import { get_score_config,get_query_bet_amount_esports_or_vr,get_query_bet_amount_common,get_lastest_market_info,set_market_id_to_ws } from "./bet-box-submit.js"
 import { compute_value_by_cur_odd_type } from "src/core/format/project/module/format-odds-conversion-mixin.js"
 import { getSeriesCountJointNumber } from "src/core/bet/common-helper/module/bet-single-config.js"
 import { nextTick, ref } from "vue"
@@ -1262,36 +1262,41 @@ this.bet_appoint_ball_head= null */
         // 对比盘口和投注项
         hls.forEach(item => {
           if(market_list.includes(item.hid)){
-            // console.error('market_list',market_list, '------',item.hid)
+            console.error('market_list',market_list, '------',item.hid)
             // 查询投注项中的 投注项id
             let ol_obj = single_list.find(obj => obj.marketId == item.hid) || {}
             // let ol_obj_index = single_list.findIndex(obj => obj.marketId == item.hid) || 0
             // 查询ws投注项 中 匹配到的投注项id 
             let ws_ol_obj = (item.ol||[]).find(obj => ol_obj.playOptionsId == obj.oid ) || {}
+
             // WS推送中包含 投注项中的投注项内容
             console.error('推送码：',obj.cmd)
             console.error('ws-坑位',item.hn, '------ 投注项坑位',ol_obj.placeNum)
             console.error('ws-盘口 状态',item.hs, 'ws-投注项 状态',ws_ol_obj.os)
             console.error('ws-投注项 赔率',ws_ol_obj.ov, '------ 投注项赔率',ol_obj.odds )
             console.error('定时器',time_out)
-            clearTimeout(time_out)
+           
             console.error('清除定时器',time_out)
             // 有坑位 并且 坑位变更 
             if(item.hn != ol_obj.placeNum && ol_obj.placeNum){
               console.error('坑位变化',item.hn,ol_obj.placeNum)
-              // 获取最新的盘口值
-              get_lastest_market_info()
               // 有坑位的数据 对 坑位 和 投注项类型 进行定位 取值 页面渲染
-              ws_ol_obj = (item.ol||[]).find(obj => ol_obj.ot == obj.ot ) || {}
+              let ws_item_hn = hls.find(obj => ol_obj.placeNum == obj.hn ) || {}
+              ws_ol_obj = (ws_item_hn.ol||[]).find(obj => ol_obj.ot == obj.ot ) || {}
               // 更新 投注项 数据
               if(ws_ol_obj.ov){
-                this.set_ws_change_odds_info(item,ws_ol_obj,ol_obj)
+                this.set_ws_change_odds_info(ws_item_hn,ws_ol_obj,ol_obj,'place_num')
+                // 更新投注项内容后 重新发起新的ws订阅
+                set_market_id_to_ws()
               }
+              // 获取最新的盘口值
+              get_lastest_market_info()
               return
             }
             // 盘口状态，玩法级别 0：开 1：封 2：关 11：锁
             if(item.hs != 0 ) {
               console.error('盘口失效',item.hs)
+              clearTimeout(time_out)
               // 直接更新状态 设置关盘
               ol_obj.hl_hs = item.hs
               ol_obj.red_green = ''
@@ -1309,7 +1314,7 @@ this.bet_appoint_ball_head= null */
   }
 
   // ws变更 带来的 投注项数据的变更
-  set_ws_change_odds_info(item,ws_ol_obj,ol_obj) {
+  set_ws_change_odds_info(item,ws_ol_obj,ol_obj,type) {
     console.error('------------ 来了 ---------------')
     if(ws_ol_obj.ov){
       // "odds": item.odds,  // 赔率 万位
@@ -1322,10 +1327,14 @@ this.bet_appoint_ball_head= null */
 
       // 投注项和状态一致不更新数据 
       if(ol_obj.odds == ws_ol_obj.ov && ws_ol_obj.os == ol_obj.ol_os && item.hs == ol_obj.hl_hs ){
-        console.error('------------ 赔率没变 ------------ ')
-        ol_obj.red_green = ''
-        this.set_ws_message_bet_info(ol_obj)
-       return
+        console.error('------------ 赔率没变 ------------ ',type == 'place_num' ?'坑位变了':"")
+    
+        // 投注项 和状态一致 并且 是坑位变化 重置红绿升降 ；不是坑位变化 直接不执行
+        if(type == 'place_num'){
+          ol_obj.red_green = ''
+        }else{
+          return
+        }
       }
       console.error('------------ 设置投注项数据 ------------ ')
       // 重新设置赔率
@@ -1341,6 +1350,12 @@ this.bet_appoint_ball_head= null */
         this.set_bet_is_accept('mark_change')
       }
 
+      // 坑位变化 后找到的新坑位数据
+      if(type == 'place_num'){
+        ol_obj.marketId = item.id
+        ol_obj.playOptionsId = ws_ol_obj.id
+      }
+      clearTimeout(time_out)
       // 获取新的基准分
       ol_obj.mark_score = get_score_config(ol_obj)
       // 赔率数据
@@ -1603,7 +1618,55 @@ this.bet_appoint_ball_head= null */
 
       this.set_options_state()
     }
-    
+  }
+  /**
+   * C112 推送数据
+   * `mid` 赛事Id
+   * `mcms` 状态2:开启，3：删除（与上游一致）
+   * `mcid` 玩法id集合
+   * @description: 玩法集变更
+   * @param {Object} obj socket推送的消息体
+   * @return {undefined} undefined
+   */
+  set_bet_c112_change(obj){
+    console.error('set_bet_c112_change',obj)
+    let mid = lodash_.get(obj,'mid', '')
+
+    // 单关/串关 属性名
+    let single_name = ''
+    // 单关/串关 属性值
+    let array_list = []
+    // 单关/串关 赛事列表
+    let mid_list = []
+    if(this.is_bet_single){
+      single_name = 'bet_single_list'
+    } else {
+      single_name = 'bet_s_list'
+    }
+    array_list = lodash_.cloneDeep(lodash_.get(this,single_name))
+    // 获取单关下的赛事id 多个（单关合并）
+    mid_list = array_list.map(item => item.matchId) || []
+
+    if(mid_list.includes(mid)){
+      let mcid = lodash_.get(obj,'mcid', '')
+      let mcms = lodash_.get(obj,'mcms', '')
+      
+      array_list.filter(item => {
+        // 当前 赛事 和 玩法对应的投注项
+        if(item.matchId == mid && mcid.includes(item.playId) ){
+          // 盘口状态，玩法级别 0：开 1：封 2：关 11：锁
+          if(mcms == 2){
+            item.hl_hs = 0
+          }
+          if(mcms == 3){
+            item.hl_hs = 2
+          }
+
+          this[single_name] = array_list
+          this.set_options_state()
+        }
+      })
+    }
   }
 }
 export default new BetData();
