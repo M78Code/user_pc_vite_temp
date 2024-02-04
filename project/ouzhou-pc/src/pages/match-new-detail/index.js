@@ -22,7 +22,9 @@ import { LayOutMain_pc } from "src/output";
 // 搜索操作相关控制类
 import search from "src/core/search-class/search.js";
 import { addWsMessageListener } from "src/core/utils/common/module/ws-message.js";
-import axios_api_loop from "src/core/http/axios-loop.js"
+import axios_api_loop from "src/core/http/axios-loop.js";
+
+import { uid } from "src/core/uuid/index.js";
 export function usedetailData(route) {
   const router = useRouter();
   /** @type {Ref<Array<TYPES.DetailCategory>>} */
@@ -62,8 +64,7 @@ export function usedetailData(route) {
   watch(
     () => route.params,
     (val) => {
-      
-      if (val && val.mid && detail_info.value?.mmp != '999' ) {
+      if (val && val.mid && detail_info.value?.mmp != "999") {
         route_parmas.value = val;
         init();
       }
@@ -77,15 +78,13 @@ export function usedetailData(route) {
     get_match_detail(val);
   });
 
-
   //  根据分类id 过滤数据
   const get_match_detail = (value) => {
     const plays = category_list.value.find(
       (item) => item.orderNo == value
     )?.plays;
-    /** @type {TYPES.DetailCategory} */ const category = category_list.value.find(
-      (item) => item.orderNo == value
-    )
+    /** @type {TYPES.DetailCategory} */ const category =
+      category_list.value.find((item) => item.orderNo == value);
     if (detail_list.value?.length > 0) {
       for (const i of detail_list.value) {
         all_list_toggle[i.hpid] = i.expanded === undefined ? true : i.expanded;
@@ -97,18 +96,18 @@ export function usedetailData(route) {
     }
     let list;
     if (plays) {
-      list = all_list.value.filter((item) =>{
-        if(category.round){
-          if(plays.includes(Number(item.hpid))){
-            let [hpid, round] = item.chpid.split("-")
-            if(round == category.round){
-              return true
-            }else {
-              return false
+      list = all_list.value.filter((item) => {
+        if (category.round) {
+          if (plays.includes(Number(item.hpid))) {
+            let [hpid, round] = item.chpid.split("-");
+            if (round == category.round) {
+              return true;
+            } else {
+              return false;
             }
           }
-        }else{
-          return plays.includes(Number(item.hpid))
+        } else {
+          return plays.includes(Number(item.hpid));
         }
       });
     } else {
@@ -128,7 +127,6 @@ export function usedetailData(route) {
     );
     detail_list.value =
       lodash.get(getMidInfo(route.params.mid), "odds_info") || [];
-
 
     show_close_thehand.value = list.length == 0;
   };
@@ -159,11 +157,15 @@ export function usedetailData(route) {
       cuid: user_info.userId,
       t: new Date().getTime(),
     };
-    console.log(MenuData.is_esports() ,'MenuData.is_esports ');
+    let send_gcuuid = uid();
+    params.gcuuid = send_gcuuid;
+    console.log(MenuData.is_esports(), "MenuData.is_esports ");
     //api_details
     let obj_ = {
       // axios api对象
-      axios_api:MenuData.is_esports() ? api_details.get_match_detail_ESMatchInfo  :  get_detail_data ,
+      axios_api: MenuData.is_esports()
+        ? api_details.get_match_detail_ESMatchInfo
+        : get_detail_data,
       // axios api对象参数
       params: params,
       // 唯一key值
@@ -171,28 +173,32 @@ export function usedetailData(route) {
       error_codes: ["0401038"],
       // axios中then回调方法
       fun_then: (res) => {
-          // 空赛事数据跳转回首页
-          if (lodash.isEmpty(res.data)) {
-            router.push({
-              name: "home",
-            });
-            return;
+        // 添加接口节流
+        let gcuuid = lodash.get(res, "gcuuid");
+        if (gcuuid && send_gcuuid != gcuuid) {
+          return;
+        }
+        // 空赛事数据跳转回首页
+        if (lodash.isEmpty(res.data)) {
+          router.push({
+            name: "home",
+          });
+          return;
+        }
+        getMatchDetailList(res.data);
+        // detail_loading.value = false;
+        detail_info.value = { ...detail_info.value, ...res.data };
+        detail_info.value["course"] = handle_course_data(detail_info.value);
+        setTimeout(() => {
+          if (!route.query.ms) {
+            LayOutMain_pc.set_oz_show_right(detail_info.value.ms > 0); // 显示右侧
           }
-          getMatchDetailList(res.data);
-          // detail_loading.value = false;
-          detail_info.value = { ...detail_info.value, ...res.data };
-          detail_info.value["course"] = handle_course_data(detail_info.value);
-          setTimeout(() => {
-             if (!route.query.ms) {
-              LayOutMain_pc.set_oz_show_right(detail_info.value.ms > 0); // 显示右侧
-                }
-           
-          }, 200);
-  
-          MatchDataWarehouseInstance.set_match_details(detail_info.value, []);
-          if (is_fresh.value) {
-            useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, route_parmas.value.mid);
-          }
+        }, 200);
+
+        MatchDataWarehouseInstance.set_match_details(detail_info.value, []);
+        if (is_fresh.value) {
+          useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, route_parmas.value.mid);
+        }
       },
       // axios中catch回调方法
       fun_catch: (e) => {
@@ -215,28 +221,22 @@ export function usedetailData(route) {
         tId: data.tid,
         t: new Date().getTime(),
       };
-  //  电竞需加isESport参数
+      //  电竞需加isESport参数
       if (MenuData.is_esports()) {
-        params.isESport = 1
-        
+        params.isESport = 1;
       }
 
-      const res = await getMatchDetailByTournamentId(params)
-      if (res.code=='0401038') {
+      const res = await getMatchDetailByTournamentId(params);
+      if (res.code == "0401038") {
         setTimeout(() => {
-          getMatchDetailList(data)
+          getMatchDetailList(data);
         }, 1000);
-        
-      }else{
+      } else {
         matchDetailList.value = res.data;
       }
-    }
-    catch (error) {
-     
+    } catch (error) {
       console.error("details-list", error);
     }
-
-     
   };
 
   /**
@@ -249,7 +249,15 @@ export function usedetailData(route) {
         mid: route_parmas.value.mid,
         t: new Date().getTime(),
       };
+      let send_gcuuid = uid();
+      params.gcuuid = send_gcuuid;
       const res = await get_detail_category(params);
+      // 添加接口节流
+      let gcuuid = lodash.get(res, "gcuuid");
+      if (gcuuid && send_gcuuid != gcuuid) {
+        return;
+      }
+
       category_list.value = res.data || [];
       const list = res.data?.filter((i) => i.marketName);
       if (list) {
@@ -269,17 +277,21 @@ export function usedetailData(route) {
    * 获取赛事列表数据
    */
   const get_detail_lists = async () => {
-  
-      const params = {
-        mcid: 0,
-        cuid: user_info.userId,
-        mid: route_parmas.value.mid,
-        newUser: 0,
-        t: new Date().getTime(),
-      };
+    const params = {
+      mcid: 0,
+      cuid: user_info.userId,
+      mid: route_parmas.value.mid,
+      newUser: 0,
+      t: new Date().getTime(),
+    };
+
+    let send_gcuuid = uid();
+    params.gcuuid = send_gcuuid;
     let obj_ = {
       // axios api对象
-      axios_api: MenuData.is_esports() ? api_details.get_match_odds_info_ES : get_detail_list ,
+      axios_api: MenuData.is_esports()
+        ? api_details.get_match_odds_info_ES
+        : get_detail_list,
       // axios api对象参数
       params: params,
       // 唯一key值
@@ -287,6 +299,11 @@ export function usedetailData(route) {
       error_codes: ["0401038"],
       // axios中then回调方法
       fun_then: (res) => {
+        // 添加接口节流
+        let gcuuid = lodash.get(res, "gcuuid");
+        if (gcuuid && send_gcuuid != gcuuid) {
+          return;
+        }
         all_list.value = res.data || [];
         res.data && res.data.forEach((item) => (item.expanded = true));
         detail_loading.value = false;
@@ -295,7 +312,7 @@ export function usedetailData(route) {
           : tabList.value.length > 0
           ? tabList.value[0].value
           : null;
-  
+
         current_key.value && get_match_detail(current_key.value);
       },
       // axios中catch回调方法
@@ -308,36 +325,37 @@ export function usedetailData(route) {
       timers: 1100,
     };
     axios_api_loop(obj_);
-
   };
-    /**
+  /**
    * 获取赛事列表数据
    */
-    const socketOddinfo = lodash.throttle(async()=>{
-      try {
-        const params = {
-          mcid: 0,
-          cuid: user_info.userId,
-          mid: route_parmas.value.mid,
-          newUser: 0,
-          t: new Date().getTime(),
-        };
-        let api = MenuData.is_esports() ? api_details.get_match_odds_info_ES : get_detail_list 
-        const res = await api(params);
-        all_list.value = res.data || [];
-        res.data && res.data.forEach((item) => (item.expanded = true));
-        detail_loading.value = false;
-        current_key.value = current_key.value
-          ? current_key.value
-          : tabList.value.length > 0
-          ? tabList.value[0].value
-          : null;
-  
-        current_key.value && get_match_detail(current_key.value);
-      } catch (error) {
-        console.error("get_detail_list", error);
-      }
-    },2000)
+  const socketOddinfo = lodash.throttle(async () => {
+    try {
+      const params = {
+        mcid: 0,
+        cuid: user_info.userId,
+        mid: route_parmas.value.mid,
+        newUser: 0,
+        t: new Date().getTime(),
+      };
+      let api = MenuData.is_esports()
+        ? api_details.get_match_odds_info_ES
+        : get_detail_list;
+      const res = await api(params);
+      all_list.value = res.data || [];
+      res.data && res.data.forEach((item) => (item.expanded = true));
+      detail_loading.value = false;
+      current_key.value = current_key.value
+        ? current_key.value
+        : tabList.value.length > 0
+        ? tabList.value[0].value
+        : null;
+
+      current_key.value && get_match_detail(current_key.value);
+    } catch (error) {
+      console.error("get_detail_list", error);
+    }
+  }, 2000);
   /**
    * @description: 通过mid获取从仓库获取最新的数据
    * @param {*} val  mid参数
@@ -444,10 +462,10 @@ export function usedetailData(route) {
     mid = route.params.mid;
     tid = route.params.tid;
     current_id.value = route.params.mid;
-     // 有ms 字段优先判断是否显示右侧
+    // 有ms 字段优先判断是否显示右侧
     if (route.query.ms) {
-      LayOutMain_pc.set_oz_show_right(Number(route.query.ms)>0); // 显示右侧
-    }else{
+      LayOutMain_pc.set_oz_show_right(Number(route.query.ms) > 0); // 显示右侧
+    } else {
       LayOutMain_pc.set_oz_show_right(true); // 显示右侧
     }
     LayOutMain_pc.set_oz_show_left(true); // 显示菜单
@@ -486,22 +504,22 @@ export function usedetailData(route) {
             RCMD_C102(data);
             break;
           case "C110":
-           RCMD_C110(data);
-           break;       
+            RCMD_C110(data);
+            break;
           default:
             break;
         }
       })
     );
   });
-   //赛事玩法数量
- /**
-  * @description: RCMD_C110 锁盘 mc==0
-  * @param {*} obj
-  * @return {*}
-  */
- function RCMD_C110(obj){
-    if(obj.cd.mc == 0){
+  //赛事玩法数量
+  /**
+   * @description: RCMD_C110 锁盘 mc==0
+   * @param {*} obj
+   * @return {*}
+   */
+  function RCMD_C110(obj) {
+    if (obj.cd.mc == 0) {
       //锁盘展示
       detail_list.value = [];
     }
@@ -558,7 +576,6 @@ export function usedetailData(route) {
   );
   //  赛事切换刷新数据
   const refresh = () => {
-  
     all_list_toggle = {};
     detail_list.value = [];
     sportId = route.params.csid;
@@ -571,25 +588,27 @@ export function usedetailData(route) {
     init();
   };
   /* 赛事结束之后调取详情接口 */
+  message_fun.push(useMittOn(MITT_TYPES.EMIT_SWITCH_MATCH, (parmas) => {}).off);
+  // 监听ws断连
   message_fun.push(
-    useMittOn(MITT_TYPES.EMIT_SWITCH_MATCH, (parmas) => {
-    }).off
-  );
-    // 监听ws断连
-  message_fun.push(useMittOn(MITT_TYPES.EMIT_WS_STATUS_CHANGE_EVENT,(ws_status, ws_status_old)=>{
-      // ws_status 链接状态变化 (0-断开,1-连接,2-断网续连状态)
-      if(ws_status.ws_status != 1){
-        MatchDataWarehouseInstance.scmd_c8_ws_reconnect()
-        socketOddinfo();
+    useMittOn(
+      MITT_TYPES.EMIT_WS_STATUS_CHANGE_EVENT,
+      (ws_status, ws_status_old) => {
+        // ws_status 链接状态变化 (0-断开,1-连接,2-断网续连状态)
+        if (ws_status.ws_status != 1) {
+          MatchDataWarehouseInstance.scmd_c8_ws_reconnect();
+          socketOddinfo();
+        }
       }
-  }).off)
+    ).off
+  );
   onUnmounted(() => {
     off();
     message_fun.forEach((i) => i());
     // off_init()
     clearTimeout(back_to_timer);
-     // 关闭详情订阅
-     MatchDataWarehouseInstance.set_active_mids([])
+    // 关闭详情订阅
+    MatchDataWarehouseInstance.set_active_mids([]);
   });
 
   /**
@@ -643,16 +662,15 @@ export function usedetailData(route) {
   watch(
     () => detail_info.value?.mmp,
     (_new, _old) => {
-   
       // 如果是999赛事结束即调接口切换赛事
       if (_new == "999") {
-        console.log('mmp',3333);
+        console.log("mmp", 3333);
         mx_autoset_active_match({ mid: route.params.mid });
       }
       // 否则更新玩法集
       else {
-        if (_old != undefined && _new!=_old) {
-          console.log('mmp',1111);
+        if (_old != undefined && _new != _old) {
+          console.log("mmp", 1111);
           get_category();
         }
       }
@@ -663,15 +681,14 @@ export function usedetailData(route) {
   watch(
     () => detail_info.value?.ms,
     (_new, _old) => {
-     
       let arr_ms = [0, 1, 2, 7, 10, 110];
       if (!arr_ms.includes(Number(_new)) && _new != undefined) {
-        console.log('mmp',4444);
+        console.log("mmp", 4444);
         mx_autoset_active_match({ mid: route.params.mid });
       }
       // 赛事状态为 0:未开赛 1:滚球阶段 2:暂停 7:延迟 10:比赛中断 110:即将开赛 时更新玩法集
       else {
-        console.log('mmp',222);
+        console.log("mmp", 222);
         // ms变更时才调用
         if (_new != _old && _old) {
           // 重新调用 赛事详情页面接口(/v1/m/matchDetail/getMatchDetailPB)
