@@ -371,7 +371,7 @@ const play_csid = computed(() => {
 const show_data = computed(() => {
   let state = false
     //足球 篮球 电竞 vr足球  B03电子足球、C01、O01等
-  if(['1','2','100','101','102','103','1001'].includes(match.value.csid) && !['B03','C01','O01'].includes(match.value.cds)){
+  if([1,2,100,101,102,103,1001].includes(+match.value.csid) && !['B03','C01','O01'].includes(match.value.cds)){
     state = true
   }
   return state;
@@ -432,10 +432,8 @@ const cur_video_icon = computed(() => {
   let is_esports = MenuData.is_esports();
   //滚球状态
   let is_play = get_match_status(ms);
-  // 包含的语言
-  let status = ["zh", "tw",'hk'].includes(UserCtr.lang);
   //演播厅
-  if (lvs == 2 && status && [1, 0].includes(lss)) {
+  if (lvs == 2 && [1, 0].includes(lss)) {
     if (lss === 1) {
       cur_video_icon = {
         type: "studio",
@@ -499,7 +497,7 @@ const click_handle = () => {
   if (["7"].includes(play_csid.value)) {
     return;
   }
-  // this.sr_click_handle(match.value);
+  details.sr_click_handle(match.value);
 }
 
 const onBetItemStateChange = (activeKey, state) => {
@@ -510,6 +508,53 @@ const onBetItemStateChange = (activeKey, state) => {
   }
 }
 
+/**
+     * @Description 切换右侧赛事
+     * @param {string} media_type 播放类型
+     * @param {undefined} undefined
+     */
+const on_switch_match = (media_type)  => {
+  // if (this.menu_data.is_virtual_sport) {
+  //   this.set_vsport_params({
+  //     mid: this.match.mid,
+  //     csid: this.match.csid,
+  //     tid: this.match.tid,
+  //     batchNo: this.match.batchNo,
+  //     orderNo: this.match.orderNo,
+  //   });
+  //   return;
+  // }
+  //展开右侧详情
+  // this.set_unfold_multi_column(false);
+  // this.set_is_pause_video(false);
+  if (
+    (route.name == "details" || route.name == "search") &&
+    media_type == "auto"
+  ) {
+    media_type = "info";
+  }
+  if (
+    ["auto", "info"].includes(media_type) &&
+    vx_detail_params.mid == this.match.mid &&
+    vx_play_media.media_type != "auto"
+  ) {
+    details.sync_mst(this.match.mid, this.match.csid);
+  }
+  // if(['video','1', 'auto'].includes(media_type)){
+  //   // 设置埋点缓存数据(列表页面) button:1.列表  2.右侧赛事信息 3.详情页
+  //   this.$utils.set_hide_api_data_obj(3,{match: this.match, button:'1',txt:'赛事列表', type:media_type});
+  // } else if(['animation','2'].includes(media_type)){
+  //   // 设置埋点缓存数据(列表页面) button:1.列表  2.右侧赛事信息 3.详情页
+  //   this.$utils.set_hide_api_data_obj(4,{match: this.match, button:'1',txt:'赛事列表', type:media_type});
+  // }
+  let play_id =
+    other_play_name_to_playid[match.value.play_current_key] || "";
+  details.on_switch_match(media_type, match.value, play_id);
+  // 如果右侧视频区是折叠，则会展开
+  // if (!this.vx_get_is_fold_status) {
+  //   this.vx_set_is_fold_status(!this.vx_get_is_fold_status);
+  // }
+}
 onMounted(() => {
   // 异步设置组件是否挂载完成
   nextTick(()=>{

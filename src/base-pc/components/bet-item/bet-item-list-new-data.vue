@@ -87,7 +87,7 @@ const props = defineProps({
 const match = inject('match', null)
 const emit = defineEmits(['oddsChange', 'stateChage'])
 const {
-  bet_click_ol, disk_text_replace, bet_item_select, score, odds_state, odds_lift, is_mounted
+  bet_click_ol, score, odds_state, odds_lift, is_mounted
 } = use_bet_item(props, emit)
 
 defineExpose({
