@@ -123,37 +123,14 @@ class BetWsMessage {
             this.MSG_C104(data);
             break;
           // 赛事 盘口赔率推送
-          case 'C105':
+          // case 'C105':
           // 投注项 盘口赔率推送
           case 'C106':
-            // 上一次推送的数据 和下一次推送数据的间隔 20毫米内
-            // 如果上一次是106 下一次是105 时间在20毫米内 不使用105数据
-            // 如果上一次是106 下一次还是106 那么使用106数据
-            // 如果上一次是105 下一次 都是用
            
-            let obj = {
-              time : Date.now(),
-              cmd : ws_cmd
-            }
+              this.MSG_C106(data)
+         
 
-            if( time_cmd.cmd ) {
-             
-              if(time_cmd.cmd == 'C106' ){
-                if( ws_cmd == 'C106' ){
-                  this.MSG_C106(data)
-                }else{
-                  if( (obj.time - time_cmd.time) > 20 ){
-                    this.MSG_C106(data)
-                  }
-                }
-              }
-
-              if(time_cmd.cmd == 'C105' ){
-                this.MSG_C106(data)
-              }
-            } 
-            
-            time_cmd = obj
+            // this.MSG_C106(data)
             break;
           // 注单状态
           case 'C201':
@@ -192,7 +169,7 @@ class BetWsMessage {
   // 赛事订阅盘口赔率变更 修改投注项变更
   // 投注项变更
   MSG_C106(obj) {
-    // console.error('obj.cmd',obj.cmd)
+    console.error('obj.cmd',obj.cmd)
     let config = obj.cd
     config.cmd = obj.cmd
     BetData.set_bet_c106_change(config)
