@@ -7,7 +7,7 @@ import lodash from "lodash";
 import  { computed_background } from  "src/output/module/constant-utils.js"
 //  // api详情
 import { api_details } from "src/api";
-import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache.js";
+import axios_debounce_cache from "src/core/http/debounce-module/";
 import { update_match_time } from "src/core/bet/common-helper/module/common-sport.js";
 import {
   MatchDataWarehouse_PC_Detail_Common as MatchDetailsData,
