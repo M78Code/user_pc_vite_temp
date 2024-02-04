@@ -372,11 +372,10 @@
       .bet-odds-reduce{
         padding: 0 .14rem;
         height: .28rem;
-        width: .26rem;
+        width: .24rem;
         background: var(--q-gb-bg-c-10);
         color: var(--qq--yb-text-color4);
-        font-size: .14rem;
-        font-weight: 600;
+        font-size: .16rem;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -407,11 +406,10 @@
       .bet-odds-add{
         padding: 0 .14rem;
         width: .24rem;
-        height: .26rem;
+        height: .28rem;
         background: var(--q-gb-bg-c-10);
         color: var(--qq--yb-text-color4);
-        font-size: .14rem;
-        font-weight: 600;
+        font-size: .16rem;
         display: flex;
         justify-content: center;
         align-items: center;
