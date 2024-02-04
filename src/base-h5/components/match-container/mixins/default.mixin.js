@@ -306,7 +306,8 @@ export default defineComponent({
       handler (c_match) {
         this.media_button_button_type_check()
         this.mmp_map_title = MatchListClass.match_period_map(c_match);
-      }
+      },
+      immediate: true
     },
     'match_of_list.msc': {
       immediate: true,
