@@ -1743,6 +1743,9 @@ class MatchMeta {
       // 获取赛事的让球方 0未找到让球方 1主队为让球方 2客队为让球方
       t.handicap_index = MatchUtils.get_handicap_index_by(t);
       const item = lodash.find(this.complete_matchs, (match) => match.mid === t.mid)
+      // 默认高度  match  接口  和  by_mids  接口 有时候 返回的 次要玩法开关不一致 ， 故重计算下
+      // MatchFold.set_match_show_tab(t)
+      // t.estimateHeight = MatchUtils.get_default_estimateHeight(t)
       if (item) {
         const index = lodash.findIndex(this.complete_matchs, (match) => match.mid === t.mid)
         if (index > -1) this.complete_matchs[index] = Object.assign({}, item, t)
