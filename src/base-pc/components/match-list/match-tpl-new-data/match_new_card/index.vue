@@ -371,7 +371,7 @@ const play_csid = computed(() => {
 const show_data = computed(() => {
   let state = false
     //足球 篮球 电竞 vr足球  B03电子足球、C01、O01等
-  if(['1','2','100','101','102','103','1001'].includes(match.value.csid) && !['B03','C01','O01'].includes(match.value.cds)){
+  if([1,2,100,101,102,103,1001].includes(+match.value.csid) && !['B03','C01','O01'].includes(match.value.cds)){
     state = true
   }
   return state;
@@ -432,10 +432,8 @@ const cur_video_icon = computed(() => {
   let is_esports = MenuData.is_esports();
   //滚球状态
   let is_play = get_match_status(ms);
-  // 包含的语言
-  let status = ["zh", "tw",'hk'].includes(UserCtr.lang);
   //演播厅
-  if (lvs == 2 && status && [1, 0].includes(lss)) {
+  if (lvs == 2 && [1, 0].includes(lss)) {
     if (lss === 1) {
       cur_video_icon = {
         type: "studio",
@@ -499,7 +497,7 @@ const click_handle = () => {
   if (["7"].includes(play_csid.value)) {
     return;
   }
-  // this.sr_click_handle(match.value);
+  details.sr_click_handle(match.value);
 }
 
 const onBetItemStateChange = (activeKey, state) => {
