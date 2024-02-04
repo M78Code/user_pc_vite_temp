@@ -193,7 +193,7 @@ function on_resize() {
     background: var(--q-header-search-color-6);
 
     :deep(.serach-background) {
-      background-color: var(--q-gb-bg-c-30);
+      background-color: var(--q-gb-bg-c-11);
       min-height: 400px;
       overflow: hidden;
     }
