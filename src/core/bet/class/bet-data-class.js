@@ -634,9 +634,11 @@ this.bet_appoint_ball_head= null */
   set_bet_appoint_obj_playOptionId(val) {
     this.bet_pre_appoint_id = val
     if(val){
-      // 选中了预约单 清空投注金额
+      // 选中了预约单 清空 其他的 投注金额
       this.bet_single_list.forEach(item=>{
-        item.bet_amount = ''
+        if(item.playOptionsId != val){
+          item.bet_amount = ''
+        }
       })
     }
     this.set_bet_data_class_version()

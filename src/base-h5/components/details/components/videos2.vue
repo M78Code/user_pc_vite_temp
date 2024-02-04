@@ -76,32 +76,32 @@
         <!-- {{ iframe_src+'&rdm='+iframe_rdm }} -->
         <!-- iframe_show && !is_show_no_handle && iframe_src-->
         <iframe 
-        v-if=" iframe_src" 
-        v-show="!is_playing_replay" 
-        ref="iframe" id="video-iframe" 
-        style="width:100%;height:100%;" 
-        frameborder="0"
-        marginwidth="0"
-        marginheight="0"
-        hspace="0"
-        vspace="0"
-        scrolling="no"
-        allowfullscreen="true"
-        allow="autoplay"
-        :src="`${iframe_src}&rdm=${iframe_rdm}`"
+          v-if=" iframe_src" 
+          v-show="!is_playing_replay" 
+          ref="iframe" id="video-iframe" 
+          style="width:100%;height:100%;" 
+          frameborder="0"
+          marginwidth="0"
+          marginheight="0"
+          hspace="0"
+          vspace="0"
+          scrolling="no"
+          allowfullscreen="true"
+          allow="autoplay"
+          :src="`${iframe_src}&rdm=${iframe_rdm}`"
         ></iframe>
         
         <!-- 视频单页项目精彩回放页面-->
         <iframe
-            v-if="is_playing_replay"
-            v-show="!is_replay_load_error"
-            id="replayIframe"
-            :src="replay_video_src+'&rdm='+iframe_rdm"
-            style="width:100%;height:100%;"
-            allow="autoplay"
-            frameborder="0"
-            scrolling="no"
-            @load="handle_replay_video_loaded"
+          v-if="is_playing_replay"
+          v-show="!is_replay_load_error"
+          id="replayIframe"
+          :src="replay_video_src+'&rdm='+iframe_rdm"
+          style="width:100%;height:100%;"
+          allow="autoplay"
+          frameborder="0"
+          scrolling="no"
+          @load="handle_replay_video_loaded"
         ></iframe>
         <div class="load-error-mask" v-show="is_replay_load_error">
           <div><img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/details/reconnect.svg`" /></div>
@@ -178,10 +178,11 @@
           <div class="collect-icon" @click="is_show_no_handle = false"></div>
         </div>
         <!-- 动画背景遮罩层 -->
-        <div v-show="get_video_url.active == 'animationUrl' || (get_is_full_screen && !is_show_no_handle)"
-            class="bg"
-            v-touch-swipe.horizontal.prevent.mouse="bg_touchmove"
-           ></div>
+        <div 
+          v-show="get_video_url.active == 'animationUrl' || (get_is_full_screen && !is_show_no_handle)"
+          class="bg"
+          v-touch-swipe.horizontal.prevent.mouse="bg_touchmove"
+        ></div>
         <!--<div class="bg" v-show="get_video_url.active == 'animationUrl'" @touchmove.prevent></div>-->
         <football-events></football-events>
 
@@ -267,7 +268,8 @@
         </div> -->
         <slider v-if="false" class="slider-container" :value="current_event_video.voice" 
                 v-show="show_icons && ['muUrl', 'lvs'].includes(get_video_url.active)&& !load_error && !is_playing_replay"  @change="change_volumn"/>
-
+        
+        <!-- <AnimationSlider></AnimationSlider> -->
        
         <div class="actions mb-8">
           <!-- 视频info说明弹窗 -->
@@ -328,6 +330,7 @@ import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt/index.js"
 import { MenuData, MatchDetailCalss,compute_img_url, LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
 import UserCtr from "src/core/user-config/user-ctr.js";
 import slider from "src/base-h5/components/details/components/slider/slider.vue"
+import AnimationSlider from "src/base-h5/components/details/components/slider/AnimationSlider.vue"
 import OrientationSubscrbe from 'src/base-h5/components/common/orientation/orientation-subscribe'
 import { useRoute } from "vue-router"
 import { project_name ,into_video_anima_event} from "src/output/index.js"
@@ -341,6 +344,7 @@ export default {
     // "tabs": () => import("src/base-pc/components/match-detail/match_info/tabs.vue"),
     "slider-x": () => import("src/base-h5/components/details/analysis-matches/components/slider-x.vue"),
     slider: slider,
+    AnimationSlider
   },
   data() {
     return {

@@ -562,9 +562,9 @@ const get_query_bet_amount_pre = () => {
     // 获取额度接口合并
     api_betting.query_pre_bet_amount(params).then((res = {}) => {
         if (res.code == 200) {
-            BetViewDataClass.set_bet_min_max_money(res.data)
+            // BetViewDataClass.set_bet_min_max_money(res.data)
             // 通知页面更新 
-            useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY)
+            // useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY)
             // 获取盘口值 
             const latestMarketInfo = lodash_.get(res, 'data.latestMarketInfo[0]', {})
             
@@ -1096,7 +1096,17 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         }else{
             index_ = BetData.bet_s_list.findIndex(item=> item.playOptionsId == oid)
         }
+        //如果oid（投注项id）等于 当前预约投注项id 则需要清除预约状态
+        if(oid === BetData.bet_pre_appoint_id) {
+            BetData.set_is_bet_pre(false)
+            BetData.set_bet_appoint_obj_playOptionId('')
+        }
         return BetData.set_delete_bet_info(oid,index_)
+    }
+    // 如果为单关 则重置预约状态
+    if (BetData.is_bet_single){
+        BetData.set_is_bet_pre(false)
+        BetData.set_bet_appoint_obj_playOptionId('')
     }
 
     
@@ -1135,7 +1145,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
     // let other = { bet_type:'common_bet'}
     // 移动端 并且是串关 点击 非串关赛事 提示信息  
     // 电子赛事 电竞的不可串关赛事
-    if(!BetData.is_bet_single && (( !ol_obj._ispo && other.bet_type == 'esports_bet' ) || (["C01","B03","O01"].includes(mid_obj.cds) || [2,4].includes(Number(mid_obj.mbmty))))){
+    if(!BetData.is_bet_single && (( !ol_obj._ispo && other.bet_type == 'esports_bet' ) || (["C01","B03","O01"].includes(ol_obj.cds) || [2,4].includes(Number(mid_obj.mbmty))))){
         let text = '不支持串关'
         useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, text);
         return
@@ -1205,7 +1215,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         tournamentLevel: mid_obj.tlev, //联赛级别
         playId: hn_obj.hpid || ol_obj._hpid, //玩法ID
         playName: set_play_name(play_config), //玩法名称
-        dataSource: mid_obj.cds, //数据源
+        dataSource: ol_obj.cds, //数据源
         home: mid_obj.mhn , //主队名称
         away: mid_obj.man , //客队名称
         ot: ol_obj.ot, //投注項类型

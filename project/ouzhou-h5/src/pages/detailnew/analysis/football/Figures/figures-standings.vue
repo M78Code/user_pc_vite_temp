@@ -84,7 +84,7 @@ const _getList = async function (flag) {
                 toggle_rule_b();
             } else {
                 setInitialState(i18n_t("bet_record.pack_up"), "", false);
-                
+                toggle_rule_a();
             }
         }
     } catch (error) {

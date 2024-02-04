@@ -459,6 +459,22 @@
                         background: var(--q-gb-t-c-5);
                     }
                 }
+                .setup-wrap{
+                    cursor:pointer;
+                    margin-right: 16px;
+                    height: 100%;
+                    .yb-icon-arrow {
+                        margin-left: 6px;
+                        transition: transform 0.3s;
+                        transform: rotate(90deg);
+                        &:before {
+                            color: #A5AEC8;
+                        }
+                    }
+                    .active {
+                        transform: rotateZ(-90deg);
+                    }
+                }
                 .versions-zhuanye {
                     .wrap-language {
                         background: var(--q-site-header-color-6);

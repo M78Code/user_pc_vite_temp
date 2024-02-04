@@ -80,6 +80,8 @@ import { api_common } from "src/api";
 import MatchFold from 'src/core/match-fold/index.js'
 import { oz_sprite_bg_images_postion } from "src/output/module/constant-utils.js";
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
+import BetData from "src/core/bet/class/bet-data-class.js";
+
 const menu_h5 = STANDARD_KEY.get("menu_h5");
 const emitters = ref({})
 const emit = defineEmits(["changeDate", "changeTab", "changeArea"]);
@@ -155,6 +157,12 @@ const changeTab = (name, index) => {
     store.tabModel = false;
     store.curSelectedOption = store.selectOptions[0]
     store.dateIndex = 0
+
+    // 冠军页面需要切换到单关
+    if(name == 'Outrights'){
+        BetData.set_is_bet_single('single')
+    }
+  
     emit("changeTab", name);
     if (name === 'Matches') {
         changeDatetab(week.value[0], 0)

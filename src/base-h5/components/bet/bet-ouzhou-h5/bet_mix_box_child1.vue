@@ -28,7 +28,10 @@
                           </span>
                           <span v-else>[{{ i18n_t(`odds.EU`) }}]</span>
                         </div>
-                        <div>
+                        <div class="nonebox4-content-right" v-if="items.is_serial && !BetData.is_bet_single">
+                          <span class="bet-disabled">{{ i18n_t('bet.invalidation2') }}</span>
+                        </div>
+                        <div v-else>
                             <div class="nonebox4-content-right" v-if="!([2,3].includes(items.ol_os*1) || [1,2].includes(items.hl_hs*1) || [1,2].includes(items.mid_mhs*1))">
                               <div class="nonebox4-content-right-profit" :class="{'red-up':items.red_green == 'red_up','green-down':items.red_green == 'green_down'}">
                                 {{compute_value_by_cur_odd_type(items.odds,items.playId,items.odds_hsw,items.sportId)}}
@@ -61,7 +64,7 @@
                           <div class="bet-odds-name">{{i18n_t('pre_record.handicap')}}</div>
                           <div class="bet-odds-edit">
                             <span class="bet-odds-reduce" :class="{begray:ref_pre_book.appoint_ball_value <= 0}" v-touch-repeat:0:300.mouse.enter.space="() => {sub_handle(items)}">-</span>
-                            <bet-input-info3 :items="items" :valueModel="ref_pre_book.appoint_ball_value" :index="'pre_handicap' + index"></bet-input-info3>
+                            <bet-input-info3 :items="items" :readonly="items.sportId == 1" :valueModel="ref_pre_book.appoint_ball_value" :index="'pre_handicap' + index"></bet-input-info3>
                             <span class="bet-odds-add" :class="{begray:ref_pre_book.appoint_ball_value >= check_ball_maxmin(items)}" v-touch-repeat:0:300.mouse.enter.space="() => {add_handle(items)}">+</span> 
                           </div>
                         </div>                    
@@ -227,6 +230,7 @@
   .nonebox4-content-left-content-text-three{
     font-size: 0.16rem;
     color: var(--q-gb-t-c-3);
+    width: 78%;
     // overflow: hidden;
     // text-overflow: ellipsis;
     // white-space: nowrap;
@@ -319,13 +323,13 @@
       }
     }
     .bet-disabled{
-      width: .5rem;
       text-align: center;
       height: .26rem;
       display: inline-block;
       border-radius: 0.02rem;
       background: var(--q-gb-bg-c-19);
       font-size: 0.12rem;
+      padding: 0 .1rem;
       font-weight: 500;
       letter-spacing: 0px;
       color: var(--q-gb-t-c-3);
