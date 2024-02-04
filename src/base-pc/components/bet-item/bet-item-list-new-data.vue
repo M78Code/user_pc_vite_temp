@@ -32,7 +32,8 @@
       ? 'flex:1.5'
       : !(ol_data.onbl || score || ol_data.onb) ? 'flex:0' : ''
       " v-if="ol_data.oid">
-      <div v-if="odds_state == 'seal'" class="lock" />
+      <div v-if="['seal'].includes(odds_state)" class="lock" :style="compute_css_obj({ key: 'pc-home-lock' })">
+      </div>
       <span v-else>
         {{ compute_value_by_cur_odd_type(
           ol_data.ov,
