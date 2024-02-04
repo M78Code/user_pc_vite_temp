@@ -178,9 +178,9 @@ const props = defineProps({
     let tempList = []
     lodash.forEach(list_data.value, (value, key)=> {
       lodash.forEach(value.data,(item)=>{
-        if(item.enablePreSettle){
-          tempList.push(item.orderNo)
-        }
+          if(item.seriesType === '1') { //单关、足篮才有提前结算
+            tempList.push(item.orderNo)
+          }
       })
     })
     orderNumberItemList.value = tempList
