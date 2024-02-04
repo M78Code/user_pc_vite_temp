@@ -18,22 +18,20 @@
     <!-- 全封(不显示盘口值) 占位时显示封-->
     <div v-else-if="is_fengpan(get_odd_status())" class="item-inner 2">
       <!--csid:1足球全封,不显示盘口名-->
-      <div class='odd-title'
-        :class="{three:column_ceil > 2,standard:n_s == 2}"
-        v-if="is_show_fenpan"
-        v-html="transfer_on(odd_item)">
-      </div>
+      <div v-if="is_show_fenpan" 
+          ref="all_close"
+          :class="['odd-title', {three:column_ceil > 2,standard:n_s == 2}]" 
+          v-html="transfer_on(odd_item)"></div>
       <img class="icon-lock" :class="{standard:n_s}" :src="match_icon_lock" />
     </div>
 
     <!-- 半封(显示盘口值)与赔率显示 -->
     <div v-else class="item-inner 3 have-on" :class="{close: is_fengpan(get_odd_status()) || get_obv_is_lock(odd_item)}">
       <!--csid:1足球全封,不显示盘口名-->
-      <div class='odd-title number_family'
-        :class="{three:column_ceil > 2,standard:n_s == 2}"
+      <div :class="['odd-title number_family', {three:column_ceil > 2,standard:n_s == 2}]"
+        ref="half_sealed"
         v-if="(odd_item.on || convert_num(odd_item) === 0 || (!is_fengpan(get_odd_status()) && [11,18,19].includes(+lodash.get(current_tab_item, 'id'))) ) ||
-              (is_fengpan(get_odd_status())  || get_obv_is_lock(odd_item))
-              && match.csid != 1"
+              (is_fengpan(get_odd_status())  || get_obv_is_lock(odd_item)) && match.csid != 1"
         v-html="transfer_on(odd_item)">
       </div>
       <!-- 显示赔率 -->
@@ -102,6 +100,8 @@ const emits = defineEmits(['select_change'])
 
 const timer_ = ref(null)
 const timer1_ = ref(null)
+const all_close = ref(null)
+const half_sealed = ref(null)
 const emitters = ref({})
 // 投注项
 const odd_item = ref({})
@@ -544,6 +544,8 @@ onUnmounted(() => {
   timer_.value = null;
   clearTimeout(timer1_.value);
   timer1_.value = null;
+  if (all_close.value) all_close.value.innerHTML = ''
+  if (half_sealed.value) half_sealed.value.innerHTML = ''
 })
 
 </script>
