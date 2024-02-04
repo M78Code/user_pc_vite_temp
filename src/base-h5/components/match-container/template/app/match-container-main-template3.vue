@@ -374,7 +374,7 @@ export default {
 
 .all-league-title{
   display: flex;
-  height: 30px;
+  height: 25px;
   background: var(--q-gb-bg-c-25);
   padding: 0 10px;
   align-items: center;
@@ -704,7 +704,7 @@ export default {
 
   /* **************联赛展示********************** -S*/
   .league {
-    height: 23px;
+    height: 25px;
     border-radius: 0.08rem 0.08rem 0 0;
     // padding: 0 0.1rem;
     background-color: var(--q-gb-bg-c-18);

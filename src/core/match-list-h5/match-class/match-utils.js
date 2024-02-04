@@ -372,7 +372,7 @@ class MatchUtils {
     return { start_time, end_time }
   }
   /**
-   * @description 增加 estimateHeight； estimateHeight 关系 不大， 就算不对 后续会主动修复， estimateHeight 只作为辅助值， 辅助初始渲染，偏差没那么大
+   * @description 增加初始高度 estimateHeight
    * @param {*} match  赛事信息
    * @returns 
    */
@@ -393,14 +393,31 @@ class MatchUtils {
     // 当前版本默认配置
     const standard_config = project_config[standard_edition] || project_config['2']
     let estimateHeight;
-    // 欧洲版 只有赛果 
+    // -------------------------- 欧洲版 --------------------------  目前只有赛果 
     if (project_name === 'ouzhou-h5') { 
-      estimateHeight = 90
+      if (is_show_league && show_card) {           // 显示联赛  显示卡片
+        estimateHeight = standard_config['6']
+      } else if (is_show_league && !show_card) {   // 显示联赛 不显示卡片 
+        estimateHeight = standard_config['8']
+      } else if (!is_show_league && show_card)  {  // 不显示联赛  显示卡片
+        estimateHeight = standard_config['7']
+      } else {                                     // 默认
+        estimateHeight = standard_config['default']
+      }
     } else { 
-      // 复刻版
-      if (MenuData.is_results()) { // 赛果
+      // -------------------------- 复刻版 --------------------------
+      if (MenuData.is_results()) { // --------- 赛果 ---------
         estimateHeight = 120
-      } else { // 常规赛事
+        if (is_show_league && show_card) {           // 显示联赛  显示卡片
+          estimateHeight = standard_config['6']
+        } else if (is_show_league && !show_card) {   // 显示联赛 不显示卡片 
+          estimateHeight = standard_config['8']
+        } else if (!is_show_league && show_card)  {  // 不显示联赛  显示卡片
+          estimateHeight = standard_config['7']
+        } else {                                     // 默认
+          estimateHeight = standard_config['default']
+        }
+      } else { // --------- 常规赛事 ---------
         if (is_show_league && show_card) {           // 显示联赛  显示卡片
           estimateHeight = show_tab ? standard_config['4'] : standard_config['1'] // 4 显示次要玩法  1 不显示次要玩法
         } else if (is_show_league && !show_card) {   // 显示联赛 不显示卡片 
