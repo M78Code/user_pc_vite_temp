@@ -102,8 +102,7 @@ export default {
       }
 
       & > div {
-        // width: 0.6rem;
-        width: 25%;
+        width: 0.6rem;
         text-align: center;
         line-height: 1;
         margin-right: 0.03rem;
