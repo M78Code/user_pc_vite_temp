@@ -366,12 +366,15 @@ onMounted(() => {
     .scroll-container {
         padding-bottom: 80px;
         flex: 1;
-        background: #F6F9FF;
+        //background: #F6F9FF;
+        background: var(--q-gb-bg-lg-6);
         /* 全局白框区投影效果 */
         box-shadow: 0px 2px 8px 0px #E2E2E4;
         margin-top: 5px;
         border-radius: 6px;
-        border: 2px solid #FFF;
+        border: 2px solid var(--q-gb-bd-c-8);
+        //border: 2px solid #FFF;
+        color: var(--q-gb-t-c-6);
     }
     .header {
         // position: absolute;
@@ -385,8 +388,10 @@ onMounted(() => {
         justify-content: space-between;
         gap: 8px;
         border-radius: 6px;
-        border: 2px solid #FFF;
-        background: #F6F9FF;
+        //border: 2px solid #FFF;
+        //background: #F6F9FF;
+         border: 2px solid var(--q-gb-bd-c-8);
+        color: var(--q-gb-t-c-6);
         box-shadow: 0px 0px 12px 0px rgba(39, 39, 39, 0.16);
 
         .title {
@@ -406,12 +411,14 @@ onMounted(() => {
                 align-items: center;
                 flex-shrink: 0;
                 border-radius: 40px;
-                background: #FFF;
+                //background: #FFF;
+                background: var(--q-gb-bg-lg-6);
 
                 .search-input {
                     flex: 1;
                     height: 100%;
                     border: none;
+                    background: var(--q-gb-bg-lg-6);
 
                     &:focus {
                         border: none !important;
@@ -436,7 +443,8 @@ onMounted(() => {
                 flex-shrink: 0;
                 border-radius: 10000px;
                 border: 1px solid #179CFF;
-                background: #FFF;
+                //background: #FFF;
+                background: var(--q-gb-bg-lg-6);
 
                 .arrow {
                     width: 10px;
