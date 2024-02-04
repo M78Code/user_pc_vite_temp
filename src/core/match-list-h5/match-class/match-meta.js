@@ -772,7 +772,6 @@ class MatchMeta {
     this.handler_popular_leagues_by_all(list)
     // 处理收藏赛事
     MatchCollect.get_collect_match_data(list)
-    MatchCollect.get_collect_match_data(list)
     // 复刻版下的新手版 和 赛果 不需要  虚拟计算
     const is_virtual = !(project_name === 'app-h5' && (MenuData.is_results() || UserCtr.standard_edition == 1))
     // 时间 热门相互切换 会导致 is_show_league 不对 需要 清一下 仓库
