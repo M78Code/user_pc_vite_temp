@@ -265,6 +265,7 @@ export default defineComponent({
      * @description 更新赛事数据
      */
     update_match_data (item) {
+      if (!item?.id) return
       this.compute_secondart_play()
       //次要玩法展开或者关闭通知列表页重新计算dom高度
       this.save_second_play_mid_map_unfold_status(item, this.bold_all_list, this.five_minutes_all_list);
@@ -777,7 +778,8 @@ export default defineComponent({
       deep: true,
       handler () {
         this.init_tab_async_show()
-        this.compute_secondart_play()
+        // this.compute_secondart_play()
+        this.update_match_data(this.current_tab_item)
         // if(this.current_hps_key){
         //   const id = +lodash.get(this.current_tab_item, 'id', 0)
         //   const hps = lodash.get(this.match, this.current_hps_key, [])
