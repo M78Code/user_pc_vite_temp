@@ -1096,7 +1096,17 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         }else{
             index_ = BetData.bet_s_list.findIndex(item=> item.playOptionsId == oid)
         }
+        //如果oid（投注项id）等于 当前预约投注项id 则需要清除预约状态
+        if(oid === BetData.bet_pre_appoint_id) {
+            BetData.set_is_bet_pre(false)
+            BetData.set_bet_appoint_obj_playOptionId('')
+        }
         return BetData.set_delete_bet_info(oid,index_)
+    }
+    // 如果为单关 则重置预约状态
+    if (BetData.is_bet_single){
+        BetData.set_is_bet_pre(false)
+        BetData.set_bet_appoint_obj_playOptionId('')
     }
 
     

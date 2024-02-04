@@ -9,7 +9,7 @@
                     <div class="font12 h12">
                         <span class="font400 mr-10 text-8A8986-i"> {{ i18n_t('common.maxn_amount_val') }}</span>
                         <span class="text-8A8986-i font500"  v-if="BetData.is_bet_pre && BetData.bet_pre_appoint_id == items.playOptionsId"> 
-                            {{ formatMoney(mathJs.subtract(mathJs.multiply(items.bet_amount,ref_pre_book.appoint_odds_value), items.bet_amount)) }}
+                            {{ formatMoney(mathJs.subtract(mathJs.multiply(items.bet_amount,ref_pre_book.appoint_odds_value || items.oddFinally), items.bet_amount)) }}
                         </span>
                         <span class="text-8A8986-i font500"   v-else>
                             {{ formatMoney(mathJs.subtract(mathJs.multiply(items.bet_amount,items.oddFinally), items.bet_amount)) }}
