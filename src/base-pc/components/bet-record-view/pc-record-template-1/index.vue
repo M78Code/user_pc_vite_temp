@@ -198,7 +198,9 @@ const get_record_list = (o_params, cur_page = 1) => {
     let tempList = []
     lodash.forEach(ref_data.record_data, (value, key) => {
       lodash.forEach(value.data, (item) => {
+        if(item.seriesType === '1') { //单关、足篮才有提前结算
           tempList.push(item.orderNo)
+        }
       })
     })
     if (tempList.length === 0) return;

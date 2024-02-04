@@ -137,7 +137,9 @@ class BetRecord {
     // 循环列表查询需要提前结算的单号
     let tempList = []
     lodash.forEach(this.table_data, (item) => {
-      tempList.push(item.orderNo)
+      if(item.seriesType === '1') { //单关、足篮才有提前结算
+        tempList.push(item.orderNo)
+      }
     })
     if (tempList.length === 0) return;
     // 如果有需要提前结算的订单，获取提前结算的金额
