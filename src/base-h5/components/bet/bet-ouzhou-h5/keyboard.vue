@@ -234,12 +234,11 @@ const _handmaxKey = () => {
 }
 // 删除键
 const _handleDeleteKey = () => {
-
   // 此处为预约盘口 赔率相关输入
   if (typeof BetData.active_index === 'string') {
 
     if (BetData.is_bet_pre && BetData.active_index.includes('odds') || BetData.active_index.includes('handicap')) {
-
+      // debugger
       if (ref_pre_book.appoint_ball_value == '-' || ref_pre_book.appoint_ball_value == '+') return
 
       if(BetData.active_index.includes('odds')) {
@@ -254,7 +253,7 @@ const _handleDeleteKey = () => {
           ref_pre_book.appoint_ball_value = ball
           return
         }
-        ref_pre_book.appoint_ball_value = ball ? ball*1 : 0
+        ref_pre_book.appoint_ball_value = ball ? ball : 0
       }
       return
     }

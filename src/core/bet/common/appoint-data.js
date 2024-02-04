@@ -269,6 +269,7 @@ const basktball_head_handle = (val) => {
     useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('pre_record.market_error_info_max')}`)
   }
   ref_pre_book.appoint_ball_value = res
+  ref_pre_book.appoint_ball_head = res
 }
 
 /**
