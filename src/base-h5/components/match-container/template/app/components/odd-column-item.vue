@@ -19,6 +19,7 @@
     <div v-else-if="is_fengpan(get_odd_status())" class="item-inner 2">
       <!--csid:1足球全封,不显示盘口名-->
       <div class='odd-title'
+        ref="all_sealed"
         :class="{three:column_ceil > 2,standard:n_s == 2}"
         v-if="is_show_fenpan"
         v-html="transfer_on(odd_item)">
@@ -30,6 +31,7 @@
     <div v-else class="item-inner 3 have-on" :class="{close: is_fengpan(get_odd_status()) || get_obv_is_lock(odd_item)}">
       <!--csid:1足球全封,不显示盘口名-->
       <div class='odd-title number_family'
+        ref="half_sealed"
         :class="{three:column_ceil > 2,standard:n_s == 2}"
         v-if="(odd_item.on || convert_num(odd_item) === 0 || (!is_fengpan(get_odd_status()) && [11,18,19].includes(+lodash.get(current_tab_item, 'id'))) ) ||
               (is_fengpan(get_odd_status())  || get_obv_is_lock(odd_item))
@@ -102,6 +104,8 @@ const emits = defineEmits(['select_change'])
 
 const timer_ = ref(null)
 const timer1_ = ref(null)
+const all_sealed = ref(null)
+const half_sealed = ref(null)
 const emitters = ref({})
 // 投注项
 const odd_item = ref({})
@@ -544,6 +548,8 @@ onUnmounted(() => {
   timer_.value = null;
   clearTimeout(timer1_.value);
   timer1_.value = null;
+  if (all_sealed.value) half_sealed.value.innerHTML = null
+  if (half_sealed.value) half_sealed.value.innerHTML = null
 })
 
 </script>

@@ -420,9 +420,9 @@ class MatchUtils {
     if (is_show_league && show_card) { // 显示联赛  显示卡片
       height = 148
     } else if (is_show_league && !show_card) { // 显示卡片 不显示联赛
-      height = 31
-    } else if (!is_show_league && show_card)  {  // 显示联赛  不显示卡片
       height = 103
+    } else if (!is_show_league && show_card)  {  // 显示联赛  不显示卡片
+      height = 31
     } else { // 默认
       height = 31
     }
