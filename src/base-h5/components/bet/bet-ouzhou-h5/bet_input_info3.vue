@@ -84,11 +84,16 @@ onMounted(()=>{
         height: .26rem;
         background: #ffffff;
         color: var(--q-gb-t-c-4);
-        font-size: .12rem;
+        font-size: .14rem;
+        font-family: DIN;
         font-weight: 500;
         .content-b {
-            width: 100%;
-            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content:center;
+
+            // width: 100%;
+            // text-align: center;
         }
         .input_place{
             color:  #8A8986;
