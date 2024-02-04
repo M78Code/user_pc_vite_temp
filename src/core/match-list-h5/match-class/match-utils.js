@@ -399,16 +399,7 @@ class MatchUtils {
     } else { 
       // -------------------------- 复刻版 --------------------------
       if (MenuData.is_results()) { // --------- 赛果 ---------
-        estimateHeight = 120
-        if (is_show_league && show_card) {           // 显示联赛  显示卡片
-          estimateHeight = standard_config['6']
-        } else if (is_show_league && !show_card) {   // 显示联赛 不显示卡片 
-          estimateHeight = standard_config['8']
-        } else if (!is_show_league && show_card)  {  // 不显示联赛  显示卡片
-          estimateHeight = standard_config['7']
-        } else {                                     // 默认
-          estimateHeight = standard_config['default']
-        }
+        estimateHeight = this.get_results_default_height(is_show_league, show_card)
       } else { // --------- 常规赛事 ---------
         if (is_show_league && show_card) {           // 显示联赛  显示卡片
           estimateHeight = show_tab ? standard_config['4'] : standard_config['1'] // 4 显示次要玩法  1 不显示次要玩法
@@ -422,6 +413,29 @@ class MatchUtils {
       }
     }
     return estimateHeight
+  }
+  // 赛果默认高度
+  get_results_default_height (is_show_league, show_card) {
+    let height = 93
+    if (is_show_league && show_card) { // 显示联赛  显示卡片
+      height = 148
+    } else if (is_show_league && !show_card) { // 显示卡片 不显示联赛
+      height = 31
+    } else if (!is_show_league && show_card)  {  // 显示联赛  不显示卡片
+      height = 103
+    } else { // 默认
+      height = 31
+    }
+    // if (is_show_league && show_card) {           // 显示联赛  显示卡片
+    //   height = standard_config['6']
+    // } else if (is_show_league && !show_card) {   // 显示联赛 不显示卡片 
+    //   height = standard_config['8']
+    // } else if (!is_show_league && show_card)  {  // 不显示联赛  显示卡片
+    //   height = standard_config['7']
+    // } else {                                     // 默认
+    //   height = standard_config['default']
+    // }
+    return height
   }
   /**
    * @description 获取赛事红黄牌
