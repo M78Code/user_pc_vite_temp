@@ -230,6 +230,7 @@
   .nonebox4-content-left-content-text-three{
     font-size: 0.16rem;
     color: var(--q-gb-t-c-3);
+    width: 78%;
     // overflow: hidden;
     // text-overflow: ellipsis;
     // white-space: nowrap;
@@ -371,10 +372,11 @@
       .bet-odds-reduce{
         padding: 0 .14rem;
         height: .28rem;
-        width: .24rem;
+        width: .26rem;
         background: var(--q-gb-bg-c-10);
         color: var(--qq--yb-text-color4);
-        font-size: .16rem;
+        font-size: .14rem;
+        font-weight: 600;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -405,10 +407,11 @@
       .bet-odds-add{
         padding: 0 .14rem;
         width: .24rem;
-        height: .28rem;
+        height: .26rem;
         background: var(--q-gb-bg-c-10);
         color: var(--qq--yb-text-color4);
-        font-size: .16rem;
+        font-size: .14rem;
+        font-weight: 600;
         display: flex;
         justify-content: center;
         align-items: center;

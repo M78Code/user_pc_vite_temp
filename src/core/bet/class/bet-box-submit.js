@@ -562,9 +562,9 @@ const get_query_bet_amount_pre = () => {
     // 获取额度接口合并
     api_betting.query_pre_bet_amount(params).then((res = {}) => {
         if (res.code == 200) {
-            BetViewDataClass.set_bet_min_max_money(res.data)
+            // BetViewDataClass.set_bet_min_max_money(res.data)
             // 通知页面更新 
-            useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY)
+            // useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY)
             // 获取盘口值 
             const latestMarketInfo = lodash_.get(res, 'data.latestMarketInfo[0]', {})
             

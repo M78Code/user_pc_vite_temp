@@ -335,17 +335,17 @@ const search_odds_value_by_ball_head = (item) => {
           if (odd_item) {
             let ve = Number((math_js.divide(odd_item.oddsValue, 100000)).toFixed(2));
             let vu = UserCtr.odds.cur_odds == 'HK' ? Number(math_js.subtract(ve, 1)) : ve
-            console.error('当前赔率前===', vu);
-            console.error('当前盘口前===', vu);
+            // console.error('当前赔率前===', vu);
+            // console.error('当前盘口前===', vu);
             if (vu > ref_pre_book.appoint_odds_value) {
               ref_pre_book.appoint_odds_value = vu;
-              console.error('当前最小值等于1', ref_pre_book.min_odds_value);
+              // console.error('当前最小值等于1', ref_pre_book.min_odds_value);
             }
             ref_pre_book.min_odds_value = vu;
             ref_pre_book.appoint_odds_value = vu == 0 ? ref_pre_book.appoint_odds_value : vu
             //设置输入框最小值
-            console.error('当前赔率===', ref_pre_book.appoint_odds_value);
-            console.error('当前盘口===', odd_item.playOptions);
+            // console.error('当前赔率===', ref_pre_book.appoint_odds_value);
+            // console.error('当前盘口===', odd_item.playOptions);
             break;
           }
         }
@@ -448,10 +448,11 @@ const set_bet_obj_config = (item) => {
 }
 
 const set_ref_data = (item) => {
+  // console.error('set_ref_dataset_ref_dataset_ref_data')
   // 获取投注项 盘口信息
   let market_info = lodash_.get(BetData.bet_read_write_refer_obj, `${item.playOptionsId}`, {})
   // 球头处理
-  let handicap = lodash_.toString(market_info.marketValue);
+  let handicap = lodash_.toString(market_info.handicap_hv);
   let init_ball_head = 0
   if (handicap && handicap.includes('/')) {
     let arr = handicap.split('/');
@@ -467,7 +468,7 @@ const set_ref_data = (item) => {
   // 最小赔率是它本身
   ref_pre_book.min_odds_value = market_info.oddFinally
   // 球头 显示
-  ref_pre_book.appoint_ball_value = market_info.marketValue
+  ref_pre_book.appoint_ball_value = market_info.handicap_hv
   // 球头 计算
   ref_pre_book.appoint_ball_head = init_ball_head
   // 获取及时比分 格式: (主队比分-客队比分)
