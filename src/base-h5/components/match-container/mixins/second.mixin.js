@@ -709,6 +709,8 @@ export default defineComponent({
       
       // const key = MatchFold.get_match_fold_key(this.match)
       // const flag = lodash.get(MatchFold.match_mid_fold_obj.value, `${key}.show_tab`, true)
+      this.init_tab_async_show(this.match?.is_show_secondary_play)
+      return this.match?.is_show_secondary_play
 
       // 复刻版 3184 需求 只做足球
       if (this.match.csid != 1) return false
@@ -777,7 +779,7 @@ export default defineComponent({
     match: {
       deep: true,
       handler () {
-        this.init_tab_async_show()
+        // this.init_tab_async_show()
         // this.compute_secondart_play()
         this.update_match_data(this.current_tab_item)
         // if(this.current_hps_key){

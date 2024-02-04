@@ -204,6 +204,26 @@ class MatchUtils {
     if ([1,2].includes(+match.start_flag)) is_show_league = true
     return is_show_league
   }
+  /**
+   * @description 是否显示次要玩法
+   * @param {*} i 赛事下标
+   * @returns Boolean 
+   */
+  get_match_is_show_secondary_play (match) {
+    // 复刻版 3184 需求 只做足球
+    if (match.csid != 1) return false
+
+    const { compose = false, cos15Minutes = false, cosBold = false, cosCorner = false, cosOutright = false, cosOvertime = false, cosPenalty = false, 
+      cosPromotion = false, cosPunish = false, hpsAdd = [], cds = '', mbmty = '' } = match;
+
+    let is_show = compose || cos15Minutes || cosBold || cosCorner || cosOutright || cosOvertime || cosPenalty || cosPromotion || cos15Minutes || 
+    cosPunish || hpsAdd.length > 0
+
+    // 电子篮球 不显示次要玩法 对应 BUG 44554
+    if(['B03', 'BE'].includes(cds) && mbmty === 2) is_show = false
+
+    return is_show
+  }
 
   // 是否显示 卡片 下边 圆角
   get_is_show_border_radius (i, list)  {
@@ -377,7 +397,7 @@ class MatchUtils {
    * @returns 
    */
   get_default_estimateHeight (match) {
-    const { is_show_league = true } = match
+    const { is_show_league = true, is_show_secondary_play = false } = match
     // 版本 1 简版   2  新版
     const standard_edition = UserCtr.standard_edition
     // 折叠对象
@@ -387,7 +407,7 @@ class MatchUtils {
     // 赛事是否显示
     const show_card = lodash.get(fold_data[fold_key], `show_card`, false)
     // 是否显示次要玩法
-    const show_tab = lodash.get(fold_data[fold_key], `show_tab`, false)
+    // const show_tab = lodash.get(fold_data[fold_key], `show_tab`, false)
     // 当前项目 默认配置
     const project_config = template_default_config[project_name] || template_default_config['app-h5']
     // 当前版本默认配置
@@ -402,11 +422,11 @@ class MatchUtils {
         estimateHeight = this.get_results_default_height(is_show_league, show_card)
       } else { // --------- 常规赛事 ---------
         if (is_show_league && show_card) {           // 显示联赛  显示卡片
-          estimateHeight = show_tab ? standard_config['4'] : standard_config['1'] // 4 显示次要玩法  1 不显示次要玩法
+          estimateHeight = is_show_secondary_play ? standard_config['4'] : standard_config['1'] // 4 显示次要玩法  1 不显示次要玩法
         } else if (is_show_league && !show_card) {   // 显示联赛 不显示卡片 
           estimateHeight = standard_config['2']
         } else if (!is_show_league && show_card)  {  // 不显示联赛  显示卡片
-          estimateHeight = show_tab ? standard_config['5'] : standard_config['3'] // 5 显示次要玩法  2 不显示次要玩法
+          estimateHeight = is_show_secondary_play ? standard_config['5'] : standard_config['3'] // 5 显示次要玩法  2 不显示次要玩法
         } else {                                     // 默认
           estimateHeight = standard_config['default']
         }
