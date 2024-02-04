@@ -201,6 +201,18 @@ class MenuData {
         })
       })
     }
+    //常规电子足球显隐
+    if(!BaseData.show_e_soprts.football){
+      menu_lv_mi_lsit = menu_lv_mi_lsit.filter((n)=>{
+       return n.mi != `190${mid==400?4:mid}`;
+      })
+    }
+     //常规电子篮球显隐
+    if(!BaseData.show_e_soprts.basketball){
+      menu_lv_mi_lsit = menu_lv_mi_lsit.filter((n)=>{
+       return n.mi != `191${mid==400?4:mid}`;
+      })
+    }
     // 默认设置二级菜单id
     // this.set_current_lv_2_menu_i( lodash_.get(menu_lv_mi_lsit,'[0]',{}))
     // 今日 加入 收藏/vr体育/电竞 滚球加入全部
