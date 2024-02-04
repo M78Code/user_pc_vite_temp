@@ -5,7 +5,8 @@
 
 <template>
   <div v-show="false">{{ BetData.bet_data_class_version }}-{{items.red_green}}-{{UserCtr.user_version}} </div>
-    <div class="bet-mix-show">
+  <div v-show="(BetData.is_bet_pre && BetData.bet_pre_appoint_id != items.playOptionsId )" class="cathectic-appoint"></div>  
+  <div class="bet-mix-show">
       <div class="nonebox4-content">
           <div class="nonebox4-content-left">
               <div class="nonebox4-content-left-content">
@@ -146,11 +147,21 @@
     ref_data.show_appoint = false
     BetData.set_is_bet_pre(false)
     BetData.set_bet_pre_obj({})
+    BetData.set_bet_appoint_obj_playOptionId('')
   }
 
   </script>
   
   <style lang="scss" scoped>
+
+  .cathectic-appoint{
+    background: rgba(0,0,0,.2);
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 1;
+  }
   .hps_img{
     width: .08rem;
     height: .13rem;
