@@ -137,7 +137,7 @@
     ref_data.show_appoint = true
     ref_data.odds_value_edit = props.items.oddFinally
     BetData.set_is_bet_pre(true)
-    BetData.set_bet_pre_obj(props.items)
+    BetData.set_current_bet_pre_obj(props.items) // 设置当前投注items数据
     set_ref_data(props.items)
     // 设置预约投注id
     BetData.set_bet_appoint_obj_playOptionId(props.items.playOptionsId)
@@ -146,7 +146,7 @@
   const set_no_show_appoint = () => {
     ref_data.show_appoint = false
     BetData.set_is_bet_pre(false)
-    BetData.set_bet_pre_obj({})
+    BetData.set_current_bet_pre_obj({})
     BetData.set_bet_appoint_obj_playOptionId('')
   }
 

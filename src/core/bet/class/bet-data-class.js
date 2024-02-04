@@ -153,6 +153,8 @@ class BetData {
     this.bet_pre_list = []
     // 预约投注数据 点击投注时 合并到投注项中的内容
     this.bet_pre_obj = {}
+    // 点击预约 设置投注项items相关数据
+    this.current_bet_pre_obj = {}
     //需要预约的盘口
     /* this bet_appoint_odds_value= null;
 this.bet_appoint_ball_head= null */
@@ -655,6 +657,11 @@ this.bet_appoint_ball_head= null */
     this.bet_pre_list = val
     this.set_bet_data_class_version()
   }
+  // 点击预约时 设置当前投注items数据
+  set_current_bet_pre_obj(val) {
+    this.current_bet_pre_obj = val
+    this.set_bet_data_class_version()
+  }
 
   // 设置预约投注项内容 用于投注时合并
   set_bet_pre_obj(val){
@@ -1088,7 +1095,6 @@ this.bet_appoint_ball_head= null */
     let reg_index = 0
     // 投注后 ws推送不进行更新
     if(BetViewDataClass.bet_order_status == 1) {
-      // console.log('这里！', this.bet_single_list, this.bet_s_list, obj)
       let single_list = []
       let single_name = ''
       // 单关 切 有投注项
