@@ -1,8 +1,9 @@
 <!-- 多项合并输入 -->
 <template>
-    <div class="bet_input_info flex_input component bet-input-info">
-        <div v-show="false"> {{ UserCtr.user_version }} --
+    <div class="bet_input_info flex_input component bet-input-info" > 
+    <div v-show="false"> {{ UserCtr.user_version }} --
       {{ BetData.bet_data_class_version }}-{{ BetViewDataClass.bet_view_version }}</div>
+      <div v-show="BetData.is_bet_pre" class="cathectic-appoint"></div>
         <div class="info_left">
             <div class="size_16 color_a1a1">
               <span> {{ i18n_t('bet.single_more') }} </span> 
@@ -15,7 +16,6 @@
                 </span>
             </div>
         </div>
-        <!-- {{ BetData.active_index }}---{{ BetData.bet_single_list.length }} -->
         <div class="info_right size_14" @click.stop="input_click($event)" :class="{'active':BetData.active_index == BetData.bet_single_list.length}">
             <div class="content-b">
                 <span v-if="ref_data.money" class="yb_fontsize20 money-number">{{ ref_data.money }}</span>
@@ -151,6 +151,16 @@ const cursor_flashing = () => {
 
 
 <style lang="scss" scoped>
+.cathectic-appoint{
+    background: rgba(0,0,0,.2);
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    top: 0;
+  }
 .bet_input_info {
     height: 68px;
     padding-left: 0.7rem;

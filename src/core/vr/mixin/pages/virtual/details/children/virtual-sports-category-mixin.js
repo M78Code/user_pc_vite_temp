@@ -15,7 +15,7 @@ import { dom } from 'quasar'
  // 引入处理数据的封装方法
 // import MatchInfoCtr from "src/base-h5/vr/utils/vsport/matchInfoCtr.js";
 import VSport from 'src/core/vr/vr-sports/vsport.js';
-import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache.js";
+import axios_debounce_cache from "src/core/http/debounce-module/";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 import { debounce } from "lodash";
 import VR_CTR from "src/core/vr/vr-sports/virtual-ctr.js"

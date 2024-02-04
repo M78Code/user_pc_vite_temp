@@ -2,7 +2,7 @@ import {
 	ref, nextTick,  onBeforeUnmount, onUnmounted
 } from "vue";
 import lodash from "lodash";
-import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache.js";
+import axios_debounce_cache from "src/core/http/debounce-module/";
 import {
 	MatchDataWarehouse_PC_List_Common as MatchListData,
 	MatchDataWarehouse_PC_Detail_Common,
@@ -23,6 +23,7 @@ import { set_base_data_init, set_base_data_init_ouzhou } from './match-list-meta
 import ServerTime from 'src/core/server-time/server-time.js';
 import get_match_list_params from './match-list-params.js'
 import { match_list_handle_set } from './match-handle-data.js'
+let current_hash_code=0
 // const route = router.currentRoute.value
 const { page_source } = PageSourceData;
 // 数据请求状态
