@@ -158,6 +158,8 @@ function confirm() {
 .dialog_content {
   box-shadow: none !important;
   background-color: #fff;
+  border-radius: 12px;
+  overflow: hidden;
 }
 
 .alert-wrap {
