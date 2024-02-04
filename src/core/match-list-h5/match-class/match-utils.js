@@ -395,15 +395,7 @@ class MatchUtils {
     let estimateHeight;
     // -------------------------- 欧洲版 --------------------------  目前只有赛果 
     if (project_name === 'ouzhou-h5') { 
-      if (is_show_league && show_card) {           // 显示联赛  显示卡片
-        estimateHeight = standard_config['6']
-      } else if (is_show_league && !show_card) {   // 显示联赛 不显示卡片 
-        estimateHeight = standard_config['8']
-      } else if (!is_show_league && show_card)  {  // 不显示联赛  显示卡片
-        estimateHeight = standard_config['7']
-      } else {                                     // 默认
-        estimateHeight = standard_config['default']
-      }
+      estimateHeight = 90
     } else { 
       // -------------------------- 复刻版 --------------------------
       if (MenuData.is_results()) { // --------- 赛果 ---------
