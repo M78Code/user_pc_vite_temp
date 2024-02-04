@@ -1,8 +1,7 @@
 import lodash from "lodash";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
-import { ref } from 'vue';
 
-import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache.js";
+import axios_debounce_cache from "src/core/http/debounce-module/";
 import PageSourceData from "src/core/page-source/page-source.js";
 import BetCommonHelper from "src/core/bet/common-helper/index.js";
 import { MatchDataWarehouse_PC_List_Common } from "src/output/module/match-data-base.js";
@@ -20,6 +19,8 @@ import filterHeader from 'src/core/filter-header/filter-header.js'
 import { match_list_handle_set } from '../match-handle-data'
 import { set_load_data_state } from '../match-list-composition'
 import { league_list_obj } from './match-list-processing'
+let current_hash_code=0
+let axios_debounce_timer;
 /**
  * @Description 删除赛事数据 卡片
  * @param {*} mid 删除赛事id

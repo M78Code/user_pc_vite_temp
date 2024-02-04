@@ -181,7 +181,6 @@ export default defineComponent({
     //     key: 'hy',
     //     language: 'Korean',
     //   }]
-    console.error('IS_FOR_NEIBU_TEST', IS_FOR_NEIBU_TEST)
     if (IS_FOR_NEIBU_TEST) {
       languages = lodash.concat(languages, [])
     }

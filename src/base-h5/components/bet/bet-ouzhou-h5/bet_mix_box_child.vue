@@ -34,13 +34,13 @@
               <!-- 单关合并 -->
               <template v-else>
                   <!-- 合并单关  -->
-                  <div class="scroll-box scroll-box-center" ref="scroll_box" :style="{ 'max-height': `${ref_min_height_max}rem` }">
+                  <div class="scroll-box scroll-box-center position-relative" ref="scroll_box"   :style="{ 'max-height': `${ref_min_height_max}rem` }">
                     <template v-if="BetData.is_bet_single && BetData.bet_single_list.length">
-                      <div v-for="(items,index) in BetData.bet_single_list" :key="items.playOptionsId">
+                      <div v-for="(items,index) in BetData.bet_single_list" :key="items.playOptionsId" class="position-relative" >
                         <bet-mix-box-child1 :items="items" :index="index"></bet-mix-box-child1>
                         <bet-input-info2 :item="items" :index="index"></bet-input-info2>
                       </div>
-                      <div v-if="BetData.bet_single_list.length > 1">
+                      <div v-if="BetData.bet_single_list.length > 1" class="position-relative" >
                         <bet-input-multiple></bet-input-multiple>
                       </div>
                     </template>
@@ -58,7 +58,6 @@
           <!-- 串关 -->
           <template v-if="!BetData.is_bet_single">
             <!-- 串关投注项列表  -->
-            <!-- <div class="scroll-box scroll-box-center" ref="scroll_box" :style="{ 'max-height': `${ref_min_height_max}rem` }"> -->
             <q-scroll-area ref="scrollAreaRef" :visible="false" :style="{ 'height': `${ref_min_height_max}rem` }" :thumb-style="{ opacity: 0}">
 
               <template v-if="BetViewDataClass.bet_order_status == 1">
@@ -341,7 +340,9 @@ background: var(--q-gb-t-c-3) !important;
   backdrop-filter: blur(5px);
   background: rgba(0, 0, 0, 0.5);
 }
-
+.position-relative{
+  position: relative;
+}
 .scroll-box {
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
@@ -349,6 +350,15 @@ background: var(--q-gb-t-c-3) !important;
   //background-color: var(--q-gb-t-c-7);
   //padding: 12px;
   //border-radius: 12px;
+
+  .scroll-box-mask{
+    background: rgba(0,0,0,.2);
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 1;
+  }
 }
 
 .full-shadow2 {

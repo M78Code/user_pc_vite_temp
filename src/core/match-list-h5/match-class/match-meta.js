@@ -199,7 +199,8 @@ class MatchMeta {
     // 元数据不作为最终渲染数据 所以不走虚拟计算
     // 元数据只作用域切换菜单时快速显示， 最终显示还是根据接口来
     this.match_mids = lodash.uniq(mids.slice(0, 10))
-    this.set_match_mids(result_mids.slice(0, 10), match_list.slice(0, 10), false)
+    this.set_match_mids(result_mids.slice(0, 10), match_list, false)
+    // this.set_match_mids(result_mids.slice(0, 10), match_list.slice(0, 10), false)
   }
 
   /**

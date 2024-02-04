@@ -42,6 +42,7 @@ const Stage = computed(()=>{
   .counting-down{
     position: unset;
     margin-left: .08rem;
+    width: auto !important;
   }
 }
 </style>

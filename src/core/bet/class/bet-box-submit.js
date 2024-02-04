@@ -412,11 +412,13 @@ const get_lastest_market_info = (type) => {
                             // if(bet_item.odds > odds.oddsValue ){
                             //     bet_item.red_green = 'green_down'
                             // }
-
-                            // 赔率 10w位
-                            // bet_item.odds = odds.oddsValue
-                            //最终赔率
-                            // bet_item.oddFinally = compute_value_by_cur_odd_type(odds.oddsValue,obj.playId, item.odds_hsw, item.csisportIdd)
+                            
+                            if(type != 'submit_bet'){
+                                // 赔率 10w位
+                                bet_item.odds = odds.oddsValue
+                                // 最终赔率
+                                bet_item.oddFinally = compute_value_by_cur_odd_type(odds.oddsValue,obj.playId, item.odds_hsw, item.csisportIdd)
+                            }
 
                             // 投注项类型
                             bet_item.ot = odds.oddsType
