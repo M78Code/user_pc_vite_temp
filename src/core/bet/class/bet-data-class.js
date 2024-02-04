@@ -634,9 +634,11 @@ this.bet_appoint_ball_head= null */
   set_bet_appoint_obj_playOptionId(val) {
     this.bet_pre_appoint_id = val
     if(val){
-      // 选中了预约单 清空投注金额
+      // 选中了预约单 清空 其他的 投注金额
       this.bet_single_list.forEach(item=>{
-        item.bet_amount = ''
+        if(item.playOptionsId != val){
+          item.bet_amount = ''
+        }
       })
     }
     this.set_bet_data_class_version()
@@ -1261,16 +1263,16 @@ this.bet_appoint_ball_head= null */
             // 查询ws投注项 中 匹配到的投注项id 
             let ws_ol_obj = (item.ol||[]).find(obj => ol_obj.playOptionsId == obj.oid ) || {}
             // WS推送中包含 投注项中的投注项内容
-            // console.error('推送码：',obj.cmd)
-            // console.error('ws-坑位',item.hn, '------ 投注项坑位',ol_obj.placeNum)
-            // console.error('ws-盘口 状态',item.hs, 'ws-投注项 状态',ws_ol_obj.os)
-            // console.error('ws-投注项 赔率',ws_ol_obj.ov, '------ 投注项赔率',ol_obj.odds )
-            // console.error('定时器',time_out)
+            console.error('推送码：',obj.cmd)
+            console.error('ws-坑位',item.hn, '------ 投注项坑位',ol_obj.placeNum)
+            console.error('ws-盘口 状态',item.hs, 'ws-投注项 状态',ws_ol_obj.os)
+            console.error('ws-投注项 赔率',ws_ol_obj.ov, '------ 投注项赔率',ol_obj.odds )
+            console.error('定时器',time_out)
             clearTimeout(time_out)
-            // console.error('清除定时器',time_out)
+            console.error('清除定时器',time_out)
             // 有坑位 并且 坑位变更 
             if(item.hn != ol_obj.placeNum && ol_obj.placeNum){
-              // console.error('坑位变化',item.hn,ol_obj.placeNum)
+              console.error('坑位变化',item.hn,ol_obj.placeNum)
               // 获取最新的盘口值
               get_lastest_market_info()
               // 有坑位的数据 对 坑位 和 投注项类型 进行定位 取值 页面渲染
@@ -1283,7 +1285,7 @@ this.bet_appoint_ball_head= null */
             }
             // 盘口状态，玩法级别 0：开 1：封 2：关 11：锁
             if(item.hs != 0 ) {
-              // console.error('盘口失效',item.hs)
+              console.error('盘口失效',item.hs)
               // 直接更新状态 设置关盘
               ol_obj.hl_hs = item.hs
               ol_obj.red_green = ''
@@ -1302,7 +1304,7 @@ this.bet_appoint_ball_head= null */
 
   // ws变更 带来的 投注项数据的变更
   set_ws_change_odds_info(item,ws_ol_obj,ol_obj) {
-    // console.error('------------ 来了 ---------------')
+    console.error('------------ 来了 ---------------')
     if(ws_ol_obj.ov){
       // "odds": item.odds,  // 赔率 万位
       // "oddFinally": compute_value_by_cur_odd_type(item.odds, '', '', item.sportId),  //赔率
@@ -1314,12 +1316,12 @@ this.bet_appoint_ball_head= null */
 
       // 投注项和状态一致不更新数据 
       if(ol_obj.odds == ws_ol_obj.ov && ws_ol_obj.os == ol_obj.ol_os && item.hs == ol_obj.hl_hs ){
-        // console.error('------------ 赔率没变 ------------ ')
+        console.error('------------ 赔率没变 ------------ ')
         ol_obj.red_green = ''
         this.set_ws_message_bet_info(ol_obj)
        return
       }
-      // console.error('------------ 设置投注项数据 ------------ ')
+      console.error('------------ 设置投注项数据 ------------ ')
       // 重新设置赔率
       ol_obj.odds = parseFloat(ws_ol_obj.ov) ? ws_ol_obj.ov*1 : ol_obj.odds
       

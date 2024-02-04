@@ -4,18 +4,11 @@
         <div v-show="false"> {{ UserCtr.user_version }} --
       {{ BetData.bet_data_class_version }}-{{ BetViewDataClass.bet_view_version }}</div>
         <div class="bet_input_info flex_input">
-       <!-- <div class="info_left"> -->
-       <!-- <div class="size_16 color_a1a1">{{i18n_t('bet.bet')}}</div> -->
-        <!-- <div class="size_14">
-            <span>{{i18n_t('bet.total_win2')}}</span>
-            <span class="margin_left_4">{{}}</span>
-        </div> -->
-       <!-- </div> -->
+       
        <div class="info_right size_14" @click.stop="input_click(items, index, $event)">
         <div class="content-b " :class="{'active':BetData.active_index == index}">
-            <span v-if="valueModel" class="yb_fontsize20 money-number">{{ valueModel }}</span>
+            <span v-if="valueModel || valueModel == 0" class="yb_fontsize12 money-number">{{ valueModel }}</span>
             <span class="money-span" ref="money_span" v-if="BetData.active_index == index && !readonly" :style="{ opacity:  '1' }"></span>
-            <!-- <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">{{ i18n_t('app_h5.bet.limit')}} {{ format_money(ref_data.min_money) }}~{{format_money(ref_data.max_money) }}</span> -->
           </div>
           
        </div>
@@ -81,28 +74,21 @@ onMounted(()=>{
 
 <style lang="scss" scoped>
 .bet_input_info{
-    height: 28px;
+    height: .28rem;
     // padding-left: 0.7rem;
     background: var(--q-gb-bg-c-10);
     // padding: 0 0.15rem;
 
     .info_right{
-        width: 80px;
-        height: 30px;
-        box-shadow: 0px 1px 4px 0px rgba(255, 112, 0, 0.10);
-        border: 1px solid var(--q-gb-bg-c-14);
-        padding-left: 6px;
-        background: linear-gradient(0deg,#ffffff,#ffffff);
-        caret-color: var(--q-gb-bd-c-1);
-        font-family: DIN;
-        font-size: 20px;
+        width: .7rem;
+        height: .26rem;
+        background: #ffffff;
+        color: var(--q-gb-t-c-4);
+        font-size: .12rem;
         font-weight: 500;
-        display: flex;
-        align-items: center;
-        border-radius: 2px;
         .content-b {
-            display: flex;
-            align-items: center;
+            width: 100%;
+            text-align: center;
         }
         .input_place{
             color:  #8A8986;
