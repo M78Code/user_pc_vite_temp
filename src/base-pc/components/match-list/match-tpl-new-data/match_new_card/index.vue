@@ -508,6 +508,53 @@ const onBetItemStateChange = (activeKey, state) => {
   }
 }
 
+/**
+     * @Description 切换右侧赛事
+     * @param {string} media_type 播放类型
+     * @param {undefined} undefined
+     */
+const on_switch_match = (media_type)  => {
+  // if (this.menu_data.is_virtual_sport) {
+  //   this.set_vsport_params({
+  //     mid: this.match.mid,
+  //     csid: this.match.csid,
+  //     tid: this.match.tid,
+  //     batchNo: this.match.batchNo,
+  //     orderNo: this.match.orderNo,
+  //   });
+  //   return;
+  // }
+  //展开右侧详情
+  // this.set_unfold_multi_column(false);
+  // this.set_is_pause_video(false);
+  if (
+    (route.name == "details" || route.name == "search") &&
+    media_type == "auto"
+  ) {
+    media_type = "info";
+  }
+  if (
+    ["auto", "info"].includes(media_type) &&
+    vx_detail_params.mid == this.match.mid &&
+    vx_play_media.media_type != "auto"
+  ) {
+    details.sync_mst(this.match.mid, this.match.csid);
+  }
+  // if(['video','1', 'auto'].includes(media_type)){
+  //   // 设置埋点缓存数据(列表页面) button:1.列表  2.右侧赛事信息 3.详情页
+  //   this.$utils.set_hide_api_data_obj(3,{match: this.match, button:'1',txt:'赛事列表', type:media_type});
+  // } else if(['animation','2'].includes(media_type)){
+  //   // 设置埋点缓存数据(列表页面) button:1.列表  2.右侧赛事信息 3.详情页
+  //   this.$utils.set_hide_api_data_obj(4,{match: this.match, button:'1',txt:'赛事列表', type:media_type});
+  // }
+  let play_id =
+    other_play_name_to_playid[match.value.play_current_key] || "";
+  details.on_switch_match(media_type, match.value, play_id);
+  // 如果右侧视频区是折叠，则会展开
+  // if (!this.vx_get_is_fold_status) {
+  //   this.vx_set_is_fold_status(!this.vx_get_is_fold_status);
+  // }
+}
 onMounted(() => {
   // 异步设置组件是否挂载完成
   nextTick(()=>{
