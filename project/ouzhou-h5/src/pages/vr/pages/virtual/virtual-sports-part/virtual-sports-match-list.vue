@@ -88,7 +88,8 @@ export default {
     }
 
     .odd-t-w-inner {
-      width: 2.52rem;
+      // width: 2.52rem;
+      width: 100%;
       height: 100%;
       float: right;
       flex-wrap: nowrap;
@@ -101,7 +102,8 @@ export default {
       }
 
       & > div {
-        width: 0.6rem;
+        // width: 0.6rem;
+        width: 25%;
         text-align: center;
         line-height: 1;
         margin-right: 0.03rem;
