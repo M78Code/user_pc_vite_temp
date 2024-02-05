@@ -119,6 +119,7 @@ class MenuData {
     this.current_ball_type = ''
 
     this.left_menu_list = []
+    this.is_virtual_sport = false
   }
 
   // 获取数据缓存 ，用于刷新
