@@ -309,7 +309,7 @@
 import { MatchProcessFullVersionWapper as MatchProcess } from 'src/components/match-process/index.js';
 import betItem from "src/base-pc/components/bet-item/bet-item-list-new-data"
 import { ref, computed, watch, onMounted, inject, reactive, nextTick } from 'vue';
-import { MenuData, get_match_status, UserCtr, MatchDetailCalss } from "src/output/index.js";
+import { MenuData, get_match_status, LayOutMain_pc, MatchDetailCalss, other_play_name_to_playid } from "src/output/index.js";
 import { getScrollbarWidth } from 'src/core/utils/common/index'
 import { useRoute, useRouter } from 'vue-router';
 import lodash from 'lodash'
@@ -514,19 +514,19 @@ const onBetItemStateChange = (activeKey, state) => {
      * @param {undefined} undefined
      */
 const on_switch_match = (media_type)  => {
-  // if (this.menu_data.is_virtual_sport) {
-  //   this.set_vsport_params({
-  //     mid: this.match.mid,
-  //     csid: this.match.csid,
-  //     tid: this.match.tid,
-  //     batchNo: this.match.batchNo,
-  //     orderNo: this.match.orderNo,
-  //   });
-  //   return;
-  // }
+  if (MenuData.is_virtual_sport) {
+    MatchListDetailMiddleware.set_vsport_params({
+      mid: match.value.mid,
+      csid: match.value.csid,
+      tid: match.value.tid,
+      batchNo: match.value.batchNo,
+      orderNo: match.value.orderNo,
+    });
+    return;
+  }
   //展开右侧详情
-  // this.set_unfold_multi_column(false);
-  // this.set_is_pause_video(false);
+    LayOutMain_pc.set_unfold_multi_column(false);
+    MatchDetailCalss.set_is_pause_video(false);
   if (
     (route.name == "details" || route.name == "search") &&
     media_type == "auto"
