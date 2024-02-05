@@ -1416,7 +1416,7 @@ export default {
 .card-footer{
   position: absolute;
   bottom: 2px;
-  width: 100%;
+  width: 50%;
   height: 25px;
   z-index: 99;
   display: flex;
