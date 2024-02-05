@@ -296,7 +296,8 @@
             </div>
           </div>
           <!-- 次要玩法 DOM -->
-          <div class="secondary-game-play" v-if="[1,2,5,7,8].includes(+match.csid) && standard_edition != 1" @click.stop>
+          <!-- <div class="secondary-game-play" v-if="[1,2,5,7,8].includes(+match.csid) && standard_edition != 1" @click.stop> -->
+          <div class="secondary-game-play" v-if="[1].includes(+match.csid) && standard_edition != 1" @click.stop>
             <MatchContainerSecondTemplate2
               :i="i"
               :match="match_of_list"
@@ -1013,7 +1014,7 @@ export default {
   height: auto;
   position: relative;
   height: 1.12rem;
-  z-index: 100;
+  z-index: 8888;
 
   .right-content-style {
     position: relative;
@@ -1491,7 +1492,8 @@ export default {
 }
 .score-content{
   flex: 1;
-  // width: 80%;
+  position: fixed;
+  right: 10px;
   :deep(.score-section){
     height: 100%;
   }

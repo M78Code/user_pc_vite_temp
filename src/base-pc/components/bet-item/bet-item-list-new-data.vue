@@ -32,7 +32,8 @@
       ? 'flex:1.5'
       : !(ol_data.onbl || score || ol_data.onb) ? 'flex:0' : ''
       " v-if="ol_data.oid">
-      <div v-if="odds_state == 'seal'" class="lock" />
+      <div v-if="['seal'].includes(odds_state)" class="lock" :style="compute_css_obj({ key: 'pc-home-lock' })">
+      </div>
       <span v-else>
         {{ compute_value_by_cur_odd_type(
           ol_data.ov,
@@ -86,7 +87,7 @@ const props = defineProps({
 const match = inject('match', null)
 const emit = defineEmits(['oddsChange', 'stateChage'])
 const {
-  bet_click_ol, disk_text_replace, bet_item_select, score, odds_state, odds_lift, is_mounted
+  bet_click_ol, score, odds_state, odds_lift, is_mounted
 } = use_bet_item(props, emit)
 
 defineExpose({

@@ -372,7 +372,8 @@ const get_lastest_market_info = (type) => {
                         // bug 需要遍历 ot == oddsType
                         let market_odds_list = lodash_.get(market,'marketOddsList',[]) || []
 
-                        let odds = market_odds_list.find(page=> page.oddsType == item.ot) || {}
+                        // playOptionsId 已经在 ws那边做了替换为最新的
+                        let odds = market_odds_list.find(page=> page.oddsType == item.ot && page.playOptionsId == item.playOptionsId) || {}
 
                         if( odds.id ) {
                             // 替换新id
@@ -384,8 +385,7 @@ const get_lastest_market_info = (type) => {
                             bet_item.ol_os = odds.oddsStatus
                             // 盘口状态
                             bet_item.hl_hs = market.status
-                            // 盘口id
-                            bet_item.marketId = market.id
+                        
 
                             // ws断连后 需要对比数据 进行投注
                             // 坑位变更 赔率也变 进行锁盘处理
@@ -412,18 +412,15 @@ const get_lastest_market_info = (type) => {
                             // if(bet_item.odds > odds.oddsValue ){
                             //     bet_item.red_green = 'green_down'
                             // }
-                            
-                            if(type != 'submit_bet'){
-                                // 赔率 10w位
-                                bet_item.odds = odds.oddsValue
-                                // 最终赔率
-                                bet_item.oddFinally = compute_value_by_cur_odd_type(odds.oddsValue,obj.playId, item.odds_hsw, item.csisportIdd)
-                            }
 
                             // 投注项类型
                             bet_item.ot = odds.oddsType
+
+                            // 盘口id 和 投注项id 在ws那边做替换
                             // 投注项id
-                            bet_item.playOptionsId = odds.id
+                            // bet_item.playOptionsId = odds.id
+                            // 盘口id
+                            // bet_item.marketId = market.id
                             // 基准分
                             // bet_item.mark_score = 
                             // 盘口值
@@ -487,7 +484,7 @@ const get_lastest_market_info = (type) => {
                 }
                 
                 // 重新订阅ws
-                set_market_id_to_ws()
+                // set_market_id_to_ws()
             })
         }
     }).finally(()=>{

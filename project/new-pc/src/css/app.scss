@@ -299,11 +299,13 @@ input::-ms-reveal {
 
 /* *** 直滚动条样式 ************ -S */
 .v-scroll-area {
+  
   &:after {
     z-index: 99;
     content: "";
     display: block;
     width: 14px;
+    background: var(--q-bg-gb-c-11) !important;
   }
 
   /*  真实滚动条的 bar 样式 */
@@ -320,6 +322,7 @@ input::-ms-reveal {
     width: 7px;
     border-radius: 4px;
     cursor: pointer;
+    
   }
 
   /*  列表页的 拖动条 样式重写 */

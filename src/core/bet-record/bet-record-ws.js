@@ -74,6 +74,23 @@ export default class BetRecordWs {
      * @param {undefined} undefined
      * @return {undefined} undefined
      */
+    // {
+    //     "event": "WS",
+    //     "cmd": "WS_MSG_REV",
+    //     "data": {
+    //         "cd": {
+    //             "cuid": "509825984426120034",
+    //             "orderNo": "5119540751322881",
+    //             "orderStatus": 1,
+    //             "preSettleAmount": 8.79,
+    //             "preStatus": 1,
+    //             "status": 1
+    //         },
+    //         "cmd": "C201",
+    //         "ctsp": "1707034551156",
+    //         "ld": "5119540751322881"
+    //     }
+    // }
     r_ws_msg(obj) {
         // 获取window.postMessage自定义命令
         const cmd = lodash.get(obj, 'data.cmd');

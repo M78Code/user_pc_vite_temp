@@ -123,13 +123,10 @@ class BetWsMessage {
             this.MSG_C104(data);
             break;
           // 赛事 盘口赔率推送
-          // case 'C105':
+          case 'C105':
           // 投注项 盘口赔率推送
           case 'C106':
-           
-              this.MSG_C106(data)
-         
-
+            this.MSG_C106(data)
             // this.MSG_C106(data)
             break;
           // 注单状态
@@ -139,6 +136,10 @@ class BetWsMessage {
           // 注单状态
           case 'C203':
             this.MSG_C203(data);
+            break;
+          // 玩法移除或开启
+          case 'C112':
+            this.MSG_C112(data);
             break;
           
           default:
@@ -169,7 +170,6 @@ class BetWsMessage {
   // 赛事订阅盘口赔率变更 修改投注项变更
   // 投注项变更
   MSG_C106(obj) {
-    console.error('obj.cmd',obj.cmd)
     let config = obj.cd
     config.cmd = obj.cmd
     BetData.set_bet_c106_change(config)
@@ -195,6 +195,20 @@ class BetWsMessage {
   MSG_C203(obj) {
     UserCtr.get_balance()
   }
+  /**
+   * C112 推送数据
+   * `mid` 赛事Id
+   * `mcms` 状态2:开启，3：删除（与上游一致）
+   * `mcid` 玩法id集合
+   * @description: 玩法集变更
+   * @param {Object} obj socket推送的消息体
+   * @return {undefined} undefined
+   */
+  MSG_C112(obj) {
+    BetData.set_bet_c112_change(obj.cd)
+  }
+
+  
 }
 
 export default new BetWsMessage();

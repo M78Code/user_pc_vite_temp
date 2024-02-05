@@ -309,7 +309,7 @@
 import { MatchProcessFullVersionWapper as MatchProcess } from 'src/components/match-process/index.js';
 import betItem from "src/base-pc/components/bet-item/bet-item-list-new-data"
 import { ref, computed, watch, onMounted, inject, reactive, nextTick } from 'vue';
-import { MenuData, get_match_status, UserCtr, MatchDetailCalss } from "src/output/index.js";
+import { MenuData, get_match_status, LayOutMain_pc, MatchDetailCalss, other_play_name_to_playid } from "src/output/index.js";
 import { getScrollbarWidth } from 'src/core/utils/common/index'
 import { useRoute, useRouter } from 'vue-router';
 import lodash from 'lodash'
@@ -371,7 +371,7 @@ const play_csid = computed(() => {
 const show_data = computed(() => {
   let state = false
     //足球 篮球 电竞 vr足球  B03电子足球、C01、O01等
-  if(['1','2','100','101','102','103','1001'].includes(match.value.csid) && !['B03','C01','O01'].includes(match.value.cds)){
+  if([1,2,100,101,102,103,1001].includes(+match.value.csid) && !['B03','C01','O01'].includes(match.value.cds)){
     state = true
   }
   return state;
@@ -432,10 +432,8 @@ const cur_video_icon = computed(() => {
   let is_esports = MenuData.is_esports();
   //滚球状态
   let is_play = get_match_status(ms);
-  // 包含的语言
-  let status = ["zh", "tw",'hk'].includes(UserCtr.lang);
   //演播厅
-  if (lvs == 2 && status && [1, 0].includes(lss)) {
+  if (lvs == 2 && [1, 0].includes(lss)) {
     if (lss === 1) {
       cur_video_icon = {
         type: "studio",
@@ -449,7 +447,7 @@ const cur_video_icon = computed(() => {
       };
     }
     //主播
-  } else if (tvs == 2 && status) {
+  } else if (tvs == 2) {
     cur_video_icon = {
       type: "anchor",
       text: i18n_t("common.anchor"),
@@ -499,7 +497,7 @@ const click_handle = () => {
   if (["7"].includes(play_csid.value)) {
     return;
   }
-  // this.sr_click_handle(match.value);
+  details.sr_click_handle(match.value);
 }
 
 const onBetItemStateChange = (activeKey, state) => {
@@ -510,6 +508,41 @@ const onBetItemStateChange = (activeKey, state) => {
   }
 }
 
+/**
+     * @Description 切换右侧赛事
+     * @param {string} media_type 播放类型
+     * @param {undefined} undefined
+     */
+const on_switch_match = (media_type)  => {
+  if (MenuData.is_virtual_sport) {
+    MatchListDetailMiddleware.set_vsport_params({
+      mid: match.value.mid,
+      csid: match.value.csid,
+      tid: match.value.tid,
+      batchNo: match.value.batchNo,
+      orderNo: match.value.orderNo,
+    });
+    return;
+  }
+  //展开右侧详情
+    LayOutMain_pc.set_unfold_multi_column(false);
+    MatchDetailCalss.set_is_pause_video(false);
+  if (
+    (route.name == "details" || route.name == "search") &&
+    media_type == "auto"
+  ) {
+    media_type = "info";
+  }
+  if (
+    ["auto", "info"].includes(media_type) &&
+    vx_detail_params.mid == this.match.mid &&
+    vx_play_media.media_type != "auto"
+  ) {
+    details.sync_mst(this.match.mid, this.match.csid);
+  }
+  let play_id = other_play_name_to_playid[match.value.play_current_key] || "";
+  details.on_switch_match(media_type, match.value, play_id);
+}
 onMounted(() => {
   // 异步设置组件是否挂载完成
   nextTick(()=>{

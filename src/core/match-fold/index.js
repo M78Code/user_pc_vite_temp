@@ -181,13 +181,23 @@ class MatchFold {
   }
 
   /**
-   * @description 设置赛事次要玩法是否展开
+   * @description 设置赛事次要玩法高度
    * @param { match } 赛事对象 
    */
   set_match_tab_content (match) {
     const key = this.get_match_fold_key(match)
     const show_tab_content = !lodash.get(this.match_mid_fold_obj.value, `${key}.show_tab_content`, false)
     this.set_match_fold(key, { show_tab_content  })
+  }
+
+  /**
+   * @description 设置赛事次要玩法是否有次要玩法
+   * @param { match } 赛事对象 
+   */
+  set_match_show_tab (match) {
+    const key = this.get_match_fold_key(match)
+    const show_tab = !lodash.get(this.match_mid_fold_obj.value, `${key}.show_tab`, false)
+    this.set_match_fold(key, { show_tab  })
   }
   /**
    * @description 获取对象折叠的  key

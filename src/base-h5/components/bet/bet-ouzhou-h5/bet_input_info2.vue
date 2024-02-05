@@ -23,6 +23,9 @@
                 <span class="money-span" ref="money_span" v-if="BetData.active_index == index" :style="{ opacity: '1' }"></span>
 
                 <span class="yb_fontsize14 limit-txt" v-show="!item.bet_amount">{{ i18n_t('bet.money_range') }} {{ ref_data.min_money }}~{{ formatMoney(ref_data.max_money) }}</span>
+
+                <img class="del_btn_money" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/delete.svg`"  @click="del_btn_money()" alt=""/>
+                
             </div>
 
         </div>
@@ -71,6 +74,7 @@ const input_click = (item, index, event) => {
     })
 }
 
+
 // 光标
 const money_span = ref(null)
 let flicker_timer = null
@@ -96,6 +100,21 @@ onMounted(() => {
 onUnmounted(() => {
     Object.values(ref_data.emit_lsit).map((x) => x());
 })
+
+
+
+/**
+ *@description 单个输入框金额删除按钮
+ *
+ */
+ const del_btn_money = () => {
+
+    BetData.set_bet_obj_amount(0, props.item.playOptionsId)
+    
+ 
+ }
+
+
 
 /**
  *@description 金额改变事件
@@ -178,6 +197,16 @@ const cursor_flashing = () => {
         .content-b {
             display: flex;
             align-items: center;
+            .money-number{
+                color: #1b1b1b;
+                font-family: "DIN";
+            }
+            .del_btn_money{
+                right: 0.25rem;
+                display: inline-block;
+                width: auto;
+                position: absolute;
+            }
         }
 
         .input_place {

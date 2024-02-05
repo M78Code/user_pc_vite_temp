@@ -150,7 +150,8 @@ const handlerUpdate = lodash.debounce((data) => {
   data.forEach(t => {
     // if (t.is_meta) return
     const item = matchs_data.value.find(m => m.mid === t.mid)
-    list.push(item)
+    const hps_data = MatchMeta.no_reset_attribute(t)
+    list.push(Object.assign({}, item, hps_data))
     mids.push(t.mid)
   })
   // console.log('当前可视区数据更新数据', list)

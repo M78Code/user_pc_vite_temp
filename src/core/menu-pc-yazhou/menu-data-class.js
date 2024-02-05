@@ -119,6 +119,7 @@ class MenuData {
     this.current_ball_type = ''
 
     this.left_menu_list = []
+    this.is_virtual_sport = false
   }
 
   // 获取数据缓存 ，用于刷新
@@ -675,9 +676,6 @@ class MenuData {
       is_multi_column &&
       !window.frames.length != parent.frames.length
     !this.is_multi_colum&& LayOutMain_pc.set_unfold_multi_column(false)
-      // && state.layoutReducer.is_unfold_multi_column;
-    // store.dispatch("set_unfold_multi_column", this.is_multi_column);
-    // console.warn('this.is_multi_column ',this.is_multi_column )
   }
   /**
    * 获取 当前 左侧菜单赛种的 名字
