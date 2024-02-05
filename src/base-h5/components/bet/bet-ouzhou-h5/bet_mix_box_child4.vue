@@ -35,7 +35,7 @@
                     <div class="flex">
                       <div>
                         <div class="nonebox4-content-right">
-                           <div class="nonebox4-content-right-profit">{{item.oddsValues}}</div>
+                           <div class="nonebox4-content-right-profit">@{{item.oddsValues}}</div>
                         </div>
                         <div class="nonebox4-content-right-bot" :class="BetViewDataClass.bet_order_status == 3?'green-color':BetViewDataClass.bet_order_status==4?'red-color':''">
                           {{BetViewDataClass.bet_order_status==4?i18n_t('bet.bet_err'):BetViewDataClass.bet_order_status==2?i18n_t('bet.bet_loading'):i18n_t('bet.bet_suc')}}{{}}
@@ -241,6 +241,7 @@
       font-size: 0.2rem;
       font-weight: bold;
       padding: 0 0.05rem;
+      font-family: "DIN";
   }
   .nonebox4-content-right{
     text-align: right;
