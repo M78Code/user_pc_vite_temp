@@ -397,6 +397,7 @@ onMounted(() => {
         .title {
             font-weight: 600;
             font-size: 14px;
+            color: var(--q-header-search-color-3);
         }
 
         .right {
