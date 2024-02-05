@@ -17,9 +17,11 @@
                     </div>
                 </div>
         
-                <div>  
+                <div class="input-border">  
                     <input class="bet-input" v-model="ref_data.money" type="text" @input="set_win_money" @click="show_quick_amount(true)" @focus="stop_drap_fn(false)" @blur="stop_drap_fn(true)" @keydown.enter="keydown($event)"
                     :placeholder="placeholder" maxLength="11"  />
+                    <img class="del_btn_money" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/delete-input.svg`" @click="del_btn_money()" alt="" />
+
                 </div>
             
             </div>
@@ -40,7 +42,7 @@ import { reactive,onMounted,onUnmounted,computed } from "vue"
 import lodash_ from 'lodash'
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
-import { useMittEmit,useMittOn,MITT_TYPES,UserCtr,formatMoney, format_money3 } from "src/output/index.js"
+import { useMittEmit,useMittOn,MITT_TYPES,UserCtr,formatMoney, format_money3 ,LOCAL_PROJECT_FILE_PREFIX} from "src/output/index.js"
 import { submit_handle } from "src/core/bet/class/bet-box-submit.js"
 import mathJs from 'src/core/bet/common/mathjs.js'
 import { ref_pre_book } from "src/core/bet/common/appoint-data.js"
@@ -120,7 +122,11 @@ const bet_money_btn_class = (obj, index) => {
     }
     return className;
 }
-
+const del_btn_money = () => {
+    ref_data.money = null
+    BetData.set_bet_obj_amount(null,props.items.playOptionsId)
+    BetData.set_bet_amount(null)
+}
 // 快捷金额
 const set_bet_money = obj => {
     // 获取当前投注金额
@@ -276,6 +282,14 @@ const placeholder = computed(() => {
     background: var(--q-gb-bg-c-15);
     .bet-input-info{
         height: 58px;
+        .input-border{
+            position: relative;
+        }
+        .del_btn_money{
+            position: absolute;
+            top: calc(50% - 6px);
+            right: 10px;
+        }
     }
     .text-8A8986-i {
         color: var(--q-gb-t-c-8) !important
