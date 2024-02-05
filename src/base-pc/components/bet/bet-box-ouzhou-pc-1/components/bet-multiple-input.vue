@@ -9,7 +9,7 @@
                     <div>{{i18n_t('bet.bet_multiple')}}</div>
                     <div class="bet-count">
                         <span>{{ BetData.bet_single_list.length}}</span>
-                        <span>x</span>
+                        <span>x</span>123
                     </div>
                 </div>
                 <div class="row text-color-max-win mt2">
@@ -26,9 +26,7 @@
                 <input class="bet-input" v-model="ref_data.money" type="text" @input="set_win_money" @keydown.enter="keydown($event)"
                 :placeholder="placeholder" maxLength="11" />
                 <!--清除输入金额按钮-->
-                <div class="bet-input-close" @click.stop="bet_clear_handle" v-if="ref_data.money && !BetData.is_bet_single">
-                    <icon-wapper name="icon-failure" size="12px" />
-                </div>
+                <img class="del_btn_money" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/delete-input.svg`" @click="del_btn_money()" alt="" />
             </div>
         </div>
         
@@ -149,10 +147,14 @@ onUnmounted(() => {
 }
 
 // 清空输入框金额
-const bet_clear_handle = () => {
-    ref_data.money = ''
-    BetData.set_bet_amount(0)
-    BetData.set_bet_obj_amount('',oid)
+const del_btn_money = () => {
+    ref_data.money = null
+    BetData.set_bet_amount(null)
+    BetData.bet_single_list.forEach(item => {
+        BetData.set_bet_obj_amount(null, item.playOptionsId)
+    })
+    useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY_UPDATE)
+    useMittEmit(MITT_TYPES.EMIT_BET_MULTIPLE_MONEY,ref_data)
 }
 
 // 键盘回车事件
@@ -275,6 +277,12 @@ input[type="number"] {
     }
     .right-input {
         padding-right: .12rem;
+        position: relative;
+        .del_btn_money{
+            position: absolute;
+            top: calc(50% - 6px);
+            right: 20px;
+        }
     }
     .mt2 {
         margin-top: .02rem;
