@@ -23,6 +23,7 @@
                 <span class="money-span" ref="money_span" v-if="BetData.active_index == BetData.bet_single_list.length" :style="{ opacity: '1' }"></span>
 
                 <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">{{i18n_t('bet.money_range')}} {{ref_data.min_money}}~{{format_money3(ref_data.max_money)}}</span>
+                <img class="del_btn_money" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/delete.svg`"  @click="del_btn_money()" alt=""/>
             </div>
         </div>
     </div>
@@ -89,6 +90,15 @@ const winMoney = computed(()=> state =>{
     }
     return formatMoney(sum) 
 })
+
+const del_btn_money = () => {
+    BetData.bet_single_list.forEach(item => {
+        BetData.set_bet_amount('')
+        BetData.set_bet_obj_amount('', item.playOptionsId)
+        ref_data.money = ''
+        useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY_UPDATE)
+    })
+}
 
 /**
  *@description 金额改变事件
@@ -187,6 +197,16 @@ const cursor_flashing = () => {
         .content-b {
             display: flex;
             align-items: center;
+            .del_btn_money{
+                right: 0.25rem;
+                display: inline-block;
+                width: auto;
+                position: absolute;
+            }
+            .money-number{
+                font-family: 'DIN';
+                color: #1b1b1b;
+            }
         }
 
         .input_place {

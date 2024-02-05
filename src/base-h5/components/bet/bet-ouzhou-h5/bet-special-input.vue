@@ -22,11 +22,7 @@
         <span v-if="items.bet_amount" class="yb_fontsize20 money-number">{{ items.bet_amount }}</span>
         <span class="yb_fontsize14 limit-txt" v-show="!items.bet_amount">{{ i18n_t('ouzhou.bet.limit')}}<em class="number_family">{{ items.min_money }}-{{ format_money3(items.max_money) }}</em></span>
         <span class="money-span" ref="money_span" v-if="items.show_quick" :style="{ opacity: '1' }"></span>
-
-        <!-- <span class="icon-delete del_btn_money" @click="del_btn_money()"></span> -->
-        <!-- /**
-          等UI补充删除串单 单个输入框金额icon
-        */ -->
+        <img class="del_btn_money" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/delete.svg`"  @click="del_btn_money()" alt=""/>
 
       </div>
     </div>
@@ -80,19 +76,11 @@ onMounted(() => {
 
 /**
  *@description 单个输入框金额删除按钮
- *@param {Number} _index input下标
  */
-const del_btn_money = (_index) => {
-
-  /***
-   * 
-   *  
-   * 
-   */
-  
-
-
-  
+const del_btn_money = () => {
+  console.log(props.items.bet_amount)
+  props.items.bet_amount = ''
+  set_special_series('edit',ref_data.money.params.id)
 }
 
 
@@ -264,7 +252,7 @@ const alertRules = (id) => {
       //font-size: 0.16rem;
     }
     .del_btn_money{
-      right: 0.1rem;
+      right: 0.25rem;
       display: inline-block;
       width: auto;
       position: absolute;

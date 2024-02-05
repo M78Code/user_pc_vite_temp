@@ -19,10 +19,9 @@
        <div class="info_right size_14">
         <div class="content-b" @click.stop="input_click(item,index,$event)" :class="{'active':BetData.active_index == index}">
             <span v-if="ref_data.money" class="yb_fontsize20 money-number">{{ ref_data.money }}</span>
-  
             <span class="money-span" ref="money_span" v-if="BetData.active_index == index" :style="{ opacity:  '1' }"></span>
-            
             <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">{{ i18n_t('bet.money_range')}} {{ ref_data.min_money }}~{{formatMoney(ref_data.max_money) }}</span>
+            <img class="del_btn_money" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/delete.svg`"  @click="del_btn_money()" alt=""/>
           </div>
           
        </div>
@@ -32,7 +31,7 @@
 <script setup>
 import lodash_ from "lodash"
 import { onMounted, onUnmounted, reactive,ref } from "vue"
-import {MITT_TYPES,useMittOn,formatMoney,UserCtr } from "src/output/index.js"
+import {MITT_TYPES,useMittOn,formatMoney,UserCtr,LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js"
 import mathJs from 'src/core/bet/common/mathjs.js'
@@ -89,6 +88,16 @@ onUnmounted(()=>{
 })
 
 /**
+ *@description 单个输入框金额删除按钮
+ *
+ */
+ const del_btn_money = () => {
+    ref_data.money = 0
+    BetData.set_bet_obj_amount(0,props.item.playOptionsId)
+    BetData.set_bet_amount(0)
+}
+
+/**
  *@description 金额改变事件
  *@param {Number} new_money 最新金额值
  */
@@ -143,7 +152,7 @@ const set_ref_data_bet_money = () => {
     padding-left: 0.7rem;
     background: var(--q-gb-bg-c-10);
     padding: 0 0.15rem;
-
+    
     .info_right{
         width: 162px;
         height: 42px;
@@ -161,7 +170,12 @@ const set_ref_data_bet_money = () => {
         .content-b {
             display: flex;
             align-items: center;
-
+            .del_btn_money{
+                right: 0.25rem;
+                display: inline-block;
+                width: auto;
+                position: absolute;
+            }
             .money-number{
                 color: #1a1a1a;
             }
