@@ -5,7 +5,8 @@
 
 <template>
   <div v-show="false">{{ BetData.bet_data_class_version }}-{{items.red_green}}-{{UserCtr.user_version}} </div>
-    <div class="bet-mix-show">
+  <div v-show="(BetData.is_bet_pre && BetData.bet_pre_appoint_id != items.playOptionsId )" class="cathectic-appoint"></div>  
+  <div class="bet-mix-show">
       <div class="nonebox4-content">
           <div class="nonebox4-content-left">
               <div class="nonebox4-content-left-content">
@@ -34,7 +35,7 @@
                         <div v-else>
                             <div class="nonebox4-content-right" v-if="!([2,3].includes(items.ol_os*1) || [1,2].includes(items.hl_hs*1) || [1,2].includes(items.mid_mhs*1))">
                               <div class="nonebox4-content-right-profit" :class="{'red-up':items.red_green == 'red_up','green-down':items.red_green == 'green_down'}">
-                                {{compute_value_by_cur_odd_type(items.odds,items.playId,items.odds_hsw,items.sportId)}}
+                                @{{compute_value_by_cur_odd_type(items.odds,items.playId,items.odds_hsw,items.sportId)}}
                               </div>
                               <div class="show_img">
                                 <img v-if="items.red_green == 'red_up'" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/icon_up.png`" alt=""/>
@@ -136,7 +137,7 @@
     ref_data.show_appoint = true
     ref_data.odds_value_edit = props.items.oddFinally
     BetData.set_is_bet_pre(true)
-    BetData.set_bet_pre_obj(props.items)
+    BetData.set_current_bet_pre_obj(props.items) // 设置当前投注items数据
     set_ref_data(props.items)
     // 设置预约投注id
     BetData.set_bet_appoint_obj_playOptionId(props.items.playOptionsId)
@@ -145,12 +146,22 @@
   const set_no_show_appoint = () => {
     ref_data.show_appoint = false
     BetData.set_is_bet_pre(false)
-    BetData.set_bet_pre_obj({})
+    BetData.set_current_bet_pre_obj({})
+    BetData.set_bet_appoint_obj_playOptionId('')
   }
 
   </script>
   
   <style lang="scss" scoped>
+
+  .cathectic-appoint{
+    background: rgba(0,0,0,.2);
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 1;
+  }
   .hps_img{
     width: .08rem;
     height: .13rem;
@@ -297,6 +308,7 @@
   .nonebox4-content-right-profit{
       font-size: 0.2rem;
       font-weight: 700;
+      font-family: "DIN";
       color: var(--q-gb-t-c-1);
       &.red-up{
           color: var(--q-gb-t-c-17);

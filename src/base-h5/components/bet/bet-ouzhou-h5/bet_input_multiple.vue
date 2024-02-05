@@ -1,8 +1,9 @@
 <!-- 多项合并输入 -->
 <template>
-    <div class="bet_input_info flex_input component bet-input-info">
-        <div v-show="false"> {{ UserCtr.user_version }} --
+    <div class="bet_input_info flex_input component bet-input-info" > 
+    <div v-show="false"> {{ UserCtr.user_version }} --
       {{ BetData.bet_data_class_version }}-{{ BetViewDataClass.bet_view_version }}</div>
+      <div v-show="BetData.is_bet_pre" class="cathectic-appoint"></div>
         <div class="info_left">
             <div class="size_16 color_a1a1">
               <span> {{ i18n_t('bet.single_more') }} </span> 
@@ -15,7 +16,6 @@
                 </span>
             </div>
         </div>
-        <!-- {{ BetData.active_index }}---{{ BetData.bet_single_list.length }} -->
         <div class="info_right size_14" @click.stop="input_click($event)" :class="{'active':BetData.active_index == BetData.bet_single_list.length}">
             <div class="content-b">
                 <span v-if="ref_data.money" class="yb_fontsize20 money-number">{{ ref_data.money }}</span>
@@ -23,6 +23,7 @@
                 <span class="money-span" ref="money_span" v-if="BetData.active_index == BetData.bet_single_list.length" :style="{ opacity: '1' }"></span>
 
                 <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">{{i18n_t('bet.money_range')}} {{ref_data.min_money}}~{{format_money3(ref_data.max_money)}}</span>
+                <img class="del_btn_money" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/delete.svg`"  @click="del_btn_money()" alt=""/>
             </div>
         </div>
     </div>
@@ -90,6 +91,15 @@ const winMoney = computed(()=> state =>{
     return formatMoney(sum) 
 })
 
+const del_btn_money = () => {
+    BetData.bet_single_list.forEach(item => {
+        BetData.set_bet_amount('')
+        BetData.set_bet_obj_amount('', item.playOptionsId)
+        ref_data.money = ''
+        useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY_UPDATE)
+    })
+}
+
 /**
  *@description 金额改变事件
  *@param {Number} new_money 最新金额值
@@ -151,6 +161,16 @@ const cursor_flashing = () => {
 
 
 <style lang="scss" scoped>
+.cathectic-appoint{
+    background: rgba(0,0,0,.2);
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    top: 0;
+  }
 .bet_input_info {
     height: 68px;
     padding-left: 0.7rem;
@@ -177,6 +197,16 @@ const cursor_flashing = () => {
         .content-b {
             display: flex;
             align-items: center;
+            .del_btn_money{
+                right: 0.25rem;
+                display: inline-block;
+                width: auto;
+                position: absolute;
+            }
+            .money-number{
+                font-family: 'DIN';
+                color: #1b1b1b;
+            }
         }
 
         .input_place {
@@ -258,4 +288,5 @@ const cursor_flashing = () => {
 .limit-txt {
     color: var(--q-gb-t-c-3);
     white-space: nowrap;
+    font-family: "DIN";
 }</style>

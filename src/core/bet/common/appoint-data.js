@@ -17,6 +17,7 @@ const ref_pre_book = reactive({
   basic_score: '', // 赛事比分 返回比分格式为: (主队得分-客队得分)
   min_head_value: 0, //最下盘口值
   max_head_value: 0, //最大盘口值
+  current_bet_pre_obj: {}
 })
 
 /*
@@ -227,21 +228,49 @@ const computed_keyboard_odds = (val) => {
 }
 
 const computed_keyboard_handicap = (val) => {
-  let min_ball_head = -99.5;
-  let max_ball_head = 400.5;
-  let res = val
-  if (val <= min_ball_head) {
-    res = format_money(min_ball_head)
-    useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('pre_record.market_error_info')}`)
+  // console.log('这里', BetData.current_bet_pre_obj)
+  //首先判断 篮球 还是 足球
+  switch(BetData.current_bet_pre_obj.sportId*1) {
+    case 1: //足球
+      football_head_handle(val)
+      break
+    case 2: // 篮球
+      basktball_head_handle(val)
+      break
   }
-  if (val >= max_ball_head) {
-    res = format_money(max_ball_head)
-    useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('pre_record.market_error_info_max')}`)
-  }
-  ref_pre_book.appoint_ball_value = res
   set_bet_obj_config()
 }
 
+const football_head_handle = (val) => {
+  // 足球盘口展示无法手动输入 预留方法
+}
+
+const basktball_head_handle = (val) => {
+  let min_ball_head = 0
+  let max_ball_head = 0
+  if(BASKETBALL_BY_APPOINTMENT_let.includes(BetData.current_bet_pre_obj.playId)){ // 让分
+    //让球玩法预约时最大球头99.5， 最小球头-99.5
+    min_ball_head = -99.5;
+    max_ball_head = 99.5;
+  }
+  if(BASKETBALL_BY_APPOINTMENT_total.includes(BetData.current_bet_pre_obj.playId)) { // 总分
+    //大小玩法预约时最大球头400， 最小球头-0.5
+    min_ball_head = 50.5;
+    max_ball_head = 400.5;
+  }
+
+  let res = val
+  if (val*1 <= min_ball_head) {
+    res = min_ball_head
+    useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('pre_record.market_error_info')}`)
+  }
+  if (val*1 >= max_ball_head) {
+    res = max_ball_head
+    useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('pre_record.market_error_info_max')}`)
+  }
+  ref_pre_book.appoint_ball_value = res
+  ref_pre_book.appoint_ball_head = res
+}
 
 /**
  * @description:点击减号(球头或者赔率)的修改逻辑

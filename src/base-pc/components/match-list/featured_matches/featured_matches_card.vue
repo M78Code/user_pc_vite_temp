@@ -31,7 +31,7 @@
           <div class="top-line"></div>
           <div class="odds_item bet-item-wrap-ouzhou" v-for="ol_data in get_col_ols_data(item.mid)"
             :key="ol_data.oid + '_' + ol_data._hpid + '_' + ol_data._ot">
-            <betItem :ol_data="ol_data" :csid="item.csid" match_data_type="pc_hots_list"></betItem>
+            <betItem :ol_data="ol_data" :csid="item.csid" :pmatch='item' match_data_type="pc_hots_list"></betItem>
           </div>
         </div>
       </div>

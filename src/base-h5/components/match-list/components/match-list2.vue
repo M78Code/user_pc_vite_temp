@@ -145,18 +145,17 @@ const get_match_item1 = (item) => {
 const handlerUpdate = lodash.debounce((data) => {
   const length = lodash.get(data, 'length', 0)
   if (length < 1) return
-  let flag = false
   const mids = []
   const list = []
   data.forEach(t => {
-    if (t.is_meta) return
+    // if (t.is_meta) return
     const item = matchs_data.value.find(m => m.mid === t.mid)
-    list.push(item)
-    flag = true
+    const hps_data = MatchMeta.no_reset_attribute(t)
+    list.push(Object.assign({}, item, hps_data))
     mids.push(t.mid)
   })
-  console.log('当前可视区数据更新数据', list)
-  if (flag && mids_string.value !== mids.join(',')) {
+  // console.log('当前可视区数据更新数据', list)
+  if (mids_string.value !== mids.join(',')) {
     // 设置当前激活的赛事
     MatchMeta.set_current_match_mids(mids)
     // 更新仓库赛事数据 , merge: 'cover'

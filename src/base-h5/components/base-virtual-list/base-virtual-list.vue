@@ -10,7 +10,7 @@
       <div class="pillarDom" :style="{ height: `${pillarDomHeight}px` }"></div>
       <div class="contentList" :style="styleTranslate" ref="contentListRef">
         <!-- :data-mid="item.mid" :data-index="index" :data-source-index="item.source_index" -->
-        <div class="item" v-for="item, index in renderData" :key="item.mid" :mid="item.mid">
+        <div class="item" v-for="item, index in renderData" :key="item.mid" :data-mid="item.mid">
           <slot name="default" :item="item" :index="index"></slot>
         </div>
         <!-- 到底了容器-->
@@ -107,6 +107,7 @@ let isPositive = true
  */
 const end = computed(() => {
   if (!allData.value || allData.value.length <= 0) return 15
+
   // 将start.value作为遍历positionDataArr的开始位置
   let endPos = start.value
   // contentDomTotalHeight存放从start位置开始的dom节点总高度
@@ -178,7 +179,6 @@ const initDataPostion = () => {
   if (dataList.value.length < 1) return
   allData.value = dataList.value.map((item, idx) => markRaw({ ...item, arrPos: idx }))
   positionDataArr = allData.value.map((item, idx) => {
-    // if (item.estimateHeight === 31 )console.log(item.estimateHeight)
     return {
       arrPos: idx,
       mid: item.mid,
@@ -200,8 +200,7 @@ const updateHeightAndPos = () => {
   for (let i = 0; i < childrenElementArr.length; i++) {
     const childEle = childrenElementArr[i]
     // 获取当前数据dom节点的数据再allData数组中的索引位置
-    // const dataStrMid = childEle.dataset['mid']
-    const dataStrMid = childEle.getAttribute('mid')
+    const dataStrMid = childEle.dataset['mid']
     if (!dataStrMid) continue
 
     // 从allData数据中获取到该数据
@@ -321,6 +320,7 @@ const handler_render_data = (scrollTop = 0) => {
   const _cacheCount = cacheCount.value
   const realStart = Math.max(0, start.value - _cacheCount)
   contentListOffset.value = positionDataArr[realStart]?.startPos
+
 }
 
 /**
@@ -435,7 +435,6 @@ onUnmounted(() => {
   top: 0;
   left: 0;
   right: 0;
-  padding-bottom: 6px;
 
   // will-change: transform;
   .loading-more-container {

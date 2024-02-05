@@ -1,6 +1,7 @@
 <template>
   <div v-show="false">{{ BetData.bet_data_class_version }}{{ UserCtr.user_version }}</div>
-  <div v-if="(!BetData.is_bet_single && MenuData.is_eports_csid(lodash.get(match,'csid', '')) && !lodash.get(match,'ispo',0)) || odds_state == 'close'">
+  <div
+    v-if="(!BetData.is_bet_single && MenuData.is_eports_csid(lodash.get(match, 'csid', '')) && !lodash.get(match, 'ispo', 0)) || odds_state == 'close'">
     -
     <!-- 电竞并且是串关状态并且不支持串关就显示 - -->
   </div>
@@ -28,7 +29,7 @@
         {{ score }}
         <span
           v-show="(!['1', '32'].includes(ol_data._hpid) || !['MatchDataWarehouse_PC_List_Common', 'pc_list'].includes(match_data_type))">
-          {{ disk_text_replace(UserCtr.lang, ol_data.onb||ol_data.otb) }}
+          {{ disk_text_replace(UserCtr.lang, ol_data.onb || ol_data.otb) }}
         </span>
       </div>
     </div>
@@ -74,7 +75,11 @@ import UserCtr from "src/core/user-config/user-ctr.js";
 const props = defineProps({
   ol_data: {
     type: [Object, Array],
-    default: () => { },
+    default: () => ({}),
+  },
+  pmatch: {
+    type: Object,
+    default: () => ({}),
   },
   active_score: {
     type: String,
@@ -286,7 +291,7 @@ const bet_click_ol = () => {
     bet_type = 'guanjun_bet'
   }
   // 电竞
-  if (MenuData.is_esports()||MenuData.is_eports_csid(match.value?.csid)) {
+  if (MenuData.is_esports() || MenuData.is_eports_csid(match?.value?.csid||props.pmatch?.csid)) {
     bet_type = 'esports_bet'
   }
   // vr体育
@@ -455,4 +460,5 @@ onUnmounted(() => {
 
 .left_cell {
   text-align: left !important;
-}</style>
+}
+</style>

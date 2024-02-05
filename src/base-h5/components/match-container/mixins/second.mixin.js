@@ -265,6 +265,7 @@ export default defineComponent({
      * @description 更新赛事数据
      */
     update_match_data (item) {
+      if (!item?.id) return
       this.compute_secondart_play()
       //次要玩法展开或者关闭通知列表页重新计算dom高度
       this.save_second_play_mid_map_unfold_status(item, this.bold_all_list, this.five_minutes_all_list);
@@ -708,6 +709,8 @@ export default defineComponent({
       
       // const key = MatchFold.get_match_fold_key(this.match)
       // const flag = lodash.get(MatchFold.match_mid_fold_obj.value, `${key}.show_tab`, true)
+      this.init_tab_async_show(this.match?.is_show_secondary_play)
+      return this.match?.is_show_secondary_play
 
       // 复刻版 3184 需求 只做足球
       if (this.match.csid != 1) return false
@@ -776,8 +779,9 @@ export default defineComponent({
     match: {
       deep: true,
       handler () {
-        this.init_tab_async_show()
-        this.compute_secondart_play()
+        // this.init_tab_async_show()
+        // this.compute_secondart_play()
+        this.update_match_data(this.current_tab_item)
         // if(this.current_hps_key){
         //   const id = +lodash.get(this.current_tab_item, 'id', 0)
         //   const hps = lodash.get(this.match, this.current_hps_key, [])

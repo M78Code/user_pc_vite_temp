@@ -116,13 +116,6 @@ export default {
     }
   }
 }
-
-// const props = defineProps({
-//   mid: {
-//     type: [String, Number],
-//     default: () => null,
-//   },
-// })
 </script>
 
 <style lang="scss" scoped>

@@ -161,7 +161,7 @@ onUnmounted(() => {
   }
   .counting-down-wrap{
      margin-left: 0.05rem;
-     width:0.4rem !important;
+     width:auto !important;
     //  margin-left: 0.2rem;
      position: relative !important;
   }

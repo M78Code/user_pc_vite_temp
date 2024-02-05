@@ -4,6 +4,8 @@
  */
 import { ref } from 'vue'
 import lodash from 'lodash'
+import { uid } from "quasar";
+import axios_debounce_cache from "src/core/http/debounce-module/";
 import { api_common, api_match_list, api_match, api_home, api_analysis } from "src/api/index.js";
 import BaseData from 'src/core/base-data/base-data.js'
 import UserCtr from 'src/core/user-config/user-ctr.js'
@@ -31,6 +33,8 @@ class MatchMeta {
     this.tid_map_mids = {}
     // 接口取消标识
     this.axios_cancel = {}
+    // 接口 timer
+    this.axios_debounce_timer = null
   }
 
   init() {
@@ -199,7 +203,8 @@ class MatchMeta {
     // 元数据不作为最终渲染数据 所以不走虚拟计算
     // 元数据只作用域切换菜单时快速显示， 最终显示还是根据接口来
     this.match_mids = lodash.uniq(mids.slice(0, 10))
-    this.set_match_mids(result_mids.slice(0, 10), match_list.slice(0, 10), false)
+    this.set_match_mids(result_mids.slice(0, 10), match_list, false)
+    // this.set_match_mids(result_mids.slice(0, 10), match_list.slice(0, 10), false)
   }
 
   /**
@@ -767,7 +772,6 @@ class MatchMeta {
     this.handler_popular_leagues_by_all(list)
     // 处理收藏赛事
     MatchCollect.get_collect_match_data(list)
-    MatchCollect.get_collect_match_data(list)
     // 复刻版下的新手版 和 赛果 不需要  虚拟计算
     const is_virtual = !(project_name === 'app-h5' && (MenuData.is_results() || UserCtr.standard_edition == 1))
     // 时间 热门相互切换 会导致 is_show_league 不对 需要 清一下 仓库
@@ -1263,6 +1267,7 @@ class MatchMeta {
         is_meta: false,
         estimateHeight: MatchUtils.get_default_estimateHeight(match),
         is_show_league: MatchUtils.get_match_is_show_league(index, target_data),
+        is_show_secondary_play: MatchUtils.get_match_is_show_secondary_play(match),
         is_show_ball_title: MatchUtils.get_match_is_show_ball_title(index, target_data),
         is_show_border_radius: MatchUtils.get_is_show_border_radius(index, target_data),
       })
@@ -1665,7 +1670,7 @@ class MatchMeta {
     }
   }
   /**
-   * @description 获取赛事赔率    TODO:  废弃 待删除
+   * @description 获取赛事赔率
    * @param { mids } mids
    * @param { Object } other 其他参数， 比如 次要玩法拉取
    * @param {  } warehouse 仓库
@@ -1679,6 +1684,7 @@ class MatchMeta {
     if (MenuData.is_esports()) return
     // 竞足409 不需要euid
     const params = {
+      gcuuid: uid(),
       mids: mids.length > 0 ? mids : match_mids,
       cuid: UserCtr.get_uid(),
       sort: UserCtr.sort_type,
@@ -1693,9 +1699,36 @@ class MatchMeta {
       params.versionNewStatus = 'matcheHandpick';
       params.sort = 1;
     }
-    let res = ''
+   
     // 取消上一次的  限频重新请求逻辑
     this.axios_cancel['mids'] && this.axios_cancel['mids']()
+
+    const by_mids_debounce_cache = axios_debounce_cache.get_match_base_info_by_mids;
+    if (by_mids_debounce_cache && by_mids_debounce_cache["ENABLED"]) {
+      const info = by_mids_debounce_cache.can_send_request({
+        ...params,
+      });
+      if (info?.can_send) {
+        //直接发请求    单次数 请求的方法
+        this.handler_match_by_mids(params, warehouse)
+      } else {
+        // 记录timer
+        clearTimeout(this.axios_debounce_timer);
+        this.axios_debounce_timer = setTimeout(() => {
+          //直接发请求    单次数 请求的方法
+          this.handler_match_by_mids(params, warehouse)
+          this.axios_debounce_timer = null
+        }, info?.delay_time || 1000);
+      }
+    } else {
+      //直接发请求    多 次数  循环请求 的方法
+      this.handler_match_by_mids(params, warehouse)
+    }
+  }
+
+  // 赛事赔率请求
+  async handler_match_by_mids (params, warehouse = MatchDataBaseH5) {
+    let res = ''
     if (MenuData.is_esports()) {
       res = await this.handler_axios_loop_func({ http: api_common.get_esports_match_by_mids, params, key: 'get_esports_match_by_mids', axios_key: "mids" })
     } else {
@@ -1708,8 +1741,12 @@ class MatchMeta {
     MatchResponsive.set_is_http_update_info(true)
     data.forEach(t => {
       // 获取赛事的让球方 0未找到让球方 1主队为让球方 2客队为让球方
-      t.handicap_index = MatchUtils.get_handicap_index_by(t);
+      t.handicap_index = MatchUtils.get_handicap_index_by(t)
+      t.is_show_secondary_play = MatchUtils.get_match_is_show_secondary_play(t)
       const item = lodash.find(this.complete_matchs, (match) => match.mid === t.mid)
+      // 默认高度  match  接口  和  by_mids  接口 有时候 返回的 次要玩法开关不一致 ， 故重计算下
+      // MatchFold.set_match_show_tab(t)
+      // t.estimateHeight = MatchUtils.get_default_estimateHeight(t)
       if (item) {
         const index = lodash.findIndex(this.complete_matchs, (match) => match.mid === t.mid)
         if (index > -1) this.complete_matchs[index] = Object.assign({}, item, t)
@@ -1726,7 +1763,7 @@ class MatchMeta {
   }
 
    // 不需要重置的属性
-   no_reset_attribute (match, warehouse) {
+   no_reset_attribute (match, warehouse = MatchDataBaseH5) {
     let result = {}
     const item = warehouse.get_quick_mid_obj(match.mid)
     if (item) {
