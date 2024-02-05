@@ -121,14 +121,13 @@
 </template>
 
 <script setup>
-import { computed, watch, ref,inject, onUnmounted} from 'vue';
+import { inject } from 'vue';
 import lodash from 'lodash'
-import {  is_eports_csid,compute_local_project_file_path, is_show_sr_flg,compute_css_obj } from "src/output/index.js";
+import { compute_local_project_file_path, is_show_sr_flg,compute_css_obj } from "src/output/index.js";
 import { get_match_status } from 'src/core/utils/common/index'
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import details  from "src/core/match-list-pc/details-class/details.js"
-import { get_handicap_index_by, get_match_score } from 'src/core/match-list-pc/match-handle-data.js'
-import { get_remote_time,MenuData } from "src/output/index.js"
+import { MenuData } from "src/output/index.js"
 import { useRoute, useRouter } from "vue-router";
 import { BaseInfo } from "src/base-pc/mixin/base-info"
 
