@@ -178,26 +178,26 @@ watch(dataList, (v, o) => {
 const initDataPostion = () => {
   if (dataList.value.length < 1) return
   allData.value = dataList.value.map((item, idx) => markRaw({ ...item, arrPos: idx }))
-  allData.value.forEach((t, index) => {
-    const length = lodash.get(positionDataArr, 'length', 0)
-    if (length < 1) return
-    const item = positionDataArr.find(l => l.mid === t.mid)
-    // 赛事新增
-    if (!item) {
-      const prev_item = positionDataArr[index -1]
-      if (prev_item) {
-        t.startPos = prev_item.startPos + t.estimateHeight
-      }
-    } else {
-      t.startPos = item.startPos
-    }
-  })
+  // allData.value.forEach((t, index) => {
+  //   const length = lodash.get(positionDataArr, 'length', 0)
+  //   if (length < 1) return
+  //   const item = positionDataArr.find(l => l.mid === t.mid)
+  //   // 赛事新增
+  //   if (!item) {
+  //     const prev_item = positionDataArr[index -1]
+  //     if (prev_item) {
+  //       t.startPos = prev_item.startPos + t.estimateHeight
+  //     }
+  //   } else {
+  //     t.startPos = item.startPos
+  //   }
+  // })
   positionDataArr = allData.value.map((item, idx) => {
     return {
       arrPos: idx,
       mid: item.mid,
       height: item.estimateHeight || estimateHeight.value,
-      startPos: item.startPos || (item.estimateHeight || estimateHeight.value) * idx,
+      startPos: (item.estimateHeight || estimateHeight.value) * idx,
       endPos: (item.estimateHeight || estimateHeight.value) * idx + (item.estimateHeight || estimateHeight.value),
     }
   })
