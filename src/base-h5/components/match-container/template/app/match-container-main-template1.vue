@@ -1492,7 +1492,8 @@ export default {
 }
 .score-content{
   flex: 1;
-  // width: 80%;
+  position: fixed;
+  right: 10px;
   :deep(.score-section){
     height: 100%;
   }
