@@ -241,7 +241,8 @@
     let msc_format = get_msc_converted();
     //4冰球 8乒乓球 9排球 10羽毛球 13 16不统计S1
     let csid = Number(props.match.csid);
-    let { home, away } = get_match_total_score();
+    // let { home:home1, away:away1 } = get_match_total_score();
+    const { home_score: home, away_score: away } = props.match
    
     // let { home_score = 0, away_score = 0 } = props.match;
     if (msc_format && msc_format.length) {
