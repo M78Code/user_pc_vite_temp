@@ -250,6 +250,7 @@ const alertRules = (id) => {
     .limit-txt {
       color: #8A8986;
       //font-size: 0.16rem;
+      font-family: "DIN";
     }
     .del_btn_money{
       right: 0.25rem;

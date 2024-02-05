@@ -288,4 +288,5 @@ const cursor_flashing = () => {
 .limit-txt {
     color: var(--q-gb-t-c-3);
     white-space: nowrap;
+    font-family: "DIN";
 }</style>

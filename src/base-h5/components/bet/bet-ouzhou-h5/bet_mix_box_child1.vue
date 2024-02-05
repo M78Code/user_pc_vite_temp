@@ -35,7 +35,7 @@
                         <div v-else>
                             <div class="nonebox4-content-right" v-if="!([2,3].includes(items.ol_os*1) || [1,2].includes(items.hl_hs*1) || [1,2].includes(items.mid_mhs*1))">
                               <div class="nonebox4-content-right-profit" :class="{'red-up':items.red_green == 'red_up','green-down':items.red_green == 'green_down'}">
-                                {{compute_value_by_cur_odd_type(items.odds,items.playId,items.odds_hsw,items.sportId)}}
+                                @{{compute_value_by_cur_odd_type(items.odds,items.playId,items.odds_hsw,items.sportId)}}
                               </div>
                               <div class="show_img">
                                 <img v-if="items.red_green == 'red_up'" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/icon_up.png`" alt=""/>
@@ -308,6 +308,7 @@
   .nonebox4-content-right-profit{
       font-size: 0.2rem;
       font-weight: 700;
+      font-family: "DIN";
       color: var(--q-gb-t-c-1);
       &.red-up{
           color: var(--q-gb-t-c-17);
