@@ -447,7 +447,7 @@ const cur_video_icon = computed(() => {
       };
     }
     //主播
-  } else if (tvs == 2 && status) {
+  } else if (tvs == 2) {
     cur_video_icon = {
       type: "anchor",
       text: i18n_t("common.anchor"),
@@ -540,20 +540,8 @@ const on_switch_match = (media_type)  => {
   ) {
     details.sync_mst(this.match.mid, this.match.csid);
   }
-  // if(['video','1', 'auto'].includes(media_type)){
-  //   // 设置埋点缓存数据(列表页面) button:1.列表  2.右侧赛事信息 3.详情页
-  //   this.$utils.set_hide_api_data_obj(3,{match: this.match, button:'1',txt:'赛事列表', type:media_type});
-  // } else if(['animation','2'].includes(media_type)){
-  //   // 设置埋点缓存数据(列表页面) button:1.列表  2.右侧赛事信息 3.详情页
-  //   this.$utils.set_hide_api_data_obj(4,{match: this.match, button:'1',txt:'赛事列表', type:media_type});
-  // }
-  let play_id =
-    other_play_name_to_playid[match.value.play_current_key] || "";
+  let play_id = other_play_name_to_playid[match.value.play_current_key] || "";
   details.on_switch_match(media_type, match.value, play_id);
-  // 如果右侧视频区是折叠，则会展开
-  // if (!this.vx_get_is_fold_status) {
-  //   this.vx_set_is_fold_status(!this.vx_get_is_fold_status);
-  // }
 }
 onMounted(() => {
   // 异步设置组件是否挂载完成
