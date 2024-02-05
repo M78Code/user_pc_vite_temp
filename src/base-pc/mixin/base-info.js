@@ -12,11 +12,11 @@ import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/mat
 import { useRouter, useRoute } from "vue-router";
 import { format_mst_data } from 'src/core/utils/matches_list.js'
 import { useMittEmit, MITT_TYPES, useMittOn } from 'src/core/mitt/index.js'
-
+import { get_history_score_list } from 'src/core/match-list-pc/match-handle-data.js'
 import { get_handicap_index_by, get_match_score } from 'src/core/match-list-pc/match-handle-data.js'
 
 
-export function BaseInfo (match) {
+export function BaseInfo (match, props={}) {
 
 const is_show_home_goal = ref(false) // 是否显示主队进球动画
 const is_show_away_goal = ref(false) // 是否显示客队进球动画
@@ -109,6 +109,30 @@ const away_score = computed(() => {
 let handicap_index = computed(() => {
     return get_handicap_index_by(match.value)
 })
+
+const score_list = computed(() => {
+    return get_history_score_list(match.value)
+});
+const team_names = computed(() => {
+    let { mhn = '', man = '', up_half_text = '' } = match.value
+    let team_names = {
+        away: "",
+        home: "",
+    }
+    if (props.is_suffix) {
+        team_names = {
+        away: man + up_half_text,
+        home: mhn + up_half_text,
+        }
+    } else {
+        team_names = {
+        away: man,
+        home: mhn,
+        }
+    }
+    return team_names
+})
+
 onMounted(() => {
     mitt_list = [
         useMittOn(MITT_TYPES.EMIT_VAR_EVENT, handle_var_event).off
@@ -282,7 +306,9 @@ return {
     is_show_away_red,
     is_show_home_var,
     update_show_default,
-    scoring
+    scoring,
+    team_names,
+    score_list
 }
 
 }

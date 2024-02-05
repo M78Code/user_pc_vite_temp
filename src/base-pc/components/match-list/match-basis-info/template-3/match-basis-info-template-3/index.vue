@@ -54,13 +54,12 @@
   </div>
 </template>
 <script setup>
-import { computed, inject } from 'vue';
+import { inject } from 'vue';
 import { useRouter, useRoute } from "vue-router";
 import lodash from 'lodash';
 import { compute_local_project_file_path, is_show_sr_flg } from "src/output/index.js";
 import GlobalAccessConfig from "src/core/access-config/access-config.js"
 import details from "src/core/match-list-pc/details-class/details.js"
-import { get_history_score_list } from 'src/core/match-list-pc/match-handle-data.js'
 import { BaseInfo } from "src/base-pc/mixin/base-info"
 
 const router = useRouter()
@@ -77,32 +76,12 @@ const props = defineProps({
   }
 })
 const match = inject("match")
-const score_list = computed(() => {
-  return get_history_score_list(match.value)
-});
-const team_names = computed(() => {
-  let { mhn = '', man = '', up_half_text = '' } = match.value
-  let team_names = {
-    away: "",
-    home: "",
-  }
-  if (props.is_suffix) {
-    team_names = {
-      away: man + up_half_text,
-      home: mhn + up_half_text,
-    }
-  } else {
-    team_names = {
-      away: man,
-      home: mhn,
-    }
-  }
-  return team_names
-})
 const {
   collect,
   handicap_num,
-} = BaseInfo(match)
+  team_names,
+  score_list
+} = BaseInfo(match, props)
 </script>
 
 <style lang="scss" scoped>
