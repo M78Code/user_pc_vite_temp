@@ -26,13 +26,13 @@
       <template v-else>
         <!-- 预约失效 -->
         <template v-if="[2,3,4].includes(data_f.preOrderStatus)">
-          <p class="top-p"> {{i18n_t('bet_record.bet_refund')}} </p>
-          <p class="yb_fontsize14 money-p fw_700">
+          <!-- <p class="top-p"> {{i18n_t('bet_record.bet_refund')}} </p> -->
+          <!-- <p class="yb_fontsize14 money-p fw_700"> -->
             <!-- 留空处理 -->
-            <template v-if="data_f.acCode">- -</template>
+            <!-- <template v-if="data_f.acCode">- -</template> -->
             <!-- 返还金额 -->
-            <template v-else>{{format_money2(data_f.backAmount)}}</template>
-          </p>
+            <!-- <template v-else>{{format_money2(data_f.backAmount)}}</template> -->
+          <!-- </p> -->
         </template>
         <template v-else>
           <p class="top-p">{{i18n_t('bet_record.bet_max_win')}}</p>
