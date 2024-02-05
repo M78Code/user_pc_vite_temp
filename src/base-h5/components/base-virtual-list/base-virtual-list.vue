@@ -11,7 +11,7 @@
       <div class="pillarDom" :style="{ height: `${pillarDomHeight}px` }"></div>
       <div class="contentList" :style="styleTranslate" ref="contentListRef">
         <!-- :data-mid="item.mid" :data-index="index" :data-source-index="item.source_index" -->
-        <div class="item" v-for="item, index in renderData" :key="item.mid" :data-mid="item.mid" :data-pos="get_match_pos(item.mid)">
+        <div class="item" v-for="item, index in renderData" :key="item.mid" :data-mid="item.mid">
           <slot name="default" :item="item" :index="index"></slot>
         </div>
         <!-- 到底了容器-->
@@ -229,11 +229,6 @@ const initDataPostion = () => {
   }
 }
 
-const get_match_pos = (mid) => {
-  const item = positionDataArr.find(t => t.mid === mid)
-  return lodash.get(item, 'startPos', 0)
-}
-
 /**
  * 更新DOM位置信息
  */
@@ -419,6 +414,12 @@ const gotTop = () => {
 const reset_show_skeleton_state = lodash.debounce(() => {
   if (show_skeleton_screen.value) show_skeleton_screen.value = false
 }, 8000)
+
+
+const get_match_pos = (mid) => {
+  const item = positionDataArr.find(t => t.mid === mid)
+  return lodash.get(item, 'startPos', 0)
+}
 
 // 早盘 今日 key 不能一样
 const get_match_key = (item) => {
