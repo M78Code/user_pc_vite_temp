@@ -1,7 +1,5 @@
 <template>
     <div class="bet-list">
-
-        123
         <div v-show="false">{{BetViewDataClass.bet_view_version}}</div>
         <div class="f-b-s bet-content">
             <!-- <img class="img" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/bet/success.svg`" alt="" /> -->
