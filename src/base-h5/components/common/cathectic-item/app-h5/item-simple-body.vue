@@ -8,12 +8,16 @@
 <!-- 矩形框中部 -->
   <div class="item-body yb_fontsize14">
     <div class="body-title">
-        <template v-if="data_b.seriesType == '3' && Item.sportName">[{{Item.sportName}}]</template>
+        <template v-if="data_b.seriesType == '3' && Item.sportName">
+          <p style="text-wrap: nowrap;">[{{Item.sportName}}]</p>
+        </template>
         <template v-if="Item.sportId == 1011 || Item.sportId == 1002">{{Item.batchNo}}</template>
         <template v-else>
-          <span>{{ matchInfo(Item.matchInfo)[0] }}</span>
-          VS
-          <span>{{ matchInfo(Item.matchInfo)[1] }}</span>
+          <span v-if="matchInfo(Item.matchInfo).length >= 1 ">{{ matchInfo(Item.matchInfo)[0] }}</span>
+          <template v-if="matchInfo(Item.matchInfo).length >= 2">
+            <span>VS</span>
+            <span>{{ matchInfo(Item.matchInfo)[1] }}</span>
+          </template>
         </template>
     </div>
     <div class="body-info">
@@ -101,7 +105,7 @@ const copy = (evt) => {
 }
 
 const matchInfo = (matchInfo) => {
-  return matchInfo.split(" v ")
+  return matchInfo ? matchInfo.split(" v ") : []
 }
 </script>
 
