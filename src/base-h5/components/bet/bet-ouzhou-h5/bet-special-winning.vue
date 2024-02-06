@@ -23,9 +23,10 @@
 <script setup> 
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
-import {  LOCAL_PROJECT_FILE_PREFIX,format_money2 } from 'src/output/index.js'
+import {  LOCAL_PROJECT_FILE_PREFIX,useMittEmit,MITT_TYPES,format_money2 } from 'src/output/index.js'
 import mathJs from 'src/core/bet/common/mathjs.js'
 import { reactive,computed } from "vue";
+
 const props = defineProps({
   is_type: {
     type: Boolean,
@@ -40,6 +41,9 @@ const ref_data = reactive({
 
 const set_special_type = () => {
   BetData.set_special_type(!BetData.special_type)
+  nextTick(() => {
+    useMittEmit(MITT_TYPES.EMIT_SET_NOTSINGLE_SHOW_LIST)
+  });
 }
 
 // status 是响应式的 可以用于重新计算
