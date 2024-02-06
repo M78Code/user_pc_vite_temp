@@ -1387,7 +1387,7 @@ onUnmounted(() => {
         display: grid;
         grid-column-gap: 0.08rem;
         grid-template-columns: repeat(2, 50%);
-        grid-template-rows: repeat(1, 1.23rem);
+        grid-template-rows: repeat(1, 123px);
         &.f-child {
           left: 0;
         }
@@ -1407,7 +1407,7 @@ onUnmounted(() => {
             display: grid;
             gap: 0.02rem;
             grid-template-columns: repeat(2, 1fr);
-            grid-template-rows: repeat(3, 0.35rem);
+            grid-template-rows: repeat(3, 35px);
             .odd-column{
               overflow: hidden;
               border-radius: 0.02rem;

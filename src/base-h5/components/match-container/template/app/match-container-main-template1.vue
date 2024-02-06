@@ -526,6 +526,7 @@ export default {
     }
     .secondary-game-play{
       position: relative;
+      z-index: 1000;
     }
   }
 
