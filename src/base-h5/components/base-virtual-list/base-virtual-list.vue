@@ -10,7 +10,7 @@
       <div class="pillarDom" :style="{ height: `${pillarDomHeight}px` }"></div>
       <div class="contentList" :style="styleTranslate" ref="contentListRef">
         <!-- :data-mid="item.mid" :data-index="index" :data-source-index="item.source_index" -->
-        <div class="item" v-for="item, index in renderData" :key="item.mid" :data-mid="item.mid">
+        <div class="item" v-for="item, index in renderData" :key="item.mid" :data-mid="item.mid" :data-pos="get_match_pos(item.mid)">
           <slot name="default" :item="item" :index="index"></slot>
         </div>
         <!-- 到底了容器-->
@@ -167,17 +167,31 @@ onUpdated(() => {
 
 watch(dataList, (v, o) => {
   //如果是排序的话 length不会变化 但是mid集合顺序会变 列表变也是一样  赔率变化mid顺序是一样就是一样 不进入
-  if (lodash.map(v, 'mid').join() != lodash.map(o, 'mid').join()) {
+  // if (lodash.map(v, 'mid').join() != lodash.map(o, 'mid').join()) {
     nextTick(() => {
       initDataPostion()
     })
-  }
+  // }
 }, { immediate: true })
 
 // 初始化 DOM 节点位置信息
 const initDataPostion = () => {
   if (dataList.value.length < 1) return
   allData.value = dataList.value.map((item, idx) => markRaw({ ...item, arrPos: idx }))
+  // allData.value.forEach((t, index) => {
+  //   const length = lodash.get(positionDataArr, 'length', 0)
+  //   if (length < 1) return
+  //   const item = positionDataArr.find(l => l.mid === t.mid)
+  //   // 赛事新增
+  //   if (!item) {
+  //     const prev_item = positionDataArr[index -1]
+  //     if (prev_item) {
+  //       t.startPos = prev_item.startPos + t.estimateHeight
+  //     }
+  //   } else {
+  //     t.startPos = item.startPos
+  //   }
+  // })
   positionDataArr = allData.value.map((item, idx) => {
     return {
       arrPos: idx,
@@ -187,6 +201,11 @@ const initDataPostion = () => {
       endPos: (item.estimateHeight || estimateHeight.value) * idx + (item.estimateHeight || estimateHeight.value),
     }
   })
+}
+
+const get_match_pos = (mid) => {
+  const item = positionDataArr.find(t => t.mid === mid)
+  return lodash.get(item, 'startPos', 0)
 }
 
 /**
@@ -204,10 +223,10 @@ const updateHeightAndPos = () => {
     if (!dataStrMid) continue
 
     // 从allData数据中获取到该数据
-    const dataItem = positionDataArr.find(t => t.mid === dataStrMid)
+    const dataItem = positionDataArr.find(t => t.mid == dataStrMid)
     if (!dataItem) continue
 
-    const dataIndex = positionDataArr.findIndex(t => t.mid === dataStrMid)
+    const dataIndex = positionDataArr.findIndex(t => t.mid == dataStrMid)
 
     // 获取元素的实际高度
     // const { height } = childEle.getBoundingClientRect()
@@ -235,6 +254,7 @@ const updateHeightAndPos = () => {
       }
     }
   }
+  console.log(positionDataArr)
   pillarDomHeight.value = positionDataArr.length > 0 ? positionDataArr[positionDataArr.length - 1]?.endPos : 0
 }
 
@@ -293,8 +313,6 @@ const onScroll = (evt) => {
 
   const { scrollTop } = scrollerContainerDom
 
-  // console.log('scrollTopscrollTop:', scrollTop)
-
   handler_render_data(scrollTop)
 
   useMittEmit(MITT_TYPES.EMIT_MATCH_LIST_SCROLLING);
@@ -320,7 +338,6 @@ const handler_render_data = (scrollTop = 0) => {
   const _cacheCount = cacheCount.value
   const realStart = Math.max(0, start.value - _cacheCount)
   contentListOffset.value = positionDataArr[realStart]?.startPos
-
 }
 
 /**

@@ -1675,7 +1675,7 @@ class MatchMeta {
    * @param { Object } other 其他参数， 比如 次要玩法拉取
    * @param {  } warehouse 仓库
    */
-  async get_match_base_hps_by_mids({ mids = [], other = {}, warehouse }) {
+  async get_match_base_hps_by_mids({ mids = [], other = {}, source = '', warehouse }) {
     // 赛果页不需要获取赔率
     if (MenuData.is_results() && PageSourceData.route_name == 'matchResults') return
     if (this.match_mids.length < 1 && mids.length < 1) return
@@ -1692,7 +1692,10 @@ class MatchMeta {
       device: ['', 'v2_h5', 'v2_h5_st'][UserCtr.standard_edition],
     };
     // other 不为空则合并参数
-    if (!lodash.isEmpty(other)) Object.assign(params, other)
+    if (!lodash.isEmpty(other))  Object.assign(params, other)
+    // 次要玩法赔率接口删除 euid
+    delete params.euid
+    // if (source === 'attached') delete params.euid
     //如果是赛果详情精选列表
     if (PageSourceData.route_name == 'match_result') {
       delete params.euid;
