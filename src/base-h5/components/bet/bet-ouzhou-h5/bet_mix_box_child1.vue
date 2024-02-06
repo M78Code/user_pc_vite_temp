@@ -96,10 +96,10 @@
   <script setup>
   import BetData from "src/core/bet/class/bet-data-class.js";
   import { btn_reduce, btn_add, ref_pre_book,add_handle,sub_handle,set_ref_data } from "src/core/bet/common/appoint-data.js"
-  import { LOCAL_PROJECT_FILE_PREFIX,i18n_t ,MARKET_RANG_FLAG_LIST,UserCtr,compute_value_by_cur_odd_type } from "src/output/index.js";
+  import { LOCAL_PROJECT_FILE_PREFIX,i18n_t ,MARKET_RANG_FLAG_LIST,UserCtr,compute_value_by_cur_odd_type,MITT_TYPES,useMittOn } from "src/output/index.js";
   import { get_query_bet_amount_pre } from "src/core/bet/class/bet-box-submit.js"
   import betInputInfo3 from "./bet_input_info3.vue";
-  import { reactive, watch } from "vue";
+  import { reactive, watch, onMounted, onUnmounted} from "vue";
 
   const props = defineProps({
     items:{},
@@ -130,7 +130,21 @@
       return 30
     }
   }
+  const scrollAreaPo_ = () => {
+  
+  }
+  onMounted(() => {
+    scrollAreaPo_();
+    ref_data.emit_lsit = {
+      emitter_1: useMittOn(MITT_TYPES.EMIT_SET_MERGE_SHOW_LIST,scrollAreaPo_).off,
+    }
 
+  })
+  onUnmounted(()=>{
+
+    Object.values(ref_data.emit_lsit).map((x) => x());
+
+  })
   // 显示预约投注
   const set_show_appoint = () =>{
     get_query_bet_amount_pre()

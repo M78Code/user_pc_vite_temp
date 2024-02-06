@@ -47,7 +47,6 @@ class MatchResponsive {
    * @param {Boolean} val
   */
   set_is_search(val){
-    console.log(val)
     this.is_search.value = val
     // 赛事列表滚动距离
     this.scroll_top.value = 0

@@ -3,6 +3,30 @@
  * @Date: 2023-11-12 13:52:55
  * @Description: url参数页面跳转核心逻辑
  */
+// 不同项目环境数据清除
+function different_project_name_env_data_clear(){
+  try {
+    // 获取环境类型
+    const current_env = window.BUILDIN_CONFIG.CURRENT_ENV;
+    // 获取项目名称
+    const project_name = window.BUILDIN_CONFIG.PROJECT_NAME;
+    // 获取项目和环境字符串
+    const project_name_env = project_name+ '_'+current_env;
+    // 数据持久化key
+    const project_name_env_key = 'TY_SDK_PROJECT_NAME_AND_ENV';
+    // 获取上次的项目和环境字符串
+    const project_name_env_old = localStorage.getItem(project_name_env_key);
+    // 不同环境项目时清除缓存数据
+    if(project_name_env_old && project_name_env_old != project_name_env){
+      localStorage.clear();
+      sessionStorage.clear();
+    }
+    // 设置数据持久化
+    localStorage.setItem(project_name_env_key, project_name_env);
+  } catch (error) {
+    console.error(error);
+  }
+}
 
 // 获取sessionStorage中的location_search数据
 function get_session_storage_location_search()
@@ -121,6 +145,13 @@ function get_storage_sdk_key(storage,key){
 function get_topic(){
   return get_storage_sdk_key(localStorage, 'topic') || {};
 }
+
+
+// 不同项目环境数据清除
+different_project_name_env_data_clear();
+
+
+
 // 浏览器参数对象
 const search_params_obj = {};
 // 当前最新的href

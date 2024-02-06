@@ -17,9 +17,11 @@
                     </div>
                 </div>
         
-                <div>
-                    <input class="bet-input" :v-model="ref_data.money==0?'':ref_data.money" type="number" @input="set_win_money" @click="show_quick_amount()" @focus="stop_drap_fn(false)" @blur="stop_drap_fn(true)" @keydown.enter="keydown($event)"
+                <div class="input-border">
+                    <input class="bet-input" v-model="ref_data.money" type="number" @input="set_win_money" @click="show_quick_amount()" @focus="stop_drap_fn(false)" @blur="stop_drap_fn(true)" @keydown.enter="keydown($event)"
                     :placeholder="placeholder(items)" maxLength="11"  />
+                    <img class="del_btn_money" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/delete-input.svg`" @click="del_btn_money()" alt="" />
+
                 </div>
             
             </div>
@@ -69,6 +71,13 @@ const stop_drap_fn = (state) => {
         draggable: state
     }
     BetData.set_bet_box_draggable(obj)
+}
+
+const del_btn_money = () =>{
+    ref_data.money = null
+    let items_obj = lodash_.get(props,'items',{})
+    items_obj.bet_amount = null;
+    BetViewDataClass.set_bet_special_series_item(items_obj)
 }
 
 onMounted(() => {
@@ -147,6 +156,8 @@ const set_bet_money = obj => {
     BetViewDataClass.set_bet_special_series_item(items_obj)
     
 }
+
+
 
 // 限额改变 修改限额内容
 // const set_ref_data_bet_money = () => {
@@ -254,6 +265,15 @@ const placeholder = computed(() => (items) => {
     background: var(--q-gb-bg-c-15);
     .bet-input-info{
         height: 58px;
+        .input-border{
+            position: relative;
+            .del_btn_money{
+            position: absolute;
+            top: calc(50% - 6px);
+            right: 10px;
+        }
+        }
+        
     }
     .text-8A8986-i {
         color: var(--q-gb-t-c-8) !important

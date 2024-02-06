@@ -195,7 +195,7 @@
         <i
           aria-hidden="true"
           class="icon-star q-icon c-icon"
-          :class="(match.mf == 1 || match.mf == true) && 'active'"
+          :class="is_collect && 'active'"
         ></i>
       </span>
       <!-- 视频 -->
@@ -315,6 +315,7 @@ import { useRoute, useRouter } from 'vue-router';
 import lodash from 'lodash'
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import details  from "src/core/match-list-pc/details-class/details.js"
+import { BaseInfo } from "src/base-pc/mixin/base-info"
 
 const route = useRoute();
 const router = useRouter()
@@ -336,6 +337,12 @@ const vx_detail_params = ref(MatchDetailCalss.params)
 const betItemRight = ref(null)
 const betItemDetail = ref(null)
 const betItemLeft = ref(null)
+
+const {
+  is_collect,
+  collect,
+  play_name_obj,
+} = BaseInfo(match)
 
 //视屏播放类型
 const vx_play_media = ref(MatchDetailCalss.play_media)
@@ -376,40 +383,6 @@ const show_data = computed(() => {
   }
   return state;
 })
-const play_name_obj = computed(() => {
-  let play_name_obj = {
-    key: "main",
-    suffix_name: "",
-    score_key: "",
-  };
-  let { ms, tpl_id, hSpecial } = match.value || {};
-  //滚球
-  if (get_match_status(ms, [110]) == 1) {
-    //角球后缀
-    if (MenuData.is_corner_menu()) {
-      play_name_obj = {
-        key: "corner",
-        suffix_name: " - " + i18n_t("list.corner"),
-        score_key: "S5",
-      };
-      //罚牌后缀
-    } else if (tpl_id == 25) {
-      play_name_obj = {
-        key: "punish",
-        suffix_name: " - " + i18n_t("list.punish"),
-        score_key: "S10102",
-      };
-      // 15分钟比分
-    } else if (tpl_id == 24) {
-      play_name_obj = {
-        key: "main",
-        suffix_name: "",
-        score_key: `S100${hSpecial}`,
-      };
-    }
-  }
-  return play_name_obj;
-})
 /**
  * @Description 计算当前视频图标
  * @return {Object}
@@ -447,7 +420,7 @@ const cur_video_icon = computed(() => {
       };
     }
     //主播
-  } else if (tvs == 2 && status) {
+  } else if (tvs == 2) {
     cur_video_icon = {
       type: "anchor",
       text: i18n_t("common.anchor"),
@@ -540,20 +513,8 @@ const on_switch_match = (media_type)  => {
   ) {
     details.sync_mst(this.match.mid, this.match.csid);
   }
-  // if(['video','1', 'auto'].includes(media_type)){
-  //   // 设置埋点缓存数据(列表页面) button:1.列表  2.右侧赛事信息 3.详情页
-  //   this.$utils.set_hide_api_data_obj(3,{match: this.match, button:'1',txt:'赛事列表', type:media_type});
-  // } else if(['animation','2'].includes(media_type)){
-  //   // 设置埋点缓存数据(列表页面) button:1.列表  2.右侧赛事信息 3.详情页
-  //   this.$utils.set_hide_api_data_obj(4,{match: this.match, button:'1',txt:'赛事列表', type:media_type});
-  // }
-  let play_id =
-    other_play_name_to_playid[match.value.play_current_key] || "";
+  let play_id = other_play_name_to_playid[match.value.play_current_key] || "";
   details.on_switch_match(media_type, match.value, play_id);
-  // 如果右侧视频区是折叠，则会展开
-  // if (!this.vx_get_is_fold_status) {
-  //   this.vx_set_is_fold_status(!this.vx_get_is_fold_status);
-  // }
 }
 onMounted(() => {
   // 异步设置组件是否挂载完成

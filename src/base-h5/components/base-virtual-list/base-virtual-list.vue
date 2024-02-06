@@ -10,7 +10,7 @@
       <div class="pillarDom" :style="{ height: `${pillarDomHeight}px` }"></div>
       <div class="contentList" :style="styleTranslate" ref="contentListRef">
         <!-- :data-mid="item.mid" :data-index="index" :data-source-index="item.source_index" -->
-        <div class="item" v-for="item, index in renderData" :key="item.mid" :mid="item.mid">
+        <div class="item" v-for="item, index in renderData" :key="item.mid" :data-mid="item.mid" :data-pos="get_match_pos(item.mid)">
           <slot name="default" :item="item" :index="index"></slot>
         </div>
         <!-- 到底了容器-->
@@ -107,6 +107,7 @@ let isPositive = true
  */
 const end = computed(() => {
   if (!allData.value || allData.value.length <= 0) return 15
+
   // 将start.value作为遍历positionDataArr的开始位置
   let endPos = start.value
   // contentDomTotalHeight存放从start位置开始的dom节点总高度
@@ -129,7 +130,7 @@ const end = computed(() => {
  */
 const contentListOffset = ref(0)
 const styleTranslate = computed(() => {
-  return `transform:translate3d(0,${contentListOffset.value}px,0)`
+  return `transform:translate(0,${contentListOffset.value}px)`
 })
 /**
  * 当前视口需要显示的数据
@@ -166,19 +167,32 @@ onUpdated(() => {
 
 watch(dataList, (v, o) => {
   //如果是排序的话 length不会变化 但是mid集合顺序会变 列表变也是一样  赔率变化mid顺序是一样就是一样 不进入
-  if (lodash.map(v, 'mid').join() != lodash.map(o, 'mid').join()) {
+  // if (lodash.map(v, 'mid').join() != lodash.map(o, 'mid').join()) {
     nextTick(() => {
       initDataPostion()
     })
-  }
+  // }
 }, { immediate: true })
 
 // 初始化 DOM 节点位置信息
 const initDataPostion = () => {
   if (dataList.value.length < 1) return
   allData.value = dataList.value.map((item, idx) => markRaw({ ...item, arrPos: idx }))
+  // allData.value.forEach((t, index) => {
+  //   const length = lodash.get(positionDataArr, 'length', 0)
+  //   if (length < 1) return
+  //   const item = positionDataArr.find(l => l.mid === t.mid)
+  //   // 赛事新增
+  //   if (!item) {
+  //     const prev_item = positionDataArr[index -1]
+  //     if (prev_item) {
+  //       t.startPos = prev_item.startPos + t.estimateHeight
+  //     }
+  //   } else {
+  //     t.startPos = item.startPos
+  //   }
+  // })
   positionDataArr = allData.value.map((item, idx) => {
-    // if (item.estimateHeight === 31 )console.log(item.estimateHeight)
     return {
       arrPos: idx,
       mid: item.mid,
@@ -187,6 +201,11 @@ const initDataPostion = () => {
       endPos: (item.estimateHeight || estimateHeight.value) * idx + (item.estimateHeight || estimateHeight.value),
     }
   })
+}
+
+const get_match_pos = (mid) => {
+  const item = positionDataArr.find(t => t.mid === mid)
+  return lodash.get(item, 'startPos', 0)
 }
 
 /**
@@ -200,15 +219,14 @@ const updateHeightAndPos = () => {
   for (let i = 0; i < childrenElementArr.length; i++) {
     const childEle = childrenElementArr[i]
     // 获取当前数据dom节点的数据再allData数组中的索引位置
-    // const dataStrMid = childEle.dataset['mid']
-    const dataStrMid = childEle.getAttribute('mid')
+    const dataStrMid = childEle.dataset['mid']
     if (!dataStrMid) continue
 
     // 从allData数据中获取到该数据
-    const dataItem = positionDataArr.find(t => t.mid === dataStrMid)
+    const dataItem = positionDataArr.find(t => t.mid == dataStrMid)
     if (!dataItem) continue
 
-    const dataIndex = positionDataArr.findIndex(t => t.mid === dataStrMid)
+    const dataIndex = positionDataArr.findIndex(t => t.mid == dataStrMid)
 
     // 获取元素的实际高度
     // const { height } = childEle.getBoundingClientRect()
@@ -236,6 +254,7 @@ const updateHeightAndPos = () => {
       }
     }
   }
+  console.log(positionDataArr)
   pillarDomHeight.value = positionDataArr.length > 0 ? positionDataArr[positionDataArr.length - 1]?.endPos : 0
 }
 
@@ -293,8 +312,6 @@ const onScroll = (evt) => {
   if (!scrollerContainerDom) return
 
   const { scrollTop } = scrollerContainerDom
-
-  // console.log('scrollTopscrollTop:', scrollTop)
 
   handler_render_data(scrollTop)
 
@@ -435,9 +452,7 @@ onUnmounted(() => {
   top: 0;
   left: 0;
   right: 0;
-  padding-bottom: 6px;
 
-  // transform-style: preserve-3d;
   // will-change: transform;
   .loading-more-container {
     width: 100%;

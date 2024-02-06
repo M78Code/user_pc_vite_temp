@@ -106,10 +106,11 @@ const get_detail_info = (mid) => {
   // 3572298
   MatchListCardDataClass.set_current_mid(mid)
   const infomation = MatchDataWarehouseInstance.get_quick_mid_obj(mid)
- 
+
   // 存入本地，点击大屏视频的时候使用
   sessionStorage.setItem('DETAIL_INFO', JSON.stringify(infomation))
   // 电竞数据
+  detail_info.value = infomation
   if (infomation&& [100,101,102,103].includes(+infomation.csid)) {
     // 使用元数据的数据没有播放视频链接，需调用一下接口获取详情
     if (!infomation.ms&&infomation.ms!==0) {
@@ -117,8 +118,6 @@ const get_detail_info = (mid) => {
     }else{
       detail_info.value = infomation
     }
-  }else{
-    detail_info.value = infomation
   }
  
 

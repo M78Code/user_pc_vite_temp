@@ -1014,7 +1014,7 @@ export default {
   height: auto;
   position: relative;
   height: 1.12rem;
-  z-index: 100;
+  z-index: 8888;
 
   .right-content-style {
     position: relative;
@@ -1416,7 +1416,7 @@ export default {
 .card-footer{
   position: absolute;
   bottom: 2px;
-  width: 50%;
+  width: 100%;
   height: 25px;
   z-index: 99;
   display: flex;
@@ -1492,7 +1492,8 @@ export default {
 }
 .score-content{
   flex: 1;
-  // width: 80%;
+  position: fixed;
+  right: 10px;
   :deep(.score-section){
     height: 100%;
   }

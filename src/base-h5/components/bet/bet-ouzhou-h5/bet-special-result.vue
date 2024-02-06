@@ -88,6 +88,8 @@ const props = defineProps({
             text-align: right;
             color: var(--q-gb-t-c-6);
             //color: var(--q-gb-t-c-17);
+            position: absolute;
+            right: .05rem;
         }
 
         .bet-loading{
