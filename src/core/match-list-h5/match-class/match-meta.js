@@ -1811,7 +1811,6 @@ class MatchMeta {
     // ws 订阅
     this.set_ws_active_mids({ list: list, warehouse })
     // 设置仓库渲染数据
-    // this.is_ws_trigger = false
     warehouse.set_list(result)
     this.is_ws_trigger = false
     this.update_is_http_update_info()

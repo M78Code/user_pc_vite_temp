@@ -7,10 +7,11 @@
     </template>
     <!-- 滚动容器 -->
     <div class="scrollerContainer" ref="scrollerContainerRef" @scroll="onScroll">
+      <!-- <div class="pillarDom" :style="get_container_style"></div> -->
       <div class="pillarDom" :style="{ height: `${pillarDomHeight}px` }"></div>
       <div class="contentList" :style="styleTranslate" ref="contentListRef">
         <!-- :data-mid="item.mid" :data-index="index" :data-source-index="item.source_index" -->
-        <div class="item" v-for="item, index in renderData" :key="item.mid" :data-mid="item.mid" :data-pos="get_match_pos(item.mid)">
+        <div class="item" v-for="item, index in renderData" :key="item.mid" :data-mid="item.mid">
           <slot name="default" :item="item" :index="index"></slot>
         </div>
         <!-- 到底了容器-->
@@ -30,10 +31,11 @@
 <script setup>
 import { computed, markRaw, nextTick, onMounted, onUnmounted, onUpdated, ref, toRefs, watch } from 'vue'
 
-import { useMittEmit, useMittOn, MITT_TYPES, MenuData } from "src/output"
+import { useMittEmit, useMittOn, MITT_TYPES, MenuData, compute_css_obj } from "src/output"
 
 import SList from "src/base-h5/components/skeleton/skeleton-list.vue" 
 import ScrollTop from "src/base-h5/components/common/record-scroll/scroll-top.vue";
+
 
 const props = defineProps({
   cacheCount: {
@@ -150,11 +152,12 @@ const emitters = ref({})
 onMounted(() => {
   emitters.value = {
     emitter_1: useMittOn(MITT_TYPES.EMIT_GOT_TO_TOP, gotTop).off,
-  };
-  emitters.value = { 
     emitter_2: useMittOn(MITT_TYPES.EMIT_SHOW_SKELETON_DIAGRAM, (val) => {
       show_skeleton_screen.value = val
       show_skeleton_screen.value && reset_show_skeleton_state()
+    }).off,
+    emitter_3: useMittOn(MITT_TYPES.EMIT_RESET_POSITION, () => {
+      positionDataArr = []
     }).off,
   };
 })
@@ -178,34 +181,52 @@ watch(dataList, (v, o) => {
 const initDataPostion = () => {
   if (dataList.value.length < 1) return
   allData.value = dataList.value.map((item, idx) => markRaw({ ...item, arrPos: idx }))
-  // allData.value.forEach((t, index) => {
-  //   const length = lodash.get(positionDataArr, 'length', 0)
-  //   if (length < 1) return
-  //   const item = positionDataArr.find(l => l.mid === t.mid)
-  //   // 赛事新增
-  //   if (!item) {
-  //     const prev_item = positionDataArr[index -1]
-  //     if (prev_item) {
-  //       t.startPos = prev_item.startPos + t.estimateHeight
-  //     }
-  //   } else {
-  //     t.startPos = item.startPos
-  //   }
-  // })
-  positionDataArr = allData.value.map((item, idx) => {
-    return {
-      arrPos: idx,
-      mid: item.mid,
-      height: item.estimateHeight || estimateHeight.value,
-      startPos: (item.estimateHeight || estimateHeight.value) * idx,
-      endPos: (item.estimateHeight || estimateHeight.value) * idx + (item.estimateHeight || estimateHeight.value),
-    }
-  })
-}
-
-const get_match_pos = (mid) => {
-  const item = positionDataArr.find(t => t.mid === mid)
-  return lodash.get(item, 'startPos', 0)
+  const length = lodash.get(positionDataArr, 'length', 0)
+  // ws 触发的赛事新增 赛事移除 做的是 补偿修正操作
+  if (length > 0) {
+    let startPosition = 0
+    const length = lodash.get(positionDataArr, 'length', 0)
+    if (length < 1) return
+    allData.value.forEach((t, index) => {
+      const list = positionDataArr.find(l => l.mid === t.mid)
+      t.sHeight = list?.height || t.estimateHeight
+      t.startPos = startPosition
+      t.endPos = startPosition + t.sHeight
+      startPosition = t.endPos
+      // // 赛事新增
+      // if (!list) {
+      //   const prev_item = positionDataArr[index -1]
+      //   if (prev_item) {
+      //     startPosition += list.estimateHeight
+      //     t.startPos = prev_item.endPos
+      //     t.endPos = prev_item.endPos + list.estimateHeight
+      //   }
+      // } else {
+      //   t.startPos = list.startPos + startPosition
+      //   t.endPos = list.endPos + startPosition
+      // }
+    })
+    positionDataArr = allData.value.map((item, idx) => {
+      return {
+        arrPos: idx,
+        mid: item.mid,
+        height: item.sHeight || item.estimateHeight,
+        startPos: item.startPos,
+        endPos: item.endPos
+      }
+    })
+    console.log('positionDataArr', positionDataArr)
+  } else {
+    positionDataArr = allData.value.map((item, idx) => {
+      return {
+        arrPos: idx,
+        mid: item.mid,
+        height: item.estimateHeight || estimateHeight.value,
+        startPos: (item.estimateHeight || estimateHeight.value) * idx,
+        endPos: (item.estimateHeight || estimateHeight.value) * idx + (item.estimateHeight || estimateHeight.value),
+      }
+    })
+  }
 }
 
 /**
@@ -254,7 +275,7 @@ const updateHeightAndPos = () => {
       }
     }
   }
-  console.log(positionDataArr)
+  // console.log(positionDataArr)
   pillarDomHeight.value = positionDataArr.length > 0 ? positionDataArr[positionDataArr.length - 1]?.endPos : 0
 }
 
@@ -394,11 +415,26 @@ const reset_show_skeleton_state = lodash.debounce(() => {
   if (show_skeleton_screen.value) show_skeleton_screen.value = false
 }, 8000)
 
+
+const get_match_pos = (mid) => {
+  const item = positionDataArr.find(t => t.mid === mid)
+  return lodash.get(item, 'startPos', 0)
+}
+
 // 早盘 今日 key 不能一样
 const get_match_key = (item) => {
   const menu_lv1 = lodash.get(MenuData, 'current_lv_1_menu_i', 2)
   return `${menu_lv1}_${item?.mid}`
 }
+
+const get_container_style = computed(() => {
+  const style_obj = { 'height': `${pillarDomHeight.value}px` }
+  Object.assign(style_obj, {
+    ...compute_css_obj({key: 'h5-kyapp-speciality-bg' })
+  })
+  console.log(style_obj)
+  return style_obj
+})
 
 onUnmounted(() => {
   Object.values(emitters.value).map((x) => x());
@@ -445,6 +481,7 @@ onUnmounted(() => {
   top: 0;
   right: 0;
   z-index: -1;
+  // background-repeat: repeat-y !important;
 }
 
 .contentList {
