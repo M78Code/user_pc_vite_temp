@@ -121,7 +121,7 @@ import betSpecialState from "./bet-special-state.vue";
 import betSpecialResult from "./bet-special-result.vue";
 import betSpecialWinning from "./bet-special-winning.vue";
 
-import betInputInfo2 from "./bet_input_info2.vue";
+// import betInputInfo2 from "./bet_input_info2.vue";
 import betInputMultiple from "./bet_input_multiple.vue";
 import betMerge from "./bet-merge.vue"
 
