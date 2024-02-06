@@ -469,7 +469,6 @@ console.log(final_url);
     }
   }
 .league-icon{
-  width: 0.88rem;
   height: 0.24rem;
   margin-top: 0.06rem;
   background-size:cover;
