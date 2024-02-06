@@ -1115,7 +1115,7 @@ onUnmounted(() => {
           }
         }
         .odd-wrap-hps-bold-other {
-          height: 0.3rem;
+          height: 30px;
           overflow: hidden;
           border-radius: 0.02rem;
           margin-bottom: .02rem;
@@ -1163,7 +1163,7 @@ onUnmounted(() => {
   justify-content: space-between;
   .team-t-title-w {
     width: 1.1rem;
-    height: 0.3rem;
+    height: 30px;
     margin-bottom: 0.02rem;
     font-size: 0.12rem;
     display: flex;
@@ -1185,7 +1185,7 @@ onUnmounted(() => {
   }
     .odd-wrap-hps-bold-other {
       width: 0.56rem;
-      height: 0.3rem;
+      height: 30px;
       overflow: hidden;
       border-radius: 0.02rem;
       margin-bottom: .02rem;
@@ -1291,7 +1291,7 @@ onUnmounted(() => {
 
   &.standard {
     width: 1.84rem;
-    height: 1.07rem;
+    height: 107px;
     flex-wrap: nowrap;
     overflow: hidden;
   }
@@ -1318,7 +1318,7 @@ onUnmounted(() => {
 
   .slide_icon {
     width: 0.12rem;
-    height: 0.12rem;
+    height: 12px;
     position: absolute;
     top: 0.43rem;
     right: -0.03rem;
@@ -1334,14 +1334,14 @@ onUnmounted(() => {
 
   .odd-list-container {
     width: 1.7rem;
-    height: 0.56rem;
+    height: 56px;
     border-radius: 0.06rem;
     position: relative;
     overflow: hidden;
 
     .icon-jiaoqiu {
       width: 0.255rem;
-      height: 0.255rem;
+      height: 25.5px;
       display: none;
       position: absolute;
       top: 50%;
@@ -1357,7 +1357,7 @@ onUnmounted(() => {
   }
 
   .standard-odd-l-w {
-    height: 1.01rem;
+    height: 101px;
     touch-action: pan-y !important;
     width: 3.68rem;
     flex-shrink: 0;
@@ -1378,7 +1378,7 @@ onUnmounted(() => {
     }
     &.featured-combination{
       width: 200%;
-      height: 1.4rem;
+      height: 140px;
       position: relative;
       .odds-content{
         position: absolute;
@@ -1468,7 +1468,7 @@ onUnmounted(() => {
 
     .odd-wrap-min {
       width: 0.6rem;
-      height: 0.32rem;
+      height: 32px;
       overflow: hidden;
       border-radius: 0.04rem;
       margin-bottom: 0.02rem;
@@ -1476,7 +1476,7 @@ onUnmounted(() => {
       box-shadow: 0 2px 6px 0 rgba(0,0,0,.04);
 
       &.hp-2, &.hp-0 {
-        height: 0.49rem;
+        height: 49px;
       }
       &.hp-3{
         :deep(.odd-title){
@@ -1489,7 +1489,7 @@ onUnmounted(() => {
       }
 
       &.column2 {
-        height: 0.46rem;
+        height: 46px;
       }
       &.is-small{
         // height: 0.32rem;
@@ -1521,7 +1521,7 @@ onUnmounted(() => {
       }
       &.clounm2{
         .odd-wrap-min{
-          height: 0.36rem;
+          height: 36px;
         }
       }
     }
