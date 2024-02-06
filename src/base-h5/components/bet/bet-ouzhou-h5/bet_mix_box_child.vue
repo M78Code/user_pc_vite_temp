@@ -61,7 +61,7 @@
           <template v-if="!BetData.is_bet_single">
             <!-- 串关投注项列表  -->
             <div>
-            <q-scroll-area ref="scrollAreaRef" :visible="false" :style="{ 'height': `${ref_min_height_max}rem` }" :thumb-style="{ opacity: 0}">
+            <q-scroll-area ref="scrollAreaRef" :class="BetData.bet_s_list.length > 1 ? '' : 'height-short'" :visible="false" :style="{ 'height': `${ref_min_height_max}rem` }" :thumb-style="{ opacity: 0}">
               <template v-if="BetViewDataClass.bet_order_status == 1">
                 <template v-for="(item, index) in BetData.bet_s_list" :key="index">
                   <bet-mix-box-child1 :items="item" :index="index"></bet-mix-box-child1>
@@ -317,6 +317,10 @@ background: var(--q-gb-t-c-3) !important;
   width: 100%;
   -webkit-overflow-scrolling: touch;
   background-color: var(--q-gb-t-c-2);
+
+  .height-short{
+    height: 1.8rem !important;
+  }
   &.bet_state_show{
     position: fixed;
     bottom: 0;
