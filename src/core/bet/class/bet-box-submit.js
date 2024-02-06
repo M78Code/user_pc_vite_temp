@@ -1176,8 +1176,10 @@ const set_bet_obj_config = (params = {}, other = {}) => {
     // 虚拟赛事
     if(other.bet_type == 'vr_bet'){
         matchType = 4
+        mid_obj.mhn = mid_obj.teams.length>0?mid_obj.teams[0]:''
+        mid_obj.man = mid_obj.teams.length>1?mid_obj.teams[1]:''
     }
-
+    
     const play_config = {
         hl_obj,
         hn_obj,
