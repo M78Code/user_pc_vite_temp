@@ -373,7 +373,7 @@ const get_lastest_market_info = (type) => {
                         let market_odds_list = lodash_.get(market,'marketOddsList',[]) || []
 
                         // playOptionsId 已经在 ws那边做了替换为最新的
-                        let odds = market_odds_list.find(page=> page.oddsType == item.ot && page.playOptionsId == item.playOptionsId) || {}
+                        let odds = market_odds_list.find(page=> page.oddsType == item.ot && page.id == item.playOptionsId) || {}
 
                         if( odds.id ) {
                             // 替换新id
@@ -476,7 +476,6 @@ const get_lastest_market_info = (type) => {
             })
             // 重新设置投注项内容
             BetData.set_bet_single_special(bet_list)
-
             nextTick(()=>{
                  // 坑位变化 重新获取限额
                 if(type != 'submit_bet'){
@@ -1176,8 +1175,10 @@ const set_bet_obj_config = (params = {}, other = {}) => {
     // 虚拟赛事
     if(other.bet_type == 'vr_bet'){
         matchType = 4
+        mid_obj.mhn = mid_obj.teams.length>0?mid_obj.teams[0]:''
+        mid_obj.man = mid_obj.teams.length>1?mid_obj.teams[1]:''
     }
-
+    
     const play_config = {
         hl_obj,
         hn_obj,
