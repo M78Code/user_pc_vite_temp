@@ -105,7 +105,8 @@ body {
   }
   .g-settings-style {
     background: var(--q-gb-bd-c-13);
-    border: 1px solid var(--q-gb-bd-c-6);
+    border: 1px solid var(--q-gb-bd-c-8);
+    color: var(--q-gb-t-c-6);
     //box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.05);
     &::before {
       border-bottom-color: var(--q-gb-bd-c-6);

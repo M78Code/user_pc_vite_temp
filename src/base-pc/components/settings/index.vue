@@ -493,7 +493,7 @@ function change_theme() {
   
 <style  lang="scss">
 .list {
-  background: #fff;
+  background: var(--q-gb-bg-c-11);
 }
 .g-settings-style {
   width: 240px;
