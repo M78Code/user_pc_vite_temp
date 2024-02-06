@@ -133,7 +133,7 @@ class BetWsMessage {
           case 'C201':
             this.MSG_C201(data);
             break;
-          // 注单状态
+          // 用户账变
           case 'C203':
             this.MSG_C203(data);
             break;
