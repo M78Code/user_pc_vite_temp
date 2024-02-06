@@ -114,9 +114,9 @@ export default defineComponent({
     display: flex;
     align-items: center;
     cursor: pointer;
-    background-color: var(--q-gb-bg-c-30);
-    border-top: 1px solid var(--q-header-search-color-3);
-    border-bottom: 1px solid var(--q-header-search-color-3);
+    background-color: var(--q-header-search-color-8);
+    border-top: 1px solid var(--q-header-search-color-1);
+    border-bottom: 1px solid var(--q-header-search-color-1);
     margin-bottom: 5px;
 
     .search-icon-container {
@@ -138,17 +138,16 @@ export default defineComponent({
             outline: none;
             background: none;
             border: none;
-            color: var(--q-header-search-color-1);
             font-size: 12px;
             caret-color: #999999;
-            color: var(--q-gb-t-c-6);
+            color: var(--q-header-search-color-2);
 
             // &.key-is-empty {
             //   color: #0089e1 !important;
             // }
             &::placeholder {
                 font-size: 12px;
-                color: #BACCFC;
+                color: var(--q-header-search-color-2);
                 opacity: 0.5;
             }
         }
@@ -171,12 +170,13 @@ export default defineComponent({
         height: 18px;
         line-height: 18px;
         cursor: pointer;
-        border-left: 1px solid var(--q-gb-bd-c-4); // #999999
+        //border-left: 1px solid var(--q-gb-bd-c-4); // #999999
+        border-left: 1px solid var(--q-header-search-color-2);; // #999999
         padding: 0 20px;
         color: var(--q-gb-t-c-10); // #888888
 
         &:hover {
-            color: var(--q-gb-t-c-6); // #555555
+            color: var(--q-header-search-color-2);
         }
     }
 }

@@ -334,6 +334,7 @@ import AnimationSlider from "src/base-h5/components/details/components/slider/An
 import OrientationSubscrbe from 'src/base-h5/components/common/orientation/orientation-subscribe'
 import { useRoute } from "vue-router"
 import { project_name ,into_video_anima_event} from "src/output/index.js"
+import BUILDIN_CONFIG from "app/job/output/env/index.js";;
 export default {
   name: "videos",
   components: {
@@ -478,7 +479,7 @@ export default {
       },
 
     replay_video_src() {
-      const host_url = window.BUILDIN_CONFIG.DOMAIN_RESULT.live_domains[0] || lodash.get(this.get_user,'oss.live_h5')
+      const host_url = BUILDIN_CONFIG.DOMAIN_RESULT.live_domains[0] || lodash.get(this.get_user,'oss.live_h5')
       return `${host_url}/videoReplay.html?src=${this.replay_url}&lang=${this.get_lang}&volume=${this.is_user_voice ? 1 : 0}`
 
       // const host_url = 'http://localhost:4000/videoReplay.html?'
@@ -1360,7 +1361,7 @@ export default {
       this.is_show_no_handle = false
       api_common.getMatchUserIsLogin().then(res => { 
         if(res && res.code == 200 && res.data.isLogin){
-          let referUrl = window.BUILDIN_CONFIG.DOMAIN_RESULT.live_domains[0];
+          let referUrl = BUILDIN_CONFIG.DOMAIN_RESULT.live_domains[0];
           let media_src
           if(referUrl) {
             media_src = video.get_video_url_h5({data:{referUrl}},params.mid,1);

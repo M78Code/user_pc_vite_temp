@@ -34,7 +34,8 @@
               <!-- 单关合并 -->
               <template v-else>
                   <!-- 合并单关  -->
-                  <div class="scroll-box scroll-box-center position-relative" ref="scroll_box"   :style="{ 'max-height': `${ref_min_height_max}rem` }">
+                  <div class="scroll-box scroll-box-center position-relative" ref="scroll_box"   >
+                    <q-scroll-area ref="scrollAreaRef_mar" :style="{ 'height': `${ref_min_height_max}rem` }" :visible="false" :thumb-style="{ opacity: 0}">
                     <template v-if="BetData.is_bet_single && BetData.bet_single_list.length">
                       <div v-for="(items,index) in BetData.bet_single_list" :key="items.playOptionsId" class="position-relative" >
                         <bet-mix-box-child1 :items="items" :index="index"></bet-mix-box-child1>
@@ -44,6 +45,7 @@
                         <bet-input-multiple></bet-input-multiple>
                       </div>
                     </template>
+                  </q-scroll-area>
                   </div>
               </template>
               <!-- 合并投注 常用金额 -->
@@ -58,8 +60,8 @@
           <!-- 串关 -->
           <template v-if="!BetData.is_bet_single">
             <!-- 串关投注项列表  -->
-            <q-scroll-area ref="scrollAreaRef" :visible="false" :style="{ 'height': `${ref_min_height_max}rem` }" :thumb-style="{ opacity: 0}">
-
+            <div>
+            <q-scroll-area ref="scrollAreaRef" :class="BetData.bet_s_list.length > 1 ? '' : 'height-short'" :visible="false" :style="{ 'height': `${ref_min_height_max}rem` }" :thumb-style="{ opacity: 0}">
               <template v-if="BetViewDataClass.bet_order_status == 1">
                 <template v-for="(item, index) in BetData.bet_s_list" :key="index">
                   <bet-mix-box-child1 :items="item" :index="index"></bet-mix-box-child1>
@@ -91,7 +93,7 @@
                 </template>
               </template>
             </q-scroll-area>
-
+          </div>
             <!-- 串关最高可赢金额 合计投注金额 -->
             <bet-special-winning />
 
@@ -121,7 +123,7 @@ import betSpecialState from "./bet-special-state.vue";
 import betSpecialResult from "./bet-special-result.vue";
 import betSpecialWinning from "./bet-special-winning.vue";
 
-import betInputInfo2 from "./bet_input_info2.vue";
+// import betInputInfo2 from "./bet_input_info2.vue";
 import betInputMultiple from "./bet_input_multiple.vue";
 import betMerge from "./bet-merge.vue"
 
@@ -133,11 +135,14 @@ import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { ref, onMounted, reactive ,onUnmounted ,watch,computed} from 'vue';
 import {MITT_TYPES,useMittOn,formatMoney,UserCtr } from "src/output/index.js"
 import lodash from "lodash";
+import { nextTick } from 'licia';
 // 键盘收起的高度
 let ref_min_height_max = ref('3.6') // rem 高长屏幕
 
 //串单列表定位高度
-const scrollAreaRef = ref(0)
+const scrollAreaRef = ref(null)
+const scrollAreaRef_mar = ref(null)
+const position = ref(2300)
 
 //串关的按钮
 const scroll_box = ref()
@@ -159,14 +164,18 @@ const ref_data = reactive({
 })
 
 const scrollAreaPo = () => {
+    setTimeout(() => {
+      if(BetData.is_bet_single){
 
-  if(!BetData.is_bet_single){
-    if(!BetData.special_type){
-      scrollAreaRef.value.setScrollPercentage ('vertical',1)
-    }else{
-      scrollAreaRef.value.setScrollPosition('vertical', BetData.bet_s_list.length * 139 + 100)
-    }
-  }
+        scrollAreaRef_mar.value.setScrollPosition('vertical', position.value)
+        console.log(321)
+        
+      }else{
+        scrollAreaRef.value.setScrollPosition('vertical', position.value)
+        console.log(3233331)
+      }
+    }, 20);
+  
 }
 
 const set_W_H = () => {
@@ -180,14 +189,14 @@ const set_W_H = () => {
 onMounted(() => {
 
   set_W_H();
-
   scrollAreaPo();
-
+  console.log(123)
   ref_data.emit_lsit = {
     emitter_1: useMittOn(MITT_TYPES.EMIT_SET_NOTSINGLE_SHOW_LIST,scrollAreaPo).off,
   }
   
 })
+
 
 onUnmounted(()=>{
 
@@ -308,6 +317,10 @@ background: var(--q-gb-t-c-3) !important;
   width: 100%;
   -webkit-overflow-scrolling: touch;
   background-color: var(--q-gb-t-c-2);
+
+  .height-short{
+    height: 1.8rem !important;
+  }
   &.bet_state_show{
     position: fixed;
     bottom: 0;

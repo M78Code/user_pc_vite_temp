@@ -32,6 +32,7 @@ import userData from "src/core/user-config/user-ctr.js"
 import { get_query_bet_amount_common,set_market_id_to_ws } from "src/core/bet/class/bet-box-submit.js"
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import {useMittEmit, MITT_TYPES,useMittOn,formatMoney,UserCtr } from "src/output/index.js"
+import base_data from "src/core/utils/common/module/original_data";
 
 const get_bet_status = ref(true)
 
@@ -47,6 +48,7 @@ const menu_click = () => {
   
   nextTick(() => {
     useMittEmit(MITT_TYPES.EMIT_SET_NOTSINGLE_SHOW_LIST)
+    useMittEmit(MITT_TYPES.EMIT_SET_MERGE_SHOW_LIST)
   });
   
 }

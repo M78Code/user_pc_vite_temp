@@ -404,8 +404,11 @@ export const EMIT_INIT_SLIDER_CONFIG  = 'EMIT_INIT_SLIDER_CONFIG'
 // 获取最近访问的赛种信息
 export const EMIT_SET_VISIT_SPORTS_LIST= "EMIT_SET_VISIT_SPORTS_LIST"
 
-//控制展开串关类型后列表定位
+//控制展开串关类型后列表定位 串
 export const EMIT_SET_NOTSINGLE_SHOW_LIST= "EMIT_SET_NOTSINGLE_SHOW_LIST"
+
+//控制展开串关类型后列表定位 合并
+export const EMIT_SET_MERGE_SHOW_LIST= "EMIT_SET_MERGE_SHOW_LIST"
 
 //移除玩法缓存remove_session_storage
 export const EMIT_SET_REMOVE_SESSION_STORAGE= "EMIT_SET_REMOVE_SESSION_STORAGE"

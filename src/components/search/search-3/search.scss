@@ -25,7 +25,7 @@
       }
 
       .search-icon {
-        color: var(--q-header-search-color-7) !important;
+        color: var(--q-header-search-color-2) !important;
       }
 
       /*  搜索框内部容器 */
@@ -61,14 +61,14 @@
 
         .init-wrap {
           .init-row {
-            color: var(--q-gb-t-c-8); // #666
-            border-bottom-color: var(--q-header-search-color-5);
+            color: var(--q-header-search-color-9); // #666
+            border-bottom-color: var(--q-header-search-color-4);
 
             .clear-history {
-              color: var(--q-gb-t-c-8);
+              color: var(--q-header-search-color-2);
 
               &:hover {
-                color: var(--q-gb-t-c-8);
+                color: var(--q-header-search-color-9);
               }
             }
           }
@@ -88,7 +88,7 @@
           }
 
           &:hover {
-            background-color: var(--q-header-search-color-5);
+            background-color: var(--q-header-search-color-1);
             color: var(--q-gb-t-c-16);
 
             .ellipsis {
