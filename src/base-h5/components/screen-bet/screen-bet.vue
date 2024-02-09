@@ -5,7 +5,7 @@
                 <div class="leading">
                     <IconBack />
                 </div>
-                <div class="title">
+                <div class="title" v-show="!is_bet">
                     <span>法国</span>
                     <span class="score">0-0</span>
                     <span>葡萄牙</span>
@@ -14,7 +14,7 @@
                     高清
                 </div>
             </div>
-            <div class="body">
+            <div class="body" v-show="!is_bet">
                 <ul class="actions-list">
                     <li @click="change_bet_status"><IconDetail /></li>
                     <li v-show="type == 'video'" @click="change_type('animation')"><IconAni /></li>
@@ -23,19 +23,10 @@
                 </ul>
             </div>
 
-            <div class="footer">
+            <div class="footer" v-show="!is_bet">
                 <IconInfo />
                 <div class="actions">
                     <IconExitScreen />
-                </div>
-            </div>
-            <!-- 定位在右侧组件 -->
-            <div class="right">
-                <!-- 详情插槽 -->
-                <slot name="details"></slot>
-                <div class="bet-container" v-if="false">
-                    <!-- 投注插槽 -->
-                    <slot name="bet"></slot>
                 </div>
             </div>
         </div>
@@ -55,6 +46,7 @@
             'z-index': is_bet ?  '20':''
         }">
             <div :class="['bet', is_bet ? 'bet-ani' : '']" @click.stop>
+                <slot name="bet" />
             </div>
         </div>
     </div>
