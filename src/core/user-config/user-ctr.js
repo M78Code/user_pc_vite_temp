@@ -913,7 +913,7 @@ class UserCtr {
         }
       }
       // 中文简体时 后台关闭简繁译开关后强制 转为 zh
-      if (PROJECT_NAME == 'new-pc' && !obj.simpleTradSwitch) {
+      if (['new-pc', 'app-h5'].includes(PROJECT_NAME) && !obj.simpleTradSwitch) {
         lang = obj.languageName == 'hk' ? 'zh' : obj.languageName 
       }
       try {
@@ -922,7 +922,7 @@ class UserCtr {
           userMarketPrefer: obj.userMarketPrefer,
         };
         // 设置国际化语言
-        this.set_lang(PROJECT_NAME === 'app-h5' ? 'zh' : data.languageName); //多芬要加上去的 解决复刻版国际化出现{}
+        this.set_lang(data.languageName); //多芬要加上去的 解决复刻版国际化出现{}
         LocalStorage.set(this.local_storage_key, data);
       } catch (error) {
         console.error("userCtr  set_user_base_info() 错误:", error);

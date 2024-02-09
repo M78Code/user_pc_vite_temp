@@ -227,7 +227,7 @@
     ]
   },
 "app_h5": {
-  "bet":{"bet_win": "可赢{total}"},
+  "bet":{"bet_win": "Potential Winnings: {total}"},
   "detail": {
     "highlights": "Highlights",
     "events": "events",
