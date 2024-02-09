@@ -16,8 +16,9 @@
             </div>
             <div class="body">
                 <ul class="actions-list">
-                    <li><IconDetail /></li>
-                    <li><IconAni /></li>
+                    <li @click="change_bet_status"><IconDetail /></li>
+                    <li v-show="type == 'video'" @click="change_type('animation')"><IconAni /></li>
+                    <li v-show="type == 'animation'" @click="change_type('video')"><IconLive /></li>
                     <li><IconDate /></li>
                 </ul>
             </div>
@@ -47,6 +48,13 @@
                     <li :class="['line-item', select_line == 2 ? 'active' : '']" @click.stop="change_line(2)">高清一</li>
                 </ul>
                 <p class="desc">*视频卡顿或不清晰可自行调整线路</p>
+            </div>
+        </div>
+        <!-- 详情弹窗 -->
+        <div class="bet-container"  @click.stop="change_bet_status" :style="{
+            'z-index': is_bet ?  '20':''
+        }">
+            <div :class="['bet', is_bet ? 'bet-ani' : '']" @click.stop>
             </div>
         </div>
     </div>
@@ -79,11 +87,15 @@ const status = ref(false);
 const show_line = ref(false);
 /** 选择的清晰度 */
 const select_line = ref(0);
+/** 是否是投注，投注显示详情 */
+const is_bet = ref(false);
+
+/** @type {import('vue').Ref<'video'|'animation'>} */
+const type = ref('video');
 /**
  * 清晰度弹窗
  */
 const show_line_callback = () => {
-    
     show_line.value = !show_line.value;
     console.log(show_line.value, "show_line.value");
 }
@@ -94,6 +106,19 @@ const show_line_callback = () => {
  */
 const change_line = (index) => {
     select_line.value = index;
+}
+
+/**
+ * 修改类型 - 动画/视频
+ * @param {'video'|'animation'} value 
+ */
+const change_type = (value) => {
+    type.value  = value;
+}
+
+const change_bet_status = () => {
+    console.log(2222);
+    is_bet.value = !is_bet.value;
 }
 </script>
 
@@ -224,5 +249,27 @@ const change_line = (index) => {
         right: 0;
         top: 0;
     }
+}
+.bet-container {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: -1;
+}
+
+.bet {
+    width: 375px;
+    height: 100%;
+    z-index: 99;
+    position: absolute;
+    right: -375px;
+    background: red;
+    transition:right .5s linear;
+    transition-delay: .2s;
+}
+.bet-ani {
+    right: 0;
 }
 </style>
