@@ -150,7 +150,13 @@
 										<div style="display: flex;flex-direction: row; flex: 1">
 											<div class="flex_1"
 												v-if="lodash.get(i, 'hps[0].hl.length', 0) > 0 && lodash.get(i, 'hps[0].hl[0].ol[0].ov', '') && lodash.get(i, 'hps[0].hl[0].ol[0].os', '') === 1">
-												<div>{{ sports_id.includes(i.csid) ? lodash.get(i, 'hps[0].hl[0].ol[0].ot', '') === '1' ? i18n_t('ouzhou.bet_col.bet_col_1.bet_col_1') : i18n_t('ouzhou.bet_col.bet_col_1.bet_col_2') : lodash.get(i, 'hps[0].hl[0].ol[0].on', '') }}</div>
+												<div v-show="sports_id.includes(i.csid)">
+												{{lodash.get(i, 'hps[0].hl[0].ol[0].ot', '') === '1' ? i18n_t('ouzhou.bet_col.bet_col_1.bet_col_1') : i18n_t('ouzhou.bet_col.bet_col_1.bet_col_2') }}
+												</div>
+												<div v-show="!sports_id.includes(i.csid)">
+												{{lodash.get(i, 'hps[0].hl[0].ol[0].on', '') }}
+												</div>
+												
 												<div class="red">{{ get_odd_os(lodash.get(i, 'hps[0].hl[0].ol[0]', '')) }}</div>
 											</div>
 											<div class="flex_1" v-else>
@@ -168,7 +174,12 @@
 											</template>
 											<div class="flex_1"
 												v-if="lodash.get(i, 'hps[0].hl.length', 0) > 0 && lodash.get(i, 'hps[0].hl[0].ol[1].ov', '') && lodash.get(i, 'hps[0].hl[0].ol[1].os', '') === 1">
-												<div>{{ sports_id.includes(i.csid) ? lodash.get(i, 'hps[0].hl[0].ol[1].ot', '') === '1' ? i18n_t('ouzhou.bet_col.bet_col_1.bet_col_1') : i18n_t('ouzhou.bet_col.bet_col_1.bet_col_2') : lodash.get(i, 'hps[0].hl[0].ol[1].on', '') }}</div>
+												<div v-show="sports_id.includes(i.csid)">
+												  {{lodash.get(i, 'hps[0].hl[0].ol[1].ot', '') === '1' ? i18n_t('ouzhou.bet_col.bet_col_1.bet_col_1') : i18n_t('ouzhou.bet_col.bet_col_1.bet_col_2')}}
+												</div>
+												<div v-show="!sports_id.includes(i.csid)">
+												  {{lodash.get(i, 'hps[0].hl[0].ol[1].on', '')}}
+												</div>
 												<div class="red">{{ get_odd_os(lodash.get(i, 'hps[0].hl[0].ol[1]', '')) }}</div>
 											</div>
 											<div class="flex_1" v-else>
@@ -204,7 +215,12 @@
 										<div style="display: flex;flex-direction: row; flex: 1">
 											<div class="flex_1"
 												v-if="lodash.get(item, 'hps[0].hl.length', 0) > 0 && lodash.get(item, 'hps[0].hl[0].ol[1].ov', '') && lodash.get(item, 'hps[0].hl[0].ol[1].os', '') === 1">
-												<div>{{ sports_id.includes(item.csid) ? lodash.get(item, 'hps[0].hl[0].ol[0].ot', '') === '1' ? i18n_t('ouzhou.bet_col.bet_col_1.bet_col_1') : i18n_t('ouzhou.bet_col.bet_col_1.bet_col_2') : lodash.get(item, 'hps[0].hl[0].ol[0].on', '') }}</div>
+												<div v-show="sports_id.includes(item.csid)">
+												 {{lodash.get(item, 'hps[0].hl[0].ol[0].ot', '') === '1' ? i18n_t('ouzhou.bet_col.bet_col_1.bet_col_1') : i18n_t('ouzhou.bet_col.bet_col_1.bet_col_2')}}
+												</div>
+												<div v-show="!sports_id.includes(item.csid)">
+												 {{lodash.get(item, 'hps[0].hl[0].ol[0].on', '') }}
+												</div>
 												<div class="red">{{ get_odd_os(lodash.get(item, 'hps[0].hl[0].ol[0]', '')) }}</div>
 											</div>
 											<div class="flex_1" v-else>
@@ -222,7 +238,13 @@
 											</template>
 											<div class="flex_1"
 												v-if="lodash.get(item, 'hps[0].hl.length', 0) > 0 && lodash.get(item, 'hps[0].hl[0].ol[1].ov', '') && lodash.get(item, 'hps[0].hl[0].ol[1].os', '') === 1">
-												<div>{{ sports_id.includes(item.csid) ? lodash.get(item, 'hps[0].hl[0].ol[1].ot', '') === '1' ? i18n_t('ouzhou.bet_col.bet_col_1.bet_col_1') : i18n_t('ouzhou.bet_col.bet_col_1.bet_col_2') : lodash.get(item, 'hps[0].hl[0].ol[1].on', '') }}</div>
+												<div v-show="sports_id.includes(item.csid)">
+												  {{lodash.get(item, 'hps[0].hl[0].ol[1].ot', '') === '1' ? i18n_t('ouzhou.bet_col.bet_col_1.bet_col_1') : i18n_t('ouzhou.bet_col.bet_col_1.bet_col_2')}}
+												</div>
+												<div v-show="!sports_id.includes(item.csid)">
+												  {{lodash.get(item, 'hps[0].hl[0].ol[1].on', '')}}
+												</div>
+												
 												<div class="red">{{ get_odd_os(lodash.get(item, 'hps[0].hl[0].ol[1]', '')) }}</div>
 											</div>
 											<div class="flex_1" v-else>
