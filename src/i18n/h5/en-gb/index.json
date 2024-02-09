@@ -228,6 +228,12 @@
   },
 "app_h5": {
   "bet":{"bet_win": "Potential Winnings: {total}"},
+  "cathectic": {
+    "handicap_tutorial":"盘口教程"
+  },
+  "filter": {
+    "go_old_version": "前往旧版"
+  },
   "detail": {
     "highlights": "Highlights",
     "events": "events",
@@ -1091,8 +1097,12 @@
     "theme": "Theme Style",
     "time": "Time",
     "time2": "By Time",
+    "daily_activities": "Daily Activities",
+    "turn_on": "Open",
     "time_order": "Time Order",
-    "win_alone": "1X2"
+    "win_alone": "1X2",
+    "open_bets":"Unsettled Bets",
+    "closed_bets":"Settled Bets"
   },
   "home": {
     "can_bet": "Bet Item",
@@ -2452,7 +2462,8 @@
     "7": "Esports",
     "8": "VR",
     "30": "Lottery",
-    "28": "Results"
+    "28": "Results",
+    "400": "Parlay"
   },
   "virtual_sports": {
     "rank": "Ranking",

@@ -1052,6 +1052,8 @@
     "sort_title": "Regras de ordenação",
     "time2": "por tempo",
     "time": "Hora",
+    "daily_activities": "Actividades diárias",
+    "turn_on": "Aberto",
     "time_order": "ordem cronológica",
     "win_alone": "vencer sozinho"
   },
@@ -2370,7 +2372,8 @@
     "7": "Esports",
     "8": "VR",
     "30": "Lottery",
-    "28": "Results"
+    "28": "Results",
+    "400": "Parlay"
   },
   "virtual_sports": {
     "comprehensive_rating": "Classificação geral",

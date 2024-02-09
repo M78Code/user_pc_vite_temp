@@ -1302,8 +1302,12 @@
     "sort_title": "Reglas de ordenación",
     "time2": "Por hora",
     "time": "Hora",
+    "daily_activities": "Actividades diarias",
+    "turn_on": "Abierto",
     "time_order": "Orden de tiempo",
-    "win_alone": "1X2"
+    "win_alone": "1X2",
+    "open_bets":"Apuestas no liquidadas",
+    "closed_bets":"Apuestas liquidadas"
   },
   "home": {
     "can_bet": "Artículo de apuesta",
@@ -2727,7 +2731,8 @@
     "7": "Esports",
     "8": "VR",
     "30": "Lottery",
-    "28": "Results"
+    "28": "Results",
+    "400": "Parlay"
   },
   "virtual_sports": {
     "comprehensive_rating": "Calificación global",

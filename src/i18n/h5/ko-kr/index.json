@@ -1052,8 +1052,12 @@
     "sort_title": "규칙 정렬",
     "time2": "시간별",
     "time": "시간",
+    "daily_activities": "일일 활동",
+    "turn_on": "열다",
     "time_order": "시간 순서",
-    "win_alone": "혼자 승리"
+    "win_alone": "혼자 승리",
+    "open_bets":"오픈 노트",
+    "closed_bets":"마감주문"
   },
   "home": {
     "can_bet": "사용 가능한 베팅",
@@ -2374,7 +2378,8 @@
     "7": "Esports",
     "8": "VR",
     "30": "Lottery",
-    "28": "Results"
+    "28": "Results",
+    "400": "Parlay"
   },
   "virtual_sports": {
     "comprehensive_rating": "종합 평가",

@@ -1021,7 +1021,11 @@
     "time": "Thời gian",
     "time2": "Theo thời gian",
     "time_order": "Sắp xếp thời gian",
-    "win_alone": "1X2"
+    "win_alone": "1X2",
+    "daily_activities": "Ưu đãi mỗi ngày",
+    "turn_on": "Kích hoạt ",
+    "open_bets":"Đơn cược chưa thanh toán",
+    "closed_bets":"Đơn cược đã thanh toán"
   },
   "home": {
     "can_bet": "Mục cược",
@@ -2382,7 +2386,8 @@
     "7": "Esports",
     "8": "VR",
     "30": "Lottery",
-    "28": "Kết Quả"
+    "28": "Kết Quả",
+    "400": "Chung Cuộc"
   },
   "highlights": {
     "title": "Đặc sắc",
