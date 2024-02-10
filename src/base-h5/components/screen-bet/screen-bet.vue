@@ -1,6 +1,8 @@
 <template>
     <div class="screen-bet-container">
-        <div class="screen-bet" v-show="!show_line">
+        <!-- 视频/动画插槽 -->
+        <slot />
+        <div class="screen-bet" v-show="!show_line"  v-if="is_full_screen">
             <div class="header">
                 <div class="leading">
                     <IconBack />
@@ -26,34 +28,38 @@
             <div class="footer" v-show="!is_bet">
                 <IconInfo />
                 <div class="actions">
-                    <IconExitScreen />
+                    <IconExitScreen @click="handle_exit"/>
                 </div>
             </div>
         </div>
         <!-- 高清 -->
-        <div class="line-container" @click.stop="show_line_callback">
+        <div class="line-container" @click.stop="show_line_callback"  v-if="is_full_screen">
             <div :class="['change-line', show_line ? 'line-ani' : '']" @click.stop>
                 <ul >
-                    <li :class="['line-item', select_line == 0 ? 'active' : '']" @click.stop="change_line(0)">高清一</li>
-                    <li :class="['line-item', select_line == 1 ? 'active' : '']" @click.stop="change_line(1)">高清一</li>
-                    <li :class="['line-item', select_line == 2 ? 'active' : '']" @click.stop="change_line(2)">高清一</li>
+                    <li :class="['line-item', select_line == index ? 'active' : '']"
+                        @click.stop="change_line(index)" v-for="(item, index) in props.play_type_list" :key="index">
+                        {{ i18n_t(item.name) }}
+                    </li>
                 </ul>
                 <p class="desc">*视频卡顿或不清晰可自行调整线路</p>
             </div>
         </div>
         <!-- 详情弹窗 -->
-        <div class="bet-container"  @click.stop="change_bet_status" :style="{
+        <div class="bet-container"  @click.stop="change_bet_status"  v-if="is_full_screen" :style="{
             'z-index': is_bet ?  '20':''
         }">
             <div :class="['bet', is_bet ? 'bet-ani' : '']" @click.stop>
+                <!-- 详情下注弹窗 -->
                 <slot name="bet" />
+                <!-- 直播中的赛事 -->
+                <slot name="live" />
             </div>
         </div>
     </div>
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, watch } from "vue";
 import IconBack from "./components/back-icon.vue";
 import IconInfo from "./components/info-icon.vue";
 import IconExitScreen from "./components/exit-screen-icon.vue";
@@ -67,8 +73,28 @@ const props = defineProps({
     type: {
         type: String,
         default: ""
+    },
+    // 视频清晰度
+    play_type_list: {
+        type: Array,
+        default: () => ([
+            {name: "video.flv"},
+            {name: "video.m3u8"}
+        ])
+    },
+    // 当前播放的索引
+    current_play_type: {
+        type: Number,
+        default: 0
+    },
+    // 是否是全屏
+    is_full_screen: {
+        type: Boolean,
+        default: false
     }
 });
+
+const emits = defineEmits(['exit'])
 /** 视频 */
 const is_video = computed(() => props.type == "video");
 /** 动画 */
@@ -84,6 +110,10 @@ const is_bet = ref(false);
 
 /** @type {import('vue').Ref<'video'|'animation'>} */
 const type = ref('video');
+
+watch(() => props.current_play_type, (value) => {
+    select_line.value = value;
+})
 /**
  * 清晰度弹窗
  */
@@ -108,9 +138,18 @@ const change_type = (value) => {
     type.value  = value;
 }
 
+/**
+ * 修改投注弹窗状态
+ */
 const change_bet_status = () => {
-    console.log(2222);
     is_bet.value = !is_bet.value;
+}
+
+/**
+ * 退出全屏
+ */
+const handle_exit = ()=> {
+    emits('exit')
 }
 </script>
 
@@ -171,7 +210,7 @@ const change_bet_status = () => {
 .screen-bet {
     width: 100vw;
     height: 100vh;
-    background: gray;
+    // background: gray;
     top: 0;
     left: 0;
     z-index: 10;
