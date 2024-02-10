@@ -16,7 +16,7 @@
                     <!-- <img v-show="item.img" :src="item.img" /> -->
                     <span v-if="item.tid !== '0'" class="sport-icon-wrap"
                       :style="compute_css_obj({key: activeOn === index ? 'league-sport-active-image' : 'league-sport-icon-image', position:format_type(item)})"></span>
-                    {{ item.name }}
+                    {{ i18n_t(item.name) }}
                 </li>
 							<div v-show="!drawerRight" class="search-tab-content-img" @click="drawerRight = true"
 							>
@@ -65,7 +65,7 @@ const props = defineProps({
         type: Array,
         default: [
             {
-                name: "全部",
+                name: "app_h5.match.all",
                 val: 0,
                 img: "",
                 tid: '0',
@@ -80,7 +80,7 @@ const props = defineProps({
             //     tid: '10011003169,10011003541'
             // },
             {
-                name: "欧冠",
+                name: "app_h5.match.champions",
                 val: 2,
                 tid: '6408',
                 img: "",
@@ -89,7 +89,7 @@ const props = defineProps({
             {
                 // 英格兰超级联赛 England Premier League - 10011000
                 // FIFA 2023 - 英格兰超级联赛 (8分钟) FIFA 2023 - England Premier League (8mins) - 1292581040691029461
-                name: "英超",
+                name: "app_h5.match.premier",
                 val: 3,
                 img: "",
                 tid: '180',
@@ -97,27 +97,27 @@ const props = defineProps({
 
             },
             {
-                name: "意甲",
+                name: "app_h5.match.serie",
                 val: 4,
                 tid: '239',
                 img: "",
                 alias: 'serie_league'
             },
             {
-                name: "西甲",
+                name: "app_h5.match.laliga",
                 val: 5,
                 img: "",
                 tid: '320',
                 alias: 'spanish_league'
             },
             {
-                name: "德甲",
+                name: "app_h5.match.bundesliga",
                 val: 6,
                 tid: "276",
                 alias: 'german_league'
             },
             {
-                name: "法甲",
+                name: "app_h5.match.ligue",
                 val: 7,
                 img: "",
                 tid: '79',
@@ -126,7 +126,7 @@ const props = defineProps({
             {
                 // 中国超级联赛 China Super League - 10011006344 
                 // SRL中国超级联赛 SRL China Super League - 10011020404
-                name: "中超",
+                name: "app_h5.match.china_super",
                 val: 8,
                 tid: "10011006344",
                 alias: 'china_league'
@@ -269,7 +269,9 @@ function key_down(event) {
                 font-family: 'PingFang SC';
                 font-style: normal;
                 font-weight: 400;
-                //color: #7981A4;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
                 color: var(--q-gb-t-c-20);
                 &:first-child {
                     width: 0.4rem;

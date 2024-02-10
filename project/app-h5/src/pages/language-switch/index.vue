@@ -2,7 +2,7 @@
  * @Description: app-h5 切换语言
 -->
 <template>
-  <div>
+  <div class="language-switch">
     <div class="header">
       <GoBackSvg class="go-back" @click="go_back" />
         <span class="title">
@@ -92,7 +92,10 @@ const setting_language_handle = (key) => {
 </script>
 
 <style scoped lang="scss">
-.header {
+.language-switch {
+  background-color: var(--q-gb-bg-c-18);
+  height: 100%;
+  .header {
   display: flex;
   align-items: center;
   padding-left: 0.15rem;
@@ -116,17 +119,17 @@ const setting_language_handle = (key) => {
   }
 }
 .content {
-  
+  background-color: var(--q-gb-bg-c-18);
   // 语言包
     margin-top: 0.44rem;
-    max-height: 0px;
+    height: 100%;
     transition: max-height 0.3s;
 
-    .active {
+    .lang-item.active {
       max-height: 5.58rem;
       color: var(--q-gb-t-c-12)
     }
-
+    
     .lang-item {
       height: 0.44rem;
       font-size: 0.14rem;
@@ -134,11 +137,11 @@ const setting_language_handle = (key) => {
       padding-left: 0.43rem;
       padding-right: 0.2rem;
       align-items: center;
+      color: var(--q-gb-t-c-18);
 
       &:last-child {
         border-bottom: none;
       }
-
       .icon {
         display: none;
         width: 0.11rem;
@@ -187,4 +190,6 @@ const setting_language_handle = (key) => {
 }
 /* ************** 切换语言前面的图标 ************** -E */
 }
+}
+
 </style>
