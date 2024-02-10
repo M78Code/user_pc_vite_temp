@@ -112,7 +112,7 @@ onMounted(() => {
 // 赛事新增
 const handle_add_match = lodash.debounce(({ cmd, data }) => {
   MatchMeta.handle_ws_directive({ cmd, data })
-}, 1500) 
+}, 2500) 
 
 // 获取页面所需数据
 const get_page_match_data = () => {
