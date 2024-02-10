@@ -75,7 +75,29 @@
         <!-- 视频单页项目-->
         <!-- {{ iframe_src+'&rdm='+iframe_rdm }} -->
         <!-- iframe_show && !is_show_no_handle && iframe_src-->
-        <BetScreen :type="video" :is_full_screen="!orientation">
+        <!-- <iframe 
+            v-if=" iframe_src" 
+            v-show="!is_playing_replay" 
+            ref="iframe" id="video-iframe" 
+            style="width:100%;height:100%;" 
+            frameborder="0"
+            marginwidth="0"
+            marginheight="0"
+            hspace="0"
+            vspace="0"
+            scrolling="no"
+            allowfullscreen="true"
+            allow="autoplay"
+            :src="`${iframe_src}&rdm=${iframe_rdm}`"
+          ></iframe> -->
+        <BetScreen :type="video" :is_full_screen="!orientation" 
+                    @switch_type="switch_type"
+                   :team_score_detail="title" 
+                   :style="{
+                      'height': !orientation ? '100vh':'',
+                      'z-index': !orientation?'9999':'',
+                      'position':  !orientation? 'fixed': ''
+        }">
           <iframe 
             v-if=" iframe_src" 
             v-show="!is_playing_replay" 
@@ -208,7 +230,8 @@
             </div>
           </template>
           <template v-else>
-            <div class="row justify-between full-height mx-15"  @click.stop="click_mask">
+            <!-- v-if="orientation" -->
+            <div class="row justify-between full-height mx-15"  @click.stop="click_mask" >
                <!-- 缩放按钮 -->
               <img v-if="get_is_full_screen && show_exit_btn && ProjectName != 'ouzhou-h5'" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/pack_up.svg`" alt="exit" class="exit-img" @click="set_full_screen"/>
             
@@ -481,7 +504,7 @@ export default {
           return this.show_icons
         }
       },
-
+    
     replay_video_src() {
       const host_url = BUILDIN_CONFIG.DOMAIN_RESULT.live_domains[0] || lodash.get(this.get_user,'oss.live_h5')
       return `${host_url}/videoReplay.html?src=${this.replay_url}&lang=${this.get_lang}&volume=${this.is_user_voice ? 1 : 0}`
@@ -577,7 +600,8 @@ export default {
     // 是否展示动画和视频按钮
     show_animation_and_video_status() {
       return this.show_icon_status != undefined ||this.show_icon_status != null ? this.show_icon_status : true
-    }
+    },
+
   },
   props:[
     //视频说明是否展示
@@ -934,6 +958,12 @@ export default {
       this.is_playing_replay = true
       // 静音当前播放媒体
       this.video_volume({volume:0})
+      this.$nextTick(() => {
+        video.send_message({
+            cmd: 'replay_video_jq_cmd',
+            val: "$('#video ').css({ width: '100%!important', height:'100%!important', left: '0!important', top: '0!important'  })"
+        });
+      })
     },
     handle_replay_video_loaded(e) {
       if (this.get_is_hengping) {
