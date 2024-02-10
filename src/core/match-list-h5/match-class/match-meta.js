@@ -1457,6 +1457,9 @@ class MatchMeta {
     })
   }
 
+  /**
+   * @description 设置激活的 赛事mids
+   */
   set_current_match_mids(mids = []) {
     this.match_mids = mids
   }
