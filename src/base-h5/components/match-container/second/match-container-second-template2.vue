@@ -2,7 +2,7 @@
  * @Description: 复刻版  次要玩法 
 -->
 <template>
-  <div class="second-container match-container-second-template2" v-if="show_tab_by_data">
+  <div class="second-container match-container-second-template2" v-if="show_tab_by_data" @click.stop>
     <!--次要玩法 标题主名称-->
     <div class="tab-m-o-w row items-center" ref="sub_play_scroller">
       <div v-for="(t_item, i) of current_second_data" 
@@ -46,12 +46,10 @@
       </div>
     </div>
     <!-- 次要玩法   1. 左边队伍名标题   2. 右边 盘口组件  模块 -->
-    <div 
-      v-if="current_tab_item.hps" 
-      :mid="match.mid"  
+    <div  v-if="current_tab_item.hps" 
       :class="['transition-w-odd', {
       expanded: any_unfold && any_unfold != '0',
-      five_minutes_wanfa: any_unfold && any_unfold != '0' && [19].includes(+ lodash.get(current_tab_item, 'id')),}]">
+      five_minutes_wanfa: any_unfold && any_unfold != '0' && [19].includes(+ lodash.get(current_tab_item, 'id'))}]">
       <!--次要玩法标 队名 和 比分 和 盘口-->
       <div class="content row justify-between" v-if="any_unfold">
         <!--次要玩法标 队名 和 比分  次要玩法 左边的 区域    波胆，5分钟玩法  不显示-->
@@ -60,13 +58,13 @@
           <div :class="['team-t-title-w']">
             <div class='team-title'> {{ match.mhn }}  </div>
             <!--显示次要玩法比分 7,8,9 网,乒,斯-->
-            <div class="way-score" v-if="[1, 5, 7, 8, 9].includes(+current_tab_item.id) && match.ms == 1"> {{ home_score }} </div>
+            <div class="way-score" v-if="[1, 5, 7, 8, 9, 17].includes(+current_tab_item.id) && match.ms == 1"> {{ home_score }} </div>
           </div>
           <!--副队名 和 比分 , { 'is-handicap': current_tab_handicap_index == 2, 'is-handicap-1': current_tab_handicap_index == 1, } -->
           <div :class="['team-t-title-w']">
             <div class='team-title'> {{ match.man }} </div>
             <!--显示次要玩法比分 7,8,9 网,乒,斯-->
-            <div class="way-score" v-if="[1, 5, 7, 8, 9].includes(+current_tab_item.id) && match.ms == 1"> {{ away_score }}</div>
+            <div class="way-score" v-if="[1, 5, 7, 8, 9, 17].includes(+current_tab_item.id) && match.ms == 1"> {{ away_score }}</div>
           </div>
           <!--  玩法描述图标显示  玩法id: 角球 1  15分钟 17  波胆 18  特色 11  罚牌 5  晋级  3  冠军  30-->
           <div class="team-t-title-w fight-type" v-if="[1, 3, 5, 7, 8, 9].includes(+match.csid) && is_show_title">
@@ -97,17 +95,15 @@ import lodash from 'lodash'
 import { ref, computed, onMounted, onUnmounted, defineComponent, getCurrentInstance, nextTick } from 'vue'
 import second_mixin from '../mixins/second.mixin.js';
 import { IconWapper } from 'src/components/icon'
-import OddListWrap from 'src/base-h5/components/match-container/template/app/components/odd-list-wrap.vue';
 import { compute_css_obj, useMittOn, MITT_TYPES } from "src/output/index.js"
 import { select_check, information_icon } from 'src/base-h5/core/utils/local-image.js'
-
+import OddListWrap from 'src/base-h5/components/match-container/template/app/components/odd-list-wrap.vue';
 
 export default defineComponent({
   name: "match-container-second-template2",
   mixins: [second_mixin],
   props:{
     match: Object,  // 赛事数据
-    i: Number, // 所在位置
   },
   components: {
     IconWapper,
@@ -169,7 +165,7 @@ export default defineComponent({
     align-items: center;
     margin: 0 auto;
     flex-wrap: nowrap;
-    height: 22px;
+    height: 27px;
 
     .tab-item-h {
       height: 0.18rem;
@@ -315,11 +311,11 @@ export default defineComponent({
   .transition-w-odd {
     font-size: 0.1rem;
     max-height: 0;
-    margin-top: 5px;
     
     &.expanded {
       height: auto;
       max-height: none;
+      margin-top: 3px;
     }
     .content{
       .team-title-container{

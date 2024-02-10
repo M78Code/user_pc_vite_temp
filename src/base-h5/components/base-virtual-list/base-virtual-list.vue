@@ -120,7 +120,6 @@ const end = computed(() => {
   while (contentDomTotalHeight < viewPortHeight) {
     endPos++
     contentDomTotalHeight += positionDataArr[endPos]?.height
-    // console.log(endPos, contentDomTotalHeight)
   }
   // 因为数组的slice方法是包头不包尾的所以还需要再endPos上+1，才会是预期的元素数量
   endPos += 1
@@ -215,7 +214,6 @@ const initDataPostion = () => {
         endPos: item.endPos
       }
     })
-    console.log('positionDataArr', positionDataArr)
   } else {
     positionDataArr = allData.value.map((item, idx) => {
       return {
@@ -275,7 +273,6 @@ const updateHeightAndPos = () => {
       }
     }
   }
-  // console.log(positionDataArr)
   pillarDomHeight.value = positionDataArr.length > 0 ? positionDataArr[positionDataArr.length - 1]?.endPos : 0
 }
 
@@ -432,7 +429,6 @@ const get_container_style = computed(() => {
   Object.assign(style_obj, {
     ...compute_css_obj({key: 'h5-kyapp-speciality-bg' })
   })
-  console.log(style_obj)
   return style_obj
 })
 
