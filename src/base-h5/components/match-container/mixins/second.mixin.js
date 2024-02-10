@@ -28,6 +28,7 @@ export default defineComponent({
         title:'',
         id:undefined,
       },
+      hSpecial: 0, // 15 分钟阶段
       current_hps_key: '', // 玩法 key （如：hpsAdd, hps15Minutes）
       // 玩法标题总内容
       tab_list:[],
@@ -507,9 +508,24 @@ export default defineComponent({
       let split = 'S5|';
       if(this.current_tab_item.id == 1){ //角球
         split = 'S5|';
-      }
-      else if(this.current_tab_item.id == 5){ //罚牌
+      } else if(this.current_tab_item.id == 5){ //罚牌
         split = 'S10102|';
+      } else if(this.current_tab_item.id == 17){ // 15 分钟  2954【客户端】【WEB端】添加时段盘比分展示
+        //S1001	0~14:59 分钟进球
+        //S1002	15~29:59 分钟进球
+        //S1003	30~44:59 分钟进球
+        //S1004	45~59:59 分钟进球
+        //S1005	60~74:59 分钟进球
+        //S1006	75~89:59 分钟进球
+        const score_config = {
+          0: 'S1001|',
+          1: 'S1002|',
+          2: 'S1003|',
+          3: 'S1004|',
+          4: 'S1005|',
+          5: 'S1006|',
+        }
+        split = score_config[+this.hSpecial]
       }
       if(this.match.csid == 5){//网球
         split = ['S23|','S39|','S55|','S71|','S87|'];
@@ -615,6 +631,7 @@ export default defineComponent({
         if(hSpecial<0){
           hSpecial = 0
         }
+        this.hSpecial = hSpecial
         this.current_tab_item.title =  i18n_t(`football_playing_way.hps15_title[${hSpecial}]`)
       }
     },
