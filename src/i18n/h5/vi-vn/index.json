@@ -223,7 +223,234 @@
       "2H 75:00~FT"
     ]
   },
-
+  "app_h5": {
+    "cathectic": {
+        "handicap_tutorial": "Hướng dẫn kèo ",
+        "open_bets": "Đơn cược chưa thanh toán ",
+        "closed_bets": "Đơn cược đã thanh toán",
+        "no_data_pre": "Bạn chưa có dữ liệu cược trước ",
+        "no_data_unsettle": "Hiện không có dữ liệu nào chưa được thanh toán ",
+        "no_data_settle": "Hiện không có dữ liệu nào đã được thanh toán ",
+        "no_data_invalid": "Hiện không có dữ liệu nào bị vô hiệu hoá",
+        "data_loading": "Đang tải dữ liệu…",
+        "kind_tips": "Thông báo ",
+        "adjustment_amount": "Điều chỉnh số dư ",
+        "winnable": "Tiền thắng ",
+        "bet_number": "Mã đơn cược",
+        "bets": "Mục đặt cược",
+        "settle": "Kết toán ",
+        "bet_status": "Trạng thái đơn cược",
+        "cash_failed": "Đổi tiền mặt sớm không thành công ",
+        "sub_wait": "Đăng ký đã gửi đi, Vui lòng chờ đợi ",
+        "all_cash_sess": " Toàn bộ đổi tiền mặt sớm thành công ",
+        "cash_details": "Chi tiết đổi tiền mặt sớm",
+        "cash_rules": "Quy tắc đăng ký đổi tiền mặt sớm",
+        "explain1": "Đổi tiền mặt sớm chỉ áp dụng cho các trận đấu và cược chấp được chỉ định. Nếu một trận đấu hoặc cược chấp bị hủy, đơn cược đổi đổi tiền mặt sớm sẽ được thu hồi và thanh toán lại. Chúng tôi sẽ bảo lưu quyền giải thích cuối cùng về kết quả.",
+        "explain2": "Để biết các quy tắc đổi thưởng cụ thể, vui lòng kiểm tra [Trung tâm trợ giúp] - [Quy tắc đổi tiền mặt sớm của KaiYun}",
+        "confirm_cancel_reservation": "Huỷ cược trước cho trận này? "
+    },
+    "handicap_tutorial": {
+        "answer_question": "Mô phỏng tài xỉu ",
+        "football_master": "Xin chúc mừng, bạn đã trở thành bậc thầy của bóng đá",
+        "training_camp": "Sân huấn luyện ",
+        "actual_combat": "Cược thật ",
+        "practise": "Mô phỏng ",
+        "again": "Học lại ",
+        "single": "Chọn đơn ",
+        "return_home": "Trở về trang chủ ",
+        "next": "Tiếp",
+        "introdution": "Chiến lược ",
+        "results_appear": "Khi kết quả như vậy xảy ra",
+        "red_list": "Chúc mừng bạn đã thắng!",
+        "not_master": "Rất tiếc , Bạn vẫn chưa nắm vững  ",
+        "big_small_ball": "Tài/ Xỉu ",
+        "big_small_ball_tip": "Tổng số bàn thắng 2 đội ghi bàn toàn trận 90 phút (bao gồm phút bù giờ) là tỷ số Tài /Xỉu ",
+        "handicapData_condition": "Chấp 0 ",
+        "handicapData_condition_1": "Tổng số bàn thắng ",
+        "all_win": "Thắng trọn ",
+        "home_team": "Đội nhà  ",
+        "bet_home_team": "Cược đội nhà ",
+        "bet_away_team": "Cược đội khách ",
+        "away_team": "Đội khách ",
+        "all_lose": "Thua trọn ",
+        "win_half": "Thắng nửa tiền ",
+        "lose_half": "Thua nửa tiền ",
+        "tie_handicap": "Kèo đồng banh ",
+        "tie_half_plate": "Kèo hoà chấp nửa quả ",
+        "big_bet": "Cược Tài %s",
+        "small_bet": "Cược xỉu %s",
+        "enter_ball": "Tổng số bàn thắng ",
+        "vice_versa": "Ngược lại ",
+        "return_principal_discount": "Hoàn tiền cược ( hoà)",
+        "return_principal": "Hoàn tiền cược ",
+        "home_team_handicap": "Đội nhà chấp %s quả ",
+        "ball_plate_1": "Kèo 0.5 quả ",
+        "ball_plate_2": "Kèo 0.75 quả",
+        "ball_plate_3": "Kèo 1 quả",
+        "ball_plate_4": "Kèo 1.25 quả",
+        "ball_plate_5": "Kèo 1.5 quả",
+        "ball_plate_6": "Kèo 1.75 quả",
+        "note_1": "Cược đội nhà thì ăn trọn ,đội khách thì thua trọn ",
+        "note_2": "Hoà, hoàn tiền cược (không tính vòng cược )",
+        "note_3": "Cược đội nhà thì ăn trọn , cược đội khách thua trọn ",
+        "note_4": "Hoà , cược đội nhà thì thua trọn , cược đội khách thắng trọn ",
+        "note_5": "Cược đội nhà thì thua trọn, Cược đội khách ăn trọn ",
+        "note_6": "Cược đội nhà thắng nửa tiền, Cược đội khách thua nửa tiền ",
+        "note_7": "Cược đội nhà thì ăn trọn, Cược đội khách thì thua trọn ",
+        "note_8": "Cược cả 2 đội hoàn tiền cược (vòng cược ko tính )",
+        "note_9": "Cược đội nhà thua nửa tiền, cược đội khách thắng nửa tiền ",
+        "note_10": "Cược đội nhà thì thua trọn, Cược đội khách thì ăn trọn ",
+        "note_11": "Cược đội nhà thì thua trọn, cược đội khách thì ăn trọn ",
+        "note_12": "Cược đội nhà thắng nửa tiền, Cược đội khách thua nửa tiền ",
+        "note_13": "Cược đội nhà thì ăn trọn, cược đội khách thì thua trọn ",
+        "note_14": "Cược Tài 2.5 thì ăn trọn, Cược xỉu 2.5 thì thua trọn ",
+        "note_15": "Cược tài 2.5/3 thắng nửa tiền, Cược xỉu 2.5/3 thua nửa tiền ",
+        "note_16": "Cược tài 3/3.5 thì thua nửa tiền, cược xỉu 3/3.5 thắng nửa tiền ",
+        "note_17": "Cược tài 3 thì hoàn tiền cược (vòng cược không được tính),  cược xỉu 3 thì hoàn tiền cược (vòng cược không tính)",
+        "questionsData": {
+            "1": {
+                "note_1": "Tổng số bàn thắng 2, nhỏ hơn 2.5",
+                "note_2": "Vì vậy nếu bạn đặt cược <span>xỉu 2.5</span>có thể ăn trọn ,Đặt cược <span>Tài 2.5</span>thì thua trọn "
+            },
+            "2": {
+                "note_1": "Số bàn thắng 2, nhỏ hơn 2/2.5",
+                "note_2": "Nguyên tắc cược cơ bản, Cược <span>xỉu 2/2.5</span> có thể thắng nửa tiền "
+            }
+        },
+        "ball": "%squả ",
+        "big": "Tài %s",
+        "small": "Xỉu %s",
+        "which_win": "Lựa chọn nào có thể ăn trọn ?",
+        "which_win_half": "Lựa chọn nào có thể thắng nửa tiền ?",
+        "real_madrid": "Real Madrid",
+        "m_chesester_city": "Manchester City",
+        "m_chesester_untied": "Manchester United",
+        "chelsea": "Chelsea",
+        "barcelona": "Barcelona"
+    },
+    "bet": {
+        "bet_win": "Đã thắng {total}",
+        "delete": "Xoá",
+        "confirm": "OK",
+        "parlay": "Cược xiên",
+        "odd": "Đơn",
+        "limit": "Hạn mức ",
+        "cancel_appoint": "Huỷ cược trước",
+        "pm_sport": "PM Thể Thao ",
+        "bet_confirm": "Đã xác nhận đơn cược ",
+        "bet_error": "Đơn cược không thành công",
+        "reserve_win": "Số tiền cược trước ",
+        "win_amount": "Số tiền có thể ăn ",
+        "toltip1": "là gì ",
+        "toltipc": "Cược xiên ",
+        "toltips": {
+            "2001": {
+                "title": "Cược xiên 2 là việc lựa chọn 2 trận đấu trong một đơn cược. ",
+                "content": "Khi bạn chọn 2 trận đấu liên tiếp để cược xiên 2, hệ thống sẽ gộp 2 trận thành 1 đơn cược , bạn phải thắng cả 2 trận mới được xem là thắng cược.  "
+            },
+            "3001": {
+                "title": "Cược xiên 3 là việc lựa chọn 3 trận đấu trong một đơn cược. ",
+                "content": "Khi bạn chọn 3 trận đấu liên tiếp để cược xiên 3, hệ thống sẽ gộp 3 trận thành 1 đơn cược , bạn phải thắng cả 3 trận mới được xem là thắng cược.  "
+            },
+            "3004": {
+                "title": "Cược liên hoàn 3 là 4 cược cho 3 trận đấu khách nhau",
+                "content": "Cược liên hoàn 3 được kết hợp bởi 3 lựa chọn cược riêng biệt tạo thành 4 đơn cược khác nhau, bao gồm 3 đơn cược xiên 2 và 1 đơn cược xiên 3. Đơn cược thắng khi có ít nhất 2 lựa chọn cược có kết quả thắng."
+            },
+            "4001": {
+                "title": "Cược xiên 4 là việc lựa chọn 4 trận đấu trong một đơn cược. ",
+                "content": "Khi bạn chọn 4 trận đấu liên tiếp để cược xiên 4, hệ thống sẽ gộp 4 trận thành 1 đơn cược , bạn phải thắng cả 4 trận mới được xem là thắng cược.  "
+            },
+            "5001": {
+                "title": "Cược xiên 5 là việc lựa chọn 5 trận đấu trong một đơn cược. ",
+                "content": "Khi bạn chọn 5 trận đấu liên tiếp để cược xiên 5, hệ thống sẽ gộp 5 trận thành 1 đơn cược , bạn phải thắng cả 5 trận mới được xem là thắng cược.  "
+            },
+            "6001": {
+                "title": "Cược xiên 6 là việc lựa chọn 6 trận đấu trong một đơn cược. ",
+                "content": "Khi bạn chọn 6 trận đấu liên tiếp để cược xiên 6, hệ thống sẽ gộp 6  trận thành 1 đơn cược , bạn phải thắng cả 6 trận mới được xem là thắng cược.  "
+            },
+            "7001": {
+                "title": "Cược xiên 7 là việc lựa chọn 7 trận đấu trong một đơn cược. ",
+                "content": "Khi bạn chọn 7  trận đấu liên tiếp để cược xiên 7, hệ thống sẽ gộp 7  trận thành 1 đơn cược , bạn phải thắng cả 7 trận mới được xem là thắng cược.  "
+            },
+            "8001": {
+                "title": "Cược xiên 8 là việc lựa chọn 8 trận đấu trong một đơn cược. ",
+                "content": "Khi bạn chọn 8  trận đấu liên tiếp để cược xiên 8, hệ thống sẽ gộp 8  trận thành 1 đơn cược , bạn phải thắng cả 8 trận mới được xem là thắng cược.  "
+            },
+            "9001": {
+                "title": "Cược xiên 9 là việc lựa chọn 9 trận đấu trong một đơn cược. ",
+                "content": "Khi bạn chọn 9  trận đấu liên tiếp để cược xiên 9, hệ thống sẽ gộp 9  trận thành 1 đơn cược , bạn phải thắng cả 9 trận mới được xem là thắng cược.  "
+            },
+            "10001": {
+                "title": "Cược xiên 10 là việc lựa chọn 10  trận đấu trong một đơn cược. ",
+                "content": "Khi bạn chọn 10  trận đấu liên tiếp để cược xiên 10, hệ thống sẽ gộp 10  trận thành 1 đơn cược , bạn phải thắng cả 10 trận mới được xem là thắng cược.  "
+            },
+            "40011": {
+                "title": "Cược liên hoàn 4 là 11 đơn cược cho 4 trận khác nhau ",
+                "content": "Cược liên hoàn 4 được kết hợp bởi 4 lựa chọn cược riêng biệt tạo thành 11 đơn cược khác nhau, bao gồm 6 đơn cược xiên 2, 4 đơn cược xiên 3 và 1 đơn cược xiên 4. Đơn cược thắng khi có ít nhất 2 lựa chọn cược có kết quả thắng."
+            },
+            "50026": {
+                "title": "Cược liên hoàn 5 là 26 đơn cược cho 5 trận khác nhau ",
+                "content": "Cược liên hoàn 5 được kết hợp bởi  5 lựa chọn cược riêng biệt tạo thành 26 đơn cược khác nhau, bao gồm 10 đơn cược xiên 2, 10 đơn cược xiên 3, 5 đơn cược xiên 4 và 1 đơn cược xiên 5. Đơn cược thắng khi có ít nhất 2 lựa chọn cược có kết quả thắng."
+            },
+            "60057": {
+                "title": "Cược liên hoàn 6 là 57 đơn cược cho 6 trận khác nhau ",
+                "content": "Cược liên hoàn 6 được kết hợp bởi 6 lựa chọn cược riêng biệt tạo thành 57 đơn cược khác nhau, bao gồm 15 đơn cược xiên 2, 20 đơn cược xiên 3, 15 đơn cược xiên 4, 6 đơn cược xiên 5 và 1 đơn cược xiên 6. Đơn cược thắng khi có ít nhất 2 lựa chọn cược có kết quả thắng."
+            },
+            "700120": {
+                "title": "Cược liên hoàn 7 là 120 đơn cược cho 7 trận khác nhau ",
+                "content": "Cược liên hoàn 7 được kết hợp bởi 7 lựa chọn cược riêng biệt tạo thành 120 đơn cược khác nhau, bao gồm 21 đơn cược xiên 2, 35 đơn cược xiên 3, 35 đơn cược xiên 4, 21 đơn cược xiên 5, 7 đơn cược xiên 6 và 1 đơn cược xiên 7. Đơn cược thắng khi có ít nhất 2 lựa chọn cược có kết quả thắng."
+            },
+            "800247": {
+                "title": "Cược liên hoàn 8 là 247 đơn cược cho 7 trận khác nhau ",
+                "content": "Cược liên hoàn 8 được kết hợp bởi 8 lựa chọn cược riêng biệt tạo thành 247 đơn cược khác nhau, bao gồm 28 đơn cược xiên 2, 56 đơn cược xiên 3, 70 đơn cược xiên 4, 56 đơn cược xiên 5, 28 đơn cược xiên 6, 8 đơn cược xiên 7 và 1 đơn cược xiên 8. Đơn cược thắng khi có ít nhất 2 lựa chọn cược có kết quả thắng."
+            },
+            "900502": {
+                "title": "Cược liên hoàn 9 là 502 đơn cược cho 9 trận khác nhau ",
+                "content": "Cược liên hoàn 9 được kết hợp bởi 9 lựa chọn cược riêng biệt tạo thành 502 đơn cược khác nhau, bao gồm 36 đơn cược xiên 2, 84 đơn cược xiên 3, 126 đơn cược xiên 4, 126 đơn cược xiên 5, 84 đơn cược xiên 6, 36 đơn cược xiên 7, 9 đơn cược xiên 8 và 1 đơn cược xiên 9. Đơn cược thắng khi có ít nhất 2 lựa chọn cược có kết quả thắng."
+            },
+            "10001013": {
+                "title": "Cược liên hoàn 10 là 1013 đơn cược cho 10 trận khác nhau ",
+                "content": "Cược liên hoàn 10 được kết hợp bởi 10 lựa chọn cược riêng biệt tạo thành 1013 đơn cược khác nhau, bao gồm 45 đơn cược xiên 2, 120 đơn cược xiên 3, 210 đơn cược xiên 4, 252 đơn cược xiên 5, 210 đơn cược xiên 6, 120 đơn cược xiên 7, 45 đơn cược xiên 8, 10 đơn cược xiên 9 và 1 đơn cược xiên 10. Đơn cược thắng khi có ít nhất 2 lựa chọn cược có kết quả thắng."
+            }
+        }
+    },
+    "match": {
+        "all": "Toàn bộ ",
+        "champions": "Giải vô địch Châu Âu UEFA",
+        "premier": "Giải bóng đá ngoại hạng anh (Premier League)",
+        "serie": "Giải bóng đá vô địch quốc gia Italia (Serie A )",
+        "laliga": "Giải bóng đá Tây Ban Nha (La Liga)",
+        "ligue": "Giải bóng đá Pháp (Ligue 1)",
+        "china_super": "Giải bóng đá ngoại hạng Trung Quốc (Chinese Super League)",
+        "normal_results": "Kết quả",
+        "game_results": "Kết qủa E-sport",
+        "vr_results": "Kết quả VR ",
+        "championship_results": "Kết quả vô địch "
+    },
+    "filter": {
+        "more": "Thêm >",
+        "enlarge": "Phóng to ",
+        "font_size": "Cỡ chữ ",
+        "default": "Mặc định ",
+        "turn_on": "Kích hoạt ",
+        "daily_activities": "Ưu đãi mỗi ngày",
+        "go_old_version": "Đi về bản cũ ",
+        "go_web_version": "PC "
+    },
+    "v_sports": {
+        "event_status": "Trạng thái trận đấu"
+    },
+    "detail": {
+        "half": "Hiệp 1",
+        "not_data_Injury": "Hiện chưa có danh sách cầu thủ bị thương",
+        "not_data_substitute": "Hiện chưa có danh sách cầu thủ dự bị ",
+        "not_data_starter": "Hiện chưa có danh sách bắt đầu",
+        "acronym_half": "Một nửa",
+        "highlights": "Điểm nổi bật",
+        "events": "Trận đấu",
+        "technical_statistics": "Thống kê kỹ thuật"
+    }
+},
   "ac_rules": {
     "auto": "Tự động chấp nhận tỉ lệ cược tốt  hơn",
     "understand": "OK"
@@ -2381,7 +2608,7 @@
     "2": "Hôm Nay",
     "3": "Cược Sớm",
     "4": "Chung Cuộc",
-    "5": "即将开赛",
+    "5": "Sắp bắt đầu",
     "6": "Cược Xâu",
     "7": "Esports",
     "8": "VR",
