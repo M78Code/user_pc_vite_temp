@@ -1397,7 +1397,7 @@ onUnmounted(() => {
         > .item {
           text-align: center;
           .title{
-            margin-bottom: 0.08rem;
+            margin-bottom: 5px;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;

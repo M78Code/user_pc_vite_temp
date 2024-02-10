@@ -2442,7 +2442,11 @@
     "novideo3": "Multilingual, currency",
     "novideo4": "Amazing",
     "novideo5": "Great team",
-    "novideo6": "You have been inactive for too long, the video is paused, pls click play to continue watching"
+    "novideo6": "You have been inactive for too long, the video is paused, pls click play to continue watching",
+    "flv": "HD1",
+    "m3u8": "HD2",
+    "clarity1": "HD",
+    "clarity2": "SD"
   },
   "new_menu": {
     "1": "In-Play",

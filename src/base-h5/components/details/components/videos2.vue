@@ -75,22 +75,23 @@
         <!-- 视频单页项目-->
         <!-- {{ iframe_src+'&rdm='+iframe_rdm }} -->
         <!-- iframe_show && !is_show_no_handle && iframe_src-->
-        <iframe 
-          v-if=" iframe_src" 
-          v-show="!is_playing_replay" 
-          ref="iframe" id="video-iframe" 
-          style="width:100%;height:100%;" 
-          frameborder="0"
-          marginwidth="0"
-          marginheight="0"
-          hspace="0"
-          vspace="0"
-          scrolling="no"
-          allowfullscreen="true"
-          allow="autoplay"
-          :src="`${iframe_src}&rdm=${iframe_rdm}`"
-        ></iframe>
-        
+        <BetScreen :type="video" :is_full_screen="!orientation">
+          <iframe 
+            v-if=" iframe_src" 
+            v-show="!is_playing_replay" 
+            ref="iframe" id="video-iframe" 
+            style="width:100%;height:100%;" 
+            frameborder="0"
+            marginwidth="0"
+            marginheight="0"
+            hspace="0"
+            vspace="0"
+            scrolling="no"
+            allowfullscreen="true"
+            allow="autoplay"
+            :src="`${iframe_src}&rdm=${iframe_rdm}`"
+          ></iframe>
+        </BetScreen>
         <!-- 视频单页项目精彩回放页面-->
         <iframe
           v-if="is_playing_replay"
@@ -335,6 +336,7 @@ import OrientationSubscrbe from 'src/base-h5/components/common/orientation/orien
 import { useRoute } from "vue-router"
 import { project_name ,into_video_anima_event} from "src/output/index.js"
 import BUILDIN_CONFIG from "app/job/output/env/index.js";;
+import BetScreen from 'src/base-h5/components/screen-bet/screen-bet.vue'
 export default {
   name: "videos",
   components: {
@@ -345,7 +347,8 @@ export default {
     // "tabs": () => import("src/base-pc/components/match-detail/match_info/tabs.vue"),
     "slider-x": () => import("src/base-h5/components/details/analysis-matches/components/slider-x.vue"),
     slider: slider,
-    AnimationSlider
+    AnimationSlider,
+    BetScreen
   },
   data() {
     return {
@@ -435,7 +438,8 @@ export default {
       get_video_url: MatchDetailCalss.video_url,
       // 是否全屏
       get_is_full_screen: false,
-      ProjectName: project_name
+      ProjectName: project_name,
+      orientation: true
     }
   },
   computed: {
@@ -1868,15 +1872,19 @@ export default {
     },
     listener(value) {
       console.log(value, "如果切换横竖屏，会触发此函数");
+      this.orientation = value;
       // 如果切换横竖屏，会触发此函数
-     
+      if (!value) {
+        // 旋转横屏
+        
+      }
       this.set_full_screen();
-
     }
   },
   mounted() {
     OrientationSubscrbe.instance.change_status(true);
     OrientationSubscrbe.instance.add_notify(this.listener);
+    // document.addEventListener('')
     this.set_zhiding_info( false )
     this.set_video_zhiding( false )
     this.mitt_obj[MITT_TYPES.EMIT_VIDEO_SWITCHING] = useMittOn(MITT_TYPES.EMIT_VIDEO_SWITCHING,this.icon_click_lvs);

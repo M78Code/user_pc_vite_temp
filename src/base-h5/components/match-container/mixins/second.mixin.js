@@ -44,26 +44,29 @@ export default defineComponent({
   },
   mounted(){
 
-    //用户改变展开折叠状态时钟
+    // 用户改变展开折叠状态时钟
     this.init_tab_timer = null;
     this.compute_list_dom_time = null;
     this.tab_list = play_title()
 
     if(!["virtual_sports","category"].includes(this.$route.name)) {
+
       // mmp映射赛事阶段名，国际化语言
       this.update_mmp_map_title();
 
-      //自动展开次要玩法
+      // 自动展开次要玩法
       this.init_unfold_play_way('mounted');
-      this.on_listeners();
+      // this.on_listeners();
 
       // 足球进行到加时赛及以后阶段不显示加时赛玩法
       this.not_show_overtime_play()
+
       // 足球之外调用此方法，通过折叠状态
       this.change_status_by_any_unfold();
     }
   },
   methods:{
+    // 是否显示更多
     show_more_status_flg(type){
       this.is_show_tree_line=type;
       this.init_unfold_play_way('mounted');

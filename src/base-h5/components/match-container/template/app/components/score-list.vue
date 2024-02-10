@@ -4,13 +4,13 @@
 
 <template>
   <div v-show="show_score_match_line(match)" class="score-section"
-    :class="{ 'flex-star': [3].includes(+match.csid), standard: standard_edition == 2, result: get_menu_type == 28 }">
+    :class="{ 'flex-star': [3].includes(+match.csid), standard: standard_edition == 2, result: is_results }">
     <div class="scroll-container-w" :class="{ 'left_scroll': show_left_triangle, 'right_scroll': show_right_triangle,'bq-ball': match.csid == 3, }"
       :ref="`match_score_scroll_w_${match.mid}`">
       <!-- 需求：棒球3，斯诺克7，拳击12 不显示比分  -->
       <div class="score-se-inner" ref='scoreWrapScroller' v-if="![3].includes(+match.csid)" :class="{
-        standard: standard_edition == 2 && get_menu_type != 28,
-        result: get_menu_type == 28,
+        standard: standard_edition == 2 && !is_results,
+        result: is_results,
         'is-foot-ball': match.csid == 1 || match.csid == 11,
         'is-basket-ball': match.csid == 2,
         'sport-puck-ball': match.csid == 4,
@@ -22,13 +22,10 @@
         <div class="score-se-inner2" :ref="`score_se_inner2_${match.mid}`">
           <!-- 比分 -->
           <div class="row items-center score-fle-container-1"
-            :class="{ result: get_menu_type == 28 && PageSourceData.page_source !== 'detail_match_list', }">
+            :class="{ result: is_results && PageSourceData.page_source !== 'detail_match_list', }">
             <template v-for="(score, i) of msc_converted">
               <div v-if="is_show_score(match, score)" class="score row items-start"
-                :class="{
-                  //  'basket-ball': match.csid == 2, 
-                  'important-color-number': i == msc_converted.length - 1 && match.csid == 2 && get_menu_type != 28
-                }"
+                :class="{ 'important-color-number': i == msc_converted.length - 1 && match.csid == 2 && !is_results }"
                 :key="i" :data-scores="`${i}-${msc_converted.length}-${match.csid}`">
                 <!--角球图标-->
                 <img class="kk-icon" alt="" v-if="match.csid == 1 && score[0] == 'S5' && score[4]"
@@ -112,7 +109,7 @@
         {{ i18n_t('match_info.strike_out') }}&nbsp; <span class="score">{{ match.mbcn }}</span>
       </div> -->
       <div class="baseball-poi-ia" v-if="match.csid == 3" :data-csid="match.csid">
-        <template v-if="get_menu_type != 28">
+        <template v-if="!is_results">
           <div class="baseball-poi-w">
             <div class="poi" :class="{p:match.mbtlp == 1}"></div>
             <div class="poi" :class="{p:match.mbolp == 1}"></div>
@@ -136,6 +133,8 @@ import { MenuData, score_switch_handle, score_format } from "src/output/index.js
 import { standard_edition} from 'src/base-h5/mixin/userctr.js'
 import PageSourceData  from  "src/core/page-source/page-source.js";
 
+import { is_results } from 'src/base-h5/mixin/menu.js'
+
 const props = defineProps({
   match: Object,
 })
@@ -151,7 +150,6 @@ const last_list_score = ref('')
 const msc_converted = ref([])
 const show_left_triangle = ref(false)
 const show_right_triangle = ref(false)
-const get_menu_type = ref(MenuData.get_menu_type())
 
 onMounted(() => {
   // get_last_list_score();
@@ -194,8 +192,7 @@ const get_total_scores = computed(() => {
   // let { home, away } = get_match_total_score();
 
   let { home_score: home, away_score: away } = props.match
- 
-  // let { home_score = 0, away_score = 0 } = props.match;
+
   if (msc_format && msc_format.length) {
     let t = home + away;
     let total_sum = t ? `(${t})` : '';
@@ -292,9 +289,6 @@ const show_score_match_line = (match) => {
   let csid = +match.csid;
   let result = false;
   result = match.ms == 1 && [1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16].includes(csid);
-  // if(get_menu_type.value == 28){
-  //   result = true;
-  // }
   return result;
 }
 /**
