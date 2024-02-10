@@ -67,7 +67,7 @@ const left_menu = ref([]);
  */
 const get_left_menus = async () => {
   const res = await axios.get(
-    "https://api-doc-server-new.sportxxxw1box.com/openapi/componentKey/menus"
+    "https://api-doc-server-new.dbsporxxxw1box.com/openapi/componentKey/menus"
   );
   left_menu.value = res.data?.data || [];
 };
@@ -80,7 +80,7 @@ const chang_menu = async (menu = {}) => {
     menu.enable_version || left_menu.value[0]?.childs[0].enable_version;
   const project = menu.project || left_menu.value[0]?.project;
   const res = await axios.get(
-    `https://api-doc-server-new.sportxxxw1box.com/openapi/componentDoc/findDetailsByProjectAndVersion?project=${project}&version=${version}`
+    `https://api-doc-server-new.dbsporxxxw1box.com/openapi/componentDoc/findDetailsByProjectAndVersion?project=${project}&version=${version}`
   );
   file_data.value = res.data?.data || {};
 };
