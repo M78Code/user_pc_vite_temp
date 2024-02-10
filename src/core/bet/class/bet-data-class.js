@@ -225,7 +225,7 @@ this.bet_appoint_ball_head= null */
   set_user_max_min_money(){
     if (this.is_bet_single) {
       const { qon,qtw,qth,qfo,qfi,max='MAX' } = lodash_.get(UserCtr, 'user_info.cvo.single', { qon: 100, qtw: 200, qth: 500, qfo: 1000, qfi: 2000 })  
-      this.user_max_min_money = {qon,qtw,qth,qfo,qfi,max} 
+      this.user_max_min_money = {qon,qtw,qth,qfo,qfi} 
     } else {
       const {qon,qtw,qth,qfo,qfi,qsi } = lodash_.get(UserCtr, 'user_info.cvo.series', { qon: 10, qtw: 50, qth: 100, qfo: 200, qfi: 500, qsi: 1000 })
       this.user_max_min_money = {qon,qtw,qth,qfo,qfi,qsi}
