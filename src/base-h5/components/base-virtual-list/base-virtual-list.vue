@@ -254,7 +254,7 @@ const updateHeightAndPos = () => {
       }
     }
   }
-  console.log(positionDataArr)
+  // console.log(positionDataArr)
   pillarDomHeight.value = positionDataArr.length > 0 ? positionDataArr[positionDataArr.length - 1]?.endPos : 0
 }
 
