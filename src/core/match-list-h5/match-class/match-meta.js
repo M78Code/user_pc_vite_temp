@@ -1457,7 +1457,7 @@ class MatchMeta {
     })
   }
 
-  set_current_match_mids(mids) {
+  set_current_match_mids(mids = []) {
     this.match_mids = mids
   }
 
