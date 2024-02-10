@@ -1809,26 +1809,30 @@ class MatchMeta {
    * @param { warehouse } 仓库类型
    */
   handle_update_match_info(config) {
-    MatchResponsive.set_is_http_update_info(true)
-    const { list = [], merge = '', warehouse = MatchDataBaseH5 } = config
-    // 合并前后两次赛事数据
-    const result = lodash.map(list, t => {
-      // MatchResponsive.get_ball_seed_methods(t)
-      const match = warehouse.get_quick_mid_obj(t.mid)
-      let target = {}
-      if (merge === 'cover') {
-        target = Object.assign({}, match, t)
-      } else {
-        target = match?.is_meta ? Object.assign({}, match, t) : Object.assign({}, t, match)
-      }
-      return target
-    })
-    // ws 订阅
-    this.set_ws_active_mids({ list: list, warehouse })
-    // 设置仓库渲染数据
-    warehouse.set_list(result)
-    this.is_ws_trigger = false
-    this.update_is_http_update_info()
+    try {
+      MatchResponsive.set_is_http_update_info(true)
+      const { list = [], merge = '', warehouse = MatchDataBaseH5 } = config
+      // 合并前后两次赛事数据
+      const result = lodash.map(list, t => {
+        // MatchResponsive.get_ball_seed_methods(t)
+        const match = warehouse.get_quick_mid_obj(t.mid)
+        let target = {}
+        if (merge === 'cover') {
+          target = Object.assign({}, match, t)
+        } else {
+          target = match?.is_meta ? Object.assign({}, match, t) : Object.assign({}, t, match)
+        }
+        return target
+      })
+      // ws 订阅
+      this.set_ws_active_mids({ list: list, warehouse })
+      // 设置仓库渲染数据
+      warehouse.set_list(result)
+      this.is_ws_trigger = false
+      this.update_is_http_update_info()
+    } catch(err) {
+      console.error(err)
+    }
   }
 
   /**

@@ -256,13 +256,12 @@ export default defineComponent({
     },
     // 是否有角球
     get_corner_kick () {
-      // const S5 = lodash.get(this.match_of_list, 'msc_obj.S5', '')
-      // let is_show = false
-      // S5 && Object.values(S5).forEach(t => {
-      //   is_show = t && true
-      // })
-      // return is_show
-      return false
+      const S5 = lodash.get(this.match_of_list, 'msc_obj.S5', '')
+      let is_show = false
+      S5 && Object.values(S5).forEach(t => {
+        is_show = t && true
+      })
+      return is_show
     },
     // 全部球种折叠状态
     all_ball_seed_collapsed () {
