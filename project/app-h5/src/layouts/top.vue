@@ -388,6 +388,7 @@ const handle_match_render_data = (type) => {
   // 清除赛事折叠信息
   MatchDataBaseH5.init()
   // 清除次要玩法折叠信息
+  useMittEmit(MITT_TYPES.EMIT_RESET_POSITION)
   MatchResponsive.set_secondary_unfold_map({})
   // MatchFold.clear_fold_info()
   if (MenuData.is_collect()) {

@@ -723,7 +723,7 @@ class MatchMeta {
     })
     if (+res.code !== 200) return this.set_page_match_empty_status({ state: true });
     const list = lodash.get(res, 'data', [])
-    return this.handler_match_list_data({ list: list, is_virtual: false, type: 1 })
+    return this.handler_match_list_data({ list: list, is_virtual: false, type: 1, source: 'details' })
   }
 
   /**
@@ -1213,7 +1213,7 @@ class MatchMeta {
    */
   handler_match_list_data(config) {
 
-    const { list = [], type = 1, is_virtual = true, warehouse = MatchDataBaseH5, scroll_top = 0, merge = '' } = config
+    const { list = [], type = 1, is_virtual = true, warehouse = MatchDataBaseH5, scroll_top = 0, merge = '', source = '' } = config
 
     const is_classify = this.get_is_classify()
 
@@ -1307,6 +1307,9 @@ class MatchMeta {
         this.compute_page_render_list({ scrollTop: scroll_top, merge, type })
       }
     }
+
+    // 赛果详情
+    if (source === 'details') this.handle_submit_warehouse({ list: matchs_data, warehouse })
 
     // 重置数据为空状态
     this.set_page_match_empty_status({ state: false })
@@ -1811,7 +1814,6 @@ class MatchMeta {
     // ws 订阅
     this.set_ws_active_mids({ list: list, warehouse })
     // 设置仓库渲染数据
-    // this.is_ws_trigger = false
     warehouse.set_list(result)
     this.is_ws_trigger = false
     this.update_is_http_update_info()

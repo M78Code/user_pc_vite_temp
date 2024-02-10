@@ -526,6 +526,7 @@ export default {
     }
     .secondary-game-play{
       position: relative;
+      z-index: 1000;
     }
   }
 
@@ -1013,7 +1014,7 @@ export default {
   background-color: var(--q-color-com-bg-color-12);
   height: auto;
   position: relative;
-  height: 1.12rem;
+  height: 112px;
   z-index: 8888;
 
   .right-content-style {
@@ -1558,7 +1559,7 @@ export default {
   width: 100%;
   color: var(--q-gb-t-c-19);
   padding-left: 1px;
-  height: 0.2rem;
+  height: 20px;
   display: flex;
   align-items: center;
   margin: 0 auto;
