@@ -1,5 +1,6 @@
 <template>
-    <div class="screen-bet-container">
+    <!-- 禁止触摸滚动 -->
+    <div class="screen-bet-container" @touchmove.stop>
         <!-- 视频/动画插槽 -->
         <slot />
         <div class="screen-bet" v-show="!show_line"  v-if="is_full_screen">
@@ -8,9 +9,9 @@
                     <IconBack />
                 </div>
                 <div class="title" v-show="!is_bet">
-                    <span>法国</span>
-                    <span class="score">0-0</span>
-                    <span>葡萄牙</span>
+                    <span>{{ props.team_score_detail?.mhn }}</span>
+                    <span class="score">{{ props.team_score_detail?.msc }}</span>
+                    <span>{{ props.team_score_detail?.man }}</span>
                 </div>
                 <div class="actions" @click.stop="show_line_callback">
                     高清
@@ -91,10 +92,15 @@ const props = defineProps({
     is_full_screen: {
         type: Boolean,
         default: false
+    },
+    // 比分信息
+    team_score_detail: {
+        type: Object,
+        default: () => ({})
     }
 });
 
-const emits = defineEmits(['exit'])
+const emits = defineEmits(['exit', 'switch_type'])
 /** 视频 */
 const is_video = computed(() => props.type == "video");
 /** 动画 */
@@ -128,6 +134,7 @@ const show_line_callback = () => {
  */
 const change_line = (index) => {
     select_line.value = index;
+    emits('switch_type', index == 0 ? 1 : 2)
 }
 
 /**
@@ -156,8 +163,9 @@ const handle_exit = ()=> {
 <style lang="scss" scoped>
 .screen-bet-container {
     position: relative;
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
+    // z-index: 999;
     .line-container {
         position: relative;
         width: 100vw;
@@ -182,6 +190,7 @@ const handle_exit = ()=> {
         .line-item {
             width: 88px;
             height: 36px;
+            font-size: 16px;
             border-radius: 8px;
             border: 1px solid var(--border-color-border-primary, rgba(255, 255, 255, 0.04));
             margin-bottom: 16px;
@@ -199,6 +208,7 @@ const handle_exit = ()=> {
         .desc {
             color: rgba(255, 255, 255, 0.60);
             margin-top: 74px;
+            font-size: 16px;
         }
     }
     .line-ani {
@@ -208,13 +218,13 @@ const handle_exit = ()=> {
     
 }
 .screen-bet {
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     // background: gray;
     top: 0;
     left: 0;
     z-index: 10;
-    padding: 20px 36px 16px 36px;
+    // padding: 20px 36px 16px 36px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -224,7 +234,8 @@ const handle_exit = ()=> {
         display: flex;
         justify-content: space-between;
         align-items: center;
-
+        padding:  20px 36px 0 36px;
+        background: linear-gradient(0deg, rgba(0, 0, 0, 0.00) 0%, rgba(0, 0, 0, 0.87) 65.18%, #000 100%, #000 100%);
         .leading {
             display: flex;
             align-items: center;
@@ -236,7 +247,6 @@ const handle_exit = ()=> {
             font-size: 14px;
             font-weight: 500;
             color: #fff;
-
             .score {
                 padding: 0 16px;
             }
@@ -260,6 +270,8 @@ const handle_exit = ()=> {
         flex-direction: column;
         justify-content: flex-end;
         align-items: flex-end;
+        padding: 0 36px 0 36px;
+
         .actions-list {
             li {
                 margin-bottom: 16px;
@@ -268,6 +280,7 @@ const handle_exit = ()=> {
     }
 
     .footer {
+        padding:  0 36px 16px 36px;
         display: flex;
         align-items: center;
         justify-content: space-between;
