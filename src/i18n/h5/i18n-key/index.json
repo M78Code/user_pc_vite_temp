@@ -1,0 +1,3201 @@
+{
+    "ouzhou": {
+        "record": {
+            "my_bet": "ty_pc.k_ouzhou.k_record.k_my_bet",
+            "unsettled": "ty_pc.k_ouzhou.k_record.k_unsettled",
+            "settled": "ty_pc.k_ouzhou.k_record.k_settled",
+            "unpaid_bets": "ty_pc.k_ouzhou.k_record.k_unpaid_bets",
+            "settled_time": "ty_pc.k_ouzhou.k_record.k_settled_time",
+            "bet_time": "ty_pc.k_ouzhou.k_record.k_bet_time",
+            "match_time": "ty_pc.k_ouzhou.k_record.k_match_time",
+            "today": "ty_pc.k_ouzhou.k_record.k_today",
+            "yesterday": "ty_pc.k_ouzhou.k_record.k_yesterday",
+            "7_days": "ty_pc.k_ouzhou.k_record.k_7_days",
+            "30_days": "ty_pc.k_ouzhou.k_record.k_30_days",
+            "datails": "ty_pc.k_ouzhou.k_record.k_datails"
+        },
+        "detail": {
+            "which_team": "ty_pc.k_ouzhou.k_detail.k_which_team",
+            "keno_lottery": "ty_pc.k_ouzhou.k_detail.k_keno_lottery",
+            "exciting_different": "ty_pc.k_ouzhou.k_detail.k_exciting_different",
+            "close_handicap": "ty_pc.k_ouzhou.k_detail.k_close_handicap",
+            "betting": "ty_pc.k_ouzhou.k_detail.k_betting",
+            "assault": "ty_pc.k_ouzhou.k_detail.k_assault",
+            "possession_ball": "ty_pc.k_ouzhou.k_detail.k_possession_ball",
+            "shot_wide_goal": "ty_pc.k_ouzhou.k_detail.k_shot_wide_goal",
+            "shots_on_goal": "ty_pc.k_ouzhou.k_detail.k_shots_on_goal",
+            "event_analysis": "ty_pc.k_ouzhou.k_detail.k_event_analysis",
+            "foul": "ty_pc.k_ouzhou.k_detail.k_foul",
+            "point": "ty_pc.k_ouzhou.k_detail.k_point",
+            "penalty": "ty_pc.k_ouzhou.k_detail.k_penalty",
+            "pause": "ty_pc.k_ouzhou.k_detail.k_pause",
+            "read": "ty_pc.k_ouzhou.k_detail.k_read"
+        },
+        "bet": {
+            "place_bet": "ty_pc.k_ouzhou.k_bet.k_place_bet",
+            "limit": "ty_pc.k_ouzhou.k_bet.k_limit",
+            "book_bet_amount": "ty_pc.k_ouzhou.k_bet.k_book_bet_amount"
+        },
+        "menu": {
+            "collect": "ty_pc.k_ouzhou.k_menu.k_collect",
+            "popular": "ty_pc.k_ouzhou.k_menu.k_popular",
+            "all_sports": "ty_pc.k_ouzhou.k_menu.k_all_sports",
+            "my_bets": "ty_pc.k_ouzhou.k_menu.k_my_bets"
+        },
+        "match": {
+            "league": "ty_pc.k_ouzhou.k_match.k_league",
+            "outrights": "ty_pc.k_ouzhou.k_match.k_outrights",
+            "favorites": "ty_pc.k_ouzhou.k_match.k_favorites",
+            "matches": "ty_pc.k_ouzhou.k_match.k_matches",
+            "featured": "ty_pc.k_ouzhou.k_match.k_featured",
+            "featured_events": "ty_pc.k_ouzhou.k_match.k_featured_events",
+            "top_events": "ty_pc.k_ouzhou.k_match.k_top_events",
+            "top_leagues": "ty_pc.k_ouzhou.k_match.k_top_leagues",
+            "all_matches": "ty_pc.k_ouzhou.k_match.k_all_matches",
+            "15_mins": "ty_pc.k_ouzhou.k_match.k_15_mins",
+            "inplay": "ty_pc.k_ouzhou.k_match.k_inplay",
+            "home": "ty_pc.k_ouzhou.k_match.k_home",
+            "today": "ty_pc.k_ouzhou.k_match.k_today",
+            "early": "ty_pc.k_ouzhou.k_match.k_early",
+            "bet_col_Over": "ty_pc.k_ouzhou.k_match.k_bet_col_Over",
+            "bet_col_Under": "ty_pc.k_ouzhou.k_match.k_bet_col_Under",
+            "home_handicap": "ty_pc.k_ouzhou.k_match.k_home_handicap",
+            "away_handicap": "ty_pc.k_ouzhou.k_match.k_away_handicap",
+            "tomorrow": "ty_pc.k_ouzhou.k_match.k_tomorrow",
+            "select_time": {
+                "12h": "ty_pc.k_ouzhou.k_match.k_select_time.k_12h",
+                "24h": "ty_pc.k_ouzhou.k_match.k_select_time.k_24h",
+                "72h": "ty_pc.k_ouzhou.k_match.k_select_time.k_72h",
+                "168h": "ty_pc.k_ouzhou.k_match.k_select_time.k_168h"
+            },
+            "play_map": {
+                "1": "ty_pc.k_ouzhou.k_match.k_play_map.k_1",
+                "2": "ty_pc.k_ouzhou.k_match.k_play_map.k_2",
+                "4": "ty_pc.k_ouzhou.k_match.k_play_map.k_4",
+                "17": "ty_pc.k_ouzhou.k_match.k_play_map.k_17",
+                "18": "ty_pc.k_ouzhou.k_match.k_play_map.k_18",
+                "19": "ty_pc.k_ouzhou.k_match.k_play_map.k_19",
+                "37": "ty_pc.k_ouzhou.k_match.k_play_map.k_37",
+                "38": "ty_pc.k_ouzhou.k_match.k_play_map.k_38",
+                "39": "ty_pc.k_ouzhou.k_match.k_play_map.k_39",
+                "153": "ty_pc.k_ouzhou.k_match.k_play_map.k_153",
+                "154": "ty_pc.k_ouzhou.k_match.k_play_map.k_154",
+                "155": "ty_pc.k_ouzhou.k_match.k_play_map.k_155",
+                "172": "ty_pc.k_ouzhou.k_match.k_play_map.k_172",
+                "173": "ty_pc.k_ouzhou.k_match.k_play_map.k_173",
+                "181": "ty_pc.k_ouzhou.k_match.k_play_map.k_181",
+                "182": "ty_pc.k_ouzhou.k_match.k_play_map.k_182",
+                "242": "ty_pc.k_ouzhou.k_match.k_play_map.k_242",
+                "243": "ty_pc.k_ouzhou.k_match.k_play_map.k_243",
+                "244": "ty_pc.k_ouzhou.k_match.k_play_map.k_244",
+                "20043": "ty_pc.k_ouzhou.k_match.k_play_map.k_20043",
+                "20044": "ty_pc.k_ouzhou.k_match.k_play_map.k_20044",
+                "20045": "ty_pc.k_ouzhou.k_match.k_play_map.k_20045",
+                "20046": "ty_pc.k_ouzhou.k_match.k_play_map.k_20046",
+                "30001": "ty_pc.k_ouzhou.k_match.k_play_map.k_30001",
+                "30002": "ty_pc.k_ouzhou.k_match.k_play_map.k_30002",
+                "30003": "ty_pc.k_ouzhou.k_match.k_play_map.k_30003",
+                "12_2": "ty_pc.k_ouzhou.k_match.k_play_map.k_12_2"
+            }
+        },
+        "setting_menu": {
+            "personal": "ty_pc.k_ouzhou.k_setting_menu.k_personal",
+            "back": "ty_pc.k_ouzhou.k_setting_menu.k_back",
+            "money": "ty_pc.k_ouzhou.k_setting_menu.k_money",
+            "language": "ty_pc.k_ouzhou.k_setting_menu.k_language",
+            "odds_setting": "ty_pc.k_ouzhou.k_setting_menu.k_odds_setting",
+            "odds_display": "ty_pc.k_ouzhou.k_setting_menu.k_odds_display",
+            "dec": "ty_pc.k_ouzhou.k_setting_menu.k_dec",
+            "hk": "ty_pc.k_ouzhou.k_setting_menu.k_hk",
+            "any": "ty_pc.k_ouzhou.k_setting_menu.k_any",
+            "hig": "ty_pc.k_ouzhou.k_setting_menu.k_hig",
+            "version": "ty_pc.k_ouzhou.k_setting_menu.k_version",
+            "euro": "ty_pc.k_ouzhou.k_setting_menu.k_euro",
+            "asia": "ty_pc.k_ouzhou.k_setting_menu.k_asia",
+            "hot": "ty_pc.k_ouzhou.k_setting_menu.k_hot",
+            "time": "ty_pc.k_ouzhou.k_setting_menu.k_time",
+            "sort": "ty_pc.k_ouzhou.k_setting_menu.k_sort"
+        },
+        "no_data": {
+            "coming_soon": "ty_pc.k_ouzhou.k_no_data.k_coming_soon"
+        },
+        "search": {
+            "change": "ty_pc.k_ouzhou.k_search.k_change",
+            "clear_search_history": "ty_pc.k_ouzhou.k_search.k_clear_search_history",
+            "league": "ty_pc.k_ouzhou.k_search.k_league",
+            "null1": "ty_pc.k_ouzhou.k_search.k_null1",
+            "null2": "ty_pc.k_ouzhou.k_search.k_null2",
+            "other": "ty_pc.k_ouzhou.k_search.k_other",
+            "search_hot": "ty_pc.k_ouzhou.k_search.k_search_hot",
+            "search_play": "ty_pc.k_ouzhou.k_search.k_search_play",
+            "search_record": "ty_pc.k_ouzhou.k_search.k_search_record",
+            "search_sports": "ty_pc.k_ouzhou.k_search.k_search_sports",
+            "team": "ty_pc.k_ouzhou.k_search.k_team",
+            "placeholder": "ty_pc.k_ouzhou.k_search.k_placeholder",
+            "close": "ty_pc.k_ouzhou.k_search.k_close",
+            "view_all_match": "ty_pc.k_ouzhou.k_search.k_view_all_match",
+            "underway": "ty_pc.k_ouzhou.k_search.k_underway",
+            "no_search_rezult": "ty_pc.k_ouzhou.k_search.k_no_search_rezult",
+            "dogfall": "ty_pc.k_ouzhou.k_search.k_dogfall",
+            "search_history": "ty_pc.k_ouzhou.k_search.k_search_history",
+            "No results": "ty_pc.k_ouzhou.k_search.k_No results"
+        },
+        "bet_col": {
+            "bet_col_1": {
+                "bet_col_1": "ty_pc.k_ouzhou.k_bet_col.k_bet_col_1.k_bet_col_1",
+                "bet_col_X": "ty_pc.k_ouzhou.k_bet_col.k_bet_col_1.k_bet_col_X",
+                "bet_col_2": "ty_pc.k_ouzhou.k_bet_col.k_bet_col_1.k_bet_col_2"
+            },
+            "bet_col_2": {
+                "bet_col_Over": "ty_pc.k_ouzhou.k_bet_col.k_bet_col_2.k_bet_col_Over",
+                "bet_col_Under": "ty_pc.k_ouzhou.k_bet_col.k_bet_col_2.k_bet_col_Under"
+            },
+            "bet_col_4": {
+                "bet_col_1": "ty_pc.k_ouzhou.k_bet_col.k_bet_col_4.k_bet_col_1",
+                "bet_col_2": "ty_pc.k_ouzhou.k_bet_col.k_bet_col_4.k_bet_col_2"
+            },
+            "bet_col_37": {
+                "bet_col_1": "ty_pc.k_ouzhou.k_bet_col.k_bet_col_37.k_bet_col_1",
+                "bet_col_2": "ty_pc.k_ouzhou.k_bet_col.k_bet_col_37.k_bet_col_2"
+            },
+            "bet_col_38": {
+                "bet_col_1": "ty_pc.k_ouzhou.k_bet_col.k_bet_col_38.k_bet_col_1",
+                "bet_col_2": "ty_pc.k_ouzhou.k_bet_col.k_bet_col_38.k_bet_col_2"
+            },
+            "bet_col_39": {
+                "bet_col_1": "ty_pc.k_ouzhou.k_bet_col.k_bet_col_39.k_bet_col_1",
+                "bet_col_2": "ty_pc.k_ouzhou.k_bet_col.k_bet_col_39.k_bet_col_2"
+            },
+            "bet_col_153": {
+                "bet_col_1": "ty_pc.k_ouzhou.k_bet_col.k_bet_col_153.k_bet_col_1",
+                "bet_col_2": "ty_pc.k_ouzhou.k_bet_col.k_bet_col_153.k_bet_col_2"
+            },
+            "bet_col_154": {
+                "bet_col_1": "ty_pc.k_ouzhou.k_bet_col.k_bet_col_154.k_bet_col_1",
+                "bet_col_2": "ty_pc.k_ouzhou.k_bet_col.k_bet_col_154.k_bet_col_2"
+            },
+            "bet_col_155": {
+                "bet_col_1": "ty_pc.k_ouzhou.k_bet_col.k_bet_col_155.k_bet_col_1",
+                "bet_col_2": "ty_pc.k_ouzhou.k_bet_col.k_bet_col_155.k_bet_col_2"
+            },
+            "bet_col_172": {
+                "bet_col_1": "ty_pc.k_ouzhou.k_bet_col.k_bet_col_172.k_bet_col_1",
+                "bet_col_2": "ty_pc.k_ouzhou.k_bet_col.k_bet_col_172.k_bet_col_2"
+            },
+            "bet_col_173": {
+                "bet_col_1": "ty_pc.k_ouzhou.k_bet_col.k_bet_col_173.k_bet_col_1",
+                "bet_col_2": "ty_pc.k_ouzhou.k_bet_col.k_bet_col_173.k_bet_col_2"
+            },
+            "bet_col_181": {
+                "bet_col_1": "ty_pc.k_ouzhou.k_bet_col.k_bet_col_181.k_bet_col_1",
+                "bet_col_2": "ty_pc.k_ouzhou.k_bet_col.k_bet_col_181.k_bet_col_2"
+            },
+            "bet_col_182": {
+                "bet_col_1": "ty_pc.k_ouzhou.k_bet_col.k_bet_col_182.k_bet_col_1",
+                "bet_col_2": "ty_pc.k_ouzhou.k_bet_col.k_bet_col_182.k_bet_col_2"
+            },
+            "bet_col_242": {
+                "bet_col_1": "ty_pc.k_ouzhou.k_bet_col.k_bet_col_242.k_bet_col_1",
+                "bet_col_2": "ty_pc.k_ouzhou.k_bet_col.k_bet_col_242.k_bet_col_2"
+            },
+            "bet_col_243": {
+                "bet_col_1": "ty_pc.k_ouzhou.k_bet_col.k_bet_col_243.k_bet_col_1",
+                "bet_col_2": "ty_pc.k_ouzhou.k_bet_col.k_bet_col_243.k_bet_col_2"
+            },
+            "bet_col_244": {
+                "bet_col_1": "ty_pc.k_ouzhou.k_bet_col.k_bet_col_244.k_bet_col_1",
+                "bet_col_2": "ty_pc.k_ouzhou.k_bet_col.k_bet_col_244.k_bet_col_2"
+            },
+            "bet_col_30001": {
+                "bet_col_1": "ty_pc.k_ouzhou.k_bet_col.k_bet_col_30001.k_bet_col_1",
+                "bet_col_2": "ty_pc.k_ouzhou.k_bet_col.k_bet_col_30001.k_bet_col_2"
+            },
+            "bet_col_30002": {
+                "bet_col_1": "ty_pc.k_ouzhou.k_bet_col.k_bet_col_30002.k_bet_col_1",
+                "bet_col_2": "ty_pc.k_ouzhou.k_bet_col.k_bet_col_30002.k_bet_col_2"
+            },
+            "bet_col_30003": {
+                "bet_col_1": "ty_pc.k_ouzhou.k_bet_col.k_bet_col_30003.k_bet_col_1",
+                "bet_col_2": "ty_pc.k_ouzhou.k_bet_col.k_bet_col_30003.k_bet_col_2"
+            }
+        },
+        "15minutes_bet_col": [
+            "ty_pc.k_ouzhou.k_15minutes_bet_col.k_0",
+            "ty_pc.k_ouzhou.k_15minutes_bet_col.k_1",
+            "ty_pc.k_ouzhou.k_15minutes_bet_col.k_2",
+            "ty_pc.k_ouzhou.k_15minutes_bet_col.k_3",
+            "ty_pc.k_ouzhou.k_15minutes_bet_col.k_4",
+            "ty_pc.k_ouzhou.k_15minutes_bet_col.k_5"
+        ]
+    },
+    "app_h5": {
+        "cathectic": {
+            "handicap_tutorial": "ty_pc.k_app_h5.k_cathectic.k_handicap_tutorial",
+            "open_bets": "ty_pc.k_app_h5.k_cathectic.k_open_bets",
+            "closed_bets": "ty_pc.k_app_h5.k_cathectic.k_closed_bets",
+            "no_data_pre": "ty_pc.k_app_h5.k_cathectic.k_no_data_pre",
+            "no_data_unsettle": "ty_pc.k_app_h5.k_cathectic.k_no_data_unsettle",
+            "no_data_settle": "ty_pc.k_app_h5.k_cathectic.k_no_data_settle",
+            "no_data_invalid": "ty_pc.k_app_h5.k_cathectic.k_no_data_invalid",
+            "data_loading": "ty_pc.k_app_h5.k_cathectic.k_data_loading",
+            "kind_tips": "ty_pc.k_app_h5.k_cathectic.k_kind_tips",
+            "adjustment_amount": "ty_pc.k_app_h5.k_cathectic.k_adjustment_amount",
+            "winnable": "ty_pc.k_app_h5.k_cathectic.k_winnable",
+            "bet_number": "ty_pc.k_app_h5.k_cathectic.k_bet_number",
+            "bets": "ty_pc.k_app_h5.k_cathectic.k_bets",
+            "settle": "ty_pc.k_app_h5.k_cathectic.k_settle",
+            "bet_status": "ty_pc.k_app_h5.k_cathectic.k_bet_status",
+            "cash_failed": "ty_pc.k_app_h5.k_cathectic.k_cash_failed",
+            "sub_wait": "ty_pc.k_app_h5.k_cathectic.k_sub_wait",
+            "all_cash_sess": "ty_pc.k_app_h5.k_cathectic.k_all_cash_sess",
+            "cash_details": "ty_pc.k_app_h5.k_cathectic.k_cash_details",
+            "cash_rules": "ty_pc.k_app_h5.k_cathectic.k_cash_rules",
+            "explain1": "ty_pc.k_app_h5.k_cathectic.k_explain1",
+            "explain2": "ty_pc.k_app_h5.k_cathectic.k_explain2",
+            "confirm_cancel_reservation": "ty_pc.k_app_h5.k_cathectic.k_confirm_cancel_reservation"
+        },
+        "handicap_tutorial": {
+            "answer_question": "ty_pc.k_app_h5.k_handicap_tutorial.k_answer_question",
+            "football_master": "ty_pc.k_app_h5.k_handicap_tutorial.k_football_master",
+            "training_camp": "ty_pc.k_app_h5.k_handicap_tutorial.k_training_camp",
+            "actual_combat": "ty_pc.k_app_h5.k_handicap_tutorial.k_actual_combat",
+            "practise": "ty_pc.k_app_h5.k_handicap_tutorial.k_practise",
+            "again": "ty_pc.k_app_h5.k_handicap_tutorial.k_again",
+            "single": "ty_pc.k_app_h5.k_handicap_tutorial.k_single",
+            "return_home": "ty_pc.k_app_h5.k_handicap_tutorial.k_return_home",
+            "next": "ty_pc.k_app_h5.k_handicap_tutorial.k_next",
+            "introdution": "ty_pc.k_app_h5.k_handicap_tutorial.k_introdution",
+            "results_appear": "ty_pc.k_app_h5.k_handicap_tutorial.k_results_appear",
+            "red_list": "ty_pc.k_app_h5.k_handicap_tutorial.k_red_list",
+            "not_master": "ty_pc.k_app_h5.k_handicap_tutorial.k_not_master",
+            "big_small_ball": "ty_pc.k_app_h5.k_handicap_tutorial.k_big_small_ball",
+            "big_small_ball_tip": "ty_pc.k_app_h5.k_handicap_tutorial.k_big_small_ball_tip",
+            "handicapData_condition": "ty_pc.k_app_h5.k_handicap_tutorial.k_handicapData_condition",
+            "handicapData_condition_1": "ty_pc.k_app_h5.k_handicap_tutorial.k_handicapData_condition_1",
+            "all_win": "ty_pc.k_app_h5.k_handicap_tutorial.k_all_win",
+            "home_team": "ty_pc.k_app_h5.k_handicap_tutorial.k_home_team",
+            "bet_home_team": "ty_pc.k_app_h5.k_handicap_tutorial.k_bet_home_team",
+            "bet_away_team": "ty_pc.k_app_h5.k_handicap_tutorial.k_bet_away_team",
+            "away_team": "ty_pc.k_app_h5.k_handicap_tutorial.k_away_team",
+            "all_lose": "ty_pc.k_app_h5.k_handicap_tutorial.k_all_lose",
+            "win_half": "ty_pc.k_app_h5.k_handicap_tutorial.k_win_half",
+            "lose_half": "ty_pc.k_app_h5.k_handicap_tutorial.k_lose_half",
+            "tie_handicap": "ty_pc.k_app_h5.k_handicap_tutorial.k_tie_handicap",
+            "tie_half_plate": "ty_pc.k_app_h5.k_handicap_tutorial.k_tie_half_plate",
+            "big_bet": "ty_pc.k_app_h5.k_handicap_tutorial.k_big_bet",
+            "small_bet": "ty_pc.k_app_h5.k_handicap_tutorial.k_small_bet",
+            "enter_ball": "ty_pc.k_app_h5.k_handicap_tutorial.k_enter_ball",
+            "vice_versa": "ty_pc.k_app_h5.k_handicap_tutorial.k_vice_versa",
+            "return_principal_discount": "ty_pc.k_app_h5.k_handicap_tutorial.k_return_principal_discount",
+            "return_principal": "ty_pc.k_app_h5.k_handicap_tutorial.k_return_principal",
+            "home_team_handicap": "ty_pc.k_app_h5.k_handicap_tutorial.k_home_team_handicap",
+            "ball_plate_1": "ty_pc.k_app_h5.k_handicap_tutorial.k_ball_plate_1",
+            "ball_plate_2": "ty_pc.k_app_h5.k_handicap_tutorial.k_ball_plate_2",
+            "ball_plate_3": "ty_pc.k_app_h5.k_handicap_tutorial.k_ball_plate_3",
+            "ball_plate_4": "ty_pc.k_app_h5.k_handicap_tutorial.k_ball_plate_4",
+            "ball_plate_5": "ty_pc.k_app_h5.k_handicap_tutorial.k_ball_plate_5",
+            "ball_plate_6": "ty_pc.k_app_h5.k_handicap_tutorial.k_ball_plate_6",
+            "note_1": "ty_pc.k_app_h5.k_handicap_tutorial.k_note_1",
+            "note_2": "ty_pc.k_app_h5.k_handicap_tutorial.k_note_2",
+            "note_3": "ty_pc.k_app_h5.k_handicap_tutorial.k_note_3",
+            "note_4": "ty_pc.k_app_h5.k_handicap_tutorial.k_note_4",
+            "note_5": "ty_pc.k_app_h5.k_handicap_tutorial.k_note_5",
+            "note_6": "ty_pc.k_app_h5.k_handicap_tutorial.k_note_6",
+            "note_7": "ty_pc.k_app_h5.k_handicap_tutorial.k_note_7",
+            "note_8": "ty_pc.k_app_h5.k_handicap_tutorial.k_note_8",
+            "note_9": "ty_pc.k_app_h5.k_handicap_tutorial.k_note_9",
+            "note_10": "ty_pc.k_app_h5.k_handicap_tutorial.k_note_10",
+            "note_11": "ty_pc.k_app_h5.k_handicap_tutorial.k_note_11",
+            "note_12": "ty_pc.k_app_h5.k_handicap_tutorial.k_note_12",
+            "note_13": "ty_pc.k_app_h5.k_handicap_tutorial.k_note_13",
+            "note_14": "ty_pc.k_app_h5.k_handicap_tutorial.k_note_14",
+            "note_15": "ty_pc.k_app_h5.k_handicap_tutorial.k_note_15",
+            "note_16": "ty_pc.k_app_h5.k_handicap_tutorial.k_note_16",
+            "note_17": "ty_pc.k_app_h5.k_handicap_tutorial.k_note_17",
+            "questionsData": {
+                "1": {
+                    "note_1": "ty_pc.k_app_h5.k_handicap_tutorial.k_questionsData.k_1.k_note_1",
+                    "note_2": "ty_pc.k_app_h5.k_handicap_tutorial.k_questionsData.k_1.k_note_2"
+                },
+                "2": {
+                    "note_1": "ty_pc.k_app_h5.k_handicap_tutorial.k_questionsData.k_2.k_note_1",
+                    "note_2": "ty_pc.k_app_h5.k_handicap_tutorial.k_questionsData.k_2.k_note_2"
+                }
+            },
+            "ball": "ty_pc.k_app_h5.k_handicap_tutorial.k_ball",
+            "big": "ty_pc.k_app_h5.k_handicap_tutorial.k_big",
+            "small": "ty_pc.k_app_h5.k_handicap_tutorial.k_small",
+            "which_win": "ty_pc.k_app_h5.k_handicap_tutorial.k_which_win",
+            "which_win_half": "ty_pc.k_app_h5.k_handicap_tutorial.k_which_win_half",
+            "real_madrid": "ty_pc.k_app_h5.k_handicap_tutorial.k_real_madrid",
+            "m_chesester_city": "ty_pc.k_app_h5.k_handicap_tutorial.k_m_chesester_city",
+            "m_chesester_untied": "ty_pc.k_app_h5.k_handicap_tutorial.k_m_chesester_untied",
+            "chelsea": "ty_pc.k_app_h5.k_handicap_tutorial.k_chelsea",
+            "barcelona": "ty_pc.k_app_h5.k_handicap_tutorial.k_barcelona"
+        },
+        "bet": {
+            "bet_win": "ty_pc.k_app_h5.k_bet.k_bet_win",
+            "delete": "ty_pc.k_app_h5.k_bet.k_delete",
+            "confirm": "ty_pc.k_app_h5.k_bet.k_confirm",
+            "parlay": "ty_pc.k_app_h5.k_bet.k_parlay",
+            "odd": "ty_pc.k_app_h5.k_bet.k_odd",
+            "limit": "ty_pc.k_app_h5.k_bet.k_limit",
+            "cancel_appoint": "ty_pc.k_app_h5.k_bet.k_cancel_appoint",
+            "pm_sport": "ty_pc.k_app_h5.k_bet.k_pm_sport",
+            "bet_confirm": "ty_pc.k_app_h5.k_bet.k_bet_confirm",
+            "bet_error": "ty_pc.k_app_h5.k_bet.k_bet_error",
+            "reserve_win": "ty_pc.k_app_h5.k_bet.k_reserve_win",
+            "win_amount": "ty_pc.k_app_h5.k_bet.k_win_amount",
+            "toltip1": "ty_pc.k_app_h5.k_bet.k_toltip1",
+            "toltipc": "ty_pc.k_app_h5.k_bet.k_toltipc",
+            "toltips": {
+                "2001": {
+                    "title": "ty_pc.k_app_h5.k_bet.k_toltips.k_2001.k_title",
+                    "content": "ty_pc.k_app_h5.k_bet.k_toltips.k_2001.k_content"
+                },
+                "3001": {
+                    "title": "ty_pc.k_app_h5.k_bet.k_toltips.k_3001.k_title",
+                    "content": "ty_pc.k_app_h5.k_bet.k_toltips.k_3001.k_content"
+                },
+                "3004": {
+                    "title": "ty_pc.k_app_h5.k_bet.k_toltips.k_3004.k_title",
+                    "content": "ty_pc.k_app_h5.k_bet.k_toltips.k_3004.k_content"
+                },
+                "4001": {
+                    "title": "ty_pc.k_app_h5.k_bet.k_toltips.k_4001.k_title",
+                    "content": "ty_pc.k_app_h5.k_bet.k_toltips.k_4001.k_content"
+                },
+                "5001": {
+                    "title": "ty_pc.k_app_h5.k_bet.k_toltips.k_5001.k_title",
+                    "content": "ty_pc.k_app_h5.k_bet.k_toltips.k_5001.k_content"
+                },
+                "6001": {
+                    "title": "ty_pc.k_app_h5.k_bet.k_toltips.k_6001.k_title",
+                    "content": "ty_pc.k_app_h5.k_bet.k_toltips.k_6001.k_content"
+                },
+                "7001": {
+                    "title": "ty_pc.k_app_h5.k_bet.k_toltips.k_7001.k_title",
+                    "content": "ty_pc.k_app_h5.k_bet.k_toltips.k_7001.k_content"
+                },
+                "8001": {
+                    "title": "ty_pc.k_app_h5.k_bet.k_toltips.k_8001.k_title",
+                    "content": "ty_pc.k_app_h5.k_bet.k_toltips.k_8001.k_content"
+                },
+                "9001": {
+                    "title": "ty_pc.k_app_h5.k_bet.k_toltips.k_9001.k_title",
+                    "content": "ty_pc.k_app_h5.k_bet.k_toltips.k_9001.k_content"
+                },
+                "10001": {
+                    "title": "ty_pc.k_app_h5.k_bet.k_toltips.k_10001.k_title",
+                    "content": "ty_pc.k_app_h5.k_bet.k_toltips.k_10001.k_content"
+                },
+                "40011": {
+                    "title": "ty_pc.k_app_h5.k_bet.k_toltips.k_40011.k_title",
+                    "content": "ty_pc.k_app_h5.k_bet.k_toltips.k_40011.k_content"
+                },
+                "50026": {
+                    "title": "ty_pc.k_app_h5.k_bet.k_toltips.k_50026.k_title",
+                    "content": "ty_pc.k_app_h5.k_bet.k_toltips.k_50026.k_content"
+                },
+                "60057": {
+                    "title": "ty_pc.k_app_h5.k_bet.k_toltips.k_60057.k_title",
+                    "content": "ty_pc.k_app_h5.k_bet.k_toltips.k_60057.k_content"
+                },
+                "700120": {
+                    "title": "ty_pc.k_app_h5.k_bet.k_toltips.k_700120.k_title",
+                    "content": "ty_pc.k_app_h5.k_bet.k_toltips.k_700120.k_content"
+                },
+                "800247": {
+                    "title": "ty_pc.k_app_h5.k_bet.k_toltips.k_800247.k_title",
+                    "content": "ty_pc.k_app_h5.k_bet.k_toltips.k_800247.k_content"
+                },
+                "900502": {
+                    "title": "ty_pc.k_app_h5.k_bet.k_toltips.k_900502.k_title",
+                    "content": "ty_pc.k_app_h5.k_bet.k_toltips.k_900502.k_content"
+                },
+                "10001013": {
+                    "title": "ty_pc.k_app_h5.k_bet.k_toltips.k_10001013.k_title",
+                    "content": "ty_pc.k_app_h5.k_bet.k_toltips.k_10001013.k_content"
+                }
+            }
+        },
+        "match": {
+            "all": "ty_pc.k_app_h5.k_match.k_all",
+            "champions": "ty_pc.k_app_h5.k_match.k_champions",
+            "premier": "ty_pc.k_app_h5.k_match.k_premier",
+            "serie": "ty_pc.k_app_h5.k_match.k_serie",
+            "laliga": "ty_pc.k_app_h5.k_match.k_laliga",
+            "ligue": "ty_pc.k_app_h5.k_match.k_ligue",
+            "china_super": "ty_pc.k_app_h5.k_match.k_china_super",
+            "normal_results": "ty_pc.k_app_h5.k_match.k_normal_results",
+            "game_results": "ty_pc.k_app_h5.k_match.k_game_results",
+            "vr_results": "ty_pc.k_app_h5.k_match.k_vr_results",
+            "championship_results": "ty_pc.k_app_h5.k_match.k_championship_results"
+        },
+        "filter": {
+            "more": "ty_pc.k_app_h5.k_filter.k_more",
+            "enlarge": "ty_pc.k_app_h5.k_filter.k_enlarge",
+            "font_size": "ty_pc.k_app_h5.k_filter.k_font_size",
+            "default": "ty_pc.k_app_h5.k_filter.k_default",
+            "turn_on": "ty_pc.k_app_h5.k_filter.k_turn_on",
+            "daily_activities": "ty_pc.k_app_h5.k_filter.k_daily_activities",
+            "go_old_version": "ty_pc.k_app_h5.k_filter.k_go_old_version",
+            "go_web_version": "ty_pc.k_app_h5.k_filter.k_go_web_version"
+        },
+        "v_sports": {
+            "event_status": "ty_pc.k_app_h5.k_v_sports.k_event_status"
+        },
+        "detail": {
+            "half": "ty_pc.k_app_h5.k_detail.k_half",
+            "not_data_Injury": "ty_pc.k_app_h5.k_detail.k_not_data_Injury",
+            "not_data_substitute": "ty_pc.k_app_h5.k_detail.k_not_data_substitute",
+            "not_data_starter": "ty_pc.k_app_h5.k_detail.k_not_data_starter",
+            "acronym_half": "ty_pc.k_app_h5.k_detail.k_acronym_half",
+            "highlights": "ty_pc.k_app_h5.k_detail.k_highlights",
+            "events": "ty_pc.k_app_h5.k_detail.k_events",
+            "technical_statistics": "ty_pc.k_app_h5.k_detail.k_technical_statistics"
+        }
+    },
+    "ac_rules": {
+        "auto": "ty_pc.k_ac_rules.k_auto",
+        "understand": "ty_pc.k_ac_rules.k_understand"
+    },
+    "accept_rules": {
+        "accept_odds": "ty_pc.k_accept_rules.k_accept_odds",
+        "automatically_odds": "ty_pc.k_accept_rules.k_automatically_odds",
+        "do_not_accept_odds": "ty_pc.k_accept_rules.k_do_not_accept_odds",
+        "feature_not_checked": "ty_pc.k_accept_rules.k_feature_not_checked",
+        "if": "ty_pc.k_accept_rules.k_if",
+        "if_bet_when": "ty_pc.k_accept_rules.k_if_bet_when",
+        "increased_odds": "ty_pc.k_accept_rules.k_increased_odds",
+        "interrupt_your_betting": "ty_pc.k_accept_rules.k_interrupt_your_betting",
+        "lower_odds": "ty_pc.k_accept_rules.k_lower_odds",
+        "matter_placing_content": "ty_pc.k_accept_rules.k_matter_placing_content",
+        "system_default": "ty_pc.k_accept_rules.k_system_default",
+        "system_will_think": "ty_pc.k_accept_rules.k_system_will_think",
+        "will_interrupt_behavior": "ty_pc.k_accept_rules.k_will_interrupt_behavior",
+        "chat_msg": "ty_pc.k_accept_rules.k_chat_msg"
+    },
+    "analysis_football_matches": {
+        "age": "ty_pc.k_analysis_football_matches.k_age",
+        "analysis_data": "ty_pc.k_analysis_football_matches.k_analysis_data",
+        "away_win": "ty_pc.k_analysis_football_matches.k_away_win",
+        "bench_lineup": "ty_pc.k_analysis_football_matches.k_bench_lineup",
+        "Injury_situation": "ty_pc.k_analysis_football_matches.k_Injury_situation",
+        "big": "ty_pc.k_analysis_football_matches.k_big",
+        "big_ball": "ty_pc.k_analysis_football_matches.k_big_ball",
+        "Big_ball_rate": "ty_pc.k_analysis_football_matches.k_Big_ball_rate",
+        "Coach_data": "ty_pc.k_analysis_football_matches.k_Coach_data",
+        "company": "ty_pc.k_analysis_football_matches.k_company",
+        "cup_points": "ty_pc.k_analysis_football_matches.k_cup_points",
+        "customer": "ty_pc.k_analysis_football_matches.k_customer",
+        "Customer_win_rate": "ty_pc.k_analysis_football_matches.k_Customer_win_rate",
+        "date": "ty_pc.k_analysis_football_matches.k_date",
+        "Disk": "ty_pc.k_analysis_football_matches.k_Disk",
+        "European_Finger": "ty_pc.k_analysis_football_matches.k_European_Finger",
+        "Favorable_information": "ty_pc.k_analysis_football_matches.k_Favorable_information",
+        "field": "ty_pc.k_analysis_football_matches.k_field",
+        "flat": "ty_pc.k_analysis_football_matches.k_flat",
+        "Fundamentals": "ty_pc.k_analysis_football_matches.k_Fundamentals",
+        "Future_schedule": "ty_pc.k_analysis_football_matches.k_Future_schedule",
+        "gain_loss": "ty_pc.k_analysis_football_matches.k_gain_loss",
+        "game": "ty_pc.k_analysis_football_matches.k_game",
+        "Go_to_war": "ty_pc.k_analysis_football_matches.k_Go_to_war",
+        "handicap": "ty_pc.k_analysis_football_matches.k_handicap",
+        "historical_war": "ty_pc.k_analysis_football_matches.k_historical_war",
+        "home_win1": "ty_pc.k_analysis_football_matches.k_home_win1",
+        "immediate": "ty_pc.k_analysis_football_matches.k_immediate",
+        "Initial_offer": "ty_pc.k_analysis_football_matches.k_Initial_offer",
+        "integral": "ty_pc.k_analysis_football_matches.k_integral",
+        "intelligence": "ty_pc.k_analysis_football_matches.k_intelligence",
+        "Interval_days": "ty_pc.k_analysis_football_matches.k_Interval_days",
+        "league": "ty_pc.k_analysis_football_matches.k_league",
+        "league_points": "ty_pc.k_analysis_football_matches.k_league_points",
+        "level": "ty_pc.k_analysis_football_matches.k_level",
+        "line_up": "ty_pc.k_analysis_football_matches.k_line_up",
+        "lose": "ty_pc.k_analysis_football_matches.k_lose",
+        "Lose_plate": "ty_pc.k_analysis_football_matches.k_Lose_plate",
+        "main": "ty_pc.k_analysis_football_matches.k_main",
+        "Main_win": "ty_pc.k_analysis_football_matches.k_Main_win",
+        "Main_win_rate": "ty_pc.k_analysis_football_matches.k_Main_win_rate",
+        "match": "ty_pc.k_analysis_football_matches.k_match",
+        "Move_plate": "ty_pc.k_analysis_football_matches.k_Move_plate",
+        "name": "ty_pc.k_analysis_football_matches.k_name",
+        "near": "ty_pc.k_analysis_football_matches.k_near",
+        "negative": "ty_pc.k_analysis_football_matches.k_negative",
+        "net_win": "ty_pc.k_analysis_football_matches.k_net_win",
+        "Neutral_Information": "ty_pc.k_analysis_football_matches.k_Neutral_Information",
+        "no_data": "ty_pc.k_analysis_football_matches.k_no_data",
+        "number": "ty_pc.k_analysis_football_matches.k_number",
+        "Odds": "ty_pc.k_analysis_football_matches.k_Odds",
+        "player": "ty_pc.k_analysis_football_matches.k_player",
+        "Points_per_game": "ty_pc.k_analysis_football_matches.k_Points_per_game",
+        "position": "ty_pc.k_analysis_football_matches.k_position",
+        "rank": "ty_pc.k_analysis_football_matches.k_rank",
+        "ranking": "ty_pc.k_analysis_football_matches.k_ranking",
+        "reason": "ty_pc.k_analysis_football_matches.k_reason",
+        "recent_record": "ty_pc.k_analysis_football_matches.k_recent_record",
+        "record_clashes": {
+            "5": "ty_pc.k_analysis_football_matches.k_record_clashes.k_5",
+            "10": "ty_pc.k_analysis_football_matches.k_record_clashes.k_10",
+            "15": "ty_pc.k_analysis_football_matches.k_record_clashes.k_15"
+        },
+        "results": "ty_pc.k_analysis_football_matches.k_results",
+        "Return_rate": "ty_pc.k_analysis_football_matches.k_Return_rate",
+        "same_game": "ty_pc.k_analysis_football_matches.k_same_game",
+        "same_host_guest": "ty_pc.k_analysis_football_matches.k_same_host_guest",
+        "score": "ty_pc.k_analysis_football_matches.k_score",
+        "shut_down": "ty_pc.k_analysis_football_matches.k_shut_down",
+        "size": "ty_pc.k_analysis_football_matches.k_size",
+        "small": "ty_pc.k_analysis_football_matches.k_small",
+        "small_ball": "ty_pc.k_analysis_football_matches.k_small_ball",
+        "small_ball_rate": "ty_pc.k_analysis_football_matches.k_small_ball_rate",
+        "standings": "ty_pc.k_analysis_football_matches.k_standings",
+        "starting_lineup": "ty_pc.k_analysis_football_matches.k_starting_lineup",
+        "Tactical_division": "ty_pc.k_analysis_football_matches.k_Tactical_division",
+        "team": "ty_pc.k_analysis_football_matches.k_team",
+        "Technical_side": "ty_pc.k_analysis_football_matches.k_Technical_side",
+        "Total": "ty_pc.k_analysis_football_matches.k_Total",
+        "total_all": "ty_pc.k_analysis_football_matches.k_total_all",
+        "turn_around": "ty_pc.k_analysis_football_matches.k_turn_around",
+        "Turning_trend": "ty_pc.k_analysis_football_matches.k_Turning_trend",
+        "Unfavorable_information": "ty_pc.k_analysis_football_matches.k_Unfavorable_information",
+        "victory": "ty_pc.k_analysis_football_matches.k_victory",
+        "win": "ty_pc.k_analysis_football_matches.k_win",
+        "win_plate": "ty_pc.k_analysis_football_matches.k_win_plate",
+        "Win_rate": "ty_pc.k_analysis_football_matches.k_Win_rate",
+        "analysis_information": "ty_pc.k_analysis_football_matches.k_analysis_information"
+    },
+    "basketball_playing_way": {
+        "first_half": "ty_pc.k_basketball_playing_way.k_first_half",
+        "quarter": "ty_pc.k_basketball_playing_way.k_quarter"
+    },
+    "bet": {
+        "bet_order_info2": "ty_pc.k_bet.k_bet_order_info2",
+        "edit_success": "ty_pc.k_bet.k_edit_success",
+        "edit_fail": "ty_pc.k_bet.k_edit_fail",
+        "account_balance": "ty_pc.k_bet.k_account_balance",
+        "agree_change": "ty_pc.k_bet.k_agree_change",
+        "agree_change2": "ty_pc.k_bet.k_agree_change2",
+        "away_win": "ty_pc.k_bet.k_away_win",
+        "bet": "ty_pc.k_bet.k_bet",
+        "bet_winner": "ty_pc.k_bet.k_bet_winner",
+        "bet_10001": "ty_pc.k_bet.k_bet_10001",
+        "bet_10001013": "ty_pc.k_bet.k_bet_10001013",
+        "bet_2001": "ty_pc.k_bet.k_bet_2001",
+        "bet_3001": "ty_pc.k_bet.k_bet_3001",
+        "bet_3004": "ty_pc.k_bet.k_bet_3004",
+        "bet_4001": "ty_pc.k_bet.k_bet_4001",
+        "bet_40011": "ty_pc.k_bet.k_bet_40011",
+        "bet_5001": "ty_pc.k_bet.k_bet_5001",
+        "bet_50026": "ty_pc.k_bet.k_bet_50026",
+        "bet_6001": "ty_pc.k_bet.k_bet_6001",
+        "bet_60057": "ty_pc.k_bet.k_bet_60057",
+        "bet_7001": "ty_pc.k_bet.k_bet_7001",
+        "bet_700120": "ty_pc.k_bet.k_bet_700120",
+        "bet_8001": "ty_pc.k_bet.k_bet_8001",
+        "bet_800247": "ty_pc.k_bet.k_bet_800247",
+        "bet_9001": "ty_pc.k_bet.k_bet_9001",
+        "bet_900502": "ty_pc.k_bet.k_bet_900502",
+        "bet_err": "ty_pc.k_bet.k_bet_err",
+        "bet_err2": "ty_pc.k_bet.k_bet_err2",
+        "bet_information": "ty_pc.k_bet.k_bet_information",
+        "bet_loading": "ty_pc.k_bet.k_bet_loading",
+        "bet_look_result": "ty_pc.k_bet.k_bet_look_result",
+        "bet_msg": "ty_pc.k_bet.k_bet_msg",
+        "bet_ok": "ty_pc.k_bet.k_bet_ok",
+        "bet_record": "ty_pc.k_bet.k_bet_record",
+        "bet_suc": "ty_pc.k_bet.k_bet_suc",
+        "bet_type_1": "ty_pc.k_bet.k_bet_type_1",
+        "bet_val": "ty_pc.k_bet.k_bet_val",
+        "bet_val2": "ty_pc.k_bet.k_bet_val2",
+        "bet_win": "ty_pc.k_bet.k_bet_win",
+        "betting": "ty_pc.k_bet.k_betting",
+        "chatroom": "ty_pc.k_bet.k_chatroom",
+        "clear": "ty_pc.k_bet.k_clear",
+        "delete_all": "ty_pc.k_bet.k_delete_all",
+        "disabled": "ty_pc.k_bet.k_disabled",
+        "close": "ty_pc.k_bet.k_close",
+        "bet_upd": "ty_pc.k_bet.k_bet_upd",
+        "err_msg01": "ty_pc.k_bet.k_err_msg01",
+        "err_msg02": "ty_pc.k_bet.k_err_msg02",
+        "err_msg03": "ty_pc.k_bet.k_err_msg03",
+        "err_msg04": "ty_pc.k_bet.k_err_msg04",
+        "err_msg05": "ty_pc.k_bet.k_err_msg05",
+        "err_msg06": "ty_pc.k_bet.k_err_msg06",
+        "err_msg07": "ty_pc.k_bet.k_err_msg07",
+        "err_msg08": "ty_pc.k_bet.k_err_msg08",
+        "err_msg09": "ty_pc.k_bet.k_err_msg09",
+        "err_msg10": "ty_pc.k_bet.k_err_msg10",
+        "err_msg11": "ty_pc.k_bet.k_err_msg11",
+        "err_msg12": "ty_pc.k_bet.k_err_msg12",
+        "err_msg13": "ty_pc.k_bet.k_err_msg13",
+        "home_win": "ty_pc.k_bet.k_home_win",
+        "input_v": "ty_pc.k_bet.k_input_v",
+        "input_v2": "ty_pc.k_bet.k_input_v2",
+        "invalidation": "ty_pc.k_bet.k_invalidation",
+        "invalidation2": "ty_pc.k_bet.k_invalidation2",
+        "kushikatsu": "ty_pc.k_bet.k_kushikatsu",
+        "merge": "ty_pc.k_bet.k_merge",
+        "loading": "ty_pc.k_bet.k_loading",
+        "loading2": "ty_pc.k_bet.k_loading2",
+        "match_add": "ty_pc.k_bet.k_match_add",
+        "match_max": "ty_pc.k_bet.k_match_max",
+        "match_max2": "ty_pc.k_bet.k_match_max2",
+        "match_min": "ty_pc.k_bet.k_match_min",
+        "money_range": "ty_pc.k_bet.k_money_range",
+        "max": "ty_pc.k_bet.k_max",
+        "millions": "ty_pc.k_bet.k_millions",
+        "millions_10": "ty_pc.k_bet.k_millions_10",
+        "money_limit": "ty_pc.k_bet.k_money_limit",
+        "money_limit2": "ty_pc.k_bet.k_money_limit2",
+        "msg01": "ty_pc.k_bet.k_msg01",
+        "msg02": "ty_pc.k_bet.k_msg02",
+        "msg03": "ty_pc.k_bet.k_msg03",
+        "msg04": "ty_pc.k_bet.k_msg04",
+        "msg05": "ty_pc.k_bet.k_msg05",
+        "msg06": "ty_pc.k_bet.k_msg06",
+        "msg07": "ty_pc.k_bet.k_msg07",
+        "msg08": "ty_pc.k_bet.k_msg08",
+        "msg09": "ty_pc.k_bet.k_msg09",
+        "msg10": "ty_pc.k_bet.k_msg10",
+        "msg11": "ty_pc.k_bet.k_msg11",
+        "msg12": "ty_pc.k_bet.k_msg12",
+        "msg13": "ty_pc.k_bet.k_msg13",
+        "number_transactions": "ty_pc.k_bet.k_number_transactions",
+        "odd_upd": "ty_pc.k_bet.k_odd_upd",
+        "odd_upd_": "ty_pc.k_bet.k_odd_upd_",
+        "odd_upd_2": "ty_pc.k_bet.k_odd_upd_2",
+        "odd_upded": "ty_pc.k_bet.k_odd_upded",
+        "order_no": "ty_pc.k_bet.k_order_no",
+        "pack_up": "ty_pc.k_bet.k_pack_up",
+        "pack_up2": "ty_pc.k_bet.k_pack_up2",
+        "save": "ty_pc.k_bet.k_save",
+        "single_more": "ty_pc.k_bet.k_single_more",
+        "submitted_successfully": "ty_pc.k_bet.k_submitted_successfully",
+        "sum": "ty_pc.k_bet.k_sum",
+        "sum2": "ty_pc.k_bet.k_sum2",
+        "total": "ty_pc.k_bet.k_total",
+        "total_win": "ty_pc.k_bet.k_total_win",
+        "total_win2": "ty_pc.k_bet.k_total_win2",
+        "understand": "ty_pc.k_bet.k_understand",
+        "used_money2": "ty_pc.k_bet.k_used_money2",
+        "wan": "ty_pc.k_bet.k_wan",
+        "wanwan": "ty_pc.k_bet.k_wanwan",
+        "wanyi": "ty_pc.k_bet.k_wanyi",
+        "total_bet": "ty_pc.k_bet.k_total_bet",
+        "total_income": "ty_pc.k_bet.k_total_income",
+        "bet_retract": "ty_pc.k_bet.k_bet_retract",
+        "bet_inplay": "ty_pc.k_bet.k_bet_inplay",
+        "bet_limit": "ty_pc.k_bet.k_bet_limit",
+        "error_message": "ty_pc.k_bet.k_error_message",
+        "bet_min_item": "ty_pc.k_bet.k_bet_min_item",
+        "bet_max_item": "ty_pc.k_bet.k_bet_max_item",
+        "bet_auto_msg_1": "ty_pc.k_bet.k_bet_auto_msg_1",
+        "bet_merge": "ty_pc.k_bet.k_bet_merge",
+        "bet_booked": "ty_pc.k_bet.k_bet_booked",
+        "bet_book_failed": "ty_pc.k_bet.k_bet_book_failed",
+        "bet_booking": "ty_pc.k_bet.k_bet_booking",
+        "bet_process": "ty_pc.k_bet.k_bet_process",
+        "bet_book_valid": "ty_pc.k_bet.k_bet_book_valid",
+        "bet_book_confirm": "ty_pc.k_bet.k_bet_book_confirm"
+    },
+    "bet_message": {
+        "success": "ty_pc.k_bet_message.k_success",
+        "error": "ty_pc.k_bet_message.k_error",
+        "loading": "ty_pc.k_bet_message.k_loading",
+        "m_0402001": "ty_pc.k_bet_message.k_m_0402001",
+        "m_0402009": "ty_pc.k_bet_message.k_m_0402009",
+        "m_0402014": "ty_pc.k_bet_message.k_m_0402014",
+        "m_0402015": "ty_pc.k_bet_message.k_m_0402015",
+        "m_0402018": "ty_pc.k_bet_message.k_m_0402018",
+        "m_132113": "ty_pc.k_bet_message.k_m_132113",
+        "m_0402035": "ty_pc.k_bet_message.k_m_0402035",
+        "m_0402042": "ty_pc.k_bet_message.k_m_0402042",
+        "m_0400453": "ty_pc.k_bet_message.k_m_0400453",
+        "m_0400459": "ty_pc.k_bet_message.k_m_0400459",
+        "m_0400460": "ty_pc.k_bet_message.k_m_0400460",
+        "m_0400464": "ty_pc.k_bet_message.k_m_0400464",
+        "m_0400468": "ty_pc.k_bet_message.k_m_0400468",
+        "m_0400469": "ty_pc.k_bet_message.k_m_0400469",
+        "m_M400005": "ty_pc.k_bet_message.k_m_M400005",
+        "m_M400007": "ty_pc.k_bet_message.k_m_M400007",
+        "m_M400009": "ty_pc.k_bet_message.k_m_M400009",
+        "m_M400010": "ty_pc.k_bet_message.k_m_M400010",
+        "m_M400011": "ty_pc.k_bet_message.k_m_M400011",
+        "m_M400012": "ty_pc.k_bet_message.k_m_M400012",
+        "m_0401038": "ty_pc.k_bet_message.k_m_0401038",
+        "m_DJ001": "ty_pc.k_bet_message.k_m_DJ001",
+        "m_DJ003": "ty_pc.k_bet_message.k_m_DJ003",
+        "m_DJ004": "ty_pc.k_bet_message.k_m_DJ004",
+        "m_DJ005": "ty_pc.k_bet_message.k_m_DJ005"
+    },
+    "bet_record": {
+        "30day": "ty_pc.k_bet_record.k_30day",
+        "7day": "ty_pc.k_bet_record.k_7day",
+        "account": "ty_pc.k_bet_record.k_account",
+        "before": "ty_pc.k_bet_record.k_before",
+        "bet_amount_betting_limit": "ty_pc.k_bet_record.k_bet_amount_betting_limit",
+        "bet_amount_betting_limit2": "ty_pc.k_bet_record.k_bet_amount_betting_limit2",
+        "bet_date_list": [
+            "ty_pc.k_bet_record.k_bet_date_list.k_0",
+            "ty_pc.k_bet_record.k_bet_date_list.k_1",
+            "ty_pc.k_bet_record.k_bet_date_list.k_2",
+            "ty_pc.k_bet_record.k_bet_date_list.k_3"
+        ],
+        "bet_enble_list": "ty_pc.k_bet_record.k_bet_enble_list",
+        "bet_fail": "ty_pc.k_bet_record.k_bet_fail",
+        "bet_match_tishi": "ty_pc.k_bet_record.k_bet_match_tishi",
+        "bet_max_win": "ty_pc.k_bet_record.k_bet_max_win",
+        "bet_no": "ty_pc.k_bet_record.k_bet_no",
+        "bet_no_status00": "ty_pc.k_bet_record.k_bet_no_status00",
+        "bet_no_status02": "ty_pc.k_bet_record.k_bet_no_status02",
+        "bet_no_status03": "ty_pc.k_bet_record.k_bet_no_status03",
+        "bet_no_status04": "ty_pc.k_bet_record.k_bet_no_status04",
+        "bet_no_status05": "ty_pc.k_bet_record.k_bet_no_status05",
+        "bet_no_status06": "ty_pc.k_bet_record.k_bet_no_status06",
+        "bet_no_status07": "ty_pc.k_bet_record.k_bet_no_status07",
+        "bet_no_status08": "ty_pc.k_bet_record.k_bet_no_status08",
+        "bet_no_status11": "ty_pc.k_bet_record.k_bet_no_status11",
+        "bet_no_status12": "ty_pc.k_bet_record.k_bet_no_status12",
+        "bet_no_status15": "ty_pc.k_bet_record.k_bet_no_status15",
+        "bet_no_status16": "ty_pc.k_bet_record.k_bet_no_status16",
+        "bet_no_status17": "ty_pc.k_bet_record.k_bet_no_status17",
+        "bet_refund": "ty_pc.k_bet_record.k_bet_refund",
+        "bet_sum_count": "ty_pc.k_bet_record.k_bet_sum_count",
+        "bet_sum_val": "ty_pc.k_bet_record.k_bet_sum_val",
+        "bet_suopan_info": "ty_pc.k_bet_record.k_bet_suopan_info",
+        "bet_time": "ty_pc.k_bet_record.k_bet_time",
+        "bet_pre_time": "ty_pc.k_bet_record.k_bet_pre_time",
+        "settle_time": "ty_pc.k_bet_record.k_settle_time",
+        "time": "ty_pc.k_bet_record.k_time",
+        "bet_val": "ty_pc.k_bet_record.k_bet_val",
+        "bet_val2": "ty_pc.k_bet_record.k_bet_val2",
+        "bet_win": "ty_pc.k_bet_record.k_bet_win",
+        "betted_title": "ty_pc.k_bet_record.k_betted_title",
+        "cancel_type_1": "ty_pc.k_bet_record.k_cancel_type_1",
+        "cancel_type_17": "ty_pc.k_bet_record.k_cancel_type_17",
+        "cancel_type_2": "ty_pc.k_bet_record.k_cancel_type_2",
+        "cancel_type_20": "ty_pc.k_bet_record.k_cancel_type_20",
+        "cancel_type_3": "ty_pc.k_bet_record.k_cancel_type_3",
+        "cancel_type_4": "ty_pc.k_bet_record.k_cancel_type_4",
+        "cancel_type_5": "ty_pc.k_bet_record.k_cancel_type_5",
+        "cancel_type_6": "ty_pc.k_bet_record.k_cancel_type_6",
+        "confirming": "ty_pc.k_bet_record.k_confirming",
+        "copy_suc": "ty_pc.k_bet_record.k_copy_suc",
+        "go_back": "ty_pc.k_bet_record.k_go_back",
+        "ing": "ty_pc.k_bet_record.k_ing",
+        "invalid": "ty_pc.k_bet_record.k_invalid",
+        "invalid_bet": "ty_pc.k_bet_record.k_invalid_bet",
+        "no_account": "ty_pc.k_bet_record.k_no_account",
+        "pack_down": "ty_pc.k_bet_record.k_pack_down",
+        "pack_up": "ty_pc.k_bet_record.k_pack_up",
+        "sort0": "ty_pc.k_bet_record.k_sort0",
+        "sort1": "ty_pc.k_bet_record.k_sort1",
+        "sort2": "ty_pc.k_bet_record.k_sort2",
+        "sort3": "ty_pc.k_bet_record.k_sort3",
+        "sort4": "ty_pc.k_bet_record.k_sort4",
+        "sort5": "ty_pc.k_bet_record.k_sort5",
+        "submitting_bet": "ty_pc.k_bet_record.k_submitting_bet",
+        "successful_betting": "ty_pc.k_bet_record.k_successful_betting",
+        "total_bet_amount": "ty_pc.k_bet_record.k_total_bet_amount",
+        "total_winable_amount": "ty_pc.k_bet_record.k_total_winable_amount",
+        "result_score": "ty_pc.k_bet_record.k_result_score",
+        "number": "ty_pc.k_bet_record.k_number",
+        "bet": "ty_pc.k_bet_record.k_bet",
+        "l/w": "ty_pc.k_bet_record.k_l/w",
+        "score_result": "ty_pc.k_bet_record.k_score_result"
+    },
+    "pre_record": {
+        "book_one": "ty_pc.k_pre_record.k_book_one",
+        "book": "ty_pc.k_pre_record.k_book",
+        "booked": "ty_pc.k_pre_record.k_booked",
+        "booked_fail": "ty_pc.k_pre_record.k_booked_fail",
+        "booking": "ty_pc.k_pre_record.k_booking",
+        "processing": "ty_pc.k_pre_record.k_processing",
+        "expired": "ty_pc.k_pre_record.k_expired",
+        "ConfirmedBooking": "ty_pc.k_pre_record.k_ConfirmedBooking",
+        "canceled": "ty_pc.k_pre_record.k_canceled",
+        "handicap": "ty_pc.k_pre_record.k_handicap",
+        "odds": "ty_pc.k_pre_record.k_odds",
+        "book_bet_amount": "ty_pc.k_pre_record.k_book_bet_amount",
+        "confirm_cancle": "ty_pc.k_pre_record.k_confirm_cancle",
+        "confirm_matchinfo": "ty_pc.k_pre_record.k_confirm_matchinfo",
+        "cancle_fail_tips": "ty_pc.k_pre_record.k_cancle_fail_tips",
+        "cancle_fail_tips2": "ty_pc.k_pre_record.k_cancle_fail_tips2",
+        "market_error_info": "ty_pc.k_pre_record.k_market_error_info",
+        "market_error_info_max": "ty_pc.k_pre_record.k_market_error_info_max",
+        "market_error_info_low": "ty_pc.k_pre_record.k_market_error_info_low"
+    },
+    "collect": {
+        "betted_title": "ty_pc.k_collect.k_betted_title",
+        "historical_record": "ty_pc.k_collect.k_historical_record",
+        "match_end": "ty_pc.k_collect.k_match_end",
+        "match_no": "ty_pc.k_collect.k_match_no"
+    },
+    "common": {
+        "e_sports": "ty_pc.k_common.k_e_sports",
+        "edit": "ty_pc.k_common.k_edit",
+        "temporarily_unavailable": "ty_pc.k_common.k_temporarily_unavailable",
+        "in_box": "ty_pc.k_common.k_in_box",
+        "please_refresh": "ty_pc.k_common.k_please_refresh",
+        "all_notice": "ty_pc.k_common.k_all_notice",
+        "all_select": "ty_pc.k_common.k_all_select",
+        "analysis": "ty_pc.k_common.k_analysis",
+        "bet": "ty_pc.k_common.k_bet",
+        "cancel": "ty_pc.k_common.k_cancel",
+        "close": "ty_pc.k_common.k_close",
+        "finish": "ty_pc.k_common.k_finish",
+        "hengping_tip": "ty_pc.k_common.k_hengping_tip",
+        "loading_suc": "ty_pc.k_common.k_loading_suc",
+        "maintenance_tips": "ty_pc.k_common.k_maintenance_tips",
+        "match_time": "ty_pc.k_common.k_match_time",
+        "mix": "ty_pc.k_common.k_mix",
+        "money": "ty_pc.k_common.k_money",
+        "no_data": "ty_pc.k_common.k_no_data",
+        "no_network": "ty_pc.k_common.k_no_network",
+        "notice": "ty_pc.k_common.k_notice",
+        "ok": "ty_pc.k_common.k_ok",
+        "on": "ty_pc.k_common.k_on",
+        "rule_description": "ty_pc.k_common.k_rule_description",
+        "show_more": "ty_pc.k_common.k_show_more",
+        "show_more2": "ty_pc.k_common.k_show_more2",
+        "single": "ty_pc.k_common.k_single",
+        "title_188": "ty_pc.k_common.k_title_188",
+        "title_panda": "ty_pc.k_common.k_title_panda",
+        "under": "ty_pc.k_common.k_under",
+        "unit": "ty_pc.k_common.k_unit",
+        "virtual_sports": "ty_pc.k_common.k_virtual_sports",
+        "auto_close": "ty_pc.k_common.k_auto_close",
+        "HD": "ty_pc.k_common.k_HD",
+        "return": "ty_pc.k_common.k_return",
+        "SD": "ty_pc.k_common.k_SD",
+        "zhuanye": "ty_pc.k_common.k_zhuanye",
+        "xinshou": "ty_pc.k_common.k_xinshou",
+        "gongnengwanshan": "ty_pc.k_common.k_gongnengwanshan",
+        "yemianjianjie": "ty_pc.k_common.k_yemianjianjie",
+        "use": "ty_pc.k_common.k_use",
+        "loading": "ty_pc.k_common.k_loading"
+    },
+    "detail": {
+        "less": "ty_pc.k_detail.k_less",
+        "mins": "ty_pc.k_detail.k_mins",
+        "odd_all_closed": "ty_pc.k_detail.k_odd_all_closed",
+        "odd_closed": "ty_pc.k_detail.k_odd_closed",
+        "no_way_bet": "ty_pc.k_detail.k_no_way_bet",
+        "popular_recommendation": "ty_pc.k_detail.k_popular_recommendation",
+        "non": "ty_pc.k_detail.k_non"
+    },
+    "early": {
+        "btn1": "ty_pc.k_early.k_btn1",
+        "btn2": "ty_pc.k_early.k_btn2",
+        "btn2_1": "ty_pc.k_early.k_btn2_1",
+        "btn2_2": "ty_pc.k_early.k_btn2_2",
+        "btn3": "ty_pc.k_early.k_btn3",
+        "btn4": "ty_pc.k_early.k_btn4",
+        "btn5": "ty_pc.k_early.k_btn5",
+        "info1": "ty_pc.k_early.k_info1",
+        "info2": "ty_pc.k_early.k_info2",
+        "info3": "ty_pc.k_early.k_info3",
+        "info4": "ty_pc.k_early.k_info4",
+        "info6": "ty_pc.k_early.k_info6",
+        "info7": "ty_pc.k_early.k_info7",
+        "info8": "ty_pc.k_early.k_info8",
+        "info9": "ty_pc.k_early.k_info9",
+        "info10": "ty_pc.k_early.k_info10",
+        "list1": "ty_pc.k_early.k_list1",
+        "list2": "ty_pc.k_early.k_list2",
+        "list3": "ty_pc.k_early.k_list3",
+        "list4": "ty_pc.k_early.k_list4",
+        "list5": "ty_pc.k_early.k_list5",
+        "list6": "ty_pc.k_early.k_list6",
+        "list7": "ty_pc.k_early.k_list7",
+        "list8": "ty_pc.k_early.k_list8",
+        "list9": "ty_pc.k_early.k_list9"
+    },
+    "error_msg_info": {
+        "1002": {
+            "client_msg": "ty_pc.k_error_msg_info.k_1002.k_client_msg"
+        },
+        "249203": {
+            "client_msg": "ty_pc.k_error_msg_info.k_249203.k_client_msg"
+        },
+        "249207": {
+            "client_msg": "ty_pc.k_error_msg_info.k_249207.k_client_msg"
+        },
+        "0400545": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0400545.k_client_msg"
+        },
+        "0400544": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0400544.k_client_msg"
+        },
+        "0400543": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0400543.k_client_msg"
+        },
+        "0400542": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0400542.k_client_msg"
+        },
+        "0400540": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0400540.k_client_msg"
+        },
+        "0000000": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0000000.k_client_msg"
+        },
+        "0400450": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0400450.k_client_msg"
+        },
+        "0400451": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0400451.k_client_msg",
+            "tost_msg": "ty_pc.k_error_msg_info.k_0400451.k_tost_msg"
+        },
+        "0400452": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0400452.k_client_msg",
+            "tost_msg": "ty_pc.k_error_msg_info.k_0400452.k_tost_msg"
+        },
+        "0400453": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0400453.k_client_msg"
+        },
+        "0400454": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0400454.k_client_msg"
+        },
+        "0400455": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0400455.k_client_msg"
+        },
+        "0400456": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0400456.k_client_msg"
+        },
+        "0400457": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0400457.k_client_msg"
+        },
+        "0400458": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0400458.k_client_msg"
+        },
+        "0400459": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0400459.k_client_msg"
+        },
+        "0400460": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0400460.k_client_msg"
+        },
+        "0400461": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0400461.k_client_msg",
+            "tost_msg": "ty_pc.k_error_msg_info.k_0400461.k_tost_msg"
+        },
+        "0400462": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0400462.k_client_msg"
+        },
+        "0400463": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0400463.k_client_msg"
+        },
+        "0400464": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0400464.k_client_msg"
+        },
+        "0400467": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0400467.k_client_msg"
+        },
+        "0400468": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0400468.k_client_msg"
+        },
+        "0400469": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0400469.k_client_msg",
+            "tost_msg": "ty_pc.k_error_msg_info.k_0400469.k_tost_msg"
+        },
+        "0400475": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0400475.k_client_msg"
+        },
+        "0400476": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0400476.k_client_msg"
+        },
+        "0400477": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0400477.k_client_msg"
+        },
+        "0400478": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0400478.k_client_msg"
+        },
+        "0400479": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0400479.k_client_msg"
+        },
+        "0400480": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0400480.k_client_msg",
+            "tost_msg": "ty_pc.k_error_msg_info.k_0400480.k_tost_msg"
+        },
+        "0400481": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0400481.k_client_msg",
+            "tost_msg": "ty_pc.k_error_msg_info.k_0400481.k_tost_msg"
+        },
+        "0400483": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0400483.k_client_msg"
+        },
+        "0400484": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0400484.k_client_msg",
+            "tost_msg": "ty_pc.k_error_msg_info.k_0400484.k_tost_msg"
+        },
+        "0400485": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0400485.k_client_msg",
+            "tost_msg": "ty_pc.k_error_msg_info.k_0400485.k_tost_msg"
+        },
+        "0400486": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0400486.k_client_msg"
+        },
+        "0400488": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0400488.k_client_msg",
+            "tost_msg": "ty_pc.k_error_msg_info.k_0400488.k_tost_msg"
+        },
+        "0400517": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0400517.k_client_msg"
+        },
+        "0400519": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0400519.k_client_msg"
+        },
+        "0400532": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0400532.k_client_msg"
+        },
+        "0401999": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0401999.k_client_msg"
+        },
+        "0402001": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0402001.k_client_msg",
+            "tost_msg": "ty_pc.k_error_msg_info.k_0402001.k_tost_msg"
+        },
+        "0402002": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0402002.k_client_msg",
+            "tost_msg": "ty_pc.k_error_msg_info.k_0402002.k_tost_msg"
+        },
+        "0402003": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0402003.k_client_msg",
+            "tost_msg": "ty_pc.k_error_msg_info.k_0402003.k_tost_msg"
+        },
+        "0402004": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0402004.k_client_msg",
+            "tost_msg": "ty_pc.k_error_msg_info.k_0402004.k_tost_msg"
+        },
+        "0402005": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0402005.k_client_msg",
+            "tost_msg": "ty_pc.k_error_msg_info.k_0402005.k_tost_msg"
+        },
+        "0402006": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0402006.k_client_msg",
+            "tost_msg": "ty_pc.k_error_msg_info.k_0402006.k_tost_msg"
+        },
+        "0402007": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0402007.k_client_msg",
+            "tost_msg": "ty_pc.k_error_msg_info.k_0402007.k_tost_msg"
+        },
+        "0402008": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0402008.k_client_msg",
+            "tost_msg": "ty_pc.k_error_msg_info.k_0402008.k_tost_msg"
+        },
+        "0402009": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0402009.k_client_msg",
+            "tost_msg": "ty_pc.k_error_msg_info.k_0402009.k_tost_msg"
+        },
+        "0402010": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0402010.k_client_msg",
+            "tost_msg": "ty_pc.k_error_msg_info.k_0402010.k_tost_msg"
+        },
+        "0402012": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0402012.k_client_msg",
+            "tost_msg": "ty_pc.k_error_msg_info.k_0402012.k_tost_msg"
+        },
+        "0402015": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0402015.k_client_msg"
+        },
+        "0402016": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0402016.k_client_msg",
+            "tost_msg": "ty_pc.k_error_msg_info.k_0402016.k_tost_msg"
+        },
+        "0402017": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0402017.k_client_msg"
+        },
+        "0402018": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0402018.k_client_msg"
+        },
+        "0402020": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0402020.k_client_msg"
+        },
+        "0402021": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0402021.k_client_msg"
+        },
+        "0402022": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0402022.k_client_msg",
+            "tost_msg": "ty_pc.k_error_msg_info.k_0402022.k_tost_msg"
+        },
+        "0402023": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0402023.k_client_msg",
+            "tost_msg": "ty_pc.k_error_msg_info.k_0402023.k_tost_msg"
+        },
+        "0402024": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0402024.k_client_msg",
+            "tost_msg": "ty_pc.k_error_msg_info.k_0402024.k_tost_msg"
+        },
+        "0402025": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0402025.k_client_msg",
+            "tost_msg": "ty_pc.k_error_msg_info.k_0402025.k_tost_msg"
+        },
+        "0402026": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0402026.k_client_msg",
+            "tost_msg": "ty_pc.k_error_msg_info.k_0402026.k_tost_msg"
+        },
+        "0402027": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0402027.k_client_msg",
+            "tost_msg": "ty_pc.k_error_msg_info.k_0402027.k_tost_msg"
+        },
+        "0402035": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0402035.k_client_msg"
+        },
+        "0402038": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0402038.k_client_msg"
+        },
+        "0402039": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0402039.k_client_msg"
+        },
+        "0402040": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0402040.k_client_msg"
+        },
+        "0402041": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0402041.k_client_msg"
+        },
+        "0402042": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0402042.k_client_msg",
+            "tost_msg": "ty_pc.k_error_msg_info.k_0402042.k_tost_msg"
+        },
+        "0402043": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0402043.k_client_msg",
+            "tost_msg": "ty_pc.k_error_msg_info.k_0402043.k_tost_msg"
+        },
+        "0402044": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0402044.k_client_msg",
+            "tost_msg": "ty_pc.k_error_msg_info.k_0402044.k_tost_msg"
+        },
+        "0402045": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0402045.k_client_msg",
+            "tost_msg": "ty_pc.k_error_msg_info.k_0402045.k_tost_msg"
+        },
+        "0402046": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0402046.k_client_msg",
+            "tost_msg": "ty_pc.k_error_msg_info.k_0402046.k_tost_msg"
+        },
+        "0402047": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0402047.k_client_msg",
+            "tost_msg": "ty_pc.k_error_msg_info.k_0402047.k_tost_msg"
+        },
+        "0402048": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0402048.k_client_msg",
+            "tost_msg": "ty_pc.k_error_msg_info.k_0402048.k_tost_msg"
+        },
+        "0402049": {
+            "client_msg": "ty_pc.k_error_msg_info.k_0402049.k_client_msg",
+            "tost_msg": "ty_pc.k_error_msg_info.k_0402049.k_tost_msg"
+        },
+        "04021001": {
+            "client_msg": "ty_pc.k_error_msg_info.k_04021001.k_client_msg"
+        },
+        "04021002": {
+            "client_msg": "ty_pc.k_error_msg_info.k_04021002.k_client_msg"
+        },
+        "04021003": {
+            "client_msg": "ty_pc.k_error_msg_info.k_04021003.k_client_msg"
+        },
+        "04021004": {
+            "client_msg": "ty_pc.k_error_msg_info.k_04021004.k_client_msg"
+        },
+        "04021005": {
+            "client_msg": "ty_pc.k_error_msg_info.k_04021005.k_client_msg"
+        },
+        "04021006": {
+            "client_msg": "ty_pc.k_error_msg_info.k_04021006.k_client_msg"
+        },
+        "04021007": {
+            "client_msg": "ty_pc.k_error_msg_info.k_04021007.k_client_msg"
+        },
+        "04021008": {
+            "client_msg": "ty_pc.k_error_msg_info.k_04021008.k_client_msg"
+        },
+        "04021009": {
+            "client_msg": "ty_pc.k_error_msg_info.k_04021009.k_client_msg"
+        },
+        "04021010": {
+            "client_msg": "ty_pc.k_error_msg_info.k_04021010.k_client_msg"
+        },
+        "04021011": {
+            "client_msg": "ty_pc.k_error_msg_info.k_04021011.k_client_msg"
+        },
+        "04021012": {
+            "client_msg": "ty_pc.k_error_msg_info.k_04021012.k_client_msg"
+        },
+        "04021013": {
+            "client_msg": "ty_pc.k_error_msg_info.k_04021013.k_client_msg"
+        }
+    },
+    "filter": {
+        "all_leagues": "ty_pc.k_filter.k_all_leagues",
+        "match_key": "ty_pc.k_filter.k_match_key",
+        "match_select_title": "ty_pc.k_filter.k_match_select_title",
+        "please_select_league": "ty_pc.k_filter.k_please_select_league",
+        "reverse_election": "ty_pc.k_filter.k_reverse_election"
+    },
+    "football_playing_way": {
+        "hpsBold": "ty_pc.k_football_playing_way.k_hpsBold",
+        "champion": "ty_pc.k_football_playing_way.k_champion",
+        "corner": "ty_pc.k_football_playing_way.k_corner",
+        "hps15Minutes": "ty_pc.k_football_playing_way.k_hps15Minutes",
+        "hps5Minutes": "ty_pc.k_football_playing_way.k_hps5Minutes",
+        "hps_next_goal": "ty_pc.k_football_playing_way.k_hps_next_goal",
+        "hps15_title": [
+            "ty_pc.k_football_playing_way.k_hps15_title.k_0",
+            "ty_pc.k_football_playing_way.k_hps15_title.k_1",
+            "ty_pc.k_football_playing_way.k_hps15_title.k_2",
+            "ty_pc.k_football_playing_way.k_hps15_title.k_3",
+            "ty_pc.k_football_playing_way.k_hps15_title.k_4",
+            "ty_pc.k_football_playing_way.k_hps15_title.k_5"
+        ],
+        "hps_fifteen_minutes_details": [
+            {
+                "title": "ty_pc.k_football_playing_way.k_hps_fifteen_minutes_details.k_0.k_title",
+                "content": "ty_pc.k_football_playing_way.k_hps_fifteen_minutes_details.k_0.k_content"
+            },
+            {
+                "title": "ty_pc.k_football_playing_way.k_hps_fifteen_minutes_details.k_1.k_title",
+                "content": "ty_pc.k_football_playing_way.k_hps_fifteen_minutes_details.k_1.k_content"
+            },
+            {
+                "title": "ty_pc.k_football_playing_way.k_hps_fifteen_minutes_details.k_2.k_title",
+                "content": "ty_pc.k_football_playing_way.k_hps_fifteen_minutes_details.k_2.k_content"
+            },
+            {
+                "title": "ty_pc.k_football_playing_way.k_hps_fifteen_minutes_details.k_3.k_title",
+                "content": "ty_pc.k_football_playing_way.k_hps_fifteen_minutes_details.k_3.k_content"
+            },
+            {
+                "title": "ty_pc.k_football_playing_way.k_hps_fifteen_minutes_details.k_4.k_title",
+                "content": "ty_pc.k_football_playing_way.k_hps_fifteen_minutes_details.k_4.k_content"
+            },
+            {
+                "title": "ty_pc.k_football_playing_way.k_hps_fifteen_minutes_details.k_5.k_title",
+                "content": "ty_pc.k_football_playing_way.k_hps_fifteen_minutes_details.k_5.k_content"
+            }
+        ],
+        "overtime": "ty_pc.k_football_playing_way.k_overtime",
+        "penalty_cards": "ty_pc.k_football_playing_way.k_penalty_cards",
+        "penalty_shootout": "ty_pc.k_football_playing_way.k_penalty_shootout",
+        "promotion": "ty_pc.k_football_playing_way.k_promotion",
+        "full_time_draw": "ty_pc.k_football_playing_way.k_full_time_draw",
+        "half_time_draw": "ty_pc.k_football_playing_way.k_half_time_draw",
+        "minutes_of_the_Xth_goal": "ty_pc.k_football_playing_way.k_minutes_of_the_Xth_goal",
+        "any_goal": "ty_pc.k_football_playing_way.k_any_goal",
+        "feature": "ty_pc.k_football_playing_way.k_feature",
+        "all_both": "ty_pc.k_football_playing_way.k_all_both",
+        "all_total_goal": "ty_pc.k_football_playing_way.k_all_total_goal",
+        "half_both": "ty_pc.k_football_playing_way.k_half_both",
+        "half_total_goal": "ty_pc.k_football_playing_way.k_half_total_goal"
+    },
+    "footer_menu": {
+        "adviser": "ty_pc.k_footer_menu.k_adviser",
+        "all": "ty_pc.k_footer_menu.k_all",
+        "analysis": "ty_pc.k_footer_menu.k_analysis",
+        "bet_model": "ty_pc.k_footer_menu.k_bet_model",
+        "bet_order": "ty_pc.k_footer_menu.k_bet_order",
+        "bet_record": "ty_pc.k_footer_menu.k_bet_record",
+        "change_simple01": "ty_pc.k_footer_menu.k_change_simple01",
+        "change_simple02": "ty_pc.k_footer_menu.k_change_simple02",
+        "collect": "ty_pc.k_footer_menu.k_collect",
+        "corner": "ty_pc.k_footer_menu.k_corner",
+        "corner_kick": "ty_pc.k_footer_menu.k_corner_kick",
+        "daxiao": "ty_pc.k_footer_menu.k_daxiao",
+        "Day_mode": "ty_pc.k_footer_menu.k_Day_mode",
+        "daytime": "ty_pc.k_footer_menu.k_daytime",
+        "filter": "ty_pc.k_footer_menu.k_filter",
+        "follow": "ty_pc.k_footer_menu.k_follow",
+        "full_time": "ty_pc.k_footer_menu.k_full_time",
+        "hot": "ty_pc.k_footer_menu.k_hot",
+        "hot2": "ty_pc.k_footer_menu.k_hot2",
+        "league_filter": "ty_pc.k_footer_menu.k_league_filter",
+        "mode": "ty_pc.k_footer_menu.k_mode",
+        "more": "ty_pc.k_footer_menu.k_more",
+        "new_v": "ty_pc.k_footer_menu.k_new_v",
+        "night": "ty_pc.k_footer_menu.k_night",
+        "night_mode": "ty_pc.k_footer_menu.k_night_mode",
+        "odds_set": "ty_pc.k_footer_menu.k_odds_set",
+        "play_way_f": "ty_pc.k_footer_menu.k_play_way_f",
+        "popular_Sort": "ty_pc.k_footer_menu.k_popular_Sort",
+        "pro_v": "ty_pc.k_footer_menu.k_pro_v",
+        "rangfen": "ty_pc.k_footer_menu.k_rangfen",
+        "rangqiu": "ty_pc.k_footer_menu.k_rangqiu",
+        "refresh": "ty_pc.k_footer_menu.k_refresh",
+        "search": "ty_pc.k_footer_menu.k_search",
+        "selected": "ty_pc.k_footer_menu.k_selected",
+        "set_menu": "ty_pc.k_footer_menu.k_set_menu",
+        "settings": "ty_pc.k_footer_menu.k_settings",
+        "sort_title": "ty_pc.k_footer_menu.k_sort_title",
+        "theme": "ty_pc.k_footer_menu.k_theme",
+        "daily_activities": "ty_pc.k_footer_menu.k_daily_activities",
+        "turn_on": "ty_pc.k_footer_menu.k_turn_on",
+        "time": "ty_pc.k_footer_menu.k_time",
+        "time2": "ty_pc.k_footer_menu.k_time2",
+        "time_order": "ty_pc.k_footer_menu.k_time_order",
+        "win_alone": "ty_pc.k_footer_menu.k_win_alone",
+        "handicap_tutorial": "ty_pc.k_footer_menu.k_handicap_tutorial",
+        "open_bets": "ty_pc.k_footer_menu.k_open_bets",
+        "closed_bets": "ty_pc.k_footer_menu.k_closed_bets"
+    },
+    "home": {
+        "can_bet": "ty_pc.k_home.k_can_bet",
+        "home": "ty_pc.k_home.k_home",
+        "hot": "ty_pc.k_home.k_hot",
+        "invalid_credentials": "ty_pc.k_home.k_invalid_credentials",
+        "lang_en": "ty_pc.k_home.k_lang_en",
+        "lang_zj": "ty_pc.k_home.k_lang_zj",
+        "live_video": "ty_pc.k_home.k_live_video",
+        "login_invalid": "ty_pc.k_home.k_login_invalid",
+        "login_success": "ty_pc.k_home.k_login_success",
+        "match_no_has": "ty_pc.k_home.k_match_no_has",
+        "match_no_hot": "ty_pc.k_home.k_match_no_hot",
+        "my": "ty_pc.k_home.k_my",
+        "no_favorite_events": "ty_pc.k_home.k_no_favorite_events",
+        "record": "ty_pc.k_home.k_record"
+    },
+    "home_popular": {
+        "assist": "ty_pc.k_home_popular.k_assist",
+        "average": "ty_pc.k_home_popular.k_average",
+        "featured": "ty_pc.k_home_popular.k_featured",
+        "featured_events": "ty_pc.k_home_popular.k_featured_events",
+        "player": "ty_pc.k_home_popular.k_player",
+        "quiz": "ty_pc.k_home_popular.k_quiz",
+        "ranking": "ty_pc.k_home_popular.k_ranking",
+        "win_rate": "ty_pc.k_home_popular.k_win_rate",
+        "you_may_also_like": "ty_pc.k_home_popular.k_you_may_also_like"
+    },
+    "info_rules": {
+        "auto": "ty_pc.k_info_rules.k_auto",
+        "i_know": "ty_pc.k_info_rules.k_i_know",
+        "rules": {
+            "rule1": "ty_pc.k_info_rules.k_rules.k_rule1",
+            "rule2": "ty_pc.k_info_rules.k_rules.k_rule2"
+        }
+    },
+    "isoName": "ty_pc.k_isoName",
+    "limit": {
+        "msg1": "ty_pc.k_limit.k_msg1"
+    },
+    "list": {
+        "win1": "ty_pc.k_list.k_win1",
+        "win2": "ty_pc.k_list.k_win2",
+        "play": "ty_pc.k_list.k_play",
+        "play1": "ty_pc.k_list.k_play1",
+        "play2": "ty_pc.k_list.k_play2",
+        "play3": "ty_pc.k_list.k_play3",
+        "dogfall": "ty_pc.k_list.k_dogfall",
+        "home_hdp": "ty_pc.k_list.k_home_hdp",
+        "away_hdp": "ty_pc.k_list.k_away_hdp",
+        "over": "ty_pc.k_list.k_over",
+        "under": "ty_pc.k_list.k_under",
+        "after_time_start": "ty_pc.k_list.k_after_time_start",
+        "after_time_start2": "ty_pc.k_list.k_after_time_start2",
+        "go_to_details": "ty_pc.k_list.k_go_to_details",
+        "match_doing": "ty_pc.k_list.k_match_doing",
+        "match_end": "ty_pc.k_list.k_match_end",
+        "match_no": "ty_pc.k_list.k_match_no",
+        "match_no_start": "ty_pc.k_list.k_match_no_start",
+        "match_start": "ty_pc.k_list.k_match_start",
+        "score-disparity": "ty_pc.k_list.k_score-disparity",
+        "total_play_count": "ty_pc.k_list.k_total_play_count",
+        "total_pp_score_count": "ty_pc.k_list.k_total_pp_score_count",
+        "water_polo_countdown": "ty_pc.k_list.k_water_polo_countdown",
+        "other": "ty_pc.k_list.k_other"
+    },
+    "match_results_title": {
+        "1": {
+            "title": [
+                "ty_pc.k_match_results_title.k_1.k_title.k_0",
+                "ty_pc.k_match_results_title.k_1.k_title.k_1",
+                "ty_pc.k_match_results_title.k_1.k_title.k_2"
+            ]
+        },
+        "2": {
+            "title": [
+                "ty_pc.k_match_results_title.k_2.k_title.k_0",
+                "ty_pc.k_match_results_title.k_2.k_title.k_1",
+                "ty_pc.k_match_results_title.k_2.k_title.k_2"
+            ]
+        }
+    },
+    "list_title": {
+        "1": {
+            "title": [
+                "ty_pc.k_list_title.k_1.k_title.k_0",
+                "ty_pc.k_list_title.k_1.k_title.k_1",
+                "ty_pc.k_list_title.k_1.k_title.k_2",
+                "ty_pc.k_list_title.k_1.k_title.k_3",
+                "ty_pc.k_list_title.k_1.k_title.k_4",
+                "ty_pc.k_list_title.k_1.k_title.k_5"
+            ]
+        },
+        "2": {
+            "title": [
+                "ty_pc.k_list_title.k_2.k_title.k_0",
+                "ty_pc.k_list_title.k_2.k_title.k_1",
+                "ty_pc.k_list_title.k_2.k_title.k_2"
+            ]
+        },
+        "3": {
+            "title": [
+                "ty_pc.k_list_title.k_3.k_title.k_0",
+                "ty_pc.k_list_title.k_3.k_title.k_1",
+                "ty_pc.k_list_title.k_3.k_title.k_2"
+            ]
+        },
+        "4": {
+            "title": [
+                "ty_pc.k_list_title.k_4.k_title.k_0",
+                "ty_pc.k_list_title.k_4.k_title.k_1",
+                "ty_pc.k_list_title.k_4.k_title.k_2"
+            ]
+        },
+        "5": {
+            "title": [
+                "ty_pc.k_list_title.k_5.k_title.k_0",
+                "ty_pc.k_list_title.k_5.k_title.k_1",
+                "ty_pc.k_list_title.k_5.k_title.k_2"
+            ]
+        },
+        "6": {
+            "title": [
+                "ty_pc.k_list_title.k_6.k_title.k_0",
+                "ty_pc.k_list_title.k_6.k_title.k_1",
+                "ty_pc.k_list_title.k_6.k_title.k_2"
+            ]
+        },
+        "7": {
+            "title": [
+                "ty_pc.k_list_title.k_7.k_title.k_0",
+                "ty_pc.k_list_title.k_7.k_title.k_1",
+                "ty_pc.k_list_title.k_7.k_title.k_2"
+            ]
+        },
+        "8": {
+            "title": [
+                "ty_pc.k_list_title.k_8.k_title.k_0",
+                "ty_pc.k_list_title.k_8.k_title.k_1",
+                "ty_pc.k_list_title.k_8.k_title.k_2"
+            ]
+        },
+        "9": {
+            "title": [
+                "ty_pc.k_list_title.k_9.k_title.k_0",
+                "ty_pc.k_list_title.k_9.k_title.k_1",
+                "ty_pc.k_list_title.k_9.k_title.k_2"
+            ]
+        },
+        "10": {
+            "title": [
+                "ty_pc.k_list_title.k_10.k_title.k_0",
+                "ty_pc.k_list_title.k_10.k_title.k_1",
+                "ty_pc.k_list_title.k_10.k_title.k_2"
+            ]
+        },
+        "11": {
+            "title": [
+                "ty_pc.k_list_title.k_11.k_title.k_0",
+                "ty_pc.k_list_title.k_11.k_title.k_1",
+                "ty_pc.k_list_title.k_11.k_title.k_2",
+                "ty_pc.k_list_title.k_11.k_title.k_3",
+                "ty_pc.k_list_title.k_11.k_title.k_4",
+                "ty_pc.k_list_title.k_11.k_title.k_5"
+            ]
+        },
+        "12": {
+            "title": [
+                "ty_pc.k_list_title.k_12.k_title.k_0",
+                "ty_pc.k_list_title.k_12.k_title.k_1"
+            ]
+        },
+        "13": {
+            "title": [
+                "ty_pc.k_list_title.k_13.k_title.k_0",
+                "ty_pc.k_list_title.k_13.k_title.k_1",
+                "ty_pc.k_list_title.k_13.k_title.k_2"
+            ]
+        },
+        "14": {
+            "title": [
+                "ty_pc.k_list_title.k_14.k_title.k_0",
+                "ty_pc.k_list_title.k_14.k_title.k_1",
+                "ty_pc.k_list_title.k_14.k_title.k_2",
+                "ty_pc.k_list_title.k_14.k_title.k_3",
+                "ty_pc.k_list_title.k_14.k_title.k_4",
+                "ty_pc.k_list_title.k_14.k_title.k_5"
+            ]
+        },
+        "15": {
+            "title": [
+                "ty_pc.k_list_title.k_15.k_title.k_0",
+                "ty_pc.k_list_title.k_15.k_title.k_1",
+                "ty_pc.k_list_title.k_15.k_title.k_2",
+                "ty_pc.k_list_title.k_15.k_title.k_3",
+                "ty_pc.k_list_title.k_15.k_title.k_4",
+                "ty_pc.k_list_title.k_15.k_title.k_5"
+            ]
+        },
+        "16": {
+            "title": [
+                "ty_pc.k_list_title.k_16.k_title.k_0",
+                "ty_pc.k_list_title.k_16.k_title.k_1",
+                "ty_pc.k_list_title.k_16.k_title.k_2",
+                "ty_pc.k_list_title.k_16.k_title.k_3",
+                "ty_pc.k_list_title.k_16.k_title.k_4"
+            ]
+        },
+        "100": {
+            "title": [
+                "ty_pc.k_list_title.k_100.k_title.k_0",
+                "ty_pc.k_list_title.k_100.k_title.k_1",
+                "ty_pc.k_list_title.k_100.k_title.k_2"
+            ]
+        },
+        "101": {
+            "title": [
+                "ty_pc.k_list_title.k_101.k_title.k_0",
+                "ty_pc.k_list_title.k_101.k_title.k_1",
+                "ty_pc.k_list_title.k_101.k_title.k_2"
+            ]
+        },
+        "102": {
+            "title": [
+                "ty_pc.k_list_title.k_102.k_title.k_0",
+                "ty_pc.k_list_title.k_102.k_title.k_1",
+                "ty_pc.k_list_title.k_102.k_title.k_2"
+            ]
+        },
+        "103": {
+            "title": [
+                "ty_pc.k_list_title.k_103.k_title.k_0",
+                "ty_pc.k_list_title.k_103.k_title.k_1",
+                "ty_pc.k_list_title.k_103.k_title.k_2"
+            ]
+        },
+        "1001": {
+            "title": [
+                "ty_pc.k_list_title.k_1001.k_title.k_0",
+                "ty_pc.k_list_title.k_1001.k_title.k_1",
+                "ty_pc.k_list_title.k_1001.k_title.k_2"
+            ]
+        },
+        "1004": {
+            "title": [
+                "ty_pc.k_list_title.k_1004.k_title.k_0",
+                "ty_pc.k_list_title.k_1004.k_title.k_1",
+                "ty_pc.k_list_title.k_1004.k_title.k_2",
+                "ty_pc.k_list_title.k_1004.k_title.k_3"
+            ]
+        }
+    },
+    "login": {
+        "err_msg01": "ty_pc.k_login.k_err_msg01",
+        "err_msg02": "ty_pc.k_login.k_err_msg02",
+        "login": "ty_pc.k_login.k_login",
+        "name": "ty_pc.k_login.k_name",
+        "no_login": "ty_pc.k_login.k_no_login",
+        "password": "ty_pc.k_login.k_password",
+        "remember_pwd": "ty_pc.k_login.k_remember_pwd",
+        "shop_code": "ty_pc.k_login.k_shop_code"
+    },
+    "lost": {
+        "msg1": "ty_pc.k_lost.k_msg1",
+        "msg2": "ty_pc.k_lost.k_msg2",
+        "msg3": "ty_pc.k_lost.k_msg3",
+        "msg4": "ty_pc.k_lost.k_msg4",
+        "msg5": "ty_pc.k_lost.k_msg5"
+    },
+    "main_menu": {
+        "my_bet": "ty_pc.k_main_menu.k_my_bet"
+    },
+    "match_info": {
+        "lvs": "ty_pc.k_match_info.k_lvs",
+        "topic": "ty_pc.k_match_info.k_topic",
+        "abandon": "ty_pc.k_match_info.k_abandon",
+        "add": "ty_pc.k_match_info.k_add",
+        "day": "ty_pc.k_match_info.k_day",
+        "all_result": "ty_pc.k_match_info.k_all_result",
+        "animation": "ty_pc.k_match_info.k_animation",
+        "animation_info": "ty_pc.k_match_info.k_animation_info",
+        "ball": "ty_pc.k_match_info.k_ball",
+        "cancel": "ty_pc.k_match_info.k_cancel",
+        "delay": "ty_pc.k_match_info.k_delay",
+        "drawn": "ty_pc.k_match_info.k_drawn",
+        "full": "ty_pc.k_match_info.k_full",
+        "greater": "ty_pc.k_match_info.k_greater",
+        "half": "ty_pc.k_match_info.k_half",
+        "ice_add": "ty_pc.k_match_info.k_ice_add",
+        "interrupt": "ty_pc.k_match_info.k_interrupt",
+        "less": "ty_pc.k_match_info.k_less",
+        "m_anima_not_start": "ty_pc.k_match_info.k_m_anima_not_start",
+        "m_video_not_start": "ty_pc.k_match_info.k_m_video_not_start",
+        "match_colse": "ty_pc.k_match_info.k_match_colse",
+        "match_end": "ty_pc.k_match_info.k_match_end",
+        "match_not_start": "ty_pc.k_match_info.k_match_not_start",
+        "match_over": "ty_pc.k_match_info.k_match_over",
+        "my_bets": "ty_pc.k_match_info.k_my_bets",
+        "no": "ty_pc.k_match_info.k_no",
+        "odds_type_additional": "ty_pc.k_match_info.k_odds_type_additional",
+        "pack_up": "ty_pc.k_match_info.k_pack_up",
+        "pause": "ty_pc.k_match_info.k_pause",
+        "postpone": "ty_pc.k_match_info.k_postpone",
+        "select_event": "ty_pc.k_match_info.k_select_event",
+        "shoot_out": "ty_pc.k_match_info.k_shoot_out",
+        "show_more": "ty_pc.k_match_info.k_show_more",
+        "strike": "ty_pc.k_match_info.k_strike",
+        "strike_out": "ty_pc.k_match_info.k_strike_out",
+        "total_score": "ty_pc.k_match_info.k_total_score",
+        "unknown": "ty_pc.k_match_info.k_unknown",
+        "video": "ty_pc.k_match_info.k_video",
+        "video_info": "ty_pc.k_match_info.k_video_info",
+        "yes": "ty_pc.k_match_info.k_yes",
+        "match_parlay": "ty_pc.k_match_info.k_match_parlay",
+        "no_score_data": "ty_pc.k_match_info.k_no_score_data",
+        "video_live": "ty_pc.k_match_info.k_video_live",
+        "animation_live": "ty_pc.k_match_info.k_animation_live",
+        "match_cancellation": "ty_pc.k_match_info.k_match_cancellation"
+    },
+    "match_main": {
+        "cut_off": "ty_pc.k_match_main.k_cut_off",
+        "Handicap": "ty_pc.k_match_main.k_Handicap",
+        "Rostov_U20": "ty_pc.k_match_main.k_Rostov_U20",
+        "royal_house_Madrid": "ty_pc.k_match_main.k_royal_house_Madrid"
+    },
+    "match_result": {
+        "attack": "ty_pc.k_match_result.k_attack",
+        "ball_possession": "ty_pc.k_match_result.k_ball_possession",
+        "corner": "ty_pc.k_match_result.k_corner",
+        "corner_kick": "ty_pc.k_match_result.k_corner_kick",
+        "dangerous_offense": "ty_pc.k_match_result.k_dangerous_offense",
+        "end_of_regular_season": "ty_pc.k_match_result.k_end_of_regular_season",
+        "event": "ty_pc.k_match_result.k_event",
+        "Field_goal_percentage": "ty_pc.k_match_result.k_Field_goal_percentage",
+        "finish": "ty_pc.k_match_result.k_finish",
+        "Fouls": "ty_pc.k_match_result.k_Fouls",
+        "Free_throw": "ty_pc.k_match_result.k_Free_throw",
+        "Free_throw_percentage": "ty_pc.k_match_result.k_Free_throw_percentage",
+        "goal": "ty_pc.k_match_result.k_goal",
+        "match": "ty_pc.k_match_result.k_match",
+        "match_analysis": "ty_pc.k_match_result.k_match_analysis",
+        "midfield": "ty_pc.k_match_result.k_midfield",
+        "overtime_is_over": "ty_pc.k_match_result.k_overtime_is_over",
+        "own_goals": "ty_pc.k_match_result.k_own_goals",
+        "penalty_kick": "ty_pc.k_match_result.k_penalty_kick",
+        "penalty_kick_ended": "ty_pc.k_match_result.k_penalty_kick_ended",
+        "penalty_missed": "ty_pc.k_match_result.k_penalty_missed",
+        "red_card": "ty_pc.k_match_result.k_red_card",
+        "Remaining_pause": "ty_pc.k_match_result.k_Remaining_pause",
+        "shoot_right": "ty_pc.k_match_result.k_shoot_right",
+        "shot": "ty_pc.k_match_result.k_shot",
+        "shot_off": "ty_pc.k_match_result.k_shot_off",
+        "start": "ty_pc.k_match_result.k_start",
+        "statistics": "ty_pc.k_match_result.k_statistics",
+        "substitution": "ty_pc.k_match_result.k_substitution",
+        "three_point_shooting": "ty_pc.k_match_result.k_three_point_shooting",
+        "Three_pointer": "ty_pc.k_match_result.k_Three_pointer",
+        "Two_pointer": "ty_pc.k_match_result.k_Two_pointer",
+        "which_number": "ty_pc.k_match_result.k_which_number",
+        "yellow_card": "ty_pc.k_match_result.k_yellow_card"
+    },
+    "matchtype": {
+        "1": "ty_pc.k_matchtype.k_1",
+        "2": "ty_pc.k_matchtype.k_2",
+        "3": "ty_pc.k_matchtype.k_3",
+        "4": "ty_pc.k_matchtype.k_4"
+    },
+    "mmp": {
+        "1": {
+            "0": "ty_pc.k_mmp.k_1.k_0",
+            "6": "ty_pc.k_mmp.k_1.k_6",
+            "7": "ty_pc.k_mmp.k_1.k_7",
+            "31": "ty_pc.k_mmp.k_1.k_31",
+            "32": "ty_pc.k_mmp.k_1.k_32",
+            "33": "ty_pc.k_mmp.k_1.k_33",
+            "34": "ty_pc.k_mmp.k_1.k_34",
+            "41": "ty_pc.k_mmp.k_1.k_41",
+            "42": "ty_pc.k_mmp.k_1.k_42",
+            "50": "ty_pc.k_mmp.k_1.k_50",
+            "80": "ty_pc.k_mmp.k_1.k_80",
+            "90": "ty_pc.k_mmp.k_1.k_90",
+            "100": "ty_pc.k_mmp.k_1.k_100",
+            "110": "ty_pc.k_mmp.k_1.k_110",
+            "120": "ty_pc.k_mmp.k_1.k_120",
+            "999": "ty_pc.k_mmp.k_1.k_999"
+        },
+        "2": {
+            "0": "ty_pc.k_mmp.k_2.k_0",
+            "1": "ty_pc.k_mmp.k_2.k_1",
+            "2": "ty_pc.k_mmp.k_2.k_2",
+            "13": "ty_pc.k_mmp.k_2.k_13",
+            "14": "ty_pc.k_mmp.k_2.k_14",
+            "15": "ty_pc.k_mmp.k_2.k_15",
+            "16": "ty_pc.k_mmp.k_2.k_16",
+            "21": "ty_pc.k_mmp.k_2.k_21",
+            "31": "ty_pc.k_mmp.k_2.k_31",
+            "32": "ty_pc.k_mmp.k_2.k_32",
+            "40": "ty_pc.k_mmp.k_2.k_40",
+            "61": "ty_pc.k_mmp.k_2.k_61",
+            "80": "ty_pc.k_mmp.k_2.k_80",
+            "90": "ty_pc.k_mmp.k_2.k_90",
+            "100": "ty_pc.k_mmp.k_2.k_100",
+            "110": "ty_pc.k_mmp.k_2.k_110",
+            "301": "ty_pc.k_mmp.k_2.k_301",
+            "302": "ty_pc.k_mmp.k_2.k_302",
+            "303": "ty_pc.k_mmp.k_2.k_303",
+            "999": "ty_pc.k_mmp.k_2.k_999",
+            "1001": "ty_pc.k_mmp.k_2.k_1001",
+            "1002": "ty_pc.k_mmp.k_2.k_1002",
+            "99999": "ty_pc.k_mmp.k_2.k_99999"
+        },
+        "3": {
+            "0": "ty_pc.k_mmp.k_3.k_0",
+            "80": "ty_pc.k_mmp.k_3.k_80",
+            "90": "ty_pc.k_mmp.k_3.k_90",
+            "100": "ty_pc.k_mmp.k_3.k_100",
+            "401": "ty_pc.k_mmp.k_3.k_401",
+            "402": "ty_pc.k_mmp.k_3.k_402",
+            "403": "ty_pc.k_mmp.k_3.k_403",
+            "404": "ty_pc.k_mmp.k_3.k_404",
+            "405": "ty_pc.k_mmp.k_3.k_405",
+            "406": "ty_pc.k_mmp.k_3.k_406",
+            "407": "ty_pc.k_mmp.k_3.k_407",
+            "408": "ty_pc.k_mmp.k_3.k_408",
+            "409": "ty_pc.k_mmp.k_3.k_409",
+            "410": "ty_pc.k_mmp.k_3.k_410",
+            "411": "ty_pc.k_mmp.k_3.k_411",
+            "412": "ty_pc.k_mmp.k_3.k_412",
+            "413": "ty_pc.k_mmp.k_3.k_413",
+            "414": "ty_pc.k_mmp.k_3.k_414",
+            "415": "ty_pc.k_mmp.k_3.k_415",
+            "416": "ty_pc.k_mmp.k_3.k_416",
+            "417": "ty_pc.k_mmp.k_3.k_417",
+            "418": "ty_pc.k_mmp.k_3.k_418",
+            "421": "ty_pc.k_mmp.k_3.k_421",
+            "422": "ty_pc.k_mmp.k_3.k_422",
+            "423": "ty_pc.k_mmp.k_3.k_423",
+            "424": "ty_pc.k_mmp.k_3.k_424",
+            "425": "ty_pc.k_mmp.k_3.k_425",
+            "426": "ty_pc.k_mmp.k_3.k_426",
+            "427": "ty_pc.k_mmp.k_3.k_427",
+            "428": "ty_pc.k_mmp.k_3.k_428",
+            "429": "ty_pc.k_mmp.k_3.k_429",
+            "430": "ty_pc.k_mmp.k_3.k_430",
+            "431": "ty_pc.k_mmp.k_3.k_431",
+            "432": "ty_pc.k_mmp.k_3.k_432",
+            "433": "ty_pc.k_mmp.k_3.k_433",
+            "434": "ty_pc.k_mmp.k_3.k_434",
+            "435": "ty_pc.k_mmp.k_3.k_435",
+            "436": "ty_pc.k_mmp.k_3.k_436",
+            "437": "ty_pc.k_mmp.k_3.k_437",
+            "438": "ty_pc.k_mmp.k_3.k_438",
+            "999": "ty_pc.k_mmp.k_3.k_999",
+            "41910": "ty_pc.k_mmp.k_3.k_41910",
+            "41911": "ty_pc.k_mmp.k_3.k_41911",
+            "41912": "ty_pc.k_mmp.k_3.k_41912",
+            "41913": "ty_pc.k_mmp.k_3.k_41913",
+            "41914": "ty_pc.k_mmp.k_3.k_41914",
+            "41915": "ty_pc.k_mmp.k_3.k_41915",
+            "41916": "ty_pc.k_mmp.k_3.k_41916",
+            "41917": "ty_pc.k_mmp.k_3.k_41917",
+            "41918": "ty_pc.k_mmp.k_3.k_41918",
+            "41919": "ty_pc.k_mmp.k_3.k_41919",
+            "41920": "ty_pc.k_mmp.k_3.k_41920",
+            "42010": "ty_pc.k_mmp.k_3.k_42010",
+            "42011": "ty_pc.k_mmp.k_3.k_42011",
+            "42012": "ty_pc.k_mmp.k_3.k_42012",
+            "42013": "ty_pc.k_mmp.k_3.k_42013",
+            "42014": "ty_pc.k_mmp.k_3.k_42014",
+            "42015": "ty_pc.k_mmp.k_3.k_42015",
+            "42016": "ty_pc.k_mmp.k_3.k_42016",
+            "42017": "ty_pc.k_mmp.k_3.k_42017",
+            "42018": "ty_pc.k_mmp.k_3.k_42018",
+            "42019": "ty_pc.k_mmp.k_3.k_42019",
+            "42020": "ty_pc.k_mmp.k_3.k_42020",
+            "43810": "ty_pc.k_mmp.k_3.k_43810",
+            "43811": "ty_pc.k_mmp.k_3.k_43811",
+            "43812": "ty_pc.k_mmp.k_3.k_43812",
+            "43813": "ty_pc.k_mmp.k_3.k_43813",
+            "43814": "ty_pc.k_mmp.k_3.k_43814",
+            "43815": "ty_pc.k_mmp.k_3.k_43815",
+            "43816": "ty_pc.k_mmp.k_3.k_43816",
+            "43817": "ty_pc.k_mmp.k_3.k_43817",
+            "43818": "ty_pc.k_mmp.k_3.k_43818",
+            "43819": "ty_pc.k_mmp.k_3.k_43819",
+            "43910": "ty_pc.k_mmp.k_3.k_43910",
+            "43911": "ty_pc.k_mmp.k_3.k_43911",
+            "43912": "ty_pc.k_mmp.k_3.k_43912",
+            "43913": "ty_pc.k_mmp.k_3.k_43913",
+            "43914": "ty_pc.k_mmp.k_3.k_43914",
+            "43915": "ty_pc.k_mmp.k_3.k_43915",
+            "43916": "ty_pc.k_mmp.k_3.k_43916",
+            "43917": "ty_pc.k_mmp.k_3.k_43917",
+            "43918": "ty_pc.k_mmp.k_3.k_43918",
+            "43919": "ty_pc.k_mmp.k_3.k_43919",
+            "43920": "ty_pc.k_mmp.k_3.k_43920",
+            "999_app_h5": "ty_pc.k_mmp.k_3.k_999_app_h5"
+        },
+        "4": {
+            "0": "ty_pc.k_mmp.k_4.k_0",
+            "1": "ty_pc.k_mmp.k_4.k_1",
+            "2": "ty_pc.k_mmp.k_4.k_2",
+            "3": "ty_pc.k_mmp.k_4.k_3",
+            "32": "ty_pc.k_mmp.k_4.k_32",
+            "34": "ty_pc.k_mmp.k_4.k_34",
+            "40": "ty_pc.k_mmp.k_4.k_40",
+            "50": "ty_pc.k_mmp.k_4.k_50",
+            "80": "ty_pc.k_mmp.k_4.k_80",
+            "90": "ty_pc.k_mmp.k_4.k_90",
+            "100": "ty_pc.k_mmp.k_4.k_100",
+            "110": "ty_pc.k_mmp.k_4.k_110",
+            "120": "ty_pc.k_mmp.k_4.k_120",
+            "301": "ty_pc.k_mmp.k_4.k_301",
+            "302": "ty_pc.k_mmp.k_4.k_302",
+            "999": "ty_pc.k_mmp.k_4.k_999"
+        },
+        "5": {
+            "0": "ty_pc.k_mmp.k_5.k_0",
+            "8": "ty_pc.k_mmp.k_5.k_8",
+            "9": "ty_pc.k_mmp.k_5.k_9",
+            "10": "ty_pc.k_mmp.k_5.k_10",
+            "11": "ty_pc.k_mmp.k_5.k_11",
+            "12": "ty_pc.k_mmp.k_5.k_12",
+            "61": "ty_pc.k_mmp.k_5.k_61",
+            "80": "ty_pc.k_mmp.k_5.k_80",
+            "90": "ty_pc.k_mmp.k_5.k_90",
+            "93": "ty_pc.k_mmp.k_5.k_93",
+            "94": "ty_pc.k_mmp.k_5.k_94",
+            "95": "ty_pc.k_mmp.k_5.k_95",
+            "96": "ty_pc.k_mmp.k_5.k_96",
+            "97": "ty_pc.k_mmp.k_5.k_97",
+            "98": "ty_pc.k_mmp.k_5.k_98",
+            "100": "ty_pc.k_mmp.k_5.k_100",
+            "301": "ty_pc.k_mmp.k_5.k_301",
+            "302": "ty_pc.k_mmp.k_5.k_302",
+            "303": "ty_pc.k_mmp.k_5.k_303",
+            "304": "ty_pc.k_mmp.k_5.k_304",
+            "305": "ty_pc.k_mmp.k_5.k_305",
+            "800": "ty_pc.k_mmp.k_5.k_800",
+            "900": "ty_pc.k_mmp.k_5.k_900",
+            "999": "ty_pc.k_mmp.k_5.k_999",
+            "1000": "ty_pc.k_mmp.k_5.k_1000",
+            "1100": "ty_pc.k_mmp.k_5.k_1100",
+            "1200": "ty_pc.k_mmp.k_5.k_1200"
+        },
+        "6": {
+            "0": "ty_pc.k_mmp.k_6.k_0",
+            "13": "ty_pc.k_mmp.k_6.k_13",
+            "14": "ty_pc.k_mmp.k_6.k_14",
+            "15": "ty_pc.k_mmp.k_6.k_15",
+            "16": "ty_pc.k_mmp.k_6.k_16",
+            "32": "ty_pc.k_mmp.k_6.k_32",
+            "40": "ty_pc.k_mmp.k_6.k_40",
+            "80": "ty_pc.k_mmp.k_6.k_80",
+            "90": "ty_pc.k_mmp.k_6.k_90",
+            "100": "ty_pc.k_mmp.k_6.k_100",
+            "110": "ty_pc.k_mmp.k_6.k_110",
+            "301": "ty_pc.k_mmp.k_6.k_301",
+            "302": "ty_pc.k_mmp.k_6.k_302",
+            "303": "ty_pc.k_mmp.k_6.k_303",
+            "999": "ty_pc.k_mmp.k_6.k_999"
+        },
+        "7": {
+            "0": "ty_pc.k_mmp.k_7.k_0",
+            "21": "ty_pc.k_mmp.k_7.k_21",
+            "30": "ty_pc.k_mmp.k_7.k_30",
+            "61": "ty_pc.k_mmp.k_7.k_61",
+            "80": "ty_pc.k_mmp.k_7.k_80",
+            "90": "ty_pc.k_mmp.k_7.k_90",
+            "93": "ty_pc.k_mmp.k_7.k_93",
+            "94": "ty_pc.k_mmp.k_7.k_94",
+            "95": "ty_pc.k_mmp.k_7.k_95",
+            "96": "ty_pc.k_mmp.k_7.k_96",
+            "97": "ty_pc.k_mmp.k_7.k_97",
+            "98": "ty_pc.k_mmp.k_7.k_98",
+            "100": "ty_pc.k_mmp.k_7.k_100",
+            "419": "ty_pc.k_mmp.k_7.k_419",
+            "420": "ty_pc.k_mmp.k_7.k_420",
+            "439": "ty_pc.k_mmp.k_7.k_439",
+            "445": "ty_pc.k_mmp.k_7.k_445",
+            "999": "ty_pc.k_mmp.k_7.k_999",
+            "x": "ty_pc.k_mmp.k_7.k_x"
+        },
+        "8": {
+            "0": "ty_pc.k_mmp.k_8.k_0",
+            "8": "ty_pc.k_mmp.k_8.k_8",
+            "9": "ty_pc.k_mmp.k_8.k_9",
+            "10": "ty_pc.k_mmp.k_8.k_10",
+            "11": "ty_pc.k_mmp.k_8.k_11",
+            "12": "ty_pc.k_mmp.k_8.k_12",
+            "61": "ty_pc.k_mmp.k_8.k_61",
+            "80": "ty_pc.k_mmp.k_8.k_80",
+            "90": "ty_pc.k_mmp.k_8.k_90",
+            "93": "ty_pc.k_mmp.k_8.k_93",
+            "94": "ty_pc.k_mmp.k_8.k_94",
+            "95": "ty_pc.k_mmp.k_8.k_95",
+            "96": "ty_pc.k_mmp.k_8.k_96",
+            "97": "ty_pc.k_mmp.k_8.k_97",
+            "98": "ty_pc.k_mmp.k_8.k_98",
+            "100": "ty_pc.k_mmp.k_8.k_100",
+            "301": "ty_pc.k_mmp.k_8.k_301",
+            "302": "ty_pc.k_mmp.k_8.k_302",
+            "303": "ty_pc.k_mmp.k_8.k_303",
+            "304": "ty_pc.k_mmp.k_8.k_304",
+            "305": "ty_pc.k_mmp.k_8.k_305",
+            "306": "ty_pc.k_mmp.k_8.k_306",
+            "441": "ty_pc.k_mmp.k_8.k_441",
+            "442": "ty_pc.k_mmp.k_8.k_442",
+            "999": "ty_pc.k_mmp.k_8.k_999"
+        },
+        "9": {
+            "0": "ty_pc.k_mmp.k_9.k_0",
+            "8": "ty_pc.k_mmp.k_9.k_8",
+            "9": "ty_pc.k_mmp.k_9.k_9",
+            "10": "ty_pc.k_mmp.k_9.k_10",
+            "11": "ty_pc.k_mmp.k_9.k_11",
+            "12": "ty_pc.k_mmp.k_9.k_12",
+            "17": "ty_pc.k_mmp.k_9.k_17",
+            "37": "ty_pc.k_mmp.k_9.k_37",
+            "61": "ty_pc.k_mmp.k_9.k_61",
+            "80": "ty_pc.k_mmp.k_9.k_80",
+            "90": "ty_pc.k_mmp.k_9.k_90",
+            "93": "ty_pc.k_mmp.k_9.k_93",
+            "94": "ty_pc.k_mmp.k_9.k_94",
+            "95": "ty_pc.k_mmp.k_9.k_95",
+            "96": "ty_pc.k_mmp.k_9.k_96",
+            "100": "ty_pc.k_mmp.k_9.k_100",
+            "130": "ty_pc.k_mmp.k_9.k_130",
+            "301": "ty_pc.k_mmp.k_9.k_301",
+            "302": "ty_pc.k_mmp.k_9.k_302",
+            "303": "ty_pc.k_mmp.k_9.k_303",
+            "304": "ty_pc.k_mmp.k_9.k_304",
+            "305": "ty_pc.k_mmp.k_9.k_305",
+            "306": "ty_pc.k_mmp.k_9.k_306",
+            "441": "ty_pc.k_mmp.k_9.k_441",
+            "442": "ty_pc.k_mmp.k_9.k_442",
+            "999": "ty_pc.k_mmp.k_9.k_999"
+        },
+        "10": {
+            "0": "ty_pc.k_mmp.k_10.k_0",
+            "8": "ty_pc.k_mmp.k_10.k_8",
+            "9": "ty_pc.k_mmp.k_10.k_9",
+            "10": "ty_pc.k_mmp.k_10.k_10",
+            "11": "ty_pc.k_mmp.k_10.k_11",
+            "12": "ty_pc.k_mmp.k_10.k_12",
+            "61": "ty_pc.k_mmp.k_10.k_61",
+            "80": "ty_pc.k_mmp.k_10.k_80",
+            "90": "ty_pc.k_mmp.k_10.k_90",
+            "93": "ty_pc.k_mmp.k_10.k_93",
+            "94": "ty_pc.k_mmp.k_10.k_94",
+            "95": "ty_pc.k_mmp.k_10.k_95",
+            "96": "ty_pc.k_mmp.k_10.k_96",
+            "97": "ty_pc.k_mmp.k_10.k_97",
+            "98": "ty_pc.k_mmp.k_10.k_98",
+            "100": "ty_pc.k_mmp.k_10.k_100",
+            "301": "ty_pc.k_mmp.k_10.k_301",
+            "302": "ty_pc.k_mmp.k_10.k_302",
+            "303": "ty_pc.k_mmp.k_10.k_303",
+            "304": "ty_pc.k_mmp.k_10.k_304",
+            "999": "ty_pc.k_mmp.k_10.k_999"
+        },
+        "11": {
+            "0": "ty_pc.k_mmp.k_11.k_0",
+            "6": "ty_pc.k_mmp.k_11.k_6",
+            "7": "ty_pc.k_mmp.k_11.k_7",
+            "31": "ty_pc.k_mmp.k_11.k_31",
+            "32": "ty_pc.k_mmp.k_11.k_32",
+            "33": "ty_pc.k_mmp.k_11.k_33",
+            "34": "ty_pc.k_mmp.k_11.k_34",
+            "41": "ty_pc.k_mmp.k_11.k_41",
+            "42": "ty_pc.k_mmp.k_11.k_42",
+            "50": "ty_pc.k_mmp.k_11.k_50",
+            "80": "ty_pc.k_mmp.k_11.k_80",
+            "90": "ty_pc.k_mmp.k_11.k_90",
+            "100": "ty_pc.k_mmp.k_11.k_100",
+            "110": "ty_pc.k_mmp.k_11.k_110",
+            "120": "ty_pc.k_mmp.k_11.k_120",
+            "999": "ty_pc.k_mmp.k_11.k_999"
+        },
+        "13": {
+            "0": "ty_pc.k_mmp.k_13.k_0",
+            "8": "ty_pc.k_mmp.k_13.k_8",
+            "9": "ty_pc.k_mmp.k_13.k_9",
+            "10": "ty_pc.k_mmp.k_13.k_10",
+            "11": "ty_pc.k_mmp.k_13.k_11",
+            "12": "ty_pc.k_mmp.k_13.k_12",
+            "17": "ty_pc.k_mmp.k_13.k_17",
+            "37": "ty_pc.k_mmp.k_13.k_37",
+            "61": "ty_pc.k_mmp.k_13.k_61",
+            "80": "ty_pc.k_mmp.k_13.k_80",
+            "90": "ty_pc.k_mmp.k_13.k_90",
+            "93": "ty_pc.k_mmp.k_13.k_93",
+            "94": "ty_pc.k_mmp.k_13.k_94",
+            "95": "ty_pc.k_mmp.k_13.k_95",
+            "96": "ty_pc.k_mmp.k_13.k_96",
+            "100": "ty_pc.k_mmp.k_13.k_100",
+            "130": "ty_pc.k_mmp.k_13.k_130",
+            "301": "ty_pc.k_mmp.k_13.k_301",
+            "302": "ty_pc.k_mmp.k_13.k_302",
+            "303": "ty_pc.k_mmp.k_13.k_303",
+            "304": "ty_pc.k_mmp.k_13.k_304",
+            "305": "ty_pc.k_mmp.k_13.k_305",
+            "306": "ty_pc.k_mmp.k_13.k_306",
+            "441": "ty_pc.k_mmp.k_13.k_441",
+            "442": "ty_pc.k_mmp.k_13.k_442",
+            "999": "ty_pc.k_mmp.k_13.k_999"
+        },
+        "14": {
+            "0": "ty_pc.k_mmp.k_14.k_0",
+            "6": "ty_pc.k_mmp.k_14.k_6",
+            "7": "ty_pc.k_mmp.k_14.k_7",
+            "31": "ty_pc.k_mmp.k_14.k_31",
+            "32": "ty_pc.k_mmp.k_14.k_32",
+            "33": "ty_pc.k_mmp.k_14.k_33",
+            "34": "ty_pc.k_mmp.k_14.k_34",
+            "41": "ty_pc.k_mmp.k_14.k_41",
+            "42": "ty_pc.k_mmp.k_14.k_42",
+            "50": "ty_pc.k_mmp.k_14.k_50",
+            "60": "ty_pc.k_mmp.k_14.k_60",
+            "80": "ty_pc.k_mmp.k_14.k_80",
+            "90": "ty_pc.k_mmp.k_14.k_90",
+            "100": "ty_pc.k_mmp.k_14.k_100",
+            "110": "ty_pc.k_mmp.k_14.k_110",
+            "120": "ty_pc.k_mmp.k_14.k_120",
+            "440": "ty_pc.k_mmp.k_14.k_440",
+            "443": "ty_pc.k_mmp.k_14.k_443",
+            "444": "ty_pc.k_mmp.k_14.k_444",
+            "999": "ty_pc.k_mmp.k_14.k_999"
+        },
+        "15": {
+            "0": "ty_pc.k_mmp.k_15.k_0",
+            "6": "ty_pc.k_mmp.k_15.k_6",
+            "7": "ty_pc.k_mmp.k_15.k_7",
+            "13": "ty_pc.k_mmp.k_15.k_13",
+            "14": "ty_pc.k_mmp.k_15.k_14",
+            "15": "ty_pc.k_mmp.k_15.k_15",
+            "16": "ty_pc.k_mmp.k_15.k_16",
+            "21": "ty_pc.k_mmp.k_15.k_21",
+            "31": "ty_pc.k_mmp.k_15.k_31",
+            "32": "ty_pc.k_mmp.k_15.k_32",
+            "34": "ty_pc.k_mmp.k_15.k_34",
+            "40": "ty_pc.k_mmp.k_15.k_40",
+            "50": "ty_pc.k_mmp.k_15.k_50",
+            "61": "ty_pc.k_mmp.k_15.k_61",
+            "80": "ty_pc.k_mmp.k_15.k_80",
+            "90": "ty_pc.k_mmp.k_15.k_90",
+            "100": "ty_pc.k_mmp.k_15.k_100",
+            "110": "ty_pc.k_mmp.k_15.k_110",
+            "120": "ty_pc.k_mmp.k_15.k_120",
+            "301": "ty_pc.k_mmp.k_15.k_301",
+            "302": "ty_pc.k_mmp.k_15.k_302",
+            "303": "ty_pc.k_mmp.k_15.k_303",
+            "440": "ty_pc.k_mmp.k_15.k_440",
+            "443": "ty_pc.k_mmp.k_15.k_443",
+            "444": "ty_pc.k_mmp.k_15.k_444",
+            "999": "ty_pc.k_mmp.k_15.k_999"
+        },
+        "16": {
+            "0": "ty_pc.k_mmp.k_16.k_0",
+            "13": "ty_pc.k_mmp.k_16.k_13",
+            "14": "ty_pc.k_mmp.k_16.k_14",
+            "15": "ty_pc.k_mmp.k_16.k_15",
+            "16": "ty_pc.k_mmp.k_16.k_16",
+            "34": "ty_pc.k_mmp.k_16.k_34",
+            "50": "ty_pc.k_mmp.k_16.k_50",
+            "80": "ty_pc.k_mmp.k_16.k_80",
+            "90": "ty_pc.k_mmp.k_16.k_90",
+            "100": "ty_pc.k_mmp.k_16.k_100",
+            "120": "ty_pc.k_mmp.k_16.k_120",
+            "301": "ty_pc.k_mmp.k_16.k_301",
+            "302": "ty_pc.k_mmp.k_16.k_302",
+            "303": "ty_pc.k_mmp.k_16.k_303",
+            "999": "ty_pc.k_mmp.k_16.k_999"
+        },
+        "100": [
+            "ty_pc.k_mmp.k_100.k_0",
+            "ty_pc.k_mmp.k_100.k_1",
+            "ty_pc.k_mmp.k_100.k_2",
+            "ty_pc.k_mmp.k_100.k_3",
+            "ty_pc.k_mmp.k_100.k_4",
+            "ty_pc.k_mmp.k_100.k_5",
+            "ty_pc.k_mmp.k_100.k_6",
+            "ty_pc.k_mmp.k_100.k_7",
+            "ty_pc.k_mmp.k_100.k_8",
+            "ty_pc.k_mmp.k_100.k_9",
+            "ty_pc.k_mmp.k_100.k_10",
+            "ty_pc.k_mmp.k_100.k_11"
+        ],
+        "101": [
+            "ty_pc.k_mmp.k_101.k_0",
+            "ty_pc.k_mmp.k_101.k_1",
+            "ty_pc.k_mmp.k_101.k_2",
+            "ty_pc.k_mmp.k_101.k_3",
+            "ty_pc.k_mmp.k_101.k_4",
+            "ty_pc.k_mmp.k_101.k_5",
+            "ty_pc.k_mmp.k_101.k_6",
+            "ty_pc.k_mmp.k_101.k_7",
+            "ty_pc.k_mmp.k_101.k_8",
+            "ty_pc.k_mmp.k_101.k_9",
+            "ty_pc.k_mmp.k_101.k_10",
+            "ty_pc.k_mmp.k_101.k_11"
+        ],
+        "102": [
+            "ty_pc.k_mmp.k_102.k_0",
+            "ty_pc.k_mmp.k_102.k_1",
+            "ty_pc.k_mmp.k_102.k_2",
+            "ty_pc.k_mmp.k_102.k_3",
+            "ty_pc.k_mmp.k_102.k_4",
+            "ty_pc.k_mmp.k_102.k_5",
+            "ty_pc.k_mmp.k_102.k_6",
+            "ty_pc.k_mmp.k_102.k_7",
+            "ty_pc.k_mmp.k_102.k_8",
+            "ty_pc.k_mmp.k_102.k_9",
+            "ty_pc.k_mmp.k_102.k_10",
+            "ty_pc.k_mmp.k_102.k_11"
+        ],
+        "103": [
+            "ty_pc.k_mmp.k_103.k_0",
+            "ty_pc.k_mmp.k_103.k_1",
+            "ty_pc.k_mmp.k_103.k_2",
+            "ty_pc.k_mmp.k_103.k_3",
+            "ty_pc.k_mmp.k_103.k_4",
+            "ty_pc.k_mmp.k_103.k_5",
+            "ty_pc.k_mmp.k_103.k_6",
+            "ty_pc.k_mmp.k_103.k_7",
+            "ty_pc.k_mmp.k_103.k_8",
+            "ty_pc.k_mmp.k_103.k_9",
+            "ty_pc.k_mmp.k_103.k_10",
+            "ty_pc.k_mmp.k_103.k_11"
+        ],
+        "eports_scoring": "ty_pc.k_mmp.k_eports_scoring"
+    },
+    "ms": {
+        "0": "ty_pc.k_ms.k_0",
+        "1": "ty_pc.k_ms.k_1",
+        "2": "ty_pc.k_ms.k_2",
+        "3": "ty_pc.k_ms.k_3",
+        "4": "ty_pc.k_ms.k_4",
+        "5": "ty_pc.k_ms.k_5",
+        "6": "ty_pc.k_ms.k_6",
+        "7": "ty_pc.k_ms.k_7",
+        "8": "ty_pc.k_ms.k_8",
+        "9": "ty_pc.k_ms.k_9",
+        "10": "ty_pc.k_ms.k_10",
+        "110": "ty_pc.k_ms.k_110"
+    },
+    "msc": {
+        "S1": "ty_pc.k_msc.k_S1",
+        "S10": "ty_pc.k_msc.k_S10",
+        "S100": "ty_pc.k_msc.k_S100",
+        "S101": "ty_pc.k_msc.k_S101",
+        "S102": "ty_pc.k_msc.k_S102",
+        "S103": "ty_pc.k_msc.k_S103",
+        "S104": "ty_pc.k_msc.k_S104",
+        "S105": "ty_pc.k_msc.k_S105",
+        "S106": "ty_pc.k_msc.k_S106",
+        "S10601": "ty_pc.k_msc.k_S10601",
+        "S10602": "ty_pc.k_msc.k_S10602",
+        "S10603": "ty_pc.k_msc.k_S10603",
+        "S10604": "ty_pc.k_msc.k_S10604",
+        "S10605": "ty_pc.k_msc.k_S10605",
+        "S10606": "ty_pc.k_msc.k_S10606",
+        "S10607": "ty_pc.k_msc.k_S10607",
+        "S107": "ty_pc.k_msc.k_S107",
+        "S108": "ty_pc.k_msc.k_S108",
+        "S109": "ty_pc.k_msc.k_S109",
+        "S10901": "ty_pc.k_msc.k_S10901",
+        "S10902": "ty_pc.k_msc.k_S10902",
+        "S10903": "ty_pc.k_msc.k_S10903",
+        "S10904": "ty_pc.k_msc.k_S10904",
+        "S10906": "ty_pc.k_msc.k_S10906",
+        "S11": "ty_pc.k_msc.k_S11",
+        "S110": "ty_pc.k_msc.k_S110",
+        "S111": "ty_pc.k_msc.k_S111",
+        "S1111": "ty_pc.k_msc.k_S1111",
+        "S113": "ty_pc.k_msc.k_S113",
+        "S114": "ty_pc.k_msc.k_S114",
+        "S115": "ty_pc.k_msc.k_S115",
+        "S116": "ty_pc.k_msc.k_S116",
+        "S117": "ty_pc.k_msc.k_S117",
+        "S118": "ty_pc.k_msc.k_S118",
+        "S119": "ty_pc.k_msc.k_S119",
+        "S12": "ty_pc.k_msc.k_S12",
+        "S120": "ty_pc.k_msc.k_S120",
+        "S121": "ty_pc.k_msc.k_S121",
+        "S122": "ty_pc.k_msc.k_S122",
+        "S123": "ty_pc.k_msc.k_S123",
+        "S124": "ty_pc.k_msc.k_S124",
+        "S125": "ty_pc.k_msc.k_S125",
+        "S126": "ty_pc.k_msc.k_S126",
+        "S127": "ty_pc.k_msc.k_S127",
+        "S128": "ty_pc.k_msc.k_S128",
+        "S129": "ty_pc.k_msc.k_S129",
+        "S13": "ty_pc.k_msc.k_S13",
+        "S130": "ty_pc.k_msc.k_S130",
+        "S131": "ty_pc.k_msc.k_S131",
+        "S132": "ty_pc.k_msc.k_S132",
+        "S133": "ty_pc.k_msc.k_S133",
+        "S134": "ty_pc.k_msc.k_S134",
+        "S135": "ty_pc.k_msc.k_S135",
+        "S136": "ty_pc.k_msc.k_S136",
+        "S137": "ty_pc.k_msc.k_S137",
+        "S138": "ty_pc.k_msc.k_S138",
+        "S139": "ty_pc.k_msc.k_S139",
+        "S14": "ty_pc.k_msc.k_S14",
+        "S140": "ty_pc.k_msc.k_S140",
+        "S141": "ty_pc.k_msc.k_S141",
+        "S142": "ty_pc.k_msc.k_S142",
+        "S143": "ty_pc.k_msc.k_S143",
+        "S144": "ty_pc.k_msc.k_S144",
+        "S145": "ty_pc.k_msc.k_S145",
+        "S146": "ty_pc.k_msc.k_S146",
+        "S147": "ty_pc.k_msc.k_S147",
+        "S148": "ty_pc.k_msc.k_S148",
+        "S149": "ty_pc.k_msc.k_S149",
+        "S15": "ty_pc.k_msc.k_S15",
+        "S150": "ty_pc.k_msc.k_S150",
+        "S151": "ty_pc.k_msc.k_S151",
+        "S152": "ty_pc.k_msc.k_S152",
+        "S153": "ty_pc.k_msc.k_S153",
+        "S154": "ty_pc.k_msc.k_S154",
+        "S155": "ty_pc.k_msc.k_S155",
+        "S156": "ty_pc.k_msc.k_S156",
+        "S157": "ty_pc.k_msc.k_S157",
+        "S158": "ty_pc.k_msc.k_S158",
+        "S159": "ty_pc.k_msc.k_S159",
+        "S16": "ty_pc.k_msc.k_S16",
+        "S17": "ty_pc.k_msc.k_S17",
+        "S170": "ty_pc.k_msc.k_S170",
+        "S18": "ty_pc.k_msc.k_S18",
+        "S19": "ty_pc.k_msc.k_S19",
+        "S190": "ty_pc.k_msc.k_S190",
+        "S191": "ty_pc.k_msc.k_S191",
+        "S2": "ty_pc.k_msc.k_S2",
+        "S20": "ty_pc.k_msc.k_S20",
+        "S200": "ty_pc.k_msc.k_S200",
+        "S201": "ty_pc.k_msc.k_S201",
+        "S202": "ty_pc.k_msc.k_S202",
+        "S21": "ty_pc.k_msc.k_S21",
+        "S22": "ty_pc.k_msc.k_S22",
+        "S23": "ty_pc.k_msc.k_S23",
+        "S24": "ty_pc.k_msc.k_S24",
+        "S25": "ty_pc.k_msc.k_S25",
+        "S26": "ty_pc.k_msc.k_S26",
+        "S27": "ty_pc.k_msc.k_S27",
+        "S28": "ty_pc.k_msc.k_S28",
+        "S29": "ty_pc.k_msc.k_S29",
+        "S3": "ty_pc.k_msc.k_S3",
+        "S30": "ty_pc.k_msc.k_S30",
+        "S3011": "ty_pc.k_msc.k_S3011",
+        "S3012": "ty_pc.k_msc.k_S3012",
+        "S3013": "ty_pc.k_msc.k_S3013",
+        "S3014": "ty_pc.k_msc.k_S3014",
+        "S3015": "ty_pc.k_msc.k_S3015",
+        "S31": "ty_pc.k_msc.k_S31",
+        "S32": "ty_pc.k_msc.k_S32",
+        "S33": "ty_pc.k_msc.k_S33",
+        "S34": "ty_pc.k_msc.k_S34",
+        "S35": "ty_pc.k_msc.k_S35",
+        "S36": "ty_pc.k_msc.k_S36",
+        "S37": "ty_pc.k_msc.k_S37",
+        "S38": "ty_pc.k_msc.k_S38",
+        "S39": "ty_pc.k_msc.k_S39",
+        "S4": "ty_pc.k_msc.k_S4",
+        "S40": "ty_pc.k_msc.k_S40",
+        "S4011": "ty_pc.k_msc.k_S4011",
+        "S4012": "ty_pc.k_msc.k_S4012",
+        "S4013": "ty_pc.k_msc.k_S4013",
+        "S41": "ty_pc.k_msc.k_S41",
+        "S42": "ty_pc.k_msc.k_S42",
+        "S43": "ty_pc.k_msc.k_S43",
+        "S44": "ty_pc.k_msc.k_S44",
+        "S45": "ty_pc.k_msc.k_S45",
+        "S46": "ty_pc.k_msc.k_S46",
+        "S47": "ty_pc.k_msc.k_S47",
+        "S48": "ty_pc.k_msc.k_S48",
+        "S49": "ty_pc.k_msc.k_S49",
+        "S5": "ty_pc.k_msc.k_S5",
+        "S50": "ty_pc.k_msc.k_S50",
+        "S500": "ty_pc.k_msc.k_S500",
+        "S501": "ty_pc.k_msc.k_S501",
+        "S502": "ty_pc.k_msc.k_S502",
+        "S51": "ty_pc.k_msc.k_S51",
+        "S52": "ty_pc.k_msc.k_S52",
+        "S53": "ty_pc.k_msc.k_S53",
+        "S54": "ty_pc.k_msc.k_S54",
+        "S55": "ty_pc.k_msc.k_S55",
+        "S555": "ty_pc.k_msc.k_S555",
+        "S56": "ty_pc.k_msc.k_S56",
+        "S57": "ty_pc.k_msc.k_S57",
+        "S58": "ty_pc.k_msc.k_S58",
+        "S59": "ty_pc.k_msc.k_S59",
+        "S6": "ty_pc.k_msc.k_S6",
+        "S60": "ty_pc.k_msc.k_S60",
+        "S6011": "ty_pc.k_msc.k_S6011",
+        "S6012": "ty_pc.k_msc.k_S6012",
+        "S6014": "ty_pc.k_msc.k_S6014",
+        "S61": "ty_pc.k_msc.k_S61",
+        "S62": "ty_pc.k_msc.k_S62",
+        "S63": "ty_pc.k_msc.k_S63",
+        "S64": "ty_pc.k_msc.k_S64",
+        "S65": "ty_pc.k_msc.k_S65",
+        "S66": "ty_pc.k_msc.k_S66",
+        "S67": "ty_pc.k_msc.k_S67",
+        "S68": "ty_pc.k_msc.k_S68",
+        "S69": "ty_pc.k_msc.k_S69",
+        "S7": "ty_pc.k_msc.k_S7",
+        "S70": "ty_pc.k_msc.k_S70",
+        "S701": "ty_pc.k_msc.k_S701",
+        "S702": "ty_pc.k_msc.k_S702",
+        "S71": "ty_pc.k_msc.k_S71",
+        "S72": "ty_pc.k_msc.k_S72",
+        "S73": "ty_pc.k_msc.k_S73",
+        "S74": "ty_pc.k_msc.k_S74",
+        "S75": "ty_pc.k_msc.k_S75",
+        "S76": "ty_pc.k_msc.k_S76",
+        "S77": "ty_pc.k_msc.k_S77",
+        "S78": "ty_pc.k_msc.k_S78",
+        "S79": "ty_pc.k_msc.k_S79",
+        "S8": "ty_pc.k_msc.k_S8",
+        "S80": "ty_pc.k_msc.k_S80",
+        "S81": "ty_pc.k_msc.k_S81",
+        "S82": "ty_pc.k_msc.k_S82",
+        "S83": "ty_pc.k_msc.k_S83",
+        "S84": "ty_pc.k_msc.k_S84",
+        "S85": "ty_pc.k_msc.k_S85",
+        "S86": "ty_pc.k_msc.k_S86",
+        "S87": "ty_pc.k_msc.k_S87",
+        "S88": "ty_pc.k_msc.k_S88",
+        "S89": "ty_pc.k_msc.k_S89",
+        "S9": "ty_pc.k_msc.k_S9",
+        "S90": "ty_pc.k_msc.k_S90",
+        "S91": "ty_pc.k_msc.k_S91",
+        "S92": "ty_pc.k_msc.k_S92",
+        "S93": "ty_pc.k_msc.k_S93",
+        "S94": "ty_pc.k_msc.k_S94",
+        "S95": "ty_pc.k_msc.k_S95",
+        "S96": "ty_pc.k_msc.k_S96",
+        "S97": "ty_pc.k_msc.k_S97",
+        "S98": "ty_pc.k_msc.k_S98",
+        "S99": "ty_pc.k_msc.k_S99",
+        "S50011": "ty_pc.k_msc.k_S50011",
+        "S50012": "ty_pc.k_msc.k_S50012",
+        "S50013": "ty_pc.k_msc.k_S50013",
+        "S50014": "ty_pc.k_msc.k_S50014",
+        "S50015": "ty_pc.k_msc.k_S50015",
+        "S50016": "ty_pc.k_msc.k_S50016"
+    },
+    "msg": {
+        "msg_nodata_01": "ty_pc.k_msg.k_msg_nodata_01",
+        "msg_nodata_02": "ty_pc.k_msg.k_msg_nodata_02",
+        "msg_nodata_03": "ty_pc.k_msg.k_msg_nodata_03",
+        "msg_nodata_04": "ty_pc.k_msg.k_msg_nodata_04",
+        "msg_nodata_05": "ty_pc.k_msg.k_msg_nodata_05",
+        "msg_nodata_06": "ty_pc.k_msg.k_msg_nodata_06",
+        "msg_nodata_07": "ty_pc.k_msg.k_msg_nodata_07",
+        "msg_nodata_08": "ty_pc.k_msg.k_msg_nodata_08",
+        "msg_nodata_09": "ty_pc.k_msg.k_msg_nodata_09",
+        "msg_nodata_10": "ty_pc.k_msg.k_msg_nodata_10",
+        "msg_nodata_11": "ty_pc.k_msg.k_msg_nodata_11",
+        "msg_nodata_12": "ty_pc.k_msg.k_msg_nodata_12",
+        "msg_nodata_13": "ty_pc.k_msg.k_msg_nodata_13",
+        "msg_nodata_14": "ty_pc.k_msg.k_msg_nodata_14",
+        "msg_nodata_15": "ty_pc.k_msg.k_msg_nodata_15",
+        "msg_nodata_16": "ty_pc.k_msg.k_msg_nodata_16",
+        "msg_nodata_17": "ty_pc.k_msg.k_msg_nodata_17",
+        "msg_nodata_18": "ty_pc.k_msg.k_msg_nodata_18",
+        "msg_nodata_19": "ty_pc.k_msg.k_msg_nodata_19",
+        "msg_nodata_20": "ty_pc.k_msg.k_msg_nodata_20",
+        "msg_nodata_21": "ty_pc.k_msg.k_msg_nodata_21",
+        "msg_nodata_22": "ty_pc.k_msg.k_msg_nodata_22",
+        "msg_nodata_23": "ty_pc.k_msg.k_msg_nodata_23"
+    },
+    "myScroll": {
+        "msg1": "ty_pc.k_myScroll.k_msg1",
+        "msg2": "ty_pc.k_myScroll.k_msg2",
+        "msg3": "ty_pc.k_myScroll.k_msg3",
+        "msg4": "ty_pc.k_myScroll.k_msg4",
+        "msg5": "ty_pc.k_myScroll.k_msg5",
+        "msg6": "ty_pc.k_myScroll.k_msg6",
+        "msg7": "ty_pc.k_myScroll.k_msg7"
+    },
+    "nativeName": "ty_pc.k_nativeName",
+    "odds": {
+        "EU": "ty_pc.k_odds.k_EU",
+        "GB": "ty_pc.k_odds.k_GB",
+        "HK": "ty_pc.k_odds.k_HK",
+        "ID": "ty_pc.k_odds.k_ID",
+        "MY": "ty_pc.k_odds.k_MY",
+        "US": "ty_pc.k_odds.k_US"
+    },
+    "play_way_info": {
+        "1": "ty_pc.k_play_way_info.k_1",
+        "2": "ty_pc.k_play_way_info.k_2",
+        "3": "ty_pc.k_play_way_info.k_3",
+        "4": "ty_pc.k_play_way_info.k_4",
+        "5": "ty_pc.k_play_way_info.k_5",
+        "6": "ty_pc.k_play_way_info.k_6",
+        "17": [
+            {
+                "title": "ty_pc.k_play_way_info.k_17.k_0.k_title",
+                "content": "ty_pc.k_play_way_info.k_17.k_0.k_content"
+            },
+            {
+                "title": "ty_pc.k_play_way_info.k_17.k_1.k_title",
+                "content": "ty_pc.k_play_way_info.k_17.k_1.k_content"
+            },
+            {
+                "title": "ty_pc.k_play_way_info.k_17.k_2.k_title",
+                "content": "ty_pc.k_play_way_info.k_17.k_2.k_content"
+            },
+            {
+                "title": "ty_pc.k_play_way_info.k_17.k_3.k_title",
+                "content": "ty_pc.k_play_way_info.k_17.k_3.k_content"
+            },
+            {
+                "title": "ty_pc.k_play_way_info.k_17.k_4.k_title",
+                "content": "ty_pc.k_play_way_info.k_17.k_4.k_content"
+            },
+            {
+                "title": "ty_pc.k_play_way_info.k_17.k_5.k_title",
+                "content": "ty_pc.k_play_way_info.k_17.k_5.k_content"
+            }
+        ],
+        "19": [
+            {
+                "content": "ty_pc.k_play_way_info.k_19.k_0.k_content",
+                "title": "ty_pc.k_play_way_info.k_19.k_0.k_title"
+            },
+            {
+                "content": "ty_pc.k_play_way_info.k_19.k_1.k_content",
+                "title": "ty_pc.k_play_way_info.k_19.k_1.k_title"
+            },
+            {
+                "content": "ty_pc.k_play_way_info.k_19.k_2.k_content",
+                "title": "ty_pc.k_play_way_info.k_19.k_2.k_title"
+            },
+            {
+                "content": "ty_pc.k_play_way_info.k_19.k_3.k_content",
+                "title": "ty_pc.k_play_way_info.k_19.k_3.k_title"
+            },
+            {
+                "content": "ty_pc.k_play_way_info.k_19.k_4.k_content",
+                "title": "ty_pc.k_play_way_info.k_19.k_4.k_title",
+                "Xth_title": "ty_pc.k_play_way_info.k_19.k_4.k_Xth_title"
+            },
+            {
+                "content": "ty_pc.k_play_way_info.k_19.k_5.k_content",
+                "title": "ty_pc.k_play_way_info.k_19.k_5.k_title"
+            }
+        ]
+    },
+    "rule_description": {
+        "american_football": "ty_pc.k_rule_description.k_american_football",
+        "badminton": "ty_pc.k_rule_description.k_badminton",
+        "baseball": "ty_pc.k_rule_description.k_baseball",
+        "basketball": "ty_pc.k_rule_description.k_basketball",
+        "champion": "ty_pc.k_rule_description.k_champion",
+        "football": "ty_pc.k_rule_description.k_football",
+        "general_rules": "ty_pc.k_rule_description.k_general_rules",
+        "pingpong": "ty_pc.k_rule_description.k_pingpong",
+        "puck": "ty_pc.k_rule_description.k_puck",
+        "Snooker": "ty_pc.k_rule_description.k_Snooker",
+        "tennis": "ty_pc.k_rule_description.k_tennis",
+        "volleyball": "ty_pc.k_rule_description.k_volleyball"
+    },
+    "scroll_wrapper": {
+        "is_footer": "ty_pc.k_scroll_wrapper.k_is_footer",
+        "loding_more": "ty_pc.k_scroll_wrapper.k_loding_more"
+    },
+    "search": {
+        "dogfall": "ty_pc.k_search.k_dogfall",
+        "clear_search_history": "ty_pc.k_search.k_clear_search_history",
+        "hot": "ty_pc.k_search.k_hot",
+        "hot_league": "ty_pc.k_search.k_hot_league",
+        "keyword_is_empty": "ty_pc.k_search.k_keyword_is_empty",
+        "search_history": "ty_pc.k_search.k_search_history",
+        "search_hot": "ty_pc.k_search.k_search_hot",
+        "search_qihao": "ty_pc.k_search.k_search_qihao",
+        "search_title": "ty_pc.k_search.k_search_title",
+        "search_title_bw3": "ty_pc.k_search.k_search_title_bw3"
+    },
+    "setting_menu": {
+        "chan_lan": "ty_pc.k_setting_menu.k_chan_lan",
+        "concise": "ty_pc.k_setting_menu.k_concise",
+        "footer_t_handicap": "ty_pc.k_setting_menu.k_footer_t_handicap",
+        "footer_t_odds": "ty_pc.k_setting_menu.k_footer_t_odds",
+        "footer_t_sort": "ty_pc.k_setting_menu.k_footer_t_sort",
+        "handicap": "ty_pc.k_setting_menu.k_handicap",
+        "lang": "ty_pc.k_setting_menu.k_lang",
+        "league": "ty_pc.k_setting_menu.k_league",
+        "lottery": "ty_pc.k_setting_menu.k_lottery",
+        "newer": "ty_pc.k_setting_menu.k_newer",
+        "newer_s_edt": "ty_pc.k_setting_menu.k_newer_s_edt",
+        "odd_any": "ty_pc.k_setting_menu.k_odd_any",
+        "odd_any2": "ty_pc.k_setting_menu.k_odd_any2",
+        "odd_europe": "ty_pc.k_setting_menu.k_odd_europe",
+        "odd_europe2": "ty_pc.k_setting_menu.k_odd_europe2",
+        "odd_hong_kong": "ty_pc.k_setting_menu.k_odd_hong_kong",
+        "odd_hong_kong2": "ty_pc.k_setting_menu.k_odd_hong_kong2",
+        "odd_optimal": "ty_pc.k_setting_menu.k_odd_optimal",
+        "odd_optimal2": "ty_pc.k_setting_menu.k_odd_optimal2",
+        "prize": "ty_pc.k_setting_menu.k_prize",
+        "rule_description": "ty_pc.k_setting_menu.k_rule_description",
+        "sort": "ty_pc.k_setting_menu.k_sort",
+        "skin": "ty_pc.k_setting_menu.k_skin",
+        "standard": "ty_pc.k_setting_menu.k_standard",
+        "time": "ty_pc.k_setting_menu.k_time",
+        "tutorials": "ty_pc.k_setting_menu.k_tutorials",
+        "version": "ty_pc.k_setting_menu.k_version"
+    },
+    "sport": {
+        "badminton": "ty_pc.k_sport.k_badminton",
+        "basketball": "ty_pc.k_sport.k_basketball",
+        "football": "ty_pc.k_sport.k_football",
+        "pingpong": "ty_pc.k_sport.k_pingpong",
+        "snooker": "ty_pc.k_sport.k_snooker",
+        "tennis": "ty_pc.k_sport.k_tennis"
+    },
+    "menu_itme_name": {
+        "results": "ty_pc.k_menu_itme_name.k_results",
+        "inplay": "ty_pc.k_menu_itme_name.k_inplay",
+        "today": "ty_pc.k_menu_itme_name.k_today",
+        "early": "ty_pc.k_menu_itme_name.k_early",
+        "outher_early": "ty_pc.k_menu_itme_name.k_outher_early",
+        "champion": "ty_pc.k_menu_itme_name.k_champion",
+        "vr": "ty_pc.k_menu_itme_name.k_vr",
+        "lottery": "ty_pc.k_menu_itme_name.k_lottery",
+        "esports": "ty_pc.k_menu_itme_name.k_esports"
+    },
+    "sport2": {
+        "1": "ty_pc.k_sport2.k_1",
+        "2": "ty_pc.k_sport2.k_2",
+        "3": "ty_pc.k_sport2.k_3",
+        "4": "ty_pc.k_sport2.k_4",
+        "5": "ty_pc.k_sport2.k_5",
+        "6": "ty_pc.k_sport2.k_6",
+        "7": "ty_pc.k_sport2.k_7",
+        "8": "ty_pc.k_sport2.k_8",
+        "9": "ty_pc.k_sport2.k_9",
+        "10": "ty_pc.k_sport2.k_10",
+        "11": "ty_pc.k_sport2.k_11",
+        "12": "ty_pc.k_sport2.k_12",
+        "13": "ty_pc.k_sport2.k_13",
+        "14": "ty_pc.k_sport2.k_14",
+        "15": "ty_pc.k_sport2.k_15",
+        "16": "ty_pc.k_sport2.k_16",
+        "17": "ty_pc.k_sport2.k_17",
+        "19": "ty_pc.k_sport2.k_19",
+        "20": "ty_pc.k_sport2.k_20",
+        "21": "ty_pc.k_sport2.k_21",
+        "22": "ty_pc.k_sport2.k_22",
+        "23": "ty_pc.k_sport2.k_23",
+        "24": "ty_pc.k_sport2.k_24",
+        "25": "ty_pc.k_sport2.k_25",
+        "26": "ty_pc.k_sport2.k_26",
+        "27": "ty_pc.k_sport2.k_27",
+        "28": "ty_pc.k_sport2.k_28",
+        "29": "ty_pc.k_sport2.k_29",
+        "30": "ty_pc.k_sport2.k_30",
+        "31": "ty_pc.k_sport2.k_31",
+        "32": "ty_pc.k_sport2.k_32",
+        "33": "ty_pc.k_sport2.k_33",
+        "34": "ty_pc.k_sport2.k_34",
+        "35": "ty_pc.k_sport2.k_35",
+        "36": "ty_pc.k_sport2.k_36",
+        "37": "ty_pc.k_sport2.k_37",
+        "38": "ty_pc.k_sport2.k_38",
+        "39": "ty_pc.k_sport2.k_39",
+        "50": "ty_pc.k_sport2.k_50",
+        "100": "ty_pc.k_sport2.k_100",
+        "101": "ty_pc.k_sport2.k_101",
+        "102": "ty_pc.k_sport2.k_102",
+        "103": "ty_pc.k_sport2.k_103",
+        "1001": "ty_pc.k_sport2.k_1001",
+        "1002": "ty_pc.k_sport2.k_1002",
+        "1004": "ty_pc.k_sport2.k_1004",
+        "1009": "ty_pc.k_sport2.k_1009",
+        "1010": "ty_pc.k_sport2.k_1010",
+        "1011": "ty_pc.k_sport2.k_1011"
+    },
+    "sport_head_play_category": {
+        "1": [
+            "ty_pc.k_sport_head_play_category.k_1.k_0",
+            "ty_pc.k_sport_head_play_category.k_1.k_1",
+            "ty_pc.k_sport_head_play_category.k_1.k_2",
+            "ty_pc.k_sport_head_play_category.k_1.k_3",
+            "ty_pc.k_sport_head_play_category.k_1.k_4",
+            "ty_pc.k_sport_head_play_category.k_1.k_5"
+        ],
+        "2": [
+            "ty_pc.k_sport_head_play_category.k_2.k_0",
+            "ty_pc.k_sport_head_play_category.k_2.k_1",
+            "ty_pc.k_sport_head_play_category.k_2.k_2"
+        ],
+        "3": [
+            "ty_pc.k_sport_head_play_category.k_3.k_0",
+            "ty_pc.k_sport_head_play_category.k_3.k_1",
+            "ty_pc.k_sport_head_play_category.k_3.k_2"
+        ],
+        "4": [
+            "ty_pc.k_sport_head_play_category.k_4.k_0",
+            "ty_pc.k_sport_head_play_category.k_4.k_1",
+            "ty_pc.k_sport_head_play_category.k_4.k_2"
+        ],
+        "5": [
+            "ty_pc.k_sport_head_play_category.k_5.k_0",
+            "ty_pc.k_sport_head_play_category.k_5.k_1",
+            "ty_pc.k_sport_head_play_category.k_5.k_2"
+        ],
+        "6": [
+            "ty_pc.k_sport_head_play_category.k_6.k_0",
+            "ty_pc.k_sport_head_play_category.k_6.k_1",
+            "ty_pc.k_sport_head_play_category.k_6.k_2"
+        ],
+        "7": [
+            "ty_pc.k_sport_head_play_category.k_7.k_0",
+            "ty_pc.k_sport_head_play_category.k_7.k_1"
+        ],
+        "8": [
+            "ty_pc.k_sport_head_play_category.k_8.k_0",
+            "ty_pc.k_sport_head_play_category.k_8.k_1",
+            "ty_pc.k_sport_head_play_category.k_8.k_2"
+        ],
+        "9": [
+            "ty_pc.k_sport_head_play_category.k_9.k_0",
+            "ty_pc.k_sport_head_play_category.k_9.k_1",
+            "ty_pc.k_sport_head_play_category.k_9.k_2"
+        ],
+        "10": [
+            "ty_pc.k_sport_head_play_category.k_10.k_0",
+            "ty_pc.k_sport_head_play_category.k_10.k_1",
+            "ty_pc.k_sport_head_play_category.k_10.k_2"
+        ],
+        "11": [
+            "ty_pc.k_sport_head_play_category.k_11.k_0",
+            "ty_pc.k_sport_head_play_category.k_11.k_1",
+            "ty_pc.k_sport_head_play_category.k_11.k_2",
+            "ty_pc.k_sport_head_play_category.k_11.k_3",
+            "ty_pc.k_sport_head_play_category.k_11.k_4",
+            "ty_pc.k_sport_head_play_category.k_11.k_5"
+        ],
+        "12": [
+            "ty_pc.k_sport_head_play_category.k_12.k_0",
+            "ty_pc.k_sport_head_play_category.k_12.k_1",
+            "ty_pc.k_sport_head_play_category.k_12.k_2",
+            "ty_pc.k_sport_head_play_category.k_12.k_3",
+            "ty_pc.k_sport_head_play_category.k_12.k_4",
+            "ty_pc.k_sport_head_play_category.k_12.k_5"
+        ]
+    },
+    "time": {
+        "monthes": "ty_pc.k_time.k_monthes",
+        "month_1": "ty_pc.k_time.k_month_1",
+        "month_10": "ty_pc.k_time.k_month_10",
+        "month_11": "ty_pc.k_time.k_month_11",
+        "month_12": "ty_pc.k_time.k_month_12",
+        "month_2": "ty_pc.k_time.k_month_2",
+        "month_3": "ty_pc.k_time.k_month_3",
+        "month_4": "ty_pc.k_time.k_month_4",
+        "month_5": "ty_pc.k_time.k_month_5",
+        "month_6": "ty_pc.k_time.k_month_6",
+        "month_7": "ty_pc.k_time.k_month_7",
+        "month_8": "ty_pc.k_time.k_month_8",
+        "month_9": "ty_pc.k_time.k_month_9",
+        "time_date_1": "ty_pc.k_time.k_time_date_1",
+        "time_date_2": "ty_pc.k_time.k_time_date_2",
+        "time_date_3": "ty_pc.k_time.k_time_date_3",
+        "time_date_week": [
+            "ty_pc.k_time.k_time_date_week.k_0",
+            "ty_pc.k_time.k_time_date_week.k_1",
+            "ty_pc.k_time.k_time_date_week.k_2",
+            "ty_pc.k_time.k_time_date_week.k_3",
+            "ty_pc.k_time.k_time_date_week.k_4",
+            "ty_pc.k_time.k_time_date_week.k_5",
+            "ty_pc.k_time.k_time_date_week.k_6"
+        ]
+    },
+    "time2": "ty_pc.k_time2",
+    "time3": "ty_pc.k_time3",
+    "time4": "ty_pc.k_time4",
+    "time5": "ty_pc.k_time5",
+    "time6": "ty_pc.k_time6",
+    "time7": "ty_pc.k_time7",
+    "time8": "ty_pc.k_time8",
+    "time9": "ty_pc.k_time9",
+    "time10": "ty_pc.k_time10",
+    "time11": "ty_pc.k_time11",
+    "tips": {
+        "msg1": "ty_pc.k_tips.k_msg1",
+        "msg2": "ty_pc.k_tips.k_msg2"
+    },
+    "today": "ty_pc.k_today",
+    "token_inv": {
+        "confrim": "ty_pc.k_token_inv.k_confrim",
+        "dear_user": "ty_pc.k_token_inv.k_dear_user",
+        "msg": "ty_pc.k_token_inv.k_msg",
+        "play_happily": "ty_pc.k_token_inv.k_play_happily",
+        "reaccess": "ty_pc.k_token_inv.k_reaccess",
+        "token_dis": "ty_pc.k_token_inv.k_token_dis",
+        "token_landing": "ty_pc.k_token_inv.k_token_landing",
+        "token_no": "ty_pc.k_token_inv.k_token_no",
+        "relanding": "ty_pc.k_token_inv.k_relanding"
+    },
+    "tomorrow": "ty_pc.k_tomorrow",
+    "video": {
+        "after": "ty_pc.k_video.k_after",
+        "change_video": "ty_pc.k_video.k_change_video",
+        "click_on": "ty_pc.k_video.k_click_on",
+        "close": "ty_pc.k_video.k_close",
+        "close_1": "ty_pc.k_video.k_close_1",
+        "close_2": "ty_pc.k_video.k_close_2",
+        "double_click": "ty_pc.k_video.k_double_click",
+        "full_screen_play": "ty_pc.k_video.k_full_screen_play",
+        "lost": "ty_pc.k_video.k_lost",
+        "msg": "ty_pc.k_video.k_msg",
+        "show_hide": "ty_pc.k_video.k_show_hide",
+        "sorry": "ty_pc.k_video.k_sorry",
+        "nohandle": "ty_pc.k_video.k_nohandle",
+        "video_line": "ty_pc.k_video.k_video_line",
+        "novideo1": "ty_pc.k_video.k_novideo1",
+        "novideo2": "ty_pc.k_video.k_novideo2",
+        "novideo3": "ty_pc.k_video.k_novideo3",
+        "novideo4": "ty_pc.k_video.k_novideo4",
+        "novideo5": "ty_pc.k_video.k_novideo5",
+        "novideo6": "ty_pc.k_video.k_novideo6"
+    },
+    "virtual_sports": {
+        "rank": "ty_pc.k_virtual_sports.k_rank",
+        "advance": "ty_pc.k_virtual_sports.k_advance",
+        "champion": "ty_pc.k_virtual_sports.k_champion",
+        "comprehensive_rating": "ty_pc.k_virtual_sports.k_comprehensive_rating",
+        "date_number_title": "ty_pc.k_virtual_sports.k_date_number_title",
+        "FINAL": "ty_pc.k_virtual_sports.k_FINAL",
+        "finals": "ty_pc.k_virtual_sports.k_finals",
+        "game": "ty_pc.k_virtual_sports.k_game",
+        "goal_difference": "ty_pc.k_virtual_sports.k_goal_difference",
+        "group": "ty_pc.k_virtual_sports.k_group",
+        "group_matches": "ty_pc.k_virtual_sports.k_group_matches",
+        "GROUPS": "ty_pc.k_virtual_sports.k_GROUPS",
+        "INGAME": "ty_pc.k_virtual_sports.k_INGAME",
+        "integral": "ty_pc.k_virtual_sports.k_integral",
+        "knockout": "ty_pc.k_virtual_sports.k_knockout",
+        "leaderboard": "ty_pc.k_virtual_sports.k_leaderboard",
+        "legOrder": "ty_pc.k_virtual_sports.k_legOrder",
+        "lose": "ty_pc.k_virtual_sports.k_lose",
+        "match_status": {
+            "0": "ty_pc.k_virtual_sports.k_match_status.k_0",
+            "1": "ty_pc.k_virtual_sports.k_match_status.k_1",
+            "2": "ty_pc.k_virtual_sports.k_match_status.k_2",
+            "ended": "ty_pc.k_virtual_sports.k_match_status.k_ended",
+            "playing": "ty_pc.k_virtual_sports.k_match_status.k_playing",
+            "x_to_ended": "ty_pc.k_virtual_sports.k_match_status.k_x_to_ended"
+        },
+        "matchDay": "ty_pc.k_virtual_sports.k_matchDay",
+        "next_batch_no": "ty_pc.k_virtual_sports.k_next_batch_no",
+        "next_date_no": "ty_pc.k_virtual_sports.k_next_date_no",
+        "no_data": "ty_pc.k_virtual_sports.k_no_data",
+        "PREGAME": "ty_pc.k_virtual_sports.k_PREGAME",
+        "Q16": "ty_pc.k_virtual_sports.k_Q16",
+        "Q4": "ty_pc.k_virtual_sports.k_Q4",
+        "Q8": "ty_pc.k_virtual_sports.k_Q8",
+        "quarter_finals": "ty_pc.k_virtual_sports.k_quarter_finals",
+        "result": [
+            "ty_pc.k_virtual_sports.k_result.k_0",
+            "ty_pc.k_virtual_sports.k_result.k_1",
+            "ty_pc.k_virtual_sports.k_result.k_2",
+            "ty_pc.k_virtual_sports.k_result.k_3",
+            "ty_pc.k_virtual_sports.k_result.k_4",
+            "ty_pc.k_virtual_sports.k_result.k_5",
+            "ty_pc.k_virtual_sports.k_result.k_6"
+        ],
+        "results_last_games": "ty_pc.k_virtual_sports.k_results_last_games",
+        "results_previous": "ty_pc.k_virtual_sports.k_results_previous",
+        "runner_up": "ty_pc.k_virtual_sports.k_runner_up",
+        "SEMIFINAL": "ty_pc.k_virtual_sports.k_SEMIFINAL",
+        "semifinals": "ty_pc.k_virtual_sports.k_semifinals",
+        "show_more": "ty_pc.k_virtual_sports.k_show_more",
+        "team": "ty_pc.k_virtual_sports.k_team",
+        "third_place": "ty_pc.k_virtual_sports.k_third_place",
+        "top_16": "ty_pc.k_virtual_sports.k_top_16",
+        "top_32": "ty_pc.k_virtual_sports.k_top_32",
+        "top_64": "ty_pc.k_virtual_sports.k_top_64",
+        "vitality_performance": "ty_pc.k_virtual_sports.k_vitality_performance",
+        "win_tie_loss": "ty_pc.k_virtual_sports.k_win_tie_loss",
+        "balance": "ty_pc.k_virtual_sports.k_balance",
+        "matching": "ty_pc.k_virtual_sports.k_matching",
+        "show_all_markets": "ty_pc.k_virtual_sports.k_show_all_markets",
+        "match_detail": {
+            "leaderboard": "ty_pc.k_virtual_sports.k_match_detail.k_leaderboard",
+            "historical_results": "ty_pc.k_virtual_sports.k_match_detail.k_historical_results",
+            "bet": "ty_pc.k_virtual_sports.k_match_detail.k_bet"
+        }
+    },
+    "chatroom": {
+        "read_more": "ty_pc.k_chatroom.k_read_more",
+        "post_bet_info1": "ty_pc.k_chatroom.k_post_bet_info1",
+        "input_field_ph1": "ty_pc.k_chatroom.k_input_field_ph1",
+        "post_bet": "ty_pc.k_chatroom.k_post_bet",
+        "betting": "ty_pc.k_chatroom.k_betting",
+        "block_msg_info1": "ty_pc.k_chatroom.k_block_msg_info1",
+        "block_msg_info2": "ty_pc.k_chatroom.k_block_msg_info2",
+        "pop_content1": "ty_pc.k_chatroom.k_pop_content1",
+        "pop_send_hint1": "ty_pc.k_chatroom.k_pop_send_hint1",
+        "pop_send_hint2": "ty_pc.k_chatroom.k_pop_send_hint2",
+        "pop_send_hint3": "ty_pc.k_chatroom.k_pop_send_hint3",
+        "pop_send_hint4": "ty_pc.k_chatroom.k_pop_send_hint4",
+        "pop_send_hint5": "ty_pc.k_chatroom.k_pop_send_hint5",
+        "mute_hint1": "ty_pc.k_chatroom.k_mute_hint1",
+        "mute_hint2": "ty_pc.k_chatroom.k_mute_hint2",
+        "mute_hint3": "ty_pc.k_chatroom.k_mute_hint3",
+        "mute_hint4": "ty_pc.k_chatroom.k_mute_hint4",
+        "mute_hint": {
+            "time": [
+                "ty_pc.k_chatroom.k_mute_hint.k_time.k_0",
+                "ty_pc.k_chatroom.k_mute_hint.k_time.k_1",
+                "ty_pc.k_chatroom.k_mute_hint.k_time.k_2",
+                "ty_pc.k_chatroom.k_mute_hint.k_time.k_3",
+                "ty_pc.k_chatroom.k_mute_hint.k_time.k_4"
+            ],
+            "type": [
+                "ty_pc.k_chatroom.k_mute_hint.k_type.k_0",
+                "ty_pc.k_chatroom.k_mute_hint.k_type.k_1",
+                "ty_pc.k_chatroom.k_mute_hint.k_type.k_2"
+            ]
+        },
+        "follow_bet": "ty_pc.k_chatroom.k_follow_bet",
+        "send_err_hint1": "ty_pc.k_chatroom.k_send_err_hint1",
+        "send_err_hint2": "ty_pc.k_chatroom.k_send_err_hint2",
+        "ban_post_bet": "ty_pc.k_chatroom.k_ban_post_bet",
+        "post_bet_info2": "ty_pc.k_chatroom.k_post_bet_info2",
+        "clear": "ty_pc.k_chatroom.k_clear",
+        "post_bet2": "ty_pc.k_chatroom.k_post_bet2",
+        "bulletin": "ty_pc.k_chatroom.k_bulletin",
+        "room_not_open": "ty_pc.k_chatroom.k_room_not_open",
+        "close": "ty_pc.k_chatroom.k_close"
+    },
+    "new_menu": {
+        "1": "ty_pc.k_new_menu.k_1",
+        "2": "ty_pc.k_new_menu.k_2",
+        "3": "ty_pc.k_new_menu.k_3",
+        "4": "ty_pc.k_new_menu.k_4",
+        "5": "ty_pc.k_new_menu.k_5",
+        "6": "ty_pc.k_new_menu.k_6",
+        "7": "ty_pc.k_new_menu.k_7",
+        "8": "ty_pc.k_new_menu.k_8",
+        "28": "ty_pc.k_new_menu.k_28",
+        "30": "ty_pc.k_new_menu.k_30",
+        "101": "ty_pc.k_new_menu.k_101",
+        "102": "ty_pc.k_new_menu.k_102",
+        "103": "ty_pc.k_new_menu.k_103",
+        "104": "ty_pc.k_new_menu.k_104",
+        "105": "ty_pc.k_new_menu.k_105",
+        "106": "ty_pc.k_new_menu.k_106",
+        "107": "ty_pc.k_new_menu.k_107",
+        "108": "ty_pc.k_new_menu.k_108",
+        "109": "ty_pc.k_new_menu.k_109",
+        "110": "ty_pc.k_new_menu.k_110",
+        "111": "ty_pc.k_new_menu.k_111",
+        "112": "ty_pc.k_new_menu.k_112",
+        "113": "ty_pc.k_new_menu.k_113",
+        "114": "ty_pc.k_new_menu.k_114",
+        "115": "ty_pc.k_new_menu.k_115",
+        "116": "ty_pc.k_new_menu.k_116",
+        "118": "ty_pc.k_new_menu.k_118",
+        "300": "ty_pc.k_new_menu.k_300",
+        "400": "ty_pc.k_new_menu.k_400",
+        "401": "ty_pc.k_new_menu.k_401",
+        "402": "ty_pc.k_new_menu.k_402",
+        "403": "ty_pc.k_new_menu.k_403",
+        "404": "ty_pc.k_new_menu.k_404",
+        "405": "ty_pc.k_new_menu.k_405",
+        "406": "ty_pc.k_new_menu.k_406",
+        "407": "ty_pc.k_new_menu.k_407",
+        "408": "ty_pc.k_new_menu.k_408",
+        "409": "ty_pc.k_new_menu.k_409",
+        "410": "ty_pc.k_new_menu.k_410",
+        "411": "ty_pc.k_new_menu.k_411",
+        "412": "ty_pc.k_new_menu.k_412",
+        "413": "ty_pc.k_new_menu.k_413",
+        "414": "ty_pc.k_new_menu.k_414",
+        "415": "ty_pc.k_new_menu.k_415",
+        "416": "ty_pc.k_new_menu.k_416",
+        "417": "ty_pc.k_new_menu.k_417",
+        "418": "ty_pc.k_new_menu.k_418",
+        "419": "ty_pc.k_new_menu.k_419",
+        "420": "ty_pc.k_new_menu.k_420",
+        "421": "ty_pc.k_new_menu.k_421",
+        "422": "ty_pc.k_new_menu.k_422",
+        "423": "ty_pc.k_new_menu.k_423",
+        "424": "ty_pc.k_new_menu.k_424",
+        "425": "ty_pc.k_new_menu.k_425",
+        "426": "ty_pc.k_new_menu.k_426",
+        "427": "ty_pc.k_new_menu.k_427",
+        "428": "ty_pc.k_new_menu.k_428",
+        "429": "ty_pc.k_new_menu.k_429",
+        "430": "ty_pc.k_new_menu.k_430",
+        "431": "ty_pc.k_new_menu.k_431",
+        "432": "ty_pc.k_new_menu.k_432",
+        "433": "ty_pc.k_new_menu.k_433",
+        "434": "ty_pc.k_new_menu.k_434",
+        "435": "ty_pc.k_new_menu.k_435",
+        "436": "ty_pc.k_new_menu.k_436",
+        "437": "ty_pc.k_new_menu.k_437",
+        "438": "ty_pc.k_new_menu.k_438",
+        "439": "ty_pc.k_new_menu.k_439",
+        "440": "ty_pc.k_new_menu.k_440",
+        "450": "ty_pc.k_new_menu.k_450",
+        "500": "ty_pc.k_new_menu.k_500",
+        "1011": "ty_pc.k_new_menu.k_1011",
+        "1012": "ty_pc.k_new_menu.k_1012",
+        "1013": "ty_pc.k_new_menu.k_1013",
+        "1014": "ty_pc.k_new_menu.k_1014",
+        "1015": "ty_pc.k_new_menu.k_1015",
+        "1016": "ty_pc.k_new_menu.k_1016",
+        "1021": "ty_pc.k_new_menu.k_1021",
+        "1022": "ty_pc.k_new_menu.k_1022",
+        "1023": "ty_pc.k_new_menu.k_1023",
+        "1024": "ty_pc.k_new_menu.k_1024",
+        "1025": "ty_pc.k_new_menu.k_1025",
+        "1026": "ty_pc.k_new_menu.k_1026",
+        "1031": "ty_pc.k_new_menu.k_1031",
+        "1032": "ty_pc.k_new_menu.k_1032",
+        "1033": "ty_pc.k_new_menu.k_1033",
+        "1034": "ty_pc.k_new_menu.k_1034",
+        "1035": "ty_pc.k_new_menu.k_1035",
+        "1036": "ty_pc.k_new_menu.k_1036",
+        "1041": "ty_pc.k_new_menu.k_1041",
+        "1042": "ty_pc.k_new_menu.k_1042",
+        "1043": "ty_pc.k_new_menu.k_1043",
+        "1044": "ty_pc.k_new_menu.k_1044",
+        "1045": "ty_pc.k_new_menu.k_1045",
+        "1046": "ty_pc.k_new_menu.k_1046",
+        "1051": "ty_pc.k_new_menu.k_1051",
+        "1052": "ty_pc.k_new_menu.k_1052",
+        "1053": "ty_pc.k_new_menu.k_1053",
+        "1054": "ty_pc.k_new_menu.k_1054",
+        "1055": "ty_pc.k_new_menu.k_1055",
+        "1056": "ty_pc.k_new_menu.k_1056",
+        "1061": "ty_pc.k_new_menu.k_1061",
+        "1062": "ty_pc.k_new_menu.k_1062",
+        "1063": "ty_pc.k_new_menu.k_1063",
+        "1064": "ty_pc.k_new_menu.k_1064",
+        "1065": "ty_pc.k_new_menu.k_1065",
+        "1066": "ty_pc.k_new_menu.k_1066",
+        "1071": "ty_pc.k_new_menu.k_1071",
+        "1072": "ty_pc.k_new_menu.k_1072",
+        "1073": "ty_pc.k_new_menu.k_1073",
+        "1074": "ty_pc.k_new_menu.k_1074",
+        "1075": "ty_pc.k_new_menu.k_1075",
+        "1076": "ty_pc.k_new_menu.k_1076",
+        "1081": "ty_pc.k_new_menu.k_1081",
+        "1082": "ty_pc.k_new_menu.k_1082",
+        "1083": "ty_pc.k_new_menu.k_1083",
+        "1084": "ty_pc.k_new_menu.k_1084",
+        "1085": "ty_pc.k_new_menu.k_1085",
+        "1086": "ty_pc.k_new_menu.k_1086",
+        "1091": "ty_pc.k_new_menu.k_1091",
+        "1092": "ty_pc.k_new_menu.k_1092",
+        "1093": "ty_pc.k_new_menu.k_1093",
+        "1094": "ty_pc.k_new_menu.k_1094",
+        "1095": "ty_pc.k_new_menu.k_1095",
+        "1096": "ty_pc.k_new_menu.k_1096",
+        "1101": "ty_pc.k_new_menu.k_1101",
+        "1102": "ty_pc.k_new_menu.k_1102",
+        "1103": "ty_pc.k_new_menu.k_1103",
+        "1104": "ty_pc.k_new_menu.k_1104",
+        "1105": "ty_pc.k_new_menu.k_1105",
+        "1106": "ty_pc.k_new_menu.k_1106",
+        "1111": "ty_pc.k_new_menu.k_1111",
+        "1112": "ty_pc.k_new_menu.k_1112",
+        "1113": "ty_pc.k_new_menu.k_1113",
+        "1114": "ty_pc.k_new_menu.k_1114",
+        "1115": "ty_pc.k_new_menu.k_1115",
+        "1116": "ty_pc.k_new_menu.k_1116",
+        "1121": "ty_pc.k_new_menu.k_1121",
+        "1122": "ty_pc.k_new_menu.k_1122",
+        "1123": "ty_pc.k_new_menu.k_1123",
+        "1124": "ty_pc.k_new_menu.k_1124",
+        "1125": "ty_pc.k_new_menu.k_1125",
+        "1126": "ty_pc.k_new_menu.k_1126",
+        "1131": "ty_pc.k_new_menu.k_1131",
+        "1132": "ty_pc.k_new_menu.k_1132",
+        "1133": "ty_pc.k_new_menu.k_1133",
+        "1134": "ty_pc.k_new_menu.k_1134",
+        "1135": "ty_pc.k_new_menu.k_1135",
+        "1136": "ty_pc.k_new_menu.k_1136",
+        "1141": "ty_pc.k_new_menu.k_1141",
+        "1142": "ty_pc.k_new_menu.k_1142",
+        "1143": "ty_pc.k_new_menu.k_1143",
+        "1144": "ty_pc.k_new_menu.k_1144",
+        "1145": "ty_pc.k_new_menu.k_1145",
+        "1146": "ty_pc.k_new_menu.k_1146",
+        "1151": "ty_pc.k_new_menu.k_1151",
+        "1152": "ty_pc.k_new_menu.k_1152",
+        "1153": "ty_pc.k_new_menu.k_1153",
+        "1154": "ty_pc.k_new_menu.k_1154",
+        "1155": "ty_pc.k_new_menu.k_1155",
+        "1156": "ty_pc.k_new_menu.k_1156",
+        "1161": "ty_pc.k_new_menu.k_1161",
+        "1162": "ty_pc.k_new_menu.k_1162",
+        "1163": "ty_pc.k_new_menu.k_1163",
+        "1164": "ty_pc.k_new_menu.k_1164",
+        "1165": "ty_pc.k_new_menu.k_1165",
+        "1166": "ty_pc.k_new_menu.k_1166",
+        "1184": "ty_pc.k_new_menu.k_1184",
+        "2100": "ty_pc.k_new_menu.k_2100",
+        "2101": "ty_pc.k_new_menu.k_2101",
+        "2102": "ty_pc.k_new_menu.k_2102",
+        "2103": "ty_pc.k_new_menu.k_2103",
+        "21001": "ty_pc.k_new_menu.k_21001",
+        "21002": "ty_pc.k_new_menu.k_21002",
+        "21003": "ty_pc.k_new_menu.k_21003",
+        "21004": "ty_pc.k_new_menu.k_21004",
+        "21006": "ty_pc.k_new_menu.k_21006",
+        "21011": "ty_pc.k_new_menu.k_21011",
+        "21012": "ty_pc.k_new_menu.k_21012",
+        "21013": "ty_pc.k_new_menu.k_21013",
+        "21014": "ty_pc.k_new_menu.k_21014",
+        "21016": "ty_pc.k_new_menu.k_21016",
+        "21021": "ty_pc.k_new_menu.k_21021",
+        "21022": "ty_pc.k_new_menu.k_21022",
+        "21023": "ty_pc.k_new_menu.k_21023",
+        "21024": "ty_pc.k_new_menu.k_21024",
+        "21026": "ty_pc.k_new_menu.k_21026",
+        "21031": "ty_pc.k_new_menu.k_21031",
+        "21032": "ty_pc.k_new_menu.k_21032",
+        "21033": "ty_pc.k_new_menu.k_21033",
+        "21034": "ty_pc.k_new_menu.k_21034",
+        "21036": "ty_pc.k_new_menu.k_21036",
+        "31001": "ty_pc.k_new_menu.k_31001",
+        "31002": "ty_pc.k_new_menu.k_31002",
+        "31004": "ty_pc.k_new_menu.k_31004",
+        "31009": "ty_pc.k_new_menu.k_31009",
+        "31010": "ty_pc.k_new_menu.k_31010",
+        "31011": "ty_pc.k_new_menu.k_31011",
+        "50101": "ty_pc.k_new_menu.k_50101",
+        "50199": "ty_pc.k_new_menu.k_50199",
+        "101201": "ty_pc.k_new_menu.k_101201",
+        "101202": "ty_pc.k_new_menu.k_101202",
+        "101203": "ty_pc.k_new_menu.k_101203",
+        "101204": "ty_pc.k_new_menu.k_101204",
+        "101205": "ty_pc.k_new_menu.k_101205",
+        "101206": "ty_pc.k_new_menu.k_101206",
+        "101207": "ty_pc.k_new_menu.k_101207",
+        "101208": "ty_pc.k_new_menu.k_101208",
+        "101209": "ty_pc.k_new_menu.k_101209",
+        "101210": "ty_pc.k_new_menu.k_101210",
+        "101211": "ty_pc.k_new_menu.k_101211",
+        "101301": "ty_pc.k_new_menu.k_101301",
+        "101302": "ty_pc.k_new_menu.k_101302",
+        "101303": "ty_pc.k_new_menu.k_101303",
+        "101304": "ty_pc.k_new_menu.k_101304",
+        "101305": "ty_pc.k_new_menu.k_101305",
+        "101306": "ty_pc.k_new_menu.k_101306",
+        "101307": "ty_pc.k_new_menu.k_101307",
+        "101308": "ty_pc.k_new_menu.k_101308",
+        "101309": "ty_pc.k_new_menu.k_101309",
+        "101310": "ty_pc.k_new_menu.k_101310",
+        "101311": "ty_pc.k_new_menu.k_101311",
+        "101601": "ty_pc.k_new_menu.k_101601",
+        "101602": "ty_pc.k_new_menu.k_101602",
+        "101603": "ty_pc.k_new_menu.k_101603",
+        "101604": "ty_pc.k_new_menu.k_101604",
+        "101605": "ty_pc.k_new_menu.k_101605",
+        "101606": "ty_pc.k_new_menu.k_101606",
+        "101607": "ty_pc.k_new_menu.k_101607",
+        "101608": "ty_pc.k_new_menu.k_101608",
+        "101609": "ty_pc.k_new_menu.k_101609",
+        "102201": "ty_pc.k_new_menu.k_102201",
+        "102202": "ty_pc.k_new_menu.k_102202",
+        "102301": "ty_pc.k_new_menu.k_102301",
+        "102302": "ty_pc.k_new_menu.k_102302",
+        "102601": "ty_pc.k_new_menu.k_102601",
+        "102602": "ty_pc.k_new_menu.k_102602",
+        "103201": "ty_pc.k_new_menu.k_103201",
+        "103301": "ty_pc.k_new_menu.k_103301",
+        "103601": "ty_pc.k_new_menu.k_103601",
+        "104201": "ty_pc.k_new_menu.k_104201",
+        "104301": "ty_pc.k_new_menu.k_104301",
+        "104601": "ty_pc.k_new_menu.k_104601",
+        "105201": "ty_pc.k_new_menu.k_105201",
+        "105202": "ty_pc.k_new_menu.k_105202",
+        "105301": "ty_pc.k_new_menu.k_105301",
+        "105302": "ty_pc.k_new_menu.k_105302",
+        "105601": "ty_pc.k_new_menu.k_105601",
+        "105602": "ty_pc.k_new_menu.k_105602",
+        "106201": "ty_pc.k_new_menu.k_106201",
+        "106202": "ty_pc.k_new_menu.k_106202",
+        "106301": "ty_pc.k_new_menu.k_106301",
+        "106302": "ty_pc.k_new_menu.k_106302",
+        "106601": "ty_pc.k_new_menu.k_106601",
+        "106602": "ty_pc.k_new_menu.k_106602",
+        "107201": "ty_pc.k_new_menu.k_107201",
+        "107301": "ty_pc.k_new_menu.k_107301",
+        "107601": "ty_pc.k_new_menu.k_107601",
+        "108201": "ty_pc.k_new_menu.k_108201",
+        "108202": "ty_pc.k_new_menu.k_108202",
+        "108301": "ty_pc.k_new_menu.k_108301",
+        "108302": "ty_pc.k_new_menu.k_108302",
+        "108601": "ty_pc.k_new_menu.k_108601",
+        "108602": "ty_pc.k_new_menu.k_108602",
+        "109201": "ty_pc.k_new_menu.k_109201",
+        "109202": "ty_pc.k_new_menu.k_109202",
+        "109301": "ty_pc.k_new_menu.k_109301",
+        "109302": "ty_pc.k_new_menu.k_109302",
+        "109601": "ty_pc.k_new_menu.k_109601",
+        "110201": "ty_pc.k_new_menu.k_110201",
+        "110202": "ty_pc.k_new_menu.k_110202",
+        "110301": "ty_pc.k_new_menu.k_110301",
+        "110302": "ty_pc.k_new_menu.k_110302",
+        "110601": "ty_pc.k_new_menu.k_110601",
+        "110602": "ty_pc.k_new_menu.k_110602",
+        "111201": "ty_pc.k_new_menu.k_111201",
+        "111301": "ty_pc.k_new_menu.k_111301",
+        "111601": "ty_pc.k_new_menu.k_111601",
+        "112201": "ty_pc.k_new_menu.k_112201",
+        "112301": "ty_pc.k_new_menu.k_112301",
+        "112601": "ty_pc.k_new_menu.k_112601",
+        "113201": "ty_pc.k_new_menu.k_113201",
+        "113301": "ty_pc.k_new_menu.k_113301",
+        "113601": "ty_pc.k_new_menu.k_113601",
+        "114201": "ty_pc.k_new_menu.k_114201",
+        "114301": "ty_pc.k_new_menu.k_114301",
+        "114601": "ty_pc.k_new_menu.k_114601",
+        "115201": "ty_pc.k_new_menu.k_115201",
+        "115301": "ty_pc.k_new_menu.k_115301",
+        "115601": "ty_pc.k_new_menu.k_115601",
+        "116201": "ty_pc.k_new_menu.k_116201",
+        "116301": "ty_pc.k_new_menu.k_116301",
+        "116601": "ty_pc.k_new_menu.k_116601"
+    },
+    "highlights": {
+        "title": "ty_pc.k_highlights.k_title",
+        "collapse_replay": "ty_pc.k_highlights.k_collapse_replay",
+        "type": {
+            "all": "ty_pc.k_highlights.k_type.k_all",
+            "goal": "ty_pc.k_highlights.k_type.k_goal",
+            "corner": "ty_pc.k_highlights.k_type.k_corner",
+            "penalty": "ty_pc.k_highlights.k_type.k_penalty",
+            "card_red": "ty_pc.k_highlights.k_type.k_card_red",
+            "card_yellow": "ty_pc.k_highlights.k_type.k_card_yellow",
+            "card_yellow_red": "ty_pc.k_highlights.k_type.k_card_yellow_red"
+        },
+        "event_type": {
+            "goal": "ty_pc.k_highlights.k_event_type.k_goal",
+            "corner": "ty_pc.k_highlights.k_event_type.k_corner",
+            "red_card": "ty_pc.k_highlights.k_event_type.k_red_card",
+            "yellow_card": "ty_pc.k_highlights.k_event_type.k_yellow_card",
+            "yellow_red_card": "ty_pc.k_highlights.k_event_type.k_yellow_red_card",
+            "new_goal": "ty_pc.k_highlights.k_event_type.k_new_goal",
+            "new_corner": "ty_pc.k_highlights.k_event_type.k_new_corner",
+            "new_red_card": "ty_pc.k_highlights.k_event_type.k_new_red_card",
+            "new_yellow_card": "ty_pc.k_highlights.k_event_type.k_new_yellow_card",
+            "new_yellow_red_card": "ty_pc.k_highlights.k_event_type.k_new_yellow_red_card"
+        },
+        "back_live": "ty_pc.k_highlights.k_back_live",
+        "reconnect": "ty_pc.k_highlights.k_reconnect"
+    },
+    "game": {
+        "start": "ty_pc.k_game.k_start"
+    }
+}
