@@ -517,7 +517,7 @@ class MatchMeta {
     if (!this.is_current_http_key(http_key)) return
     const code = lodash.get(res, 'code', 0)
     if (+code !== 200) {
-      if (code === '0401038') useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('msg.msg_nodata_22')}`)
+      this.set_show_limiting_toast_tips(code)
       this.set_page_match_empty_status({ state: true, type: code == '0401038' ? 'noWifi' : 'noMatch' });
       return []
     }
@@ -559,7 +559,7 @@ class MatchMeta {
     if (!this.is_current_http_key(http_key)) return []
     const code = lodash.get(res, 'code', 0)
     if (+code !== 200) {
-      if (code === '0401038') useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('msg.msg_nodata_22')}`)
+      this.set_show_limiting_toast_tips(code)
       this.set_page_match_empty_status({ state: true, type: code == '0401038' ? 'noWifi' : 'noMatch' });
       return []
     }
@@ -616,7 +616,7 @@ class MatchMeta {
     const res = await this.handler_axios_loop_func({ http: api_common.get_match_result_api, params: target_params, key: 'get_match_result_api' })
     const code = lodash.get(res, 'code', 0)
     if (!this.is_current_http_key(http_key) || +code !== 200) {
-      if (code === '0401038') useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('msg.msg_nodata_22')}`)
+      this.set_show_limiting_toast_tips(code)
       this.set_page_match_empty_status({ state: true, type: res.code == '0401038' ? 'noWifi' : 'noMatch' });
       return []
     }
@@ -653,7 +653,7 @@ class MatchMeta {
     // const res = await api_common.get_virtual_result({"sportType":"1011","startTime":1703520000000,"endTime":1703606399000,"isVirtualSport":1,"page":{"size":100,"current":1},"tournamentId":"23622704245395458","batchNo":""})
     const code = lodash.get(res, 'code', 0)
     if (+code !== 200) {
-      if (code === '0401038') useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('msg.msg_nodata_22')}`)
+      this.set_show_limiting_toast_tips(code)
       this.set_page_match_empty_status({ state: true, type: code == '0401038' ? 'noWifi' : 'noMatch' });
       return []
     }
@@ -703,7 +703,7 @@ class MatchMeta {
     if (!this.is_current_http_key(http_key)) return
     const code = lodash.get(res, 'code', 0)
     if (+code !== 200) {
-      if (code === '0401038') useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('msg.msg_nodata_22')}`)
+      this.set_show_limiting_toast_tips(code)
       this.set_page_match_empty_status({ state: true, type: code == '0401038' ? 'noWifi' : 'noMatch' });
       return []
     }
@@ -723,7 +723,7 @@ class MatchMeta {
     })
     if (+res.code !== 200) return this.set_page_match_empty_status({ state: true });
     const list = lodash.get(res, 'data', [])
-    return this.handler_match_list_data({ list: list, is_virtual: false, type: 1 })
+    return this.handler_match_list_data({ list: list, is_virtual: false, type: 1, source: 'details' })
   }
 
   /**
@@ -762,7 +762,7 @@ class MatchMeta {
     const list = lodash.get(res, 'data', [])
     const length = lodash.get(list, 'length', 0)
     if (code === '0401038') {
-      useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('msg.msg_nodata_22')}`)
+      this.set_show_limiting_toast_tips(code)
       if (this.match_mids.length < 1) return this.set_page_match_empty_status({ state: true, type: 'noWifi' });
       return []
     }
@@ -1115,6 +1115,15 @@ class MatchMeta {
     useMittEmit(MITT_TYPES.EMIT_IS_SHOW_MASK, false);
     useMittEmit(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, { state: state, type: type });
   }
+
+  /**
+   * @description 限频提示
+   * @param {*} code 
+   */
+  set_show_limiting_toast_tips (code = '') {
+    if (code == '0401038' && this.match_mids.length < 1) useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('msg.msg_nodata_22')}`)
+  }
+
   /**
    * @description 设置骨架图的显示状态
    * @param {*} val 
@@ -1213,7 +1222,7 @@ class MatchMeta {
    */
   handler_match_list_data(config) {
 
-    const { list = [], type = 1, is_virtual = true, warehouse = MatchDataBaseH5, scroll_top = 0, merge = '' } = config
+    const { list = [], type = 1, is_virtual = true, warehouse = MatchDataBaseH5, scroll_top = 0, merge = '', source = '' } = config
 
     const is_classify = this.get_is_classify()
 
@@ -1307,6 +1316,9 @@ class MatchMeta {
         this.compute_page_render_list({ scrollTop: scroll_top, merge, type })
       }
     }
+
+    // 赛果详情
+    if (source === 'details') this.handle_submit_warehouse({ list: matchs_data, warehouse })
 
     // 重置数据为空状态
     this.set_page_match_empty_status({ state: false })
@@ -1445,7 +1457,10 @@ class MatchMeta {
     })
   }
 
-  set_current_match_mids(mids) {
+  /**
+   * @description 设置激活的 赛事mids
+   */
+  set_current_match_mids(mids = []) {
     this.match_mids = mids
   }
 
@@ -1811,7 +1826,6 @@ class MatchMeta {
     // ws 订阅
     this.set_ws_active_mids({ list: list, warehouse })
     // 设置仓库渲染数据
-    // this.is_ws_trigger = false
     warehouse.set_list(result)
     this.is_ws_trigger = false
     this.update_is_http_update_info()

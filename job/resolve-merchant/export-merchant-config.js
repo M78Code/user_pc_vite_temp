@@ -23,7 +23,7 @@ function get_date_format() {
 /**
  * https://assets-image.sportxxxw1box.com  jenkins 内网打包专用
  * https://assets-image.oceasfe.com  静态资源CDN
- * https://api-doc-server-new.sportxxxw1box.com 对外文档API 域名
+ * https://api-doc-server-new.dbsporxxxw1box.com 对外文档API 域名
  */
 
 

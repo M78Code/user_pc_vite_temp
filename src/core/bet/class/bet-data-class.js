@@ -225,7 +225,7 @@ this.bet_appoint_ball_head= null */
   set_user_max_min_money(){
     if (this.is_bet_single) {
       const { qon,qtw,qth,qfo,qfi,max='MAX' } = lodash_.get(UserCtr, 'user_info.cvo.single', { qon: 100, qtw: 200, qth: 500, qfo: 1000, qfi: 2000 })  
-      this.user_max_min_money = {qon,qtw,qth,qfo,qfi,max} 
+      this.user_max_min_money = {qon,qtw,qth,qfo,qfi} 
     } else {
       const {qon,qtw,qth,qfo,qfi,qsi } = lodash_.get(UserCtr, 'user_info.cvo.series', { qon: 10, qtw: 50, qth: 100, qfo: 200, qfi: 500, qsi: 1000 })
       this.user_max_min_money = {qon,qtw,qth,qfo,qfi,qsi}
@@ -1280,8 +1280,8 @@ this.bet_appoint_ball_head= null */
             // 有坑位 并且 坑位变更 
             if(item.hn != ol_obj.placeNum && ol_obj.placeNum){
               console.error('坑位变化',item.hn,ol_obj.placeNum)
-              // 有坑位的数据 对 坑位 和 投注项类型 进行定位 取值 页面渲染
-              let ws_item_hn = hls.find(obj => ol_obj.placeNum == obj.hn ) || {}
+              // 有坑位的数据 对 坑位 和 投注项类型 进行定位 取值 页面渲染 玩法和坑位 要一致
+              let ws_item_hn = hls.find(obj => ol_obj.placeNum == obj.hn && ol_obj.playId == obj.hpid ) || {}
               ws_ol_obj = (ws_item_hn.ol||[]).find(obj => ol_obj.ot == obj.ot ) || {}
               // 更新 投注项 数据
               if(ws_ol_obj.ov){

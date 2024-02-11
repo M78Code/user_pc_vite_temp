@@ -22,6 +22,7 @@
         "export-check-json": "node ./job/base-job/export-check-json.js",
         "copy-assets": "node ./job/base-job/copy-assets.js",
         "export-dev-target-env": "node ./job/base-job/export-dev-target-env.js",
+   
         "git-console": "node ./job/other/git-console.js",
        
         "export-entey-file": "node ./job/entry/export-entey-file.js",

@@ -159,11 +159,12 @@ export function usedetailData(route) {
     };
     let send_gcuuid = uid();
     params.gcuuid = send_gcuuid;
-    console.log(MenuData.is_esports(), "MenuData.is_esports ");
+    console.log(route_parmas,4444)
+    console.log(MenuData.is_esports(), "444444");
     //api_details
     let obj_ = {
       // axios api对象
-      axios_api: MenuData.is_esports()
+      axios_api: (MenuData.is_esports()||[100,101,102,103].includes(+route_parmas.value.csid))
         ? api_details.get_match_detail_ESMatchInfo
         : get_detail_data,
       // axios api对象参数

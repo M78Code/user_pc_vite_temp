@@ -23,8 +23,8 @@
                   </div>
                   <div class="nonebox4-content-left-info">
                     <div class="nonebox4-content-left-content-text">
-                      <div class="nonebox4-content-left-content-text-one">{{item.playOptionName}} <span class="text-one-span">{{ item.marketValue }}</span></div>
-                      <div class="nonebox4-content-left-content-text-two">{{item.matchType == 2?  `[${i18n_t("bet.bet_inplay")}]` :''}}
+                      <div class="nonebox4-content-left-content-text-one">{{item.playOptionName}} <span class="text-one-span">【{{ i18n_t(`odds.${item.marketType}`) }}】</span></div>
+                      <div class="nonebox4-content-left-content-text-two">{{item.matchType == 2?  i18n_t("bet.bet_inplay") :''}}   
                          <span class="text-two-span">{{item.playName}}
                           <span v-if="[4,19,143,113].includes(item.playId*1)">{{item.matchType == 2? item.mark_score : ''}}</span>
                          </span>
@@ -60,7 +60,7 @@
   
     import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
       import { compute_value_by_cur_odd_type,LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
-      import { format_currency } from "src/output/index.js"
+      import { i18n_t, format_currency } from "src/output/index.js"
 // import i18n from "project/activity/src/i18n";
 
   const props = defineProps({
