@@ -78,7 +78,7 @@ export default defineComponent({
         this.tab_list.filter(t => t.id == 4)[0].show_tab = false;
         if(this.current_hps_key == 'hpsOvertime'){
           this.any_unfold = false;
-          let unfold_map = _.cloneDeep(this.get_secondary_unfold_map);
+          let unfold_map = lodash.cloneDeep(this.get_secondary_unfold_map);
           if(this.match.mid in unfold_map){
             let id = unfold_map[this.match.mid] && unfold_map[this.match.mid].split('-')[0];
             let status = unfold_map[this.match.mid] && unfold_map[this.match.mid].split('-')[1];
@@ -280,7 +280,7 @@ export default defineComponent({
     // 重新计算次要玩法数据
     compute_secondary_play () {
       const o_hps_key = this.get_hps_key_by(this.current_tab_item);
-      const hps = lodash.get(this.match, `${o_hps_key}`, [])
+      const hps = lodash.cloneDeep(lodash.get(this.match, `${o_hps_key}`, []))
       if (hps.length < 1) return
       this.current_hps_key = o_hps_key;
       // 根据业务需求，修改冠军小节玩法  1585 单对应
@@ -314,7 +314,7 @@ export default defineComponent({
     // 足球之外调用此方法， 获取要展开的tab项  获取次要玩法 id
     get_tabid_auto_unfold(){
       //获取vuex中的选中tab对象
-      let unfold_map = this.get_secondary_unfold_map;
+      let unfold_map = lodash.cloneDeep(this.get_secondary_unfold_map);
       let t_itemid = null, match = this.match;
       if(match.mid in unfold_map){
         let item_status = unfold_map[match.mid] && unfold_map[match.mid].split('-');
@@ -745,7 +745,7 @@ export default defineComponent({
       // }
       // // 如果没有 玩法时
       // if(!flag ){
-      //   let unfold_map = _.cloneDeep(this.get_secondary_unfold_map);
+      //   let unfold_map = lodash.cloneDeep(this.get_secondary_unfold_map);
       //   let status_id = '';
       //   if(this.match.mid in unfold_map){
       //     status_id = unfold_map[this.match.mid] && unfold_map[this.match.mid].split('-')[0];
