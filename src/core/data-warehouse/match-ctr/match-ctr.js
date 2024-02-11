@@ -878,7 +878,6 @@ get_quick_mid_obj_ref(mid){
     const set_obj_fun = function(key, obj_old, obj_new){
       if(obj_old && obj_new){
         for (const key in obj_new) {
-          console.error(222)
           const obj =  lodash.get(obj_new,key)
            if(key && obj){
             obj_old[key] = obj;
@@ -891,7 +890,6 @@ get_quick_mid_obj_ref(mid){
       const obj_v_1_old =  lodash.get(old_obj,key);
       const obj_v_1_new =  lodash.get(new_obj,key);
       // // 对象赋值操作
-      console.error(111)
       set_obj_fun(key, obj_v_1_old, obj_v_1_new)
     }
   }

@@ -256,7 +256,7 @@ export default defineComponent({
             device: 'v2_h5_st' ,
             sort:1,//排序	 int 类型 1 按热门排序 2 按时间排序
           }})
-          this.update_match_data(item)
+          this.compute_secondary_play(item)
         }
       }
       if(item.id==17){
@@ -269,16 +269,16 @@ export default defineComponent({
      * @description 更新赛事数据
      */
     update_match_data (item) {
-      if (!item?.id) return
-      this.compute_secondart_play()
-      //次要玩法展开或者关闭通知列表页重新计算dom高度
-      this.save_second_play_mid_map_unfold_status(item, this.bold_all_list, this.five_minutes_all_list);
-      if(item.id==17){
-        this.apply_15min_title(); // 15分钟 次要玩法模块  左下角的 小标题
-      }
+      // if (!item?.id) return
+      // this.compute_secondary_play()
+      // //次要玩法展开或者关闭通知列表页重新计算dom高度
+      // this.save_second_play_mid_map_unfold_status(item, this.bold_all_list, this.five_minutes_all_list);
+      // if(item.id==17){
+      //   this.apply_15min_title(); // 15分钟 次要玩法模块  左下角的 小标题
+      // }
     },
     // 重新计算次要玩法数据
-    compute_secondart_play () {
+    compute_secondary_play () {
       const o_hps_key = this.get_hps_key_by(this.current_tab_item);
       const hps = lodash.get(this.match, `${o_hps_key}`, [])
       if (hps.length < 1) return
@@ -289,6 +289,8 @@ export default defineComponent({
       if([18].includes(id)){
         // 波胆玩法 数据加工处理
         this.bold_all_list = this.corrective_action_data_processing(hps, this.match )
+        //次要玩法展开或者关闭通知列表页重新计算dom高度
+        this.save_second_play_mid_map_unfold_status(this.current_tab_item, this.bold_all_list, this.five_minutes_all_list);
       }else if([19].includes(id)){
         // 5分钟 玩法 数据加工处理
         this.five_minutes_all_list = this.five_minutes_gameplay_data_processing(hps, this.match )
@@ -296,8 +298,9 @@ export default defineComponent({
         // 15分钟 数据处理
         const hps_data = lodash.cloneDeep(hps).sort((a, b) => +a.hSpecial - +b.hSpecial)
         this.current_tab_item.hps = hps_data
+        // 15分钟 次要玩法模块  左下角的 小标题
+        this.apply_15min_title()
       }
-      
     },
     //玩法说明图标点击
     // $event 时间对象 mid 赛事id
@@ -728,34 +731,31 @@ export default defineComponent({
     // 判断是否显示tab栏
     show_tab_by_data(){
       
-      // const key = MatchFold.get_match_fold_key(this.match)
-      // const flag = lodash.get(MatchFold.match_mid_fold_obj.value, `${key}.show_tab`, true)
-      this.init_tab_async_show(this.match?.is_show_secondary_play)
-      return this.match?.is_show_secondary_play
+      return lodash.get(this.match, 'is_show_secondary_play', false)
 
       // 复刻版 3184 需求 只做足球
-      if (this.match.csid != 1) return false
+      // if (this.match.csid != 1) return false
 
-      let{cosCorner,cosOvertime,cosBold,cosPenalty,cosPromotion, cosOutright ,cosPunish,cos15Minutes,compose,cds,mbmty} = this.match;
-      let flag = cos15Minutes || cosCorner || cosOvertime|| cosBold || cosPenalty || cosPromotion || cosOutright || cosPunish || compose
+      // let{cosCorner,cosOvertime,cosBold,cosPenalty,cosPromotion, cosOutright ,cosPunish,cos15Minutes,compose,cds,mbmty} = this.match;
+      // let flag = cos15Minutes || cosCorner || cosOvertime|| cosBold || cosPenalty || cosPromotion || cosOutright || cosPunish || compose
 
-      // 电子篮球 不显示次要玩法 对应 BUG 44554
-      if (['B03', 'BE'].includes(cds) && mbmty === 2) {
-        flag = false
-      }
-      // 如果没有 玩法时
-      if(!flag ){
-        let unfold_map = _.cloneDeep(this.get_secondary_unfold_map);
-        let status_id = '';
-        if(this.match.mid in unfold_map){
-          status_id = unfold_map[this.match.mid] && unfold_map[this.match.mid].split('-')[0];
-          unfold_map[this.match.mid] = `${status_id}-0`;
-          // 如果没有 玩法时,则隐藏次要玩法整个模块
-          MatchResponsive.set_secondary_unfold_map(unfold_map);
-        }
-      }
+      // // 电子篮球 不显示次要玩法 对应 BUG 44554
+      // if (['B03', 'BE'].includes(cds) && mbmty === 2) {
+      //   flag = false
+      // }
+      // // 如果没有 玩法时
+      // if(!flag ){
+      //   let unfold_map = _.cloneDeep(this.get_secondary_unfold_map);
+      //   let status_id = '';
+      //   if(this.match.mid in unfold_map){
+      //     status_id = unfold_map[this.match.mid] && unfold_map[this.match.mid].split('-')[0];
+      //     unfold_map[this.match.mid] = `${status_id}-0`;
+      //     // 如果没有 玩法时,则隐藏次要玩法整个模块
+      //     MatchResponsive.set_secondary_unfold_map(unfold_map);
+      //   }
+      // }
       
-      return flag;
+      // return flag;
     },
     // 主队角球数或罚牌数
     home_score(){
@@ -800,32 +800,12 @@ export default defineComponent({
     match: {
       deep: true,
       handler () {
-        // this.init_tab_async_show()
-        // this.compute_secondart_play()
-        this.update_match_data(this.current_tab_item)
-        // if(this.current_hps_key){
-        //   const id = +lodash.get(this.current_tab_item, 'id', 0)
-        //   const hps = lodash.get(this.match, this.current_hps_key, [])
-        //   if (hps.length < 1) return
-        //   // 如果是波胆 和 5分钟玩法
-        //   if([18].includes(id)){
-        //     // 波胆玩法 数据加工处理
-        //     this.bold_all_list = this.corrective_action_data_processing(hps, this.match )
-        //   }else if([19].includes(id)){
-        //     // 5分钟 玩法 数据加工处理
-        //     this.five_minutes_all_list = this.five_minutes_gameplay_data_processing(hps, this.match )
-        //   } else if ([17].includes(id)) {
-        //     // 15分钟 数据处理
-        //     if (!hps || hps.length < 1) return
-        //     const hps_data = lodash.cloneDeep(hps).sort((a, b) => +a.hSpecial - +b.hSpecial)
-        //     this.current_tab_item.hps = hps_data
-        //   }
-        // }
+        this.init_tab_async_show()
+        this.compute_secondary_play()
       }
     },
     // 是否至少存在一个展开tab状态变化,tab展开 属于唯一有用的方法之一
     any_unfold(){
-      // debugger
       let any_unfold = 0;
       let unfold_map = lodash.cloneDeep(this.get_secondary_unfold_map);
       if(this.match.mid in unfold_map){
