@@ -18,25 +18,16 @@
     <!-- 全封(不显示盘口值) 占位时显示封-->
     <div v-else-if="is_fengpan(get_odd_status())" class="item-inner 2">
       <!--csid:1足球全封,不显示盘口名-->
-      <div class='odd-title'
-        ref="all_sealed"
-        :class="{three:column_ceil > 2,standard:n_s == 2}"
-        v-if="is_show_fenpan"
-        v-html="transfer_on(odd_item)">
-      </div>
+      <div v-if="is_show_fenpan" ref="all_sealed" :class="['odd-title', {three:column_ceil > 2,standard:n_s == 2}]" v-html="transfer_on(odd_item)"></div>
       <img class="icon-lock" :class="{standard:n_s}" :src="match_icon_lock" />
     </div>
 
     <!-- 半封(显示盘口值)与赔率显示 -->
     <div v-else class="item-inner 3 have-on" :class="{close: is_fengpan(get_odd_status()) || get_obv_is_lock(odd_item)}">
       <!--csid:1足球全封,不显示盘口名-->
-      <div class='odd-title number_family'
-        ref="half_sealed"
-        :class="{three:column_ceil > 2,standard:n_s == 2}"
+      <div ref="half_sealed" :class="['odd-title number_family', {three:column_ceil > 2,standard:n_s == 2}]" v-html="transfer_on(odd_item)"
         v-if="(odd_item.on || convert_num(odd_item) === 0 || (!is_fengpan(get_odd_status()) && [11,18,19].includes(+lodash.get(current_tab_item, 'id'))) ) ||
-              (is_fengpan(get_odd_status())  || get_obv_is_lock(odd_item))
-              && match.csid != 1"
-        v-html="transfer_on(odd_item)">
+          (is_fengpan(get_odd_status())  || get_obv_is_lock(odd_item)) && match.csid != 1">
       </div>
       <!-- 显示赔率 -->
       <div class='odd-value fontbold number_family' v-show="!is_fengpan(get_odd_status()) && (+odd_item.ov ) && !get_obv_is_lock(odd_item)"
@@ -256,18 +247,29 @@ watch(() => odd_item.value?.ov, (v1,v0) => {
   let curr = Number(v1);
   let old = Number(v0);
 
-  if (!is_http_update_info.value && curr && old) {
-    clearTimeout(timer_.value);
+  if (!is_http_update_info.value && curr && old && curr != old) {
+    
     if(curr > old){
+      console.error(1111)
       red_green_status.value = 1;
     }else if(curr < old){
+      console.error(2222)
       red_green_status.value = -1;
     }
-    timer_.value = setTimeout(() => {
-      red_green_status.value = 0;
-    },3000);
+    
+    reset_up_down()
   }
 })
+
+// 重置红升绿降
+const reset_up_down = () => {
+  console.error(3333)
+  let timer = setTimeout(() => {
+    red_green_status.value = 0
+    clearTimeout(timer);
+    timer = null
+  }, 3000)
+}
 
 // 监听玩法变化
 watch(() => odds_value.value, () => {
