@@ -155,6 +155,7 @@ onMounted(() => {
       show_skeleton_screen.value = val
       show_skeleton_screen.value && reset_show_skeleton_state()
     }).off,
+    // 重置赛事位置
     emitter_3: useMittOn(MITT_TYPES.EMIT_RESET_POSITION, () => {
       positionDataArr = []
     }).off,
