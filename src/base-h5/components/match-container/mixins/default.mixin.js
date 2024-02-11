@@ -435,6 +435,8 @@ export default defineComponent({
      */
     handle_all_ball_seed_fold () {
       MatchFold.handler_fold_all_matchs_csid()
+      // 重置赛事位置
+      useMittEmit(MITT_TYPES.EMIT_RESET_POSITION)
       // app-h5 简版 先试运行看效果
       if (project_name === 'app-h5') return MatchMeta.compute_current_matchs()
       MatchMeta.compute_page_render_list({ scrollTop: 0, type: 2, is_scroll: false })
