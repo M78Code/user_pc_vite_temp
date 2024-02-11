@@ -159,7 +159,7 @@ const handlerUpdate = lodash.debounce((data) => {
     // 设置当前激活的赛事
     MatchMeta.set_current_match_mids(mids)
     // 更新仓库赛事数据 , merge: 'cover'
-    // MatchMeta.handle_update_match_info({ list: list, merge: 'cover' })
+    MatchMeta.handle_update_match_info({ list: list, merge: 'cover' })
     // // 根据当前可视区 mids 获取赛事赔率
     MatchMeta.get_match_base_hps_by_mids({mids: mids.join(',')})
     
