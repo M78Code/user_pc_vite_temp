@@ -250,11 +250,9 @@ watch(() => odd_item.value?.ov, (v1,v0) => {
   if (!is_http_update_info.value && curr && old && curr != old) {
     
     if(curr > old){
-      console.error(1111)
-      red_green_status.value = 1;
+      red_green_status.value = 1
     }else if(curr < old){
-      console.error(2222)
-      red_green_status.value = -1;
+      red_green_status.value = -1
     }
     
     reset_up_down()
@@ -263,10 +261,9 @@ watch(() => odd_item.value?.ov, (v1,v0) => {
 
 // 重置红升绿降
 const reset_up_down = () => {
-  console.error(3333)
   let timer = setTimeout(() => {
     red_green_status.value = 0
-    clearTimeout(timer);
+    clearTimeout(timer)
     timer = null
   }, 3000)
 }
