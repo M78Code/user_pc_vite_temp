@@ -357,7 +357,7 @@ export const category_info = (category_arr=[]) => {
       : get_is_exports()
       ? api_common.get_DJ_matchDetail_getMatchOddsInfo
       : api_common.get_matchDetail_getMatchOddsInfo;
-    component_data.send_gcuuid = UserCtr.get_uid()
+    component_data.send_gcuuid = create_gcuuid()
     params.cuid = component_data.send_gcuuid;
     let temp = [];
     // 记录是否走的是缓存
@@ -717,7 +717,7 @@ export const category_info = (category_arr=[]) => {
       : get_menu_type == 2000
       ? api_common.get_DJ_matchDetail_getMatchOddsInfo
       : api_common.get_matchDetail_getMatchOddsInfo;
-      component_data.send_gcuuid = UserCtr.get_uid();
+      component_data.send_gcuuid = create_gcuuid();
     params.cuid = component_data.send_gcuuid;
     http(params)
       .then((res) => {
