@@ -608,7 +608,7 @@ const insetColumnTooltip = () => {
 watch(
   () => props.score_list,
   (val) => {
-    console.log(33333333355,val)
+    
     const detail_info = props.detail_info;
     columns.value = [];
     if (sport_columns[detail_info.csid]) {
