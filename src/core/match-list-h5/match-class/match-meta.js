@@ -35,6 +35,12 @@ class MatchMeta {
     this.axios_cancel = {}
     // 接口 timer
     this.axios_debounce_timer = null
+    // 赛事新增防抖
+    this.debounce_add_match = lodash.debounce(this.handle_ws_add_match, 2500)
+    // 赛事移除防抖
+    this.debounce_remove_match = lodash.debounce(this.handle_ws_remove_match, 1500)
+    // 获取赔率防抖
+    this.debounce_get_hps = lodash.debounce(this.handle_ws_get_hps, 2500)
   }
 
   init() {
@@ -1661,7 +1667,8 @@ class MatchMeta {
    * @param {*} cmd 
    */
   handle_ws_directive({ cmd = '', data = {} }) {
-    console.log('--------wswswswswswsws-cmd:', cmd, data)
+    if (!['C109', 'C303', 'C114', 'C101', 'C102', 'C104', 'C901'].includes(cmd)) return
+    // console.log('--------wswswswswswsws-cmd:', cmd, data)
     // 赛事新增
     if (['C109'].includes(cmd)) {
       const { cd = [] } = data
@@ -1673,16 +1680,43 @@ class MatchMeta {
         if (MenuData.is_kemp()) {
           // this.get_champion_match()
         } else {
-          this.get_target_match_data({ scroll_top: this.prev_scroll, md: this.http_params.md })
+          this.debounce_add_match()
+          // this.get_target_match_data({ scroll_top: this.prev_scroll, md: this.http_params.md })
         }
       }
     }
-    // 调用 mids  接口
-    if (['C303', 'C114'].includes(cmd)) {
+    // 赛事移除
+    if (['C101', 'C102', 'C104', 'C901'].includes(cmd)) {
+      const { cd: { mid = '', mhs = 0, mmp = 1, ms = 110 } } = data
+      if (mhs == 2 || mmp == '999' || !this.is_valid_match(ms)) {
+        // match_mids是可视区域id
+        const active_index = this.match_mids.findIndex(t => t === mid)
+        // active_index>-1&& this.match_mids.splice(active_index,1)
+        const index = this.complete_matchs.findIndex(t => t.mid == mid)
+        index > -1 && this.complete_matchs.splice(index, 1)
+        if (active_index > -1) this.debounce_remove_match()
+      }
+    }
+    // 调用 mids  接口 C303 先注释 推送太频繁 防抖也没用
+    if (['C114'].includes(cmd)) {
       const { mid = '' } = data.cd || {};
       let _mids = String(mid).split(',')
-      if (_mids.some((_mid) => this.match_mids.includes(_mid))) this.get_match_base_hps_by_mids({})
+      if (_mids.some((_mid) => this.match_mids.includes(_mid)))  this.debounce_get_hps()
     }
+  }
+  // 赛事新增
+  handle_ws_add_match () {
+    this.is_ws_trigger = true
+    this.get_target_match_data({ scroll_top: this.prev_scroll, md: this.http_params.md })
+  }
+  // 删除赛事
+  handle_ws_remove_match () {
+    this.is_ws_trigger = true
+    this.handler_match_list_data({ list: this.complete_matchs, scroll_top: this.prev_scroll, merge: 'cover', type: 2 })
+  }
+  // 获取赔率
+  handle_ws_get_hps () {
+    this.get_match_base_hps_by_mids({})
   }
   /**
    * @description 获取赛事赔率
@@ -1842,16 +1876,18 @@ class MatchMeta {
     // ws 订阅
     // this.set_ws_active_mids({ list: list, warehouse })
     // ws 触发的赛事新增 赔率不需要重置
+    let result = []
     if (this.is_ws_trigger) {
-      list.map(t => {
+      result = list.map(t => {
         const hps_data = this.no_reset_attribute(t, warehouse)
         return Object.assign({}, t, hps_data)
       })
     } else {
+      result = list
       warehouse.clear()
     }
     // 设置仓库渲染数据
-    warehouse.set_list(list)
+    warehouse.set_list(result)
     this.is_ws_trigger = false
     this.get_match_base_hps_by_mids({ })
   }
