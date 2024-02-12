@@ -25,7 +25,7 @@
         <div class="ol-column">
           <OddsTitle class="ol-title" :list="[title]"></OddsTitle>
           <template v-for="index in maxCount">
-            <OddOlItem :value="mains.get(title.otd)[index-1]||{}"
+            <OddOlItem :value="mains.get(title.otd)[index-1]"
             :type="olType"
             >
             </OddOlItem>
