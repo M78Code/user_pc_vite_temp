@@ -469,7 +469,7 @@
     "bet_max_item": "最多选择{num}场比赛",
     "bet_auto_msg_1": "Automatically accept better odds",
     "bet_merge":"Combine bets",
-    "bet_booked": "Booked",
+    "bet_booked": "Booking betting successful",
     "bet_book_failed": "Book failed",
     "bet_booking": "Booking",
     "bet_process": "Processing",
