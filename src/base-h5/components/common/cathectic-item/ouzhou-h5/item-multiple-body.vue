@@ -52,7 +52,7 @@
             <div class="list">
               <p class="col-9">
                   {{item.sportName}}
-                  [<span v-if="data_b.seriesType != '3' && item.matchType != 4" v-html="i18n_t(`matchtype.${item.matchType}`)"></span>]
+                  <span v-if="data_b.seriesType != '3' && item.matchType != 4">[{{ i18n_t(`matchtype.${item.matchType}`) }}]</span>
                   {{item.playName}}
                   [{{i18n_t(`odds.${item.marketType}`)}}]
                 <!-- 优化后的赔率 -->

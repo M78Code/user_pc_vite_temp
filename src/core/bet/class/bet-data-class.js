@@ -13,7 +13,10 @@ import UserCtr from "src/core/user-config/user-ctr.js";
 import { SessionStorage } from "src/core/utils/common/module/web-storage.js";
 import betViewDataClass from "./bet-view-data-class.js";
 
+// 赔率变更
 let time_out = null
+// 坑位变更 
+let market_out = null
 
 class BetData {
   constructor() {
@@ -1262,7 +1265,7 @@ this.bet_appoint_ball_head= null */
         // 对比盘口和投注项
         hls.forEach(item => {
           if(market_list.includes(item.hid)){
-            console.error('market_list',market_list, '------',item.hid)
+            // console.error('market_list',market_list, '------',item.hid)
             // 查询投注项中的 投注项id
             let ol_obj = single_list.find(obj => obj.marketId == item.hid) || {}
             // let ol_obj_index = single_list.findIndex(obj => obj.marketId == item.hid) || 0
@@ -1270,32 +1273,40 @@ this.bet_appoint_ball_head= null */
             let ws_ol_obj = (item.ol||[]).find(obj => ol_obj.playOptionsId == obj.oid ) || {}
 
             // WS推送中包含 投注项中的投注项内容
-            console.error('推送码：',obj.cmd)
-            console.error('ws-坑位',item.hn, '------ 投注项坑位',ol_obj.placeNum)
-            console.error('ws-盘口 状态',item.hs, 'ws-投注项 状态',ws_ol_obj.os)
-            console.error('ws-投注项 赔率',ws_ol_obj.ov, '------ 投注项赔率',ol_obj.odds )
-            console.error('定时器',time_out)
+            // console.error('推送码：',obj.cmd)
+            // console.error('ws-坑位',item.hn, '------ 投注项坑位',ol_obj.placeNum)
+            // console.error('ws-盘口 状态',item.hs, 'ws-投注项 状态',ws_ol_obj.os)
+            // console.error('ws-投注项 赔率',ws_ol_obj.ov, '------ 投注项赔率',ol_obj.odds )
+            // console.error('定时器',time_out)
            
-            console.error('清除定时器',time_out)
+            // console.error('清除定时器',time_out)
             // 有坑位 并且 坑位变更 
             if(item.hn != ol_obj.placeNum && ol_obj.placeNum){
-              console.error('坑位变化',item.hn,ol_obj.placeNum)
+              // console.error('坑位变化',item.hn,ol_obj.placeNum)
               // 有坑位的数据 对 坑位 和 投注项类型 进行定位 取值 页面渲染 玩法和坑位 要一致
               let ws_item_hn = hls.find(obj => ol_obj.placeNum == obj.hn && ol_obj.playId == obj.hpid ) || {}
+              // console.error('ws_item_hn',ws_item_hn)
               ws_ol_obj = (ws_item_hn.ol||[]).find(obj => ol_obj.ot == obj.ot ) || {}
+              // console.error('ws_ol_obj',ws_ol_obj)
               // 更新 投注项 数据
               if(ws_ol_obj.ov){
+                // console.error('ws-盘口 id',ws_item_hn.hid, '投注项-盘口 id',ol_obj.marketId)
                 this.set_ws_change_odds_info(ws_item_hn,ws_ol_obj,ol_obj,'place_num')
                 // 更新投注项内容后 重新发起新的ws订阅
                 set_market_id_to_ws()
               }
+              clearTimeout(market_out)
               // 获取最新的盘口值
-              get_lastest_market_info()
+              market_out = setTimeout(() => {
+                // 电子赛事更新太快 延迟100毫秒 使用最后一次更新
+                get_lastest_market_info()
+              }, 100);
+             
               return
             }
             // 盘口状态，玩法级别 0：开 1：封 2：关 11：锁
             if(item.hs != 0 ) {
-              console.error('盘口失效',item.hs)
+              // console.error('盘口失效',item.hs)
               clearTimeout(time_out)
               // 直接更新状态 设置关盘
               ol_obj.hl_hs = item.hs
@@ -1315,7 +1326,7 @@ this.bet_appoint_ball_head= null */
 
   // ws变更 带来的 投注项数据的变更
   set_ws_change_odds_info(item,ws_ol_obj,ol_obj,type) {
-    console.error('------------ 来了 ---------------')
+    // console.error('------------ 来了 ---------------')
     if(ws_ol_obj.ov){
       // "odds": item.odds,  // 赔率 万位
       // "oddFinally": compute_value_by_cur_odd_type(item.odds, '', '', item.sportId),  //赔率
@@ -1327,16 +1338,14 @@ this.bet_appoint_ball_head= null */
 
       // 投注项和状态一致不更新数据 
       if(ol_obj.odds == ws_ol_obj.ov && ws_ol_obj.os == ol_obj.ol_os && item.hs == ol_obj.hl_hs ){
-        console.error('------------ 赔率没变 ------------ ',type == 'place_num' ?'坑位变了':"")
-    
+        // console.error('------------ 赔率没变 ------------ ',type == 'place_num' ?'坑位变了':"")
+        ol_obj.red_green = ''
         // 投注项 和状态一致 并且 是坑位变化 重置红绿升降 ；不是坑位变化 直接不执行
-        if(type == 'place_num'){
-          ol_obj.red_green = ''
-        }else{
+        if( !type ){
           return
         }
       }
-      console.error('------------ 设置投注项数据 ------------ ')
+      // console.error('------------ 设置投注项数据 ------------ ')
       // 重新设置赔率
       ol_obj.odds = parseFloat(ws_ol_obj.ov) ? ws_ol_obj.ov*1 : ol_obj.odds
       
@@ -1352,8 +1361,9 @@ this.bet_appoint_ball_head= null */
 
       // 坑位变化 后找到的新坑位数据
       if(type == 'place_num'){
-        ol_obj.marketId = item.id
-        ol_obj.playOptionsId = ws_ol_obj.id
+        ol_obj.marketId = item.hid
+        ol_obj.playOptionsId = ws_ol_obj.oid
+        // console.error('盘口值替换:',ol_obj.marketId, ol_obj.playOptionsId)
       }
       clearTimeout(time_out)
       // 获取新的基准分
