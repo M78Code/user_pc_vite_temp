@@ -45,6 +45,7 @@ const get_pc_rule_url = () => {
         'th': 'th_th',
         'ms': 'ms_my',
         'ad': 'id_id',
+        'ru': 'ru_ru',
     }
     const lang2 = lang_map[LocalStorage.get('lang')] || 'zh_cn';
     let url = '';

@@ -93,7 +93,7 @@ const setting_language_handle = (key) => {
 
 <style scoped lang="scss">
 .language-switch {
-  background-color: var(--q-gb-bg-c-18);
+  background: var(--q-gb-bg-c-18);
   height: 100%;
   .header {
   display: flex;
@@ -104,7 +104,7 @@ const setting_language_handle = (key) => {
   height: 0.44rem;
   position: fixed;
   width: 100%;
-
+  background-color: var(--q-gb-bg-c-25);
   .go-back {
     color: #A3A3A3;
   }
@@ -121,7 +121,7 @@ const setting_language_handle = (key) => {
 .content {
   background-color: var(--q-gb-bg-c-18);
   // 语言包
-    margin-top: 0.44rem;
+    margin-top: 0.52rem;
     height: 100%;
     transition: max-height 0.3s;
 
@@ -138,7 +138,8 @@ const setting_language_handle = (key) => {
       padding-right: 0.2rem;
       align-items: center;
       color: var(--q-gb-t-c-18);
-
+      border-bottom: 1px solid var(--q-gb-bd-c-6);
+      background-color: var(--q-gb-bg-c-25);;
       &:last-child {
         border-bottom: none;
       }
@@ -157,9 +158,9 @@ const setting_language_handle = (key) => {
   }
   /* ************** 切换语言前面的图标 ************** -S */
 .lang-icon {
-  width: 0.16rem;
-  height: 0.125rem;
-  --per: -0.17rem;
+  width: 0.21rem;
+  height: 0.15rem;
+  --per: -0.226rem;
   // transform: translateY(-1px);
   background-image: url($SCSSPROJECTPATH + "/image/png/h5_lang_icon.png");
 }

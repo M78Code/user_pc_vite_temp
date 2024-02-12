@@ -906,6 +906,8 @@ class UserCtr {
   set_user_base_info(obj) {
     if (obj) {
       let lang_list = ['zh','en']
+      // 复刻版暂时支持的语系
+      let lang_list_app_h5 = ['zh','tw','en','vi','ko','ru','pt']
       let lang = obj.languageName
       if(PROJECT_NAME.includes('ouzhou')){
         if(!lang_list.includes(obj.languageName)){
@@ -915,6 +917,12 @@ class UserCtr {
       // 中文简体时 后台关闭简繁译开关后强制 转为 zh
       if (['new-pc', 'app-h5'].includes(PROJECT_NAME) && !obj.simpleTradSwitch) {
         lang = obj.languageName == 'hk' ? 'zh' : obj.languageName 
+      }
+      // 如果复刻版接口返回的语系不在支持范围内的强制转为zh
+      if(PROJECT_NAME.includes('app-h5')){
+        if(!lang_list_app_h5.includes(obj.languageName)){
+          lang = 'zh'
+        }
       }
       try {
         let data = {
