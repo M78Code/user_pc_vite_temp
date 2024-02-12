@@ -213,12 +213,11 @@ template {
     align-items: center;
 
     .header-left{
-      width: 60%;
+      // width: 60%;
       text-align: left;
       // background-color: yellow;
     }
     .header-right {
-      width: 40%;
       text-align: right;
       font-size: 0.12rem;
       padding-right: 0.1rem;
