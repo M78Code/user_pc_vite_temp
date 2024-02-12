@@ -197,7 +197,9 @@ template {
 }
 .item-body {
   .item-header {
-    line-height: 0.42rem;
+    // line-height: 0.42rem;
+    padding: 0.10rem 0;
+    padding-right: 4px;
     padding-left: 0.12rem;
     font-size: 0.16rem;
     border-bottom: 1px solid var(--q-gb-bg-c-9);
@@ -208,6 +210,10 @@ template {
       font-size: 0.12rem;
       padding-right: 0.1rem;
       color: var(--q-gb-bg-c-1);
+      flex-shrink: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       .pre-button {
         .pre-cancle-button {
           padding: 0.02rem 0.1rem;
