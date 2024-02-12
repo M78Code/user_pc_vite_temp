@@ -227,7 +227,7 @@ this.bet_appoint_ball_head= null */
 
   set_user_max_min_money(){
     if (this.is_bet_single) {
-      const { qon,qtw,qth,qfo,qfi,max='MAX' } = lodash_.get(UserCtr, 'user_info.cvo.single', { qon: 100, qtw: 200, qth: 500, qfo: 1000, qfi: 2000 })  
+      const { qon,qtw,qth,qfo,qfi } = lodash_.get(UserCtr, 'user_info.cvo.single', { qon: 100, qtw: 200, qth: 500, qfo: 1000, qfi: 2000 })  
       this.user_max_min_money = {qon,qtw,qth,qfo,qfi} 
     } else {
       const {qon,qtw,qth,qfo,qfi,qsi } = lodash_.get(UserCtr, 'user_info.cvo.series', { qon: 10, qtw: 50, qth: 100, qfo: 200, qfi: 500, qsi: 1000 })
@@ -1338,14 +1338,15 @@ this.bet_appoint_ball_head= null */
 
       // 投注项和状态一致不更新数据 
       if(ol_obj.odds == ws_ol_obj.ov && ws_ol_obj.os == ol_obj.ol_os && item.hs == ol_obj.hl_hs ){
-        // console.error('------------ 赔率没变 ------------ ',type == 'place_num' ?'坑位变了':"")
-        ol_obj.red_green = ''
+        // console.error('------------ 赔率没变 ------------ ', type ,type == 'place_num' ?'坑位变了':"")
         // 投注项 和状态一致 并且 是坑位变化 重置红绿升降 ；不是坑位变化 直接不执行
-        if( !type ){
+        if(type == 'place_num'){
+          ol_obj.red_green = ''
+        }else{
           return
         }
       }
-      // console.error('------------ 设置投注项数据 ------------ ')
+      // console.error('------------ 设置投注项数据 ------------ ', ol_obj.red_green)
       // 重新设置赔率
       ol_obj.odds = parseFloat(ws_ol_obj.ov) ? ws_ol_obj.ov*1 : ol_obj.odds
       
@@ -1377,10 +1378,19 @@ this.bet_appoint_ball_head= null */
       // console.error('1-----time_out----------', ol_obj.time_out,time_out)
       // 3秒后清除 红升绿降
       time_out = setTimeout(()=>{
+        // console.error('3秒后清除',time_out)
       // setTimeout(()=>{
-        ol_obj.red_green = ''
+        let single_list = []
+        if(this.is_bet_single){
+          single_list = this.bet_single_list || []
+        } else {
+          single_list = this.bet_s_list || []
+        }
+        // 后续有合并投注的 同一个盘口也可以进行合并 需要重新改一下 盘口id的判断逻辑
+        let ol_obj_out = single_list.find(obj => obj.playOptionsId == ol_obj.playOptionsId) || {}
+        ol_obj_out.red_green = ''
         // console.error('3秒后清除----------', ol_obj.time_out)
-        this.set_ws_message_bet_info(ol_obj)
+        this.set_ws_message_bet_info(ol_obj_out)
       },3000)
       // console.error('2-----time_out----------',time_out)
     }

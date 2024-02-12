@@ -684,7 +684,7 @@ const set_computed_appoint_ball_head = () => {
     input {
       color: var(--q-gb-t-c-5);
       border-radius: 0;
-      background-color: var(--q-gb-bg-c-21);
+      background-color: var(--q-gb-bg-c-4);
       // border: 0.5px solid var(--q-gb-bd-c-7);
       border-left: 0;
       border-right: 0;
