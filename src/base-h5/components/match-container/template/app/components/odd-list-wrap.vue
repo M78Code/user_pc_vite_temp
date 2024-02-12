@@ -265,9 +265,9 @@ const show_lock_selected = ref(false);
 const index_show_map = ref({});
 
 onMounted(() => {
-  emitters.value = {
-    emitter_2: useMittOn(MITT_TYPES.EMIT_FAPAI_WAY_TIPS_STATUS_CHANGE, fapai_way_tips_status_change_h).off,
-  }
+  // emitters.value = {
+  //   emitter_2: useMittOn(MITT_TYPES.EMIT_FAPAI_WAY_TIPS_STATUS_CHANGE, fapai_way_tips_status_change_h).off,
+  // }
 });
 
 // 左右tab切换也要计算赔率
