@@ -9,9 +9,7 @@
   <div class="odd-column-item" :class="odds_class_object()" @click.stop="item_click3" :id="dom_id_show && `list-${lodash.get(odd_item, 'oid')}`">
     <!-- 占位  或者  关盘 (列表简单版时非足球赛事角球菜单时设置为关盘)-->
     <div class="item-inner 1" v-if="is_show" >
-      <template  v-if="is_show_lock">
-        -
-      </template>
+      <template  v-if="is_show_lock"> - </template>
       <img class="icon-lock" :class="{standard:n_s}" :src="match_icon_lock"  v-else/>
     </div>
 
@@ -33,19 +31,19 @@
       <div class='odd-value fontbold number_family' v-show="!is_fengpan(get_odd_status()) && (+odd_item.ov ) && !get_obv_is_lock(odd_item)"
         :class="{
           three:column_ceil > 2,
-          red:red_green_status === 1,
-          green:red_green_status === -1,
+          red: is_up,
+          green: is_down,
           focus:odd_item.result == 4 || odd_item.result == 5,
           win:[4,5].includes(+odd_item.result),
           lose:[0,1,2,3,6].includes(+odd_item.result),
           standard:n_s == 2,
         }">
         <!-- 红升绿降 -->
-        <img class="up_down" v-if="is_up" :src="is_up_app" alt="" />
-        <img class="up_down" v-if="is_down" :src="is_down_app" alt="" />
+        <img class="up_down" v-show="is_up" :src="is_up_app" alt="" />
+        <img class="up_down" v-show="is_down" :src="is_down_app" alt="" />
         <span :class="[{ 'is_up': is_up }, { 'is_down': is_down }]"> {{ compute_value_by_cur_odd_type(odd_item.ov,odd_item._hpid,odd_item._hsw,match.csid) }}</span>
         <!--获取赔率或赛果-->
-        <span class="change-icon" v-show="red_green_status" :class="{'icon-red':red_green_status === 1,'icon-green':red_green_status === -1}"></span>
+        <span class="change-icon" v-show="is_up || is_down" :class="{'icon-red': is_up,'icon-green': is_down}"></span>
       </div>
       <!-- 半封(显示盘口值on) -->
       <img class="icon-lock" :class="{standard:n_s}" v-if="(is_fengpan(get_odd_status()) || get_obv_is_lock(odd_item))"
@@ -100,41 +98,33 @@ const half_sealed = ref(null)
 const emitters = ref({})
 // 投注项
 const odd_item = ref({})
-//红升绿降状态
-const red_green_status = ref(0)
 //虚拟体育开0 封1
 const virtual_odds_state = ref(0)
 const odd_append_value = ref('')
 const ol_dictionary = ref({})
 const is_local_lock = ref(0)
 const dom_id_show = ref('')
+// 红升
+const is_up = ref(false)
+// 绿降
+const is_down = ref(false)
 
 onMounted(() => {
   // 设置是否显示投注项dom的id属性值
   // dom_id_show.value =  window.BUILDIN_CONFIG.LOCAL_FUNCTION_SWITCH.DOM_ID_SHOW;
   dom_id_show.value =  BUILDIN_CONFIG.LOCAL_FUNCTION_SWITCH.DOM_ID_SHOW;
   get_odd_data();
-  emitters.value = {
-    // 封盘事件
-    emitter_1: useMittOn(MITT_TYPES.EMIT_ARRIVED10, arrived10_handle).off,
-     // c105更新
-    emitter_2: useMittOn(MITT_TYPES.EMIT_MATCH_RESULT_DATA_LOADED, match_result_data_loaded).off,
-  }
+  // emitters.value = {
+  //   // 封盘事件
+  //   emitter_1: useMittOn(MITT_TYPES.EMIT_ARRIVED10, arrived10_handle).off,
+  //    // c105更新
+  //   emitter_2: useMittOn(MITT_TYPES.EMIT_MATCH_RESULT_DATA_LOADED, match_result_data_loaded).off,
+  // }
 })
 
 // 当前玩法ID
 const hpid = computed(() => {
   return lodash.get(props.odd_field,'hpid');
-})
-
-// 红升
-const is_up = computed(() => {
-  return red_green_status.value === 1 && no_lock()
-})
-
-// 绿降
-const is_down = computed(() => {
-  return red_green_status.value === -1 && no_lock()
 })
 
 // 是否为封盘
@@ -160,6 +150,13 @@ const is_http_update_info = computed(() => {
   return result
 })
 
+// 是否锁
+const is_lock = () => {
+  if(props?.match?.mhs == 1) return true;
+  if(props?.hl_hs == 1) return true;
+  return odd_s.value == 2;
+}
+
 // 判断边框border-radius样式
 const odds_class_object = () => {
   let footer_sub_menu_id = 0;
@@ -182,17 +179,12 @@ const odds_class_object = () => {
   return result;
 }
 
-const is_lock = () => {
-  if(props?.match?.mhs == 1) return true;
-  if(props?.hl_hs == 1) return true;
-  return odd_s == 2;
-}
-
 /**
  * @description: 盘口状态  1.开盘，    2封盘，   3关盘 ，    4 锁盘
  * @return number 1开盘     4锁盘正常显示    2 封盘显示锁,     3关盘显示短横线
  */
 const odd_s = computed(() => {
+  
   clearTimeout(timer1_.value)
   timer1_.value = setTimeout(() => {
     get_odd_data();
@@ -242,31 +234,19 @@ watch(() => hpid.value, () => {
 // 监听赔率变化实现红升绿降
 watch(() => odd_item.value?.ov, (v1,v0) => {
 
-  if (!v1 || !v0) return
+  if (!v1 || !v0 || !no_lock()) return
 
   let curr = Number(v1);
   let old = Number(v0);
 
   if (!is_http_update_info.value && curr && old && curr != old) {
-    
-    if(curr > old){
-      red_green_status.value = 1
-    }else if(curr < old){
-      red_green_status.value = -1
-    }
-    
+
+    is_up.value = curr > old
+    is_down.value = curr < old
     reset_up_down()
+
   }
 })
-
-// 重置红升绿降
-const reset_up_down = () => {
-  let timer = setTimeout(() => {
-    red_green_status.value = 0
-    clearTimeout(timer)
-    timer = null
-  }, 3000)
-}
 
 // 监听玩法变化
 watch(() => odds_value.value, () => {
@@ -287,6 +267,16 @@ watch(() => props.match?.hps, () => {
     }
   }
 }, { deep:true })
+
+// 重置红升绿降
+const reset_up_down = () => {
+  let timer = setTimeout(() => {
+    is_up.value = false
+    is_down.value = false
+    clearTimeout(timer)
+    timer = null
+  }, 3000)
+}
 
 /**
  * @description: 不是锁
@@ -350,7 +340,6 @@ const get_odd_status = () => {
 
 // on转换html
 const transfer_on = (odd_item) => {
-  // console.log(1111111)
 
   const current_tab_item_id = lodash.get(props.current_tab_item, 'id')
   
@@ -364,19 +353,14 @@ const transfer_on = (odd_item) => {
     // 5分钟玩法
     if ([19].includes(current_tab_item_id) ){
       return odd_item.onb || odd_item.on;
-    }
-    // 15分钟玩法
-    if([17].includes(current_tab_item_id) ){
+    } else if([17].includes(current_tab_item_id) ){
+      // 15分钟玩法
       if (['Over', 'Under'].includes(odd_item.ot)) return odd_item.on || odd_item.onb;
       return odd_item.onb || odd_item.on;
-    }
-    // 波胆
-
-    if([18].includes(current_tab_item_id) ){
+    } else if([18].includes(current_tab_item_id) ){
+      // 波胆
       on = odd_item.ot
-      if(odd_item.ot == 'Other' && ['zh', 'tw'].includes(lang.value)){
-        on = '其他'
-      }
+      if (odd_item.ot == 'Other' && ['zh', 'tw'].includes(lang.value)) on = '其他'
     }
   }
 
@@ -386,16 +370,16 @@ const transfer_on = (odd_item) => {
     color = 'var(--qq-color-fs-color-13)';
   }
   
-  // 特色组合玩法盘口字体颜色
+  // 特色组合玩法盘口字体颜色 葡萄牙语 简化字段
   let on_value = null
-  if ([11].includes(current_tab_item_id) && odd_item.on) {
-    if (lang.value === 'th') on = on && on.replace(/\s+/g, "")
-    on_value = `<span style="color: var(--q-color-fs-color-135);padding-left: ${lang.value === 'th' ? 0 : '3px'}">${odd_item.on}</span>`
+  if ([11].includes(current_tab_item_id)) {
+    if (odd_item.on) {
+      on_value = `<span style="color: var(--q-color-fs-color-135);padding-left: ${lang.value === 'th' ? 0 : '3px'}">${odd_item.on}</span>`
+    }
+    if (['th'].includes(lang.value)) on = on && on.replace(/\s+/g, "")
+    if (['pt'].includes(lang.value)) on = on && on.replace('Empate', 'Emp')
   }
-  // 特殊组合玩法简化字段
-  if ([11].includes(current_tab_item_id) && ['pt'].includes(lang.value)) {
-    on = on && on.replace('Empate', 'Emp')
-  }
+
   let replaced = on
   if(![18].includes(current_tab_item_id)){
     replaced = on && on.replace(/[\/0-9\+\-\.]/ig,found => {
@@ -432,17 +416,17 @@ const get_odd_data = () => {
     if(lodash.get(props.odd_field,'hl[0]')){
       ol = props.odd_field.hl[0].ol;
     }
+    if(ol && ol.length){
+      if([11,18,19].includes(+lodash.get(props.current_tab_item, 'id'))){
+        odd_item.value = props.ol_list_item
+      }else{
+        odd_item.value = ol[props.odd_item_i];
+      }
+    } else {
+      odd_item.value = {"oid":"","mid": lodash.get(props.odd_field,'mid')}
+    }
   } catch(e){
     console.error(e);
-  }
-  if(ol && ol.length){
-    if([11,18,19].includes(+lodash.get(props.current_tab_item, 'id'))){
-      odd_item.value = props.ol_list_item
-    }else{
-      odd_item.value = ol[props.odd_item_i];
-    }
-  } else {
-    odd_item.value = {"oid":"","mid": lodash.get(props.odd_field,'mid')}
   }
 }
 /**
@@ -468,27 +452,27 @@ const get_ollist_no_close = (odd_field) => {
  * @description: 是否封盘odd_s == 2
  * @return boolean
  */
-const is_fengpan = (odd_s) => {
+const is_fengpan = (val) => {
   if(is_local_lock.value == 11) return false;
   if(props.match.mhs == 1) return true; // mhs： 0 开,  1 封,  2 关,  11 锁
   if(props.hl_hs == 1) return true;
-  return odd_s == 2;
+  return val == 2;
 }
 /**
  * @description: 是否是关盘
  * @return boolean
  */
-const is_close = (odd_s) => {
+const is_close = (val) => {
   let r = false;
   if(is_local_lock.value == 11) return false;
   if(props.match.mhs == 2) return true; // mhs： 0 开,  1 封,  2 关,  11 锁
   if(props.hl_hs == 2){ // 投注项父类关盘
     return true;
   }
-  if(odd_s == 2) {
+  if(val == 2) {
     return false;
   }
-  if(odd_s == 3){
+  if(val == 3){
     r = true;
   }
   return r;

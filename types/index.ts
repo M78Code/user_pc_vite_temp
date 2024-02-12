@@ -120,7 +120,7 @@ declare namespace TYPES {
   type OlResultArray = ['r-unkown', 'r-unkown2', 'r-tie', 'r-lose', 'r-win', 'r-win-half', 'r-lose-half']
   type OlResultState = OlResultArray[K.result[keyof K.result]]
 
-  export type OlItemType = 'default' | 'fill' | 'auto' | 'column'
+  export type OlItemType = 'default' | 'fill' | 'auto' | 'column' | 'placehold'
 }
 
 /** 属性字段复用注释 */

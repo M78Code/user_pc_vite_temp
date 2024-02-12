@@ -225,7 +225,7 @@ const set_bet_order_list = (bet_list, is_single) => {
             //     ...bet_s_obj,
             //     ...BetData.bet_pre_obj[item.playOptionsId]
             // }
-            console.error('item',item)
+            // console.error('item',item)
             // 在前面就有判断 是否有金额 
             if(item.bet_amount){
                 order_list.push({
@@ -426,7 +426,7 @@ const get_lastest_market_info = (type) => {
                             // 盘口值
                             bet_item.marketValue = market.marketValue
                             // 球头
-                            bet_item.handicap_hv = odds.playOptions || market.marketValue
+                            bet_item.handicap_hv = market.marketValue
                             let play_option_name = ''
                             // 主队 客队
                             if( odds.oddsType == 1 ){
@@ -1062,7 +1062,7 @@ const set_error_message_config = (res ={},type,order_state) => {
  * @returns 
  */
 const set_bet_obj_config = (params = {}, other = {}) => {
-    console.error('投注项需要数据', params, 'other', other);
+    // console.error('投注项需要数据', params, 'other', other);
     // 切换投注状态
     const { oid, _hid, _hn, _mid } = params
 
@@ -1259,7 +1259,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
             })
         }
     }
-    console.error('投注项内容：',bet_obj)
+    // console.error('投注项内容：',bet_obj)
 
     // 冠军 
     if(bet_obj.bet_type == 'guanjun_bet'){
@@ -1452,6 +1452,7 @@ const set_market_id_to_ws = () => {
     obj.hid = hid.join(',')
     obj.mid = mid.join(',')
 
+    // console.error('重新发起订阅：','hid:--',obj.hid, 'mid:--',obj.mid  )
     // 用户赔率分组
     obj.marketLevel = lodash_.get(UserCtr.user_info,'marketLevel','0');
     BetWsMessage.set_bet_c2_message(obj);
@@ -1693,7 +1694,7 @@ const get_market_is_show = (obj={}) =>{
     return !!hl_obj.hid
 }
 const go_to_bet = (ol_item, match_data_type) => {
-    console.log(MenuData)
+    // console.log(MenuData)
     // 如果是赛果详情
     if(PageSourceData.route_name == 'match_result') return
     const {oid,_hid,_hn,_mid,_hpid } = ol_item
