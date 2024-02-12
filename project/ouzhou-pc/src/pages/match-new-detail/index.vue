@@ -103,6 +103,7 @@
         ></div>
       </div>
       <!-- tabs 玩法分类切换 -->
+     
       <tabs :tab_options="tabList" v-model="current_key" />
 
       <!-- 玩法模板 -->
