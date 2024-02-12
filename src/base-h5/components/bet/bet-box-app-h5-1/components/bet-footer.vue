@@ -5,7 +5,7 @@
   <div v-show="false">{{BetData.bet_data_class_version}}-{{BetViewDataClass.bet_view_version}}-{{BetViewDataClass.error_code}}-{{BetViewDataClass.error_message}}-{{UserCtr.user_version}}</div>
   
   <!-- 自动接受更好的赔率 -->
-  <div class="accept" :class="!BetData.bet_is_accept ? 'active':'' " @click="set_bet_is_accept()" v-if="BetViewDataClass.bet_order_status == 1">
+  <div class="accept" :class="UserCtr.user_bet_prefer == 1 ? 'active':'' " @click="set_bet_is_accept()" v-if="BetViewDataClass.bet_order_status == 1">
       自动接受更好的赔率 
   </div>
 
@@ -275,11 +275,10 @@ const set_special_state = computed(()=> status => {
   return false
 })
 
-
 // 自动接受更好的赔率
 const set_bet_is_accept = () => {
-    let state = !BetData.bet_is_accept
-    BetData.set_bet_is_accept(state)
+  let bet_prefer = UserCtr.get_user_bet_prefer()
+  UserCtr.set_api_user_bet_prefer(bet_prefer == 1 ? 2 : 1)
 }
 
 // 投注模式切换
