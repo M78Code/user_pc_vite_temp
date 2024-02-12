@@ -1449,13 +1449,20 @@ const set_market_id_to_ws = () => {
     mid = bet_list.map(item => item.matchId)
     mid = lodash_.uniq(mid);
 
-    obj.hid = hid.join(',')
+    let obj_hid = hid.join(',')
     obj.mid = mid.join(',')
 
+    // 取消之前的所有订阅
+    obj.hid = '0'
+    BetWsMessage.set_bet_c2_message(obj);
     // console.error('重新发起订阅：','hid:--',obj.hid, 'mid:--',obj.mid  )
     // 用户赔率分组
     obj.marketLevel = lodash_.get(UserCtr.user_info,'marketLevel','0');
-    BetWsMessage.set_bet_c2_message(obj);
+    nextTick(()=>{
+        obj.hid = obj_hid
+        BetWsMessage.set_bet_c2_message(obj);
+    })
+    
 }
 
 // 设置投注后的数据内容
