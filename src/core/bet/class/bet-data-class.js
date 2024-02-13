@@ -302,6 +302,7 @@ this.bet_appoint_ball_head= null */
    * 设置 是否接受更好赔率
   */
   set_bet_is_accept(val) {
+    console.error('sssssss',val)
     this.bet_is_accept = val
     // BetViewDataClass.set_bet_before_message({code:'0402018',message:"bet.bet_upd"})
 
@@ -560,7 +561,7 @@ this.bet_appoint_ball_head= null */
   set_bet_oid_obj(old_,new_) {
     // 获取oid在投注项id集合中的位置
     let index_ = this.bet_oid_list.findIndex(item => item == old_)
-    if(index_ || index_ == 0){
+    if(index_ > -1){
       this.bet_oid_list.splice(index_,1)
       this.bet_oid_list.push(new_)
     }
@@ -1090,6 +1091,7 @@ this.bet_appoint_ball_head= null */
     // 重新设置投注项
     this.set_bet_oid_list()
 
+    console.error('set_bet_single_special',list)
     this.set_bet_data_class_version()
   }
 
@@ -1111,7 +1113,7 @@ this.bet_appoint_ball_head= null */
 
       reg_index = single_list.findIndex(i => i.playOptionsId === obj.playOptionsId)
     
-      if(reg_index || reg_index == 0){
+      if(reg_index > -1){
         single_list[reg_index] = obj
         this[single_name] = single_list
       }
@@ -1356,15 +1358,15 @@ this.bet_appoint_ball_head= null */
       ol_obj.hl_hs = item.hs
 
       // 盘口变更中 需要显示盘口变更的状态
-      if(item.hs == 11 && ws_ol_obj.os == 1){
-        this.set_bet_is_accept('mark_change')
-      }
+      // if(item.hs == 11 && ws_ol_obj.os == 1){
+      //   this.set_bet_is_accept('mark_change')
+      // }
 
       // 坑位变化 后找到的新坑位数据
       if(type == 'place_num'){
         ol_obj.marketId = item.hid
         ol_obj.playOptionsId = ws_ol_obj.oid
-        // console.error('盘口值替换:',ol_obj.marketId, ol_obj.playOptionsId)
+        console.error('盘口值替换:',ol_obj.marketId, ol_obj.playOptionsId)
       }
       clearTimeout(time_out)
       // 获取新的基准分
