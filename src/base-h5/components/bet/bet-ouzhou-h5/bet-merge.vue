@@ -23,9 +23,9 @@
       <div class="toast">
         <div class="prompt_boby">
           <div class="cue_head">{{i18n_t('tips.msg1')}}</div>
-          <div class="prompt">  {{i18n_t('tips.msg2')}}</div>
+          <div class="prompt">{{i18n_t('tips.msg2')}}</div>
         </div>
-        <div class="verify" @click="alert = false">我知道了</div>
+        <div class="verify" @click="alert = false">{{i18n_t('ac_rules.understand')}}</div>
       </div>
     </q-dialog>
   </div>
@@ -85,6 +85,9 @@ const open_toast = () => {
       font-weight: 400;
       line-height: 24px;
       color: #8a8986;
+      &:before{
+        content: "\00a0\00a0\00a0\00a0\00a0";
+      }
     }
 
   }
