@@ -40,7 +40,6 @@ onMounted(()=>{
 * @return:
 */
 const set_text_toast =(opt) => {
-  console.error('asdasdasd')
   let { msg, delay = 2000 } = opt || {}
   if (typeof opt == 'string')
     msg = opt;

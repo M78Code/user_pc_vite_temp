@@ -243,11 +243,11 @@ const _handleDeleteKey = () => {
 
       if(BetData.active_index.includes('odds')) {
         let odds = ref_pre_book.appoint_odds_value.toString()
-        odds = odds ? odds.substring(0, odds.length - 1) : ""
-        ref_pre_book.appoint_odds_value = odds ? odds*1 : ""
+        odds = odds ? odds.substring(0, odds.length - 1) : 0
+        ref_pre_book.appoint_odds_value = odds ? odds*1 : 0
       } else {
         let ball = ref_pre_book.appoint_ball_value.toString()
-        ball = ball ? ball.substring(0, ball.length - 1) : ""
+        ball = ball ? ball.substring(0, ball.length - 1) : 0
         // 判断是否有正负号 如有有保留
         if (ball == '-' || ball == '+') {
           ref_pre_book.appoint_ball_value = ball
@@ -271,7 +271,6 @@ const _handleDeleteKey = () => {
 
 // 数字建
 const _handleNumberKey = (num) => {
-  // console.error('ss数字建s')
   if (!num) return
   if (typeof BetData.active_index === 'string') {
     // 此处为预约盘口 赔率相关输入

@@ -703,9 +703,7 @@
     "bet_booking": "预约中",
     "bet_process": "进行中",
     "bet_book_valid": "已失效",
-    "bet_book_confirm": "预约",
-    "bet_max_booked_odds": "已为最高预约赔率值，请重新调整",
-    "bet_min_booked_odds": "预约赔率不能低于所对应的盘口赔率"
+    "bet_book_confirm": "预约"
   },
   "bet_message":{
     "success": "投注成功",
