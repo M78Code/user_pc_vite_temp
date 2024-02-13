@@ -85,6 +85,9 @@ const open_toast = () => {
       font-weight: 400;
       line-height: 24px;
       color: #8a8986;
+      &:before{
+        content: "\00a0\00a0\00a0\00a0\00a0";
+      }
     }
 
   }
