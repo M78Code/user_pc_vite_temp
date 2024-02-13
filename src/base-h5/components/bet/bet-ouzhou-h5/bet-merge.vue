@@ -44,7 +44,7 @@ const set_is_bet_merge = () => {
 }
 
 const open_toast = () => {
-  useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `<div>${i18n_t('tips.msg1')}</div><div>${i18n_t('tips.msg2')}</div>`)
+  useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, {msg: '勾选后，单/串关可自由切换，多个投注项会同时展示在投注栏里，同一玩法的盘口投注会替换原投注项。', type: 'confirm'})
 }
 
 </script>
