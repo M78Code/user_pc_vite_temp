@@ -39,7 +39,16 @@ const switch_handle = () => {
 const $q = useQuasar()
 
 const question_handle = ()=>{
-  console.log("$q===>", $q)
+  useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, 
+  {
+    msg: `<ul>
+      <li>下注时若赔率升高，系统将默认您接受此赔率,不会打断您的下注行为,提高下注成功率。</li>
+      <li>下注时若赔率降低，系统将默认您不接受此赔率，并打断您的下注行为，您需要确认赔率后再次投注。</li>
+      <li>若未勾选此功能，系统将认为您"自动接受任何赔率"。(即无论下注时的赔率如何变化系统都将默认您可以接受,不会打断您的下注行为</li>
+    </ul>
+    `,
+    type: 'confirm'
+  })
   // $q.dialog({
   //       title: 'Confirm',
   //       message: 'Would you like to turn on the wifi?',

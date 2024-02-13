@@ -7,7 +7,7 @@
        
        <div class="info_right size_14" @click.stop="input_click(items, index, $event)">
         <div class="content-b " :class="{'active':BetData.active_index == index}">
-            <span v-if="valueModel || valueModel == 0" class="yb_fontsize12 money-number">{{ valueModel }}</span>
+            <span class="yb_fontsize12 money-number">{{ valueModel }}</span>
             <span class="money-span" ref="money_span" v-if="BetData.active_index == index && !readonly" :style="{ opacity:  '1' }"></span>
           </div>
           

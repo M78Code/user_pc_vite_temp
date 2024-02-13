@@ -19,14 +19,24 @@
       <img class="" v-if="BetData.is_regular_amount" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/select_a.svg`" alt="" />
       <img class="" v-else :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/select_b.svg`" alt="" />
     </div>
-
+    <q-dialog v-model="alert">
+      <div class="toast">
+        <div class="prompt_boby">
+          <div class="cue_head">{{i18n_t('tips.msg1')}}</div>
+          <div class="prompt">{{i18n_t('tips.msg2')}}</div>
+        </div>
+        <div class="verify" @click="alert = false">{{i18n_t('ac_rules.understand')}}</div>
+      </div>
+    </q-dialog>
   </div>
 </template>
 <script setup>
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { LOCAL_PROJECT_FILE_PREFIX, MenuData } from "src/output/index.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
+import { ref } from "vue"
 
+const alert = ref(false)
 // 常用金额
 const set_is_regular_amount = () => {
   BetData.set_is_regular_amount()
@@ -44,13 +54,56 @@ const set_is_bet_merge = () => {
 }
 
 const open_toast = () => {
-  useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `<div>${i18n_t('tips.msg1')}</div><div>${i18n_t('tips.msg2')}</div>`)
+  // useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `<div>${i18n_t('tips.msg1')}</div><div>${i18n_t('tips.msg2')}</div>`)
+  alert.value = true;
 }
 
 </script>
 
 <style lang="scss" scoped>
+.toast{
+  background: #ffffff;
+  width: 320px;
+  height: 228px;
+  padding: 30px, auto, 16px, auto;
 
+  .prompt_boby{
+    width: 280px;
+    height: 110px;
+    margin: 30px auto;
+
+    .cue_head{
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 16px;
+      text-align: center;
+      padding-bottom: 20px;
+      color: #1A1A1A;
+    }
+    .prompt{
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 24px;
+      color: #8a8986;
+      &:before{
+        content: "\00a0\00a0\00a0\00a0\00a0";
+      }
+    }
+
+  }
+  .verify{
+    width: 300px;
+    height: 42px;
+    background-color: #FF7000;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    margin: 0 auto;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 400;
+  }
+}
 .del-info-name {
   margin-left: 0.1rem;
   color: var(--q-gb-bg-c-4);

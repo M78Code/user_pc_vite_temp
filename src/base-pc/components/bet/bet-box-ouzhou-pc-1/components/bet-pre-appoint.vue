@@ -10,7 +10,7 @@
         v-touch-repeat:0:300.mouse.enter.space="() => {
             sub_handle('ball_head')
           }">-</div>
-        <input class="pre-input" v-model="ref_data.computed_appoint_ball_head" v-if="item.sportId == 1" readonly  @mousedown.stop="">
+        <input class="pre-input" v-model="ref_data.computed_appoint_ball_head" v-if="item.sportId == 1"   @mousedown.stop="">
         <input class="pre-input" ref="ball-head-input" v-model="ref_data.computed_appoint_ball_head"  @mousedown.stop=""
           @blur="appoint_odds_head_handle" v-if="item.sportId == 2">
         <!-- 盘口加+-->
