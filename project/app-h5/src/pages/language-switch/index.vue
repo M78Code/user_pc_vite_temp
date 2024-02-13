@@ -127,14 +127,14 @@ const setting_language_handle = (key) => {
 
     .lang-item.active {
       max-height: 5.58rem;
-      color: var(--q-gb-t-c-12)
+      color: var(--q-gb-t-c-1)
     }
     
     .lang-item {
       height: 0.44rem;
       font-size: 0.14rem;
       display: flex;
-      padding-left: 0.43rem;
+      padding-left: 0.13rem;
       padding-right: 0.2rem;
       align-items: center;
       color: var(--q-gb-t-c-18);
@@ -145,13 +145,16 @@ const setting_language_handle = (key) => {
       }
       .icon {
         display: none;
-        width: 0.11rem;
-        height: 0.07rem;
+        width: 0.26rem;
+        height: 0.26rem;
       }
 
       &.active {
         .icon {
           display: block;
+          background-image: url($SCSSPROJECTPATH + "/image/png/lang_active.png"); // public/app-h5/image/png/lang_active.png
+          background-size: cover;
+          background-position: center;
         }
       }
     
