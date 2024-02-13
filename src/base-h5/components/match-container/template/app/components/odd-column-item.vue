@@ -39,15 +39,14 @@
           standard:n_s == 2,
         }">
         <!-- 红升绿降 -->
-        <img class="up_down" v-show="is_up" :src="is_up_app" alt="" />
-        <img class="up_down" v-show="is_down" :src="is_down_app" alt="" />
+        <img class="up_down" v-show="is_up" :src="is_up_app" alt="up" />
+        <img class="up_down" v-show="is_down" :src="is_down_app" alt="down" />
         <span :class="[{ 'is_up': is_up }, { 'is_down': is_down }]"> {{ compute_value_by_cur_odd_type(odd_item.ov,odd_item._hpid,odd_item._hsw,match.csid) }}</span>
         <!--获取赔率或赛果-->
         <span class="change-icon" v-show="is_up || is_down" :class="{'icon-red': is_up,'icon-green': is_down}"></span>
       </div>
       <!-- 半封(显示盘口值on) -->
-      <img class="icon-lock" :class="{standard:n_s}" v-if="(is_fengpan(get_odd_status()) || get_obv_is_lock(odd_item))"
-           :src="match_icon_lock" />
+      <img class="icon-lock" :class="{standard:n_s}" v-if="(is_fengpan(get_odd_status()) || get_obv_is_lock(odd_item))" :src="match_icon_lock" />
     </div>
 
   </div>

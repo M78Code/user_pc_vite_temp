@@ -411,9 +411,9 @@ function resetStatus() {
     }
   }
   &.placehold{
-  .ol-lock{
-    visibility: hidden;
-  }
+    .ol-lock{
+      visibility: hidden;
+    }
   }
 }
 </style>

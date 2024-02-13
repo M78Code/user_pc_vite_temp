@@ -426,7 +426,7 @@ const get_lastest_market_info = (type) => {
                             // 盘口值
                             bet_item.marketValue = market.marketValue
                             // 球头
-                            bet_item.handicap_hv = market.marketValue
+                            bet_item.handicap_hv = odds.playOptions || market.marketValue
                             let play_option_name = ''
                             // 主队 客队
                             if( odds.oddsType == 1 ){
@@ -786,7 +786,7 @@ const submit_handle_lastest_market = () => {
     }
     let params = {
         // "userId": UserCtr.get_uid(),
-        "acceptOdds": 2,  // 接受赔率变化情况
+        "acceptOdds": UserCtr.get_user_bet_prefer(),  // 接受赔率变化情况
         "tenantId": 1,
         "deviceType": BetData.deviceType,  // 设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备
         "currencyCode": currency ,  // 币种
@@ -1062,7 +1062,7 @@ const set_error_message_config = (res ={},type,order_state) => {
  * @returns 
  */
 const set_bet_obj_config = (params = {}, other = {}) => {
-    // console.error('投注项需要数据', params, 'other', other);
+    console.error('投注项需要数据', params, 'other', other);
     // 切换投注状态
     const { oid, _hid, _hn, _mid } = params
 
@@ -1449,13 +1449,20 @@ const set_market_id_to_ws = () => {
     mid = bet_list.map(item => item.matchId)
     mid = lodash_.uniq(mid);
 
-    obj.hid = hid.join(',')
+    let obj_hid = hid.join(',')
     obj.mid = mid.join(',')
 
+    // 取消之前的所有订阅
+    obj.hid = '0'
+    BetWsMessage.set_bet_c2_message(obj);
     // console.error('重新发起订阅：','hid:--',obj.hid, 'mid:--',obj.mid  )
     // 用户赔率分组
     obj.marketLevel = lodash_.get(UserCtr.user_info,'marketLevel','0');
-    BetWsMessage.set_bet_c2_message(obj);
+    nextTick(()=>{
+        obj.hid = obj_hid
+        BetWsMessage.set_bet_c2_message(obj);
+    })
+    
 }
 
 // 设置投注后的数据内容

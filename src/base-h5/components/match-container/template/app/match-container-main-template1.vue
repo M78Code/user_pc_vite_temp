@@ -69,10 +69,10 @@
                 </span>
               </span>
               <span class="league-right">
-                  <!-- <template v-if="!collapsed">
-                    <span> {{ get_ball_seed_league_count }} </span>
-                  </template> -->
-                  <IconWapper color="#c9c9c9" name="icon-arrow" size="14px"  :class="['icon-wapper', {'close': collapsed}]" />
+                <template v-if="!collapsed">
+                  <span> {{ get_ball_seed_league_count }} </span>
+                </template>
+                <IconWapper color="#c9c9c9" name="icon-arrow" size="14px"  :class="['icon-wapper', {'close': collapsed}]" />
               </span>
             </span>
           </div>
@@ -1509,9 +1509,8 @@ export default {
       }
     }
     .score-se-inner{
-        width: 100%;
         height: auto;
-        max-width: 100%;
+        max-width: 318px;
         .score-se-inner2{
           height: 25px;
           justify-content: end;
