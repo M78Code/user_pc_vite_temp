@@ -647,7 +647,7 @@ const set_computed_appoint_ball_head = () => {
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 12px 34px;
+  padding: 5px 34px 12px 34px;
   justify-content: space-between;
   position: relative;
   .cancel {
