@@ -1356,7 +1356,7 @@ const set_play_name = ({hl_obj,hn_obj,mid_obj,ol_obj,other}) => {
     // chpid 优先于hpid
     let hpid = ol_obj._chpid ?  ol_obj._chpid : ol_obj._hpid
      //玩法名称
-    let play_name = ALL_SPORT_PLAY[ol_obj]
+    let play_name = ALL_SPORT_PLAY[hpid]
 
     // 次要玩法
     if(other.secondary_paly){
