@@ -56,7 +56,7 @@ onMounted(()=>{
 * @return:
 */
 const set_text_toast =(opt) => {
-  console.log('这里！', opt, ref_data.is_toast)
+  // console.log('这里！', opt, ref_data.is_toast)
   let { msg, delay = 2000, type } = opt || {}
 
   if (type == 'confirm') {
