@@ -141,7 +141,7 @@ export function usedetailData(route) {
     is_fresh.value = isNeedLoading;
     detail_loading.value = isNeedLoading;
     get_detail(params);
-    console.log(2222222,'init')
+  
     await get_category();
   };
   /**
@@ -160,8 +160,7 @@ export function usedetailData(route) {
     };
     let send_gcuuid = uid();
     params.gcuuid = send_gcuuid;
-    console.log(route_parmas,4444)
-    console.log(MenuData.is_esports(), "444444");
+ 
     //api_details
     let obj_ = {
       // axios api对象
@@ -304,7 +303,7 @@ export function usedetailData(route) {
     params.gcuuid = send_gcuuid;
     let obj_ = {
       // axios api对象
-      axios_api: MenuData.is_esports()
+      axios_api: (MenuData.is_esports()||[100,101,102,103].includes(+route_parmas.value.csid))
         ? api_details.get_match_odds_info_ES
         : get_detail_list,
       // axios api对象参数
