@@ -6,8 +6,8 @@
   <div style="display: none;">{{ MatchDataBaseH5.data_version.version }}</div>
   <div style="display: none;">{{BetData.bet_data_class_version}}</div>
   <div style="display: none;">{{UserCtr.user_version}}</div>
-  <div class="odd-column-item" :class="odds_class_object()" @click.stop="item_click3" :id="dom_id_show && `list-${lodash.get(odd_item, 'oid')}`">
-    <!-- 占位  或者  关盘 (列表简单版时非足球赛事角球菜单时设置为关盘)-->
+  <div class="odd-column-item" :class="odds_class_object()" @click.stop="item_click3">
+    <!-- 占位  或者  关盘 (列表简单版时非足球赛事角球菜单时设置为关盘) :id="dom_id_show && `list-${lodash.get(odd_item, 'oid')}`"-->
     <div class="item-inner 1" v-if="is_show" >
       <template  v-if="is_show_lock">
         -
@@ -289,22 +289,34 @@ watch(() => props.match?.hps, () => {
   }
 }, { deep:true })
 
+// 重置红升绿降
+const reset_up_down = () => {
+  if (timer_.value) clearTimeout(timer_.value)
+  timer_.value = setTimeout(() => {
+    is_up.value = false
+    is_down.value = false
+    clearTimeout(timer_.value)
+    timer_.value = null
+  }, 3000)
+}
+
 /**
  * @description: 不是锁
  * @return boolean
  */
 const no_lock = () => {
   let result = false;
+  const value = odd_s.value
   if(props.placeholder == 1){
     result = true;
   }
-  else if(is_close(odd_s.value)){
+  else if(is_close(value)){
     result = true;
   }
-  else if(is_fengpan(odd_s.value) && (!odd_item.value.on || odd_item.value.on == 0)){
+  else if(is_fengpan(value) && (!odd_item.value.on || odd_item.value.on == 0)){
     result = true;
   }
-  else if(is_fengpan(odd_s.value) || get_obv_is_lock(odd_item.value)){
+  else if(is_fengpan(value) || get_obv_is_lock(odd_item.value)){
     result = true;
   }
   return !result;
@@ -330,9 +342,11 @@ const get_odd_append_value = (ol_item) => {
   odd_append_value.value = compute_value_by_cur_odd_type(ol_item.ov,ol_item._hpid,ol_item._hsw,props.match.csid)
   
 }
+
 const arrived10_handle = () => {
   props.is_vr_lock && (virtual_odds_state.value = 1);
 }
+
 // 获取 投注项数据，
 const get_odd_status = () => {
   if(!odd_item.value) return 3;
@@ -353,49 +367,38 @@ const get_odd_status = () => {
 const transfer_on = (odd_item) => {
   // console.log(1111111)
 
-  const current_tab_item_id = lodash.get(props.current_tab_item, 'id')
+  const current_tab_item_id = +lodash.get(props.current_tab_item, 'id')
   
-  let on = odd_item.onb || odd_item.on;
+  let on = odd_item?.onb || odd_item?.on;
   // 根据单子 55237 把增加下面逻辑
   if(MenuData.is_vr()){
-    on = odd_item.on || odd_item.onb;
+    on = odd_item?.on || odd_item?.onb;
   }
 
-  if (props.match.csid == 1) {
-    // 5分钟玩法
-    if ([19].includes(current_tab_item_id) ){
-      return odd_item.onb || odd_item.on;
-    }
+  // 5分钟玩法
+  if (props.match.csid == 1 && [19].includes(current_tab_item_id) ){
+    return odd_item?.onb || odd_item?.on;
+  }  
+  if(props.match.csid == 1 && [17].includes(current_tab_item_id) ){
     // 15分钟玩法
-    if([17].includes(current_tab_item_id) ){
-      if (['Over', 'Under'].includes(odd_item.ot)) return odd_item.on || odd_item.onb;
-      return odd_item.onb || odd_item.on;
-    }
+    return ['Over', 'Under'].includes(odd_item?.ot) ? odd_item?.on || odd_item?.onb : odd_item?.onb || odd_item?.on
+  }
+  if(props.match.csid == 1 && [18].includes(current_tab_item_id) ){
     // 波胆
-
-    if([18].includes(current_tab_item_id) ){
-      on = odd_item.ot
-      if(odd_item.ot == 'Other' && ['zh', 'tw'].includes(lang.value)){
-        on = '其他'
-      }
-    }
+    on = odd_item?.ot
+    if (odd_item?.ot == 'Other' && ['zh', 'tw'].includes(lang.value)) on = '其他'
   }
 
   let color = ''
-  if(is_fengpan(odd_s.value) || get_obv_is_lock(odd_item)){
-  } else{
-    color = 'var(--qq-color-fs-color-13)';
-  }
-  
-  // 特色组合玩法盘口字体颜色
   let on_value = null
-  if ([11].includes(current_tab_item_id) && odd_item.on) {
-    if (lang.value === 'th') on = on && on.replace(/\s+/g, "")
-    on_value = `<span style="color: var(--q-color-fs-color-135);padding-left: ${lang.value === 'th' ? 0 : '3px'}">${odd_item.on}</span>`
-  }
-  // 特殊组合玩法简化字段
-  if ([11].includes(current_tab_item_id) && ['pt'].includes(lang.value)) {
-    on = on && on.replace('Empate', 'Emp')
+
+  // 特色组合玩法盘口字体颜色 葡萄牙语 简化字段
+  if ([11].includes(current_tab_item_id)) {
+    if (odd_item?.on) {
+      on_value = `<span style="color: var(--q-color-fs-color-135);padding-left: ${lang.value === 'th' ? 0 : '3px'}">${odd_item?.on}</span>`
+    }
+    if (['th'].includes(lang.value)) on = on && on.replace(/\s+/g, "")
+    if (['pt'].includes(lang.value)) on = on && on.replace('Empate', 'Emp')
   }
   let replaced = on
   if(![18].includes(current_tab_item_id)){
