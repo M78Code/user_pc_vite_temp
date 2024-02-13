@@ -461,7 +461,9 @@
     "bet_process": "Processing",
     "bet_book_valid": "Expired",
     "bet_book_confirm": "Book",
-    "bet_book_canceled": "Cancelled"
+    "bet_book_canceled": "Cancelled",
+    "bet_max_booked_odds": "已为最高预约赔率值，请重新调整",
+    "bet_min_booked_odds": "预约赔率不能低于所对应的盘口赔率"
   },
   "bet_record": {
     "30day": "30 días",

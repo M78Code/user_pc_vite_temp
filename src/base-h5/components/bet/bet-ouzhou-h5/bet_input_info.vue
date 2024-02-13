@@ -109,7 +109,7 @@ onUnmounted(()=>{
 
 // 限额改变 修改限额内容
 const set_ref_data_bet_money = () => {
-    console.error('set_ref_data_bet_money')
+    // console.error('set_ref_data_bet_money')
     let value = props.item.playOptionsId
    
     const { min_money = 10, max_money = 8888, seriesOdds } = lodash_.get(BetViewDataClass.bet_min_max_money, `${value}`, {})

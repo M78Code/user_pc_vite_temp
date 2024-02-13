@@ -193,7 +193,7 @@ const set_ref_data_bet_money = () => {
     // 复试串关赔率
     ref_data.seriesOdds = seriesOdds
     // 限额改变 重置投注金额
-    ref_data.money = ''
+    ref_data.money = props.items.bet_amount || ''
 
     if(ref_data.show_quick){
         show_quick_amount(ref_data.show_quick)

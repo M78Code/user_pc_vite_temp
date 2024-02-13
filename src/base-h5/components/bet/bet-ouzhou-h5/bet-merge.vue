@@ -55,7 +55,6 @@ const set_is_bet_merge = () => {
 
 const open_toast = () => {
   // useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `<div>${i18n_t('tips.msg1')}</div><div>${i18n_t('tips.msg2')}</div>`)
-  console.log(111111111)
   alert.value = true;
 }
 
