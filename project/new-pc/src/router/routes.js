@@ -33,6 +33,18 @@ const routes = [
         name: "search",
         component: () => import('../pages/search/index.vue'),
       },
+      // 真人
+      {
+        path: "/real-person",
+        name: "realPerson",
+        component: () => import('../pages/real-person/index.vue'),
+      },
+      // 彩票
+      {
+        path: "/lottery",
+        name: "lottery",
+        component: () => import('../pages/lottery/index.vue'),
+      },
     ],
   },
   //赛事分析

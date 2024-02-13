@@ -35,7 +35,7 @@
             <div style="line-height: 1; flex: 1">
               <span class="menu-text">
                 <!-- 名字 {{ item }} -->
-                {{ BaseData.menus_i18n_map[item.mif || item.mi] || "" }}
+                {{ [3000,4000].includes(item.mi)?item.name:BaseData.menus_i18n_map[item.mif || item.mi] || "" }}
               </span>
             </div>
             <!-- 数字 显示    有些赛种不显示 -->
@@ -249,7 +249,7 @@ const lev_1_click = async (obj) => {
   }
 
   // 获取具体的二级玩法
-  if (( MenuData.is_today() || MenuData.is_zaopan()) && type != 2000)MenuData.set_post_menu_play_count(mi)
+  if (( MenuData.is_today() || MenuData.is_zaopan()) &&  ![2000,3000,4000].includes(type))MenuData.set_post_menu_play_count(mi)
 
   current_lv_1_mi.value = mi
   // current_lv_2_mi.value = get_lv_1_lv_2_mi(mi)
@@ -323,8 +323,23 @@ const lev_1_click = async (obj) => {
   //   root = 400
   //   MenuData.set_current_ball_type(left_obj.lv1_mi - 100)
   // } 
-  else {
-    root = mi.substr(mi.length-1,1) || 2;
+  else if([3000,4000].includes(mi)){
+    left_obj = {
+      lv1_mi: mi
+    }
+    MenuData.set_left_menu_result(left_obj)
+    //真人
+    if(mi == 3000){
+      router.push({name:'realPerson'});
+      return;
+    }
+    //彩票
+    if(mi == 4000){
+      router.push({name:'lottery'});
+      return;
+    }
+  }else{
+    root = mi.substr(String(mi).length-1,1) || 2;
     // 常规体育
     left_obj = {
       lv1_mi: mi,
@@ -341,6 +356,7 @@ const lev_1_click = async (obj) => {
     const sport_id = left_obj.lv1_mi?.substring(0,3) || 0;
     MenuData.set_current_ball_type(sport_id?+sport_id-100:'')
   }
+  
   MenuData.set_menu_root(root)
   // 不是列表页 点击列表菜单
   if(route.name != 'home'){
