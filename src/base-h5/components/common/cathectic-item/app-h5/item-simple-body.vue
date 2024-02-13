@@ -119,7 +119,7 @@ template {
   .body-title {
     display: flex;
     justify-content: space-around;
-    font-size: 0.17rem;
+    font-size: 15px;
     line-height: 3;
     span {
       white-space: nowrap;
@@ -133,6 +133,7 @@ template {
     padding: 0.1rem;
     border-radius: 0.1rem;
     color: var(--q-gb-t-c-14);
+    font-size: 14px;
     & > div {
       display: flex;
       font-weight: bold;
@@ -141,7 +142,7 @@ template {
   }
   .body-main {
     margin-top: 0.1rem;
-    font-size: .14rem;
+    font-size: 14px;
     p {
       line-height: 2;
       display: flex;
