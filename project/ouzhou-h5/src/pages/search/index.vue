@@ -94,7 +94,7 @@
 										<div style="display: flex;flex-direction: row; flex: 1">
 											<div class="flex_1"
 												v-if="lodash.get(i, 'hps[0].hl.length', 0) > 0 && lodash.get(i, 'hps[0].hl[0].ol[1].ov', '') && lodash.get(i, 'hps[0].hl[0].ol[1].os', '') === 1">
-												<div>{{ sports_id.includes(i.csid) ? lodash.get(i, 'hps[0].hl[0].ol[0].ot') === '1' ? i18n_t('ouzhou.bet_col.bet_col_1.bet_col_1') : i18n_t('ouzhou.bet_col.bet_col_1.bet_col_2') : lodash.get(i, 'hps[0].hl[0].ol[1].on', '') }}</div>
+												<div>{{ sports_id.includes(i.csid) ? lodash.get(i, 'hps[0].hl[0].ol[0].ot') === '1' ? i18n_t('ouzhou.bet_col.bet_col_1.bet_col_1') : i18n_t('ouzhou.bet_col.bet_col_1.bet_col_2') : lodash.get(i, 'hps[0].hl[0].ol[0].on', '') }}</div>
 												<div class="red">{{ get_odd_os(lodash.get(i, 'hps[0].hl[0].ol[0]')) }}</div>
 											</div>
 											<div class="flex_1" v-else>

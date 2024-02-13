@@ -10,16 +10,22 @@
       <span class="icon-delete del-info-icon"></span>
       <div class="del-info-name">{{ i18n_t('bet.delete_all') }}</div>
     </div>
-    <div class="del-info-select" @click.stop="switch_handle()">
-      <span class="del-info-name">{{ i18n_t('bet.bet_auto_msg_1') }}</span>
-      <img class="" v-if="BetData.bet_is_accept" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/select_a.svg`" alt="" />
-      <img class="" v-else :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/select_b.svg`" alt="" />
+    <div class="del-info-select" >
+      <img class="select select_a" @click.stop="switch_handle()" v-if="BetData.bet_is_accept" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/select_a.svg`" alt="" />
+      <img class="select select_b" @click.stop="switch_handle()" v-else :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/select_b.svg`" alt="" />
+      <span class="del-info-name select_del-info-name"  @click.stop="switch_handle()">{{ i18n_t('bet.bet_auto_msg_1') }}</span>
+
+      <div class="question_mark_box">
+        <img class="question_mark" @click="question_handle()" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/question_mark.png`" alt="" />
+      </div>
     </div>
+
   </div>
 </template>
 <script setup>
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { useMittEmit, MITT_TYPES,LOCAL_PROJECT_FILE_PREFIX,UserCtr } from "src/output/index.js";
+import { useQuasar } from 'quasar'
 
 const clear = () => {
   BetData.set_clear_bet_info()
@@ -28,6 +34,18 @@ const clear = () => {
 
 const switch_handle = () => {
   BetData.set_bet_is_accept(!BetData.bet_is_accept)
+}
+
+const $q = useQuasar()
+
+const question_handle = ()=>{
+  console.log("$q===>", $q)
+  // $q.dialog({
+  //       title: 'Confirm',
+  //       message: 'Would you like to turn on the wifi?',
+  //       cancel: true,
+  //       persistent: true
+  // })
 }
 
 </script>
@@ -109,8 +127,28 @@ const switch_handle = () => {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  img{
-    margin-left: .1rem;
+  .select{
+    margin-left: -0.1rem;
   }
+
+  .select_del-info-name{
+    margin-left: 0.05rem;
+  }
+
+  .question_mark_box{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    // background-color: red;
+    .question_mark{
+      width: 0.14rem;
+      height: 0.1365rem;
+      margin-left: .1rem;
+    }
+  }
+
 }
+
+
+
 </style>
