@@ -1509,9 +1509,8 @@ export default {
       }
     }
     .score-se-inner{
-        width: 100%;
         height: auto;
-        max-width: 100%;
+        max-width: 318px;
         .score-se-inner2{
           height: 25px;
           justify-content: end;
