@@ -966,7 +966,8 @@ const get_ol_length = (hp_item_obj, hp_i_i) => {
     if ([3, 30].includes(id)) return 2
     if ([1, 4, 11, 14, 16].includes(+props.match.csid)) {
       if (props.match.hps && props.match.hps[hp_i_i]) {
-        if (props.match.hps[hp_i_i].hpid == 1) {
+        const default_hpid = lodash.get(props.match.hps, `[${hp_i_i}].default_hpid`, 0)
+        if (props.match.hps[hp_i_i].hpid == 1 || [1,17].includes(default_hpid)) {
           return 3;
         }
       }

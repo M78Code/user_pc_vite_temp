@@ -9,7 +9,7 @@ const hps_15_minute = TemplateCommon.hps_15_minute
 export const template_1_main = [
   // 全场独赢
   {
-    hpid: 1,
+    default_hpid: 1,
     ols: [
       {  _hpid: 1, ot: '1' },
       {  _hpid: 1, ot: '2' },
@@ -18,7 +18,6 @@ export const template_1_main = [
   },
   // 全场让球
   {
-    hpid: 4,
     ols: [
       {  _hpid: 4, ot: '1' },
       {  _hpid: 4, ot: '2' },
@@ -27,7 +26,6 @@ export const template_1_main = [
   },
   // 全场大小
   {
-    hpid: 2,
     ols: [
       {  _hpid: 2, ot: 'Over' },
       {  _hpid: 2, ot: 'Under' },
@@ -36,7 +34,7 @@ export const template_1_main = [
   },
   // 半场独赢
   {
-    hpid: 17,
+    default_hpid: 17,
     ols: [
       {  _hpid: 17, ot: '1' },
       {  _hpid: 17, ot: '2' },
@@ -45,7 +43,6 @@ export const template_1_main = [
   },
   // 半场让球
   {
-    hpid: 19,
     ols: [
       {  _hpid: 19, ot: '1' },
       {  _hpid: 19, ot: '2' },
@@ -54,7 +51,6 @@ export const template_1_main = [
   },
   // 半场大小
   {
-    hpid: 18,
     ols: [
       {  _hpid: 18, ot: 'Over' },
       {  _hpid: 18, ot: 'Under' },
