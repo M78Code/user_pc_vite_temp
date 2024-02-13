@@ -1,7 +1,12 @@
 <template>
    <div v-show="false">{{ BetData.bet_data_class_version }}</div>
   <div class="component odd-ol-item" v-show="value.os != 3"
-    :class="[{ 'active': BetData.bet_oid_list.includes(value['oid'] ) }, status, type, calcOlResult(value['result'])]"
+    :class="[{
+      'active': BetData.bet_oid_list.includes(value['oid'] ),
+      'placehold': isPlacehold,
+      },
+      status, type, calcOlResult(value['result']),
+    ]"
   >
     <div class="icontainer" v-if="vif"
       :class="{'ol-v-hide': isLock}"
@@ -74,14 +79,22 @@ const router = useRouter();
 
 /** @type {{value: TYPES.OlResult|TYPES.Ol,type?: TYPES.OlItemType}} */
 const props = defineProps({
-  value:Object,
+  value:{
+    type:Object,
+    default: {
+      default: true
+    }
+  },
   type:{
     type: String,
     required: false,
-    default: "default"
+    default(){
+     return "default"
+    }
   },
 })
 const sportId = MatchDetailCalss.params.sportId
+const isPlacehold = computed(()=> props.value.default )
 
 const getNameBySportMenuId = ()=>{
   const csid = VR_CTR.state.virtual_current_sub_menuid;
@@ -108,7 +121,7 @@ const computedOlName = (olName)=>{
 }
 
 // @ts-ignore
-const vif =computed(()=>props.value._mhs == 0||props.value._mhs == 11 || props.value._mhs == 1)
+const vif =computed(()=> isPlacehold || props.value._mhs == 0||props.value._mhs == 11 || props.value._mhs == 1)
 const olName = (function(){
   let olName = '';
   if(props.type == 'fill'){
@@ -156,6 +169,9 @@ const textOlOU = (function(){
 
 const isLock = computed(() => {
   // console.log("props.value====", props.value)
+  if(props.value.default){
+    return true;
+  }
   if (props.value) {
     // @ts-ignore
     const { _mhs,_hs } = props.value
@@ -392,6 +408,11 @@ function resetStatus() {
     }
     .ol-content{
       flex-basis: 30%;
+    }
+  }
+  &.placehold{
+    .ol-lock{
+      visibility: hidden;
     }
   }
 }

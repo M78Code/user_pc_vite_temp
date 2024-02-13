@@ -97,6 +97,8 @@ const is_show_mask = ref(false)
 const handler_version_change = (val = 2) => {
     change_is_show_mask(true)
     useMittEmit(MITT_TYPES.EMIT_SHOW_SKELETON_DIAGRAM, true)
+    // 重置赛事位置
+    useMittEmit(MITT_TYPES.EMIT_RESET_POSITION)
     UserCtr.set_standard_edition(val)
     useMittEmit(MITT_TYPES.EMIT_GOT_TO_TOP);
     // MatchFold.clear_fold_info()
@@ -138,7 +140,8 @@ const handler_sort_change = async(val) => {
     // }
     UserCtr.set_sort_type(val);
     reset_is_show_mask()
-
+    // 重置赛事位置
+    useMittEmit(MITT_TYPES.EMIT_RESET_POSITION)
 }
 
 // 是否显示蒙层

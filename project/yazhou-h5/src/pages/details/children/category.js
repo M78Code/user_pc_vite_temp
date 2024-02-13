@@ -7,7 +7,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";
 // import websocket_data from "src/base-h5/mixins/websocket/data/skt_data_info.js";
 // 引入投注逻辑mixin
 // import betting from "src/base-h5/mixins/betting/betting.js";
-import {MatchDataWarehouse_H5_Detail_Common,format_plays, MatchDetailCalss} from "src/output/index"; 
+import {MatchDataWarehouse_H5_Detail_Common,format_plays, MatchDetailCalss, create_gcuuid} from "src/output/index"; 
 // 引入redux
 import store from "src/store-redux/index.js";
 
@@ -337,7 +337,7 @@ export const category_info = (category_arr=[]) => {
       : get_menu_type.value == 3000
       ? api_common.get_DJ_matchDetail_getMatchOddsInfo
       : api_common.get_matchDetail_getMatchOddsInfo;
-    component_data.send_gcuuid = UserCtr.uid
+    component_data.send_gcuuid = create_gcuuid()
     params.cuid = component_data.send_gcuuid;
     let temp = [];
     // 记录是否走的是缓存
@@ -688,7 +688,7 @@ export const category_info = (category_arr=[]) => {
       : get_menu_type == 3000
       ? api_common.get_DJ_matchDetail_getMatchOddsInfo
       : api_common.get_matchDetail_getMatchOddsInfo;
-      component_data.send_gcuuid = UserCtr.uid;
+      component_data.send_gcuuid = create_gcuuid();
     params.cuid = component_data.send_gcuuid;
     http(params)
       .then((res) => {

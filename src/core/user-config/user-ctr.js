@@ -133,7 +133,7 @@ class UserCtr {
     }
     this.callbackUrl = ''
  
-    
+    this.user_bet_prefer = ''
 
     // 常规体育的 图片地址 
     this.common_img_domain = ''
@@ -385,6 +385,8 @@ class UserCtr {
     // 设置用户信息，存入localStorage中
     // this.user_info.token = this.user_token
     this.set_user_base_info(this.user_info);
+
+    this.set_user_bet_prefer(user_obj.userBetPrefer)
     
     this.is_invalid = false;
     this.user_logined_id = user_obj.userId
@@ -480,6 +482,21 @@ class UserCtr {
         is_try&&this.get_balance(false)//走一次补偿逻辑
         console.error(err);
       });
+  }
+
+  // 获取用户的 自动接受更好赔率
+  get_user_bet_prefer(){
+    return this.user_bet_prefer
+  }
+
+  // 设置用户行为 自动接受更好赔率
+  set_user_bet_prefer(val){
+    this.user_bet_prefer = val;
+  }
+  // 设置接口 自动接受更好赔率
+  set_api_user_bet_prefer(val){
+    this.user_bet_prefer = val;
+    api_betting.record_user_preference({userBetPrefer: val});
   }
   
   /**
