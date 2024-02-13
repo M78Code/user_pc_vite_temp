@@ -139,7 +139,7 @@ const question_handle = ()=>{
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    background-color: red;
+    // background-color: red;
     .question_mark{
       width: 0.14rem;
       height: 0.1365rem;
