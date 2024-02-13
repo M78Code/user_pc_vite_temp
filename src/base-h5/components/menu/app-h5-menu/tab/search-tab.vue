@@ -14,14 +14,16 @@
                 <li ref="searchTab" v-for="(item, index) in dataList" :class="{ active: activeOn === index }"  :key="index"
                     @click="changeTab(index,$event,item)">
                     <!-- <img v-show="item.img" :src="item.img" /> -->
+                    <!--黑夜版图片目前也用的日间版 -->
+                    <!-- :style="compute_css_obj({key: activeOn === index ? 'league-sport-active-image' :UserCtr.theme == 'theme-1'?'league-sport-icon-atnight-image':'league-sport-icon-image', position:format_type(item)})"></span> -->
                     <span v-if="item.tid !== '0'" class="sport-icon-wrap"
-                      :style="compute_css_obj({key: activeOn === index ? 'league-sport-active-image' :UserCtr.theme == 'theme-1'?'league-sport-icon-atnight-image':'league-sport-icon-image', position:format_type(item)})"></span>
+                      :style="compute_css_obj({key: activeOn === index ? 'league-sport-active-image' :'league-sport-icon-image', position:format_type(item)})"></span>
                     {{ item.name }}
                 </li>
-							<div v-show="!drawerRight" class="search-tab-content-img" @click="handler_search"
-							>
-									<img :src="search" />
-							</div>
+                <div v-show="!drawerRight" class="search-tab-content-img" @click="handler_search"
+                >
+                        <img :src="search" />
+                </div>
             </ul>
             <div class="search" v-show="drawerRight">
                 <input class="search-input" type="text" v-model="keyword" @input="handler_search_match" :placeholder="i18n_t('ouzhou.search.placeholder')" />
@@ -59,7 +61,7 @@ import {scrollMenuEvent} from "../utils";
 // import  screenModal from './screen-modal.vue';
 // import { MenuData } from "src/output/index.js";
 // import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt";
-import { theme_list, theme_map } from "src/core/theme/"
+// import { theme_list, theme_map } from "src/core/theme/"
 import UserCtr from "src/core/user-config/user-ctr.js"
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 import { i18n_t, compute_css_obj,league_sprite_images_postion,MenuData  } from "src/output/index.js";
