@@ -13,7 +13,7 @@
     <div class="del-info-select" >
       <img class="select select_a" @click.stop="switch_handle()" v-if="BetData.bet_is_accept" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/select_a.svg`" alt="" />
       <img class="select select_b" @click.stop="switch_handle()" v-else :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/select_b.svg`" alt="" />
-      <span class="del-info-name"  @click.stop="switch_handle()">{{ i18n_t('bet.bet_auto_msg_1') }}</span>
+      <span class="del-info-name select_del-info-name"  @click.stop="switch_handle()">{{ i18n_t('bet.bet_auto_msg_1') }}</span>
 
       <div class="question_mark_box">
         <img class="question_mark" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/question_mark.png`" alt="" />
@@ -116,6 +116,10 @@ const switch_handle = () => {
   align-items: center;
   .select{
     margin-left: -0.1rem;
+  }
+
+  .select_del-info-name{
+    margin-left: 0.05rem;
   }
 
   .question_mark_box{
