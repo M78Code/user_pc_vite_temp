@@ -148,6 +148,10 @@ onUnmounted(() => {
     .content {
       color: var(--q-gb-t-c-3);
       font-size: .14rem;
+      :deep(ul) {
+        list-style: disc;
+        padding: .2rem !important;
+      }
     }
     .btn {
       height: .42rem;
