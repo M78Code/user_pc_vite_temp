@@ -62,7 +62,7 @@
                     </div>
                 </div>
                 <!-- 锁盘状态下 提示 赔率已变更  -->
-                <div v-if="items.ol_os == 4 || items.hl_hs == 11 || items.mid_mhs == 11" :class="items.red_green" class="bet-serial font12">盘口值已变更,赔率已变更</div>
+                <div v-if="items.red_green" :class="items.red_green" class="bet-serial font12">赔率已变更</div>
                 <!-- 电子赛事不支持串关 -->
                 <div v-if="items.is_serial && !BetData.is_bet_single" class="bet-serial font12">不支持串关投注</div>
             </div>

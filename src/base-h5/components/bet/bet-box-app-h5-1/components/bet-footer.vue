@@ -6,8 +6,11 @@
   
   <!-- 自动接受更好的赔率 -->
   <div class="accept" :class="UserCtr.user_bet_prefer == 1 ? 'active':'' " @click="set_bet_is_accept()" v-if="BetViewDataClass.bet_order_status == 1">
-      自动接受更好的赔率 
+      自动接受更好的赔率
   </div>
+
+  <!-- 盘口值已变更,赔率已变更 -->
+  <div class="f-c-c font12 text-ff7" v-if="BetData.bet_is_accept">盘口值已变更,赔率已变更</div>
 
   <div class="f-e-c bet-submit" v-if="BetViewDataClass.bet_order_status == 1">
 
@@ -23,7 +26,8 @@
       </div>
       <div class="bet-info f-b-c">
         <div class="middle font16" v-if="!set_special_state(BetData.bet_data_class_version)">
-          {{ i18n_t('bet.betting') }}
+          <span class="text-ff7" v-if="BetData.bet_is_accept">接受变更并投注</span>
+          <span v-else>{{ i18n_t('bet.betting') }} </span>
           <!-- 单关 -->
           <span class="yb-info-money font14" v-if="BetData.is_bet_single"> {{ i18n_tc('app_h5.bet.bet_win',{"total": bet_win_money(BetData.bet_data_class_version) }) }}</span>
           <span class="yb-info-money font14" v-else>{{ i18n_t('bet.sum') }}{{bet_total(BetViewDataClass.bet_view_version) }}</span>
@@ -106,13 +110,15 @@ onMounted(()=>{
 
 // 滑动监听
 const set_touch_move_bet = event => {
-  event.preventDefault();
-  let fit = lodash_.get(event,'target.className','')
-  get_leng_px()
-  if(fit == 'bet-box'){
-    let page_x = lodash_.get(event,'changedTouches[0].pageX',0)- ref_data.bet_leng
-    if(page_x > 5 && page_x < ref_data.move_leng){
-      ref_data.basic_model = page_x
+  if(event){
+    event.preventDefault();
+    let fit = lodash_.get(event,'target.className','')
+    get_leng_px()
+    if(fit == 'bet-box'){
+      let page_x = lodash_.get(event,'changedTouches[0].pageX',0)- ref_data.bet_leng
+      if(page_x > 5 && page_x < ref_data.move_leng){
+        ref_data.basic_model = page_x
+      }
     }
   }
 }
@@ -130,6 +136,10 @@ const set_touch_end_bet = event => {
   timer = setTimeout(() => {
     get_leng_px()
     let fit = lodash_.get(event,'target.className','')
+    // if( BetData.bet_is_accept ){
+    //   init_slider_config()
+    //   return
+    // }
     if(fit == 'bet-box' && ref_data.count < 1){
       ref_data.count++
       let page_x = lodash_.get(event,'changedTouches[0].pageX',0) - ref_data.bet_leng
