@@ -16,7 +16,7 @@
       <span class="del-info-name select_del-info-name"  @click.stop="switch_handle()">{{ i18n_t('bet.bet_auto_msg_1') }}</span>
 
       <div class="question_mark_box">
-        <img class="question_mark" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/question_mark.png`" alt="" />
+        <img class="question_mark" @click="question_handle()" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/question_mark.png`" alt="" />
       </div>
     </div>
 
@@ -25,6 +25,7 @@
 <script setup>
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { useMittEmit, MITT_TYPES,LOCAL_PROJECT_FILE_PREFIX,UserCtr } from "src/output/index.js";
+import { useQuasar } from 'quasar'
 
 const clear = () => {
   BetData.set_clear_bet_info()
@@ -33,6 +34,18 @@ const clear = () => {
 
 const switch_handle = () => {
   BetData.set_bet_is_accept(!BetData.bet_is_accept)
+}
+
+const $q = useQuasar()
+
+const question_handle = ()=>{
+  console.log("$q===>", $q)
+  // $q.dialog({
+  //       title: 'Confirm',
+  //       message: 'Would you like to turn on the wifi?',
+  //       cancel: true,
+  //       persistent: true
+  // })
 }
 
 </script>
@@ -126,6 +139,7 @@ const switch_handle = () => {
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    background-color: red;
     .question_mark{
       width: 0.14rem;
       height: 0.1365rem;
