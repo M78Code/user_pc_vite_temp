@@ -35,6 +35,7 @@ const { PROJECT_NAME } = BUILDIN_CONFIG ;
 
 let time_out = null
 let time_api_out = null
+let time_accept_out = null
 let count_api = 0 
 // 是否点击了投注按钮
 let submit_btn = false
@@ -371,9 +372,9 @@ const get_lastest_market_info = (type) => {
                     if(obj.matchInfoId == item.matchId && obj.playId == item.playId && market.placeNum == item.placeNum){
                         // bug 需要遍历 ot == oddsType
                         let market_odds_list = lodash_.get(market,'marketOddsList',[]) || []
-
+                        console.error('ws那边做了替换为最新的:', item.playOptionsId)
                         // playOptionsId 已经在 ws那边做了替换为最新的
-                        let odds = market_odds_list.find(page=> page.oddsType == item.ot && page.id == item.playOptionsId) || {}
+                        let odds = market_odds_list.find(page=> page.oddsType == item.ot) || {}
 
                         if( odds.id ) {
                             // 替换新id
@@ -385,17 +386,38 @@ const get_lastest_market_info = (type) => {
                             bet_item.ol_os = odds.oddsStatus
                             // 盘口状态
                             bet_item.hl_hs = market.status
-                        
 
                             // ws断连后 需要对比数据 进行投注
-                            // 坑位变更 赔率也变 进行锁盘处理
-                            if( type == 'submit_bet' && bet_item.odds != odds.oddsValue){
-                                bet_item.ol_os = 4
+                            
+                            if( type == 'submit_bet' ){
+                                // 坑位变更 赔率也变 进行锁盘处理
+                                // 盘口状态，玩法级别 0：开 1：封 2：关 11：锁
+                                if( ( bet_item.odds != odds.oddsValue ) || ( bet_item.ot != odds.oddsType ) ){
+                                    // bet_item.ol_os = 4
+                                    // bet_item.hl_hs = 11
+                                    BetData.set_bet_is_accept(true)
+                                    // 投注滑块重置到初始状态
+                                    useMittEmit(MITT_TYPES.EMIT_INIT_SLIDER_CONFIG)
+
+                                }else{
+                                    BetData.set_bet_is_accept(false)
+                                }
+                                console.error('sssssss',BetData.bet_is_accept)
+                                // 投注项id
+                                bet_item.playOptionsId = odds.id
+                                // 盘口id
+                                bet_item.marketId = market.id
+                                // 赔率 10w位
+                                bet_item.odds = odds.oddsValue
+                                // 最终赔率
+                                bet_item.oddFinally = compute_value_by_cur_odd_type(odds.oddsValue,obj.playId, item.odds_hsw, item.csisportIdd)
+                                
+                                clearTimeout(time_accept_out)
+                                time_accept_out = setTimeout(()=>{
+                                    BetData.set_bet_is_accept(false)
+                                },5000)
                             }
-                            // 盘口状态，玩法级别 0：开 1：封 2：关 11：锁
-                            if(type == 'submit_bet' && bet_item.ot != odds.oddsType){
-                                bet_item.hl_hs = 11
-                            }
+                           
                             // 预约投注编辑中 盘口赔率发生变化
                             if( BetData.bet_pre_appoint_id == bet_item.playOptionsId ){
                                 BetData.set_bet_appoint_obj_playOptionId(odds.id)
@@ -689,8 +711,9 @@ const submit_handle = () => {
 // 投注前获取最新的 投注信息 赔率 坑位 等
 // 投注已经准备好了 拿最新的数据 去投注
 const submit_handle_lastest_market = () => {
-    // 
-    if(submit_btn) return
+    // submit_btn 点击事件
+    // BetData.bet_is_accept 盘口值和赔率更新 需要用户重新点击
+    if(submit_btn || BetData.bet_is_accept ) return
     // 单关才有预约投注
     // 是否预约投注  1 预约  0 不预约
     //  是否合并投注  bet_single_list。length  0:1个 1:多个
@@ -1017,7 +1040,8 @@ const set_error_message_config = (res ={},type,order_state) => {
                     break;
             }
            
-        }else{
+        } else {
+            if (BetViewDataClass.bet_order_status == 3) return // 如果已经投注成功 再设置错误提示 没有意义
             obj.message = BetViewDataClass.set_code_message_config(res.code,res.message)
         }
     }
