@@ -35,6 +35,12 @@ class MatchMeta {
     this.axios_cancel = {}
     // 接口 timer
     this.axios_debounce_timer = null
+    // 赛事新增防抖
+    this.debounce_add_match = lodash.debounce(this.handle_ws_add_match, 2500)
+    // 赛事移除防抖
+    this.debounce_remove_match = lodash.debounce(this.handle_ws_remove_match, 1500)
+    // 获取赔率防抖
+    this.debounce_get_hps = lodash.debounce(this.handle_ws_get_hps, 2500)
   }
 
   init() {
@@ -517,7 +523,7 @@ class MatchMeta {
     if (!this.is_current_http_key(http_key)) return
     const code = lodash.get(res, 'code', 0)
     if (+code !== 200) {
-      if (code === '0401038') useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('msg.msg_nodata_22')}`)
+      this.set_show_limiting_toast_tips(code)
       this.set_page_match_empty_status({ state: true, type: code == '0401038' ? 'noWifi' : 'noMatch' });
       return []
     }
@@ -559,7 +565,7 @@ class MatchMeta {
     if (!this.is_current_http_key(http_key)) return []
     const code = lodash.get(res, 'code', 0)
     if (+code !== 200) {
-      if (code === '0401038') useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('msg.msg_nodata_22')}`)
+      this.set_show_limiting_toast_tips(code)
       this.set_page_match_empty_status({ state: true, type: code == '0401038' ? 'noWifi' : 'noMatch' });
       return []
     }
@@ -616,7 +622,7 @@ class MatchMeta {
     const res = await this.handler_axios_loop_func({ http: api_common.get_match_result_api, params: target_params, key: 'get_match_result_api' })
     const code = lodash.get(res, 'code', 0)
     if (!this.is_current_http_key(http_key) || +code !== 200) {
-      if (code === '0401038') useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('msg.msg_nodata_22')}`)
+      this.set_show_limiting_toast_tips(code)
       this.set_page_match_empty_status({ state: true, type: res.code == '0401038' ? 'noWifi' : 'noMatch' });
       return []
     }
@@ -653,7 +659,7 @@ class MatchMeta {
     // const res = await api_common.get_virtual_result({"sportType":"1011","startTime":1703520000000,"endTime":1703606399000,"isVirtualSport":1,"page":{"size":100,"current":1},"tournamentId":"23622704245395458","batchNo":""})
     const code = lodash.get(res, 'code', 0)
     if (+code !== 200) {
-      if (code === '0401038') useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('msg.msg_nodata_22')}`)
+      this.set_show_limiting_toast_tips(code)
       this.set_page_match_empty_status({ state: true, type: code == '0401038' ? 'noWifi' : 'noMatch' });
       return []
     }
@@ -703,7 +709,7 @@ class MatchMeta {
     if (!this.is_current_http_key(http_key)) return
     const code = lodash.get(res, 'code', 0)
     if (+code !== 200) {
-      if (code === '0401038') useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('msg.msg_nodata_22')}`)
+      this.set_show_limiting_toast_tips(code)
       this.set_page_match_empty_status({ state: true, type: code == '0401038' ? 'noWifi' : 'noMatch' });
       return []
     }
@@ -723,7 +729,7 @@ class MatchMeta {
     })
     if (+res.code !== 200) return this.set_page_match_empty_status({ state: true });
     const list = lodash.get(res, 'data', [])
-    return this.handler_match_list_data({ list: list, is_virtual: false, type: 1 })
+    return this.handler_match_list_data({ list: list, is_virtual: false, type: 1, source: 'details' })
   }
 
   /**
@@ -762,7 +768,7 @@ class MatchMeta {
     const list = lodash.get(res, 'data', [])
     const length = lodash.get(list, 'length', 0)
     if (code === '0401038') {
-      useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('msg.msg_nodata_22')}`)
+      this.set_show_limiting_toast_tips(code)
       if (this.match_mids.length < 1) return this.set_page_match_empty_status({ state: true, type: 'noWifi' });
       return []
     }
@@ -1115,6 +1121,15 @@ class MatchMeta {
     useMittEmit(MITT_TYPES.EMIT_IS_SHOW_MASK, false);
     useMittEmit(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, { state: state, type: type });
   }
+
+  /**
+   * @description 限频提示
+   * @param {*} code 
+   */
+  set_show_limiting_toast_tips (code = '') {
+    if (code == '0401038' && this.match_mids.length < 1) useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('msg.msg_nodata_22')}`)
+  }
+
   /**
    * @description 设置骨架图的显示状态
    * @param {*} val 
@@ -1213,7 +1228,7 @@ class MatchMeta {
    */
   handler_match_list_data(config) {
 
-    const { list = [], type = 1, is_virtual = true, warehouse = MatchDataBaseH5, scroll_top = 0, merge = '' } = config
+    const { list = [], type = 1, is_virtual = true, warehouse = MatchDataBaseH5, scroll_top = 0, merge = '', source = '' } = config
 
     const is_classify = this.get_is_classify()
 
@@ -1307,6 +1322,9 @@ class MatchMeta {
         this.compute_page_render_list({ scrollTop: scroll_top, merge, type })
       }
     }
+
+    // 赛果详情
+    if (source === 'details') this.handle_submit_warehouse({ list: matchs_data, warehouse })
 
     // 重置数据为空状态
     this.set_page_match_empty_status({ state: false })
@@ -1445,7 +1463,10 @@ class MatchMeta {
     })
   }
 
-  set_current_match_mids(mids) {
+  /**
+   * @description 设置激活的 赛事mids
+   */
+  set_current_match_mids(mids = []) {
     this.match_mids = mids
   }
 
@@ -1646,7 +1667,8 @@ class MatchMeta {
    * @param {*} cmd 
    */
   handle_ws_directive({ cmd = '', data = {} }) {
-    console.log('--------wswswswswswsws-cmd:', cmd, data)
+    if (!['C109', 'C303', 'C114', 'C101', 'C102', 'C104', 'C901'].includes(cmd)) return
+    // console.log('--------wswswswswswsws-cmd:', cmd, data)
     // 赛事新增
     if (['C109'].includes(cmd)) {
       const { cd = [] } = data
@@ -1658,16 +1680,43 @@ class MatchMeta {
         if (MenuData.is_kemp()) {
           // this.get_champion_match()
         } else {
-          this.get_target_match_data({ scroll_top: this.prev_scroll, md: this.http_params.md })
+          this.debounce_add_match()
+          // this.get_target_match_data({ scroll_top: this.prev_scroll, md: this.http_params.md })
         }
       }
     }
-    // 调用 mids  接口
-    if (['C303', 'C114'].includes(cmd)) {
+    // 赛事移除
+    if (['C101', 'C102', 'C104', 'C901'].includes(cmd)) {
+      const { cd: { mid = '', mhs = 0, mmp = 1, ms = 110 } } = data
+      if (mhs == 2 || mmp == '999' || !this.is_valid_match(ms)) {
+        // match_mids是可视区域id
+        const active_index = this.match_mids.findIndex(t => t === mid)
+        // active_index>-1&& this.match_mids.splice(active_index,1)
+        const index = this.complete_matchs.findIndex(t => t.mid == mid)
+        index > -1 && this.complete_matchs.splice(index, 1)
+        if (active_index > -1) this.debounce_remove_match()
+      }
+    }
+    // 调用 mids  接口 C303 先注释 推送太频繁 防抖也没用
+    if (['C114'].includes(cmd)) {
       const { mid = '' } = data.cd || {};
       let _mids = String(mid).split(',')
-      if (_mids.some((_mid) => this.match_mids.includes(_mid))) this.get_match_base_hps_by_mids({})
+      if (_mids.some((_mid) => this.match_mids.includes(_mid)))  this.debounce_get_hps()
     }
+  }
+  // 赛事新增
+  handle_ws_add_match () {
+    this.is_ws_trigger = true
+    this.get_target_match_data({ scroll_top: this.prev_scroll, md: this.http_params.md })
+  }
+  // 删除赛事
+  handle_ws_remove_match () {
+    this.is_ws_trigger = true
+    this.handler_match_list_data({ list: this.complete_matchs, scroll_top: this.prev_scroll, merge: 'cover', type: 2 })
+  }
+  // 获取赔率
+  handle_ws_get_hps () {
+    this.get_match_base_hps_by_mids({})
   }
   /**
    * @description 获取赛事赔率
@@ -1811,7 +1860,6 @@ class MatchMeta {
     // ws 订阅
     this.set_ws_active_mids({ list: list, warehouse })
     // 设置仓库渲染数据
-    // this.is_ws_trigger = false
     warehouse.set_list(result)
     this.is_ws_trigger = false
     this.update_is_http_update_info()
@@ -1828,16 +1876,18 @@ class MatchMeta {
     // ws 订阅
     // this.set_ws_active_mids({ list: list, warehouse })
     // ws 触发的赛事新增 赔率不需要重置
+    let result = []
     if (this.is_ws_trigger) {
-      list.map(t => {
+      result = list.map(t => {
         const hps_data = this.no_reset_attribute(t, warehouse)
         return Object.assign({}, t, hps_data)
       })
     } else {
+      result = list
       warehouse.clear()
     }
     // 设置仓库渲染数据
-    warehouse.set_list(list)
+    warehouse.set_list(result)
     this.is_ws_trigger = false
     this.get_match_base_hps_by_mids({ })
   }

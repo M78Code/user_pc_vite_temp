@@ -29,7 +29,11 @@
       "point": "Point",
       "penalty": "Free Throw",
       "pause": "Time Out",
-      "read": "read"
+      "read": "read",
+      "flv": "HD1",
+      "m3u8": "HD2",
+      "clarity1": "HD",
+      "clarity2": "SD"
     },
     "bet": {
       "place_bet": "Place Bet"
@@ -451,13 +455,15 @@
     "wanyi": "Trillones",
     "msg12": "The disc mouth has failed",
     "msg13": "Go to Betting History",
-    "bet_booked": "Booked",
+    "bet_booked": "Booking betting successful",
     "bet_book_failed": "Book failed",
     "bet_booking": "Booking",
     "bet_process": "Processing",
     "bet_book_valid": "Expired",
     "bet_book_confirm": "Book",
-    "bet_book_canceled": "Cancelled"
+    "bet_book_canceled": "Cancelled",
+    "bet_max_booked_odds": "已为最高预约赔率值，请重新调整",
+    "bet_min_booked_odds": "预约赔率不能低于所对应的盘口赔率"
   },
   "bet_record": {
     "30day": "30 días",

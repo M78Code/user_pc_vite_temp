@@ -8,7 +8,7 @@
   <!-- 矩形框中部 -->
   <div class="item-body yb_fontsize14">
     <div class="item-header">
-      <div>
+      <div class="header-left">
         <template v-if="data_b.seriesType == '1'"> {{ data_b.orderVOS[0]?.matchName }} </template>
         <template v-else>  {{ data_b.seriesValue }}  </template>
       </div>
@@ -52,7 +52,7 @@
             <div class="list">
               <p class="col-9">
                   {{item.sportName}}
-                  [<span v-if="data_b.seriesType != '3' && item.matchType != 4" v-html="i18n_t(`matchtype.${item.matchType}`)"></span>]
+                  <span v-if="data_b.seriesType != '3' && item.matchType != 4">[{{ i18n_t(`matchtype.${item.matchType}`) }}]</span>
                   {{item.playName}}
                   [{{i18n_t(`odds.${item.marketType}`)}}]
                 <!-- 优化后的赔率 -->
@@ -197,17 +197,35 @@ template {
 }
 .item-body {
   .item-header {
-    line-height: 0.42rem;
+    // line-height: 0.42rem;
+    padding: 0.10rem 0;
+    padding-right: 4px;
     padding-left: 0.12rem;
     font-size: 0.16rem;
     border-bottom: 1px solid var(--q-gb-bg-c-9);
     color: var(--q-gb-bg-c-13);
     display: flex;
     justify-content: space-between;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    .header-left{
+      // width: 60%;
+      text-align: left;
+      // background-color: yellow;
+    }
     .header-right {
+      text-align: right;
       font-size: 0.12rem;
       padding-right: 0.1rem;
       color: var(--q-gb-bg-c-1);
+      flex-shrink: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       .pre-button {
         .pre-cancle-button {
           padding: 0.02rem 0.1rem;

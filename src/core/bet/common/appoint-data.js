@@ -7,6 +7,8 @@ import { FOOTBALL_PLAY_LET_BALL, MARKET_BIG_SMALL_PLAY_LIST, MARKET_RANG_FLAG_LI
 import lodash_ from "lodash"
 import UserCtr from "src/core/user-config/user-ctr.js"
 
+let appoint_time_out = null
+
 const ref_pre_book = reactive({
   min_odds_value: null, //最小赔率
   appoint_odds_value: null, // 预约赔率
@@ -214,16 +216,23 @@ const add_handle = (item, index = 1) => {
 
 // h5 keyboard输入判断最大值最小值
 const computed_keyboard_odds = (val) => {
-  let max_odds = 355
-  let min_odds = parseFloat(ref_pre_book.min_odds_value)
-  let res = val
-  if (val <= min_odds) {
-    res = format_money(min_odds)
-  }
-  if (val >= max_odds) {
-    res = format_money(max_odds)
-  }
-  ref_pre_book.appoint_odds_value = res
+  clearTimeout(appoint_time_out)
+  ref_pre_book.appoint_odds_value = val
+  appoint_time_out = setTimeout(() => {
+    let max_odds = 355
+    let min_odds = parseFloat(ref_pre_book.min_odds_value)
+    let res = val
+    if (val <= min_odds) {
+      res = format_money(min_odds)
+      useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t('bet.bet_min_booked_odds'));
+    }
+    if (val >= max_odds) {
+      res = format_money(max_odds)
+      useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t('bet.bet_max_booked_odds'));
+    }
+    ref_pre_book.appoint_odds_value = res
+  }, 1500);
+
   set_bet_obj_config()
 }
 

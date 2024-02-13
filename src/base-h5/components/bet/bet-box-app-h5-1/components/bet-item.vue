@@ -3,7 +3,7 @@
     <div class="bet-list">
         <div v-show="false">{{BetViewDataClass.bet_view_version}}-{{BetData.bet_data_class_version}}- {{UserCtr.user_version}}</div>
         <!-- 单关 盘口关闭状态 -->
-        <!-- {{ items.ol_os }}-{{ items.hl_hs  }}-{{ items.mid_mhs }} -->
+        <!-- {{ items.ol_os }}-{{ items.hl_hs  }}-{{ items.mid_mhs }}-{{ items.red_green }} -->
         <!-- 投注项状态 1：开 2：封 3：关 4：锁 -->
         <!-- 盘口状态，玩法级别 0：开 1：封 2：关 11：锁 -->
         <!-- 赛事级别盘口状态（0:active 开盘, 1:suspended 封盘, 2:deactivated 关盘,11:锁盘状态） -->
@@ -62,7 +62,7 @@
                     </div>
                 </div>
                 <!-- 锁盘状态下 提示 赔率已变更  -->
-                <div v-if="items.ol_os == 4 || items.hl_hs == 11 || items.mid_mhs == 11" :class="items.red_green" class="bet-serial font12">赔率已变更</div>
+                <div v-if="items.red_green" :class="items.red_green" class="bet-serial font12">赔率已变更</div>
                 <!-- 电子赛事不支持串关 -->
                 <div v-if="items.is_serial && !BetData.is_bet_single" class="bet-serial font12">不支持串关投注</div>
             </div>

@@ -5,7 +5,7 @@
  */
 
 import axios from "project/animation/src/public/utils/http/axios_warpper.js";
-let prefix_api = "http://api-doc-server-new.sportxxxw1box.com";
+let prefix_api = "http://api-doc-server-new.dbsporxxxw1box.com";
 
 /**
  * 获取动画基础配置

@@ -213,6 +213,8 @@ const changeTab = (i, event, item) => {
     const tid = get_leagues_tid(item)
     event && scrollMenuEvent(event,".search-tab-content-ul",".active");
     MatchMeta.clear_match_info()
+    // 重置赛事位置
+    useMittEmit(MITT_TYPES.EMIT_RESET_POSITION)
     if (tid === '0') {
         MenuData.search_data_tab_index(i,'')
         MatchMeta.set_origin_match_data({})

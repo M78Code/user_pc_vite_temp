@@ -321,6 +321,8 @@ export const EMIT_MAIN_LIST_MATCH_IS_EMPTY = "EMIT_MAIN_LIST_MATCH_IS_EMPTY";
 export const EMIT_MAIN_LIST_MAX_HEIGHT = "EMIT_MAIN_LIST_MAX_HEIGHT";
 // 赛事列表回到顶部
 export const EMIT_GOT_TO_TOP = "EMIT_GOT_TO_TOP";
+// 重置赛事位置
+export const EMIT_RESET_POSITION = "EMIT_RESET_POSITION";
 // 快捷切换是否禁用
 export const EMIT_IS_SHOW_MASK = "EMIT_IS_SHOW_MASK";
 // 显示 骨架图
@@ -329,6 +331,7 @@ export const EMIT_SHOW_SKELETON_DIAGRAM = "EMIT_SHOW_SKELETON_DIAGRAM";
  * 触发toast弹框
  */
 export const EMIT_SHOW_TOAST_CMD = "EMIT_SHOW_TOAST_CMD";
+
 
 // 重新监听新的赛事列表
 export const EMIT_HANDLE_START_OBSERVER = "EMIT_HANDLE_START_OBSERVER";

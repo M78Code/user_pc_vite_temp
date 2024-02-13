@@ -69,10 +69,10 @@
                 </span>
               </span>
               <span class="league-right">
-                  <!-- <template v-if="!collapsed">
-                    <span> {{ get_ball_seed_league_count }} </span>
-                  </template> -->
-                  <IconWapper color="#c9c9c9" name="icon-arrow" size="14px"  :class="['icon-wapper', {'close': collapsed}]" />
+                <template v-if="!collapsed">
+                  <span> {{ get_ball_seed_league_count }} </span>
+                </template>
+                <IconWapper color="#c9c9c9" name="icon-arrow" size="14px"  :class="['icon-wapper', {'close': collapsed}]" />
               </span>
             </span>
           </div>
@@ -296,12 +296,8 @@
             </div>
           </div>
           <!-- 次要玩法 DOM -->
-          <!-- <div class="secondary-game-play" v-if="[1,2,5,7,8].includes(+match.csid) && standard_edition != 1" @click.stop> -->
-          <div class="secondary-game-play" v-if="[1].includes(+match.csid) && standard_edition != 1" @click.stop>
-            <MatchContainerSecondTemplate2
-              :i="i"
-              :match="match_of_list"
-            ></MatchContainerSecondTemplate2>
+          <div class="secondary-game-play" v-if="[1].includes(+match.csid) && standard_edition != 1">
+            <MatchContainerSecondTemplate2 :match="match_of_list" />
           </div>
         </div>
       </div>
@@ -526,6 +522,7 @@ export default {
     }
     .secondary-game-play{
       position: relative;
+      z-index: 1000;
     }
   }
 
@@ -1013,7 +1010,7 @@ export default {
   background-color: var(--q-color-com-bg-color-12);
   height: auto;
   position: relative;
-  height: 1.12rem;
+  height: 112px;
   z-index: 8888;
 
   .right-content-style {
@@ -1512,9 +1509,8 @@ export default {
       }
     }
     .score-se-inner{
-        width: 100%;
         height: auto;
-        max-width: 100%;
+        max-width: 318px;
         .score-se-inner2{
           height: 25px;
           justify-content: end;
@@ -1558,7 +1554,7 @@ export default {
   width: 100%;
   color: var(--q-gb-t-c-19);
   padding-left: 1px;
-  height: 0.2rem;
+  height: 20px;
   display: flex;
   align-items: center;
   margin: 0 auto;

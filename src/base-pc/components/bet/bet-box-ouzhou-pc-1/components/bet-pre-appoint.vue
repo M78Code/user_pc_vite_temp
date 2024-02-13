@@ -29,7 +29,7 @@
             sub_handle('odds_value')
           }">-</div>
 
-        <input class="pre-input" v-model="ref_data.appoint_odds_value" @input="pre_input_handle"  @mousedown.stop="" ref="currency_input">
+        <input class="pre-input" v-model="ref_data.appoint_odds_value" @blur="pre_input_handle"  @mousedown.stop="" ref="currency_input">
 
         <div class="add-number" :class="{ 'disabled': ref_data.appoint_odds_value >= 355 }"
           v-touch-repeat:0:300.mouse.enter.space="() => {
@@ -290,16 +290,17 @@ const format_pre_odds = (appoint_odds_value) => {
 }
 
 const pre_input_handle = () => {
-  console.log(ref_data.appoint_odds_value)
+
   let max_odds = 355
   let odds_val = parseFloat(ref_data.appoint_odds_value || 0)
+
   if (odds_val >= max_odds) {
     ref_data.appoint_odds_value = max_odds
     useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t('bet.bet_max_booked_odds'));
   } else {
-    ref_data.appoint_odds_value = odds_val
+     ref_data.appoint_odds_value = odds_val
   }
-  set_bet_obj_config()
+   set_bet_obj_config()
 }
 
 // 设置投注信息
@@ -647,7 +648,7 @@ const set_computed_appoint_ball_head = () => {
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 12px 34px;
+  padding: 5px 34px 12px 34px;
   justify-content: space-between;
   position: relative;
   .cancel {
@@ -684,7 +685,7 @@ const set_computed_appoint_ball_head = () => {
     input {
       color: var(--q-gb-t-c-5);
       border-radius: 0;
-      background-color: var(--q-gb-bg-c-21);
+      background-color: var(--q-gb-bg-c-4);
       // border: 0.5px solid var(--q-gb-bd-c-7);
       border-left: 0;
       border-right: 0;

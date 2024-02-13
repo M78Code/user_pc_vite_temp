@@ -32,7 +32,9 @@
         "read": "read"
     },
     "bet": {
-        "place_bet": "Place Bet"
+        "place_bet": "Place Bet",
+        "limit":"limit",
+        "book_bet_amount": "Reserved betting amount"
     },
     "menu": {
         "collect": "Favourites",
@@ -467,7 +469,7 @@
     "bet_max_item": "最多选择{num}场比赛",
     "bet_auto_msg_1": "Automatically accept better odds",
     "bet_merge":"Combine bets",
-    "bet_booked": "Booked",
+    "bet_booked": "Booking betting successful",
     "bet_book_failed": "Book failed",
     "bet_booking": "Booking",
     "bet_process": "Processing",
@@ -582,7 +584,7 @@
     "expired": "Invalid",
     "ConfirmedBooking": "Confirmed booking",
     "canceled": "Canceled",
-    "handicap": "Dishen",
+    "handicap": "Dish",
     "odds": "Odds",
     "book_bet_amount": "Booked bet amt",
     "confirm_cancle": "Confirm CXL",
@@ -2442,7 +2444,11 @@
     "novideo3": "Multilingual, currency",
     "novideo4": "Amazing",
     "novideo5": "Great team",
-    "novideo6": "You have been inactive for too long, the video is paused, pls click play to continue watching"
+    "novideo6": "You have been inactive for too long, the video is paused, pls click play to continue watching",
+    "flv": "HD1",
+    "m3u8": "HD2",
+    "clarity1": "HD",
+    "clarity2": "SD"
   },
   "new_menu": {
     "1": "In-Play",

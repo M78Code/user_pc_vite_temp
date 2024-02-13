@@ -64,4 +64,20 @@ export default {
 .empty-box {
   height: 0.18rem;
 }
+
+:deep(.icontainer ){
+  // background-color: red;
+  .ol-name .ol-name-span{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+
+
+  .ol-content{
+    flex-basis: 0%;
+  }
+}
+
 </style>

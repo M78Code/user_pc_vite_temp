@@ -9,14 +9,8 @@
     <!-- 视频画中画组件 -->
     <!-- <moveVideo></moveVideo> -->
     <p class="font_match_results">12222</p>
-    <simple-header
-      @refresh="sub_search"
-      :data_loaded="refresh_finish"
-      :title="i18n_t('common.amidithion')"
-      >1
-      <!-- 赛果 -->
-      <!-- <span>{{ i18n_t("common.amidithion") }}</span> -->
-    </simple-header>
+    <!-- 赛果 -->
+    <!-- <simple-header @refresh="sub_search" :data_loaded="refresh_finish" :title="i18n_t('common.amidithion')"></simple-header> -->
 
     <!-- 中间内容 S-->
     <div class="main_wrap">
@@ -24,13 +18,16 @@
       <result-header
         :sport_type="sport_type"
         :sport="sport"
+        :champion_sport_type="champion_sport_type"
+        :champion_sport="champion_sport"
         :startTimeShowFunc="startTimeShowFunc"
         :current_sport_id="current_sport_id"
         :startTimeShow="startTimeShow"
         :showSelectTime="showSelectTime"
         :isSelectConfirm="isSelectConfirm"
-        v-model:dateValue="model"
+        :dateValue.sync="model"
         :ipt_search="ipt_search"
+        @refresh="sub_search"
         :api_league_type="api_league_type"
         :select_submit="select_submit"
         :hideSelect="hideSelect"
@@ -39,7 +36,12 @@
         :results_params="results_params"
         :input_radio="input_radio"
         :is_bowls="is_bowls"
-        v-model:is_show="is_show"
+        :cancel="cancel"
+        :is_show="is_show"
+        :click_popup="click_popup"
+        :img_mouseleave="img_mouseleave"
+        :timeChanged="timeChanged"
+        :search_hot="search_hot"
       ></result-header>
       <!-- 筛选条件 E-->
 
@@ -68,14 +70,25 @@
       class="table-footer"
       v-if="results_data.total && load_data_state != 'empty'"
     >
-      <pagination-wrapper
+      <!-- <pagination-wrapper
         :count="results_data.total"
         @pageChange="changePage"
         :is_bet_record="false"
         :results_table="results_table_style"
         :reset_pagination="reset_pagination"
-      ></pagination-wrapper>
+      ></pagination-wrapper> -->
+      <Pagination class="record-pagination" :count="results_data.total"
+                  @pageChange="changePage"
+                  @pageSizeChange="pageSizeChange"
+                  @goPageChange="goPageChange"
+                  :is_bet_record="false"
+                  :reset_pagination="reset_pagination"
+                  :results_table="results_table_style"
+                  :page="results_params.page"
+      >
+      </Pagination>
     </div>
+    
     <!-- 底部分页条 E-->
     <div class="tips" v-if="tips.statu">{{ tips.message }}</div>
   </div>
@@ -86,7 +99,8 @@ import { i18n_t } from "src/boot/i18n.js";
 import { useGetResultConfig } from "src/base-pc/components/match-results/results-config.js";
 import { RusultType } from "src/base-pc/components/match-results/rusult-type/index.js";
 import { SimpleHeaderWapper as simpleHeader } from "src/components/common/simple-header/index.js";
-import { PaginationWrapper } from "src/components/pagination/index.js";
+import Pagination from 'project_path/src/components/Pagination.vue'
+//import { PaginationWrapper } from "src/components/pagination/index.js";
 import moveVideo from "src/base-pc/components/video-replay/move-video.vue";
 import { ResultHeader } from "src/base-pc/components/match-results/result-header/index.js";
 import { onMounted,ref } from "vue";
@@ -99,6 +113,8 @@ const {
   current_sport_id,
   sport,
   sport_type,
+  champion_sport_type,
+  champion_sport,
   refresh_finish,
   results_data,
   tips,
@@ -112,7 +128,6 @@ const {
   is_sortUp,
   activeIndex,
   reset_pagination,
-  sub_search,
   startTimeShow,
   showSelectTime,
   model,
@@ -121,18 +136,31 @@ const {
   results_params,
   is_bowls,
   is_show,
+  cancel,
+  timeChanged,
   //函数
   get_tr_detail,
   change_sort,
   change_playback_type,
   changePage,
+  pageSizeChange,
+  goPageChange,
   get_serverTime,
   startTimeShowFunc,
   isSelectConfirm,
   ipt_search,
   select_submit,
   input_radio,
-  hideSelect
+  // xinzen
+  sub_search,
+  hideSelect,
+  input_focus,
+  input_blur,
+  champion_sport_type_filter,
+  search_hot,
+  highlights_input_radio,
+   click_popup,
+  img_mouseleave
 } = useGetResultConfig();
 
 onMounted(() => {
@@ -151,7 +179,6 @@ onMounted(() => {
 }
 
 @import "./index.scss";
-@import "./table-cover.scss";
 </style>
 
 <style lang="scss">

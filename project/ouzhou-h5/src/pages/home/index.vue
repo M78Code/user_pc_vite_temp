@@ -73,7 +73,7 @@ import * as ws_message_listener from "src/core/utils/common/module/ws-message.js
 import { api_match } from "src/api/index.js";
 import UserCtr from 'src/core/user-config/user-ctr.js'
 import { i18n_t, into_home_event } from "src/output/index.js"
-import { useMittOn, MITT_TYPES } from "src/core/mitt";
+import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt";
 import ScrollTop from "src/base-h5/components/common/record-scroll/scroll-top.vue";
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 import scrollList from 'src/base-h5/components/top-menu/top-menu-ouzhou-1/scroll-menu/scroll-list.vue';
@@ -86,7 +86,6 @@ provide('get_hots_data', () => {
 
 let message_fun = null
 let message_fun_connect = null
-let handler_func = null
 const is_first = ref(false)
 const container = ref(null)
 const scroll_top = ref(0)
@@ -97,9 +96,8 @@ const featured_matches = ref([])
 const five_league_match = ref([])
 const tabValue = ref(MenuData.home_menu || 'featured');
 const state = reactive({
-    current_mi:"",
+  current_mi:"",
 })
-
 
 /**
  * 球种点击
@@ -108,6 +106,7 @@ const changeMenu = (item) =>{
   state.current_mi = item.mi;
   MenuData.set_menu_mi(item.mi);
   // MatchMeta.get_top_events_match(item.csid)
+  useMittEmit(MITT_TYPES.EMIT_SHOW_SKELETON_DIAGRAM, true)
   get_top_events_match(item.csid)
 }
 const set_init_sport = (val) =>{
@@ -137,31 +136,39 @@ onMounted(async () => {
     get_five_league_matchs()
   }
 
-  // 接口请求防抖
-  handler_func = lodash.debounce(({ cmd, data }) => {
-    handle_webscoket_cmd(cmd, data)
-  }, 1000)
-  // 删除赛事防抖
-  const handler_remove = lodash.debounce(() => {
-    MatchMeta.set_is_ws_trigger(true)
-    if (tabValue.value === 'featured') {
-      get_ouzhou_home_data()
-    } else {
-      get_top_events_match(MenuData.menu_csid)
-    }
-  }, 1500)
-
   // 增加监听接受返回的监听函数
   message_fun = ws_message_listener.ws_add_message_listener((cmd, data) => {
+
+    if (!['C109', 'C303', 'C114', 'C101', 'C102', 'C104', 'C901'].includes(cmd)) return
+
     // 赛事删除
     if (['C101', 'C102', 'C104', 'C901'].includes(cmd)) {
       const { cd: { mid = '', mhs = 0, mmp = 1, ms = 110 } } = data
       if (mhs == 2 || mmp == '999' || !MatchMeta.is_valid_match(ms)) {
-        const index = MatchMeta.match_mids.findIndex(t => t === mid)
-        index > -1 && handler_remove()
+        let index = -1
+        if (tabValue.value === 'featured') {
+          index = play_matchs.value.findIndex(t => t.mid == mid)
+        } else {
+          index = MatchMeta.match_mids.findIndex(t => t === mid)
+        }
+        // 移除赛事的同事 需要 补进赛事 所以掉接口
+        index > -1 && handle_ws_add_home_match()
       }
-    } else {
-      handler_func({ cmd, data })
+    } else if (['C109'].includes(cmd)) {
+      // 赛事新增
+      const { cd = [] } = data
+      if (cd.length < 1) return
+      // 欧洲版 二期  只展示 足球、篮球、网球， 球种菜单放开的同时这里也需要增加
+      let item = null
+      if (tabValue.value === 'featured') {
+        item = cd.find(t => [1,2,5].includes(+t.csid) )
+      } else {
+        item = cd.find(t => t.csid == MenuData.menu_csid)
+      }
+      if (item) handle_ws_add_home_match()
+    } else if (['C114'].includes(cmd)) {
+      // 调用赔率接口
+      handle_ws_get_home_hps()
     }
   })
 
@@ -172,33 +179,22 @@ onMounted(async () => {
   }).off
 })
 
-/**
- * @description 处理 ws
- */
- const handle_webscoket_cmd = (cmd, data) => {
-  // console.log('wswswswswswsws-cmd:', cmd, data)
-  if (['C109', 'C104'].includes(cmd)) {
-    const { cd = [] } = data
-    if (cd.length < 1) return
-    // 欧洲版 二期  只展示 足球、篮球、网球， 球种菜单放开的同时这里也需要增加
-    const item = cd.find(t => [1,2,5].includes(+t.csid) )
-    if (item) {
-      MatchMeta.set_is_ws_trigger(true)
-      if (tabValue.value === 'featured') {
-        get_ouzhou_home_data()
-      } else {
-        get_top_events_match(MenuData.menu_csid)
-      }
-    }
+// 赛事新增处理
+const handle_ws_add_home_match = lodash.debounce(() => {
+  MatchMeta.set_is_ws_trigger(true)
+  if (tabValue.value === 'featured') {
+    get_ouzhou_home_data()
+  } else {
+    get_top_events_match(MenuData.menu_csid)
   }
+}, 2500)
 
-  // 调用 mids  接口
-  if (['C303', 'C114'].includes(cmd)) {
-    if (five_league_mids.value.length > 0) {
-      // MatchMeta.get_match_base_hps_by_mids({ mids: five_league_mids.value.toString(), warehouse: MatchDataBaseFiveLeagueH5 })
-    }
+// 获取赔率
+const handle_ws_get_home_hps = lodash.debounce(() => {
+  if (five_league_mids.value.length > 0) {
+    // MatchMeta.get_match_base_hps_by_mids({ mids: five_league_mids.value.toString(), warehouse: MatchDataBaseFiveLeagueH5 })
   }
-}
+}, 2500)
 
 // 设置默认数据
 const set_default_home_data = () => {
@@ -317,7 +313,7 @@ const get_top_events_match = (csid = '1') => {
     MatchMeta.get_match_base_hps_by_mids({})
     clearTimeout(timer)
     timer = null
-  }, 500)
+  }, 100)
 }
 
 /**

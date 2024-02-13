@@ -698,12 +698,14 @@
     "bet_max_item": "最多选择{num}场比赛",
     "bet_auto_msg_1": "自动接受更好的赔率",
     "bet_merge":"合并投注项",
-    "bet_booked": "预约成功",
+    "bet_booked": "预约投注成功",
     "bet_book_failed": "预约失败",
     "bet_booking": "预约中",
     "bet_process": "进行中",
     "bet_book_valid": "已失效",
-    "bet_book_confirm": "预约"
+    "bet_book_confirm": "预约",
+    "bet_max_booked_odds": "已为最高预约赔率值，请重新调整",
+    "bet_min_booked_odds": "预约赔率不能低于所对应的盘口赔率"
   },
   "bet_message":{
     "success": "投注成功",
@@ -2640,7 +2642,7 @@
   "time11": "MM月dd日 hh:mm",
   "tips": {
     "msg1": "合并投注项",
-    "msg2": "勾选后，单/串关可自由切换，多个投注项会同时展示在投注栏里，同一玩法的盘口投注项会替换原投注项。"
+    "msg2": "  勾选后，单/串关可自由切换，多个投注项会同时展示在投注栏里，同一玩法的盘口投注项会替换原投注项。"
   },
   "today": "今天",
   "token_inv": {
@@ -2675,7 +2677,11 @@
     "novideo3": "支持多种<br />语言&货币",
     "novideo4": "极致用户体验",
     "novideo5": "极致服务团队",
-    "novideo6": "您长时间未操作，视频暂停，若要继续观看请重新点击播放"
+    "novideo6": "您长时间未操作，视频暂停，若要继续观看请重新点击播放",
+    "flv": "高清一",
+    "m3u8": "高清二",
+    "clarity1": "高清",
+    "clarity2": "标清"
   },
   "virtual_sports": {
     "rank": "排名",

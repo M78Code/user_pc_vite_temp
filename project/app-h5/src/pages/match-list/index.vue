@@ -80,20 +80,26 @@ onMounted(() => {
 
   // 增加监听接受返回的监听函数
   message_fun = ws_message_listener.addWsMessageListener((cmd, data) => {
-    if (['C101', 'C102', 'C104', 'C901'].includes(cmd)) {
-      MatchMeta.handle_remove_match(data)
-    } else if (['C109'].includes(cmd)) { // C109 不能和其他的一起防抖
-      
-      handle_add_match({ cmd, data })
-    } else {
-      if (timer) clearTimeout(timer)
-      timer = setTimeout(() => {
-        MatchMeta.handle_ws_directive({ cmd, data })
-        clearTimeout(null)
-        timer = null
-      }, 1500)
-    }
+    MatchMeta.handle_ws_directive({ cmd, data })
+    // if (['C101', 'C102', 'C104', 'C901'].includes(cmd)) {
+    //   MatchMeta.handle_remove_match(data)
+    // } else if (['C109'].includes(cmd)) { 
+    //   // C109 不能和其他的一起防抖
+    //   handle_add_match({ cmd, data })
+    // } else {
+    //   if (timer) clearTimeout(timer)
+    //   timer = setTimeout(() => {
+    //     MatchMeta.handle_ws_directive({ cmd, data })
+    //     clearTimeout(null)
+    //     timer = null
+    //   }, 1500)
+    // }
   })
+
+  // 赛事新增
+const handle_add_match = lodash.debounce(({ cmd, data }) => {
+  MatchMeta.handle_ws_directive({ cmd, data })
+}, 2500) 
 
   // 初始化赛事列表操作工具类
   if (standard_edition.value == 2) {
@@ -108,11 +114,6 @@ onMounted(() => {
   // 事件初始化
   event_init();
 });
-
-// 赛事新增
-const handle_add_match = lodash.debounce(({ cmd, data }) => {
-  MatchMeta.handle_ws_directive({ cmd, data })
-}, 1500) 
 
 // 获取页面所需数据
 const get_page_match_data = () => {

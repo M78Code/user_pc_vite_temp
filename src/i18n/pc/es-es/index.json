@@ -210,7 +210,10 @@
 		"score_info": "Resultados en tiempo real al apostar",
 		"total_income": "Devolver",
 		"view_all_notes": "Ver toda la lista",
-		"Có lựa chọn không được cược": ""
+		"bet_max_booked_odds": "已为最高预约赔率值，请重新调整",
+    "bet_min_booked_odds": "预约赔率不能低于所对应的盘口赔率",
+    "bet_betting": "投注中",
+    "bet_single_merge":"合并单关"
 	},
 	"bet_record": {
 		"bet_time": "Tiempo de apuesta",

@@ -141,6 +141,7 @@ export function usedetailData(route) {
     is_fresh.value = isNeedLoading;
     detail_loading.value = isNeedLoading;
     get_detail(params);
+  
     await get_category();
   };
   /**
@@ -159,8 +160,7 @@ export function usedetailData(route) {
     };
     let send_gcuuid = uid();
     params.gcuuid = send_gcuuid;
-    console.log(route_parmas,4444)
-    console.log(MenuData.is_esports(), "444444");
+ 
     //api_details
     let obj_ = {
       // axios api对象
@@ -187,7 +187,7 @@ export function usedetailData(route) {
           return;
         }
         getMatchDetailList(res.data);
-        // detail_loading.value = false;
+        //  detail_loading.value = false;
         detail_info.value = { ...detail_info.value, ...res.data };
         detail_info.value["course"] = handle_course_data(detail_info.value);
         setTimeout(() => {
@@ -243,7 +243,9 @@ export function usedetailData(route) {
   /**
    * 获取赛事tabs数据
    */
+  let loop_time = 0
   const get_category = async () => {
+   
     try {
       const params = {
         sportId: route_parmas.value.csid,
@@ -252,45 +254,35 @@ export function usedetailData(route) {
       };
       let send_gcuuid = uid();
       params.gcuuid = send_gcuuid;
-      let obj_ = {
-        // axios api对象
-        axios_api:get_detail_category,
-        // axios api对象参数
-        params: params,
-        // 唯一key值
-        key: "get_detail_category",
-        error_codes: ["0401038"],
-        // axios中then回调方法
-        fun_then: async(res) => {
-          // 添加接口节流
-          let gcuuid = lodash.get(res, "gcuuid");
-          if (gcuuid && send_gcuuid != gcuuid) {
+   
+      const {code,data,gcuuid} = await get_detail_category(params)
+
+       // 添加接口节流
+           let gc_uuid = gcuuid
+           if (gc_uuid && send_gcuuid != gcuuid) {
             return;
           }
-          category_list.value = res.data || [];
-          const list = res.data?.filter((i) => i.marketName);
+      if (code==200) {
+          category_list.value = data || [];
+          const list = data?.filter((i) => i.marketName);
           if (list) {
             tabList.value = list.map((item) => ({
               ...item,
               label: item.marketName,
               value: item.orderNo,
             }));
-          }
-    
-          await get_detail_lists();
-         
-        },
-        // axios中catch回调方法
-        fun_catch: (e) => {
-          console.log(e);
-        },
-        // 最大循环调用次数(异常时会循环调用),默认3次
-        max_loop: 3,
-        // 异常调用时延时时间,毫秒数,默认1000
-        timers: 1100,
-      };
-      axios_api_loop(obj_);
-
+            // 调用玩法列表接口
+            await get_detail_lists();
+         }
+      }
+      // 限频重新调用
+      if (code=='0401038'&&loop_time<=2) {
+        setTimeout(() => {
+          loop_time++
+          get_category()
+        }, 800);
+        
+      }
     } catch (error) {
       console.error("get_detail_category", error);
     }
@@ -311,7 +303,7 @@ export function usedetailData(route) {
     params.gcuuid = send_gcuuid;
     let obj_ = {
       // axios api对象
-      axios_api: MenuData.is_esports()
+      axios_api: (MenuData.is_esports()||[100,101,102,103].includes(+route_parmas.value.csid))
         ? api_details.get_match_odds_info_ES
         : get_detail_list,
       // axios api对象参数
