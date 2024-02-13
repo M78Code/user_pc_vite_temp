@@ -5,8 +5,8 @@
   <div v-show="false">{{BetData.bet_data_class_version}}-{{BetViewDataClass.bet_view_version}}-{{BetViewDataClass.error_code}}-{{BetViewDataClass.error_message}}-{{UserCtr.user_version}}</div>
   
   <!-- 自动接受更好的赔率 -->
-  <div class="accept" :class="!BetData.bet_is_accept ? 'active':'' " @click="set_bet_is_accept()" v-if="BetViewDataClass.bet_order_status == 1">
-      自动接受更好的赔率
+  <div class="accept" :class="UserCtr.user_bet_prefer == 1 ? 'active':'' " @click="set_bet_is_accept()" v-if="BetViewDataClass.bet_order_status == 1">
+      自动接受更好的赔率 
   </div>
 
   <div class="f-e-c bet-submit" v-if="BetViewDataClass.bet_order_status == 1">
@@ -19,7 +19,7 @@
 
       <!-- <q-slider class="bet-box-line" @pan="change_slider_model" v-model="ref_data.basic_model" :inner-min="8" :inner-max="92" :min="0" :max="100"/> -->
       <div class="bet-box-line">
-        <div class="bet-box" :style="{left:ref_data.basic_model/100+'rem'}"></div>
+        <div class="bet-box" ref="bet_silder_box" :style="{left:ref_data.basic_model/100+'rem'}"></div>
       </div>
       <div class="bet-info f-b-c">
         <div class="middle font16" v-if="!set_special_state(BetData.bet_data_class_version)">
@@ -73,6 +73,7 @@ import { useRoute,useRouter } from "vue-router"
 const router = useRouter()
 
 const bet_silder = ref('')
+const bet_silder_box = ref('')
 
 const ref_data = reactive({
   show_title: '',
@@ -167,22 +168,25 @@ const init_slider_config = () => {
 
 // 串关/单关 获取到限制的距离
 const get_leng_px = () => {
-  // console.error('bet_silder',bet_silder.value.clientWidth)
-  // let wind_leng = window.outerWidth || lodash_.get(document,'body.clientWidth')
+  let wind_leng = window.outerWidth || lodash_.get(document,'body.clientWidth')
   let bet_leng = lodash_.get(bet_silder,'value.clientWidth')
+  let silder_box = lodash_.get(bet_silder_box,'value.clientWidth') + 5
+
+  // console.error('wind_leng',wind_leng,'bet_leng',bet_leng,'silder_box',silder_box,)
   // 设置 区块比例
-  let cont_leng = bet_leng
-  // 44 是滑块的宽高 
+  let cont_leng = bet_leng - 4 // 4 左右两边编剧
+  // 47 是滑块的宽高 （47是宽高） 5 是初始位置 2.2 是滑块的2.2倍位置
+  let wind_bet = wind_leng / 390
+  ref_data.move_leng = ( cont_leng - silder_box ) / wind_bet
+  ref_data.end_leng = ( cont_leng - silder_box * 2.2 ) / wind_bet
+
   if(BetData.is_bet_single){
-    ref_data.move_leng = cont_leng - 44
-    ref_data.end_leng = cont_leng  - 44 * 2.2
-    ref_data.bet_leng = 50
+    ref_data.bet_leng = silder_box
   } else {
-    ref_data.move_leng = cont_leng - 44
-    ref_data.end_leng = cont_leng - 44 * 2.2
     // 串关左侧有删除键 需要再往后50
-    ref_data.bet_leng = 100
+    ref_data.bet_leng = silder_box * 2
   }
+  // console.error('ref',ref_data)
 }
 
 // status 是响应式的 可以用于重新计算
@@ -271,11 +275,10 @@ const set_special_state = computed(()=> status => {
   return false
 })
 
-
 // 自动接受更好的赔率
 const set_bet_is_accept = () => {
-    let state = !BetData.bet_is_accept
-    BetData.set_bet_is_accept(state)
+  let bet_prefer = UserCtr.get_user_bet_prefer()
+  UserCtr.set_api_user_bet_prefer(bet_prefer == 1 ? 2 : 1)
 }
 
 // 投注模式切换
@@ -494,11 +497,11 @@ const set_confirm = () => {
         justify-content: center;
         color: var(--q-gb-t-c-1);
         font-size: 0.2rem;
-        border: 3px solid #50B5FF;
+        border: .03rem solid #50B5FF;
         margin-right: -.2rem;
         background: #FFFFFF url($SCSSPROJECTPATH+"/image/bet/right-arrow.svg") center no-repeat;
         position: absolute;
-        top: .02rem;
+        top: .03rem;
       }
       :deep(.q-slider__track-container){
         padding: 0 !important;
@@ -516,7 +519,7 @@ const set_confirm = () => {
         justify-content: center;
         color: var(--q-gb-t-c-1);
         font-size: 0.2rem;
-        border: 3px solid #50B5FF;
+        border: 0.03rem solid #50B5FF;
         margin-right: -.2rem;
         background: #FFFFFF url($SCSSPROJECTPATH+"/image/bet/right-arrow.svg") center no-repeat;
         z-index: 99;
