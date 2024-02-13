@@ -1017,7 +1017,8 @@ const set_error_message_config = (res ={},type,order_state) => {
                     break;
             }
            
-        }else{
+        } else {
+            if (BetViewDataClass.bet_order_status == 3) return // 如果已经投注成功 再设置错误提示 没有意义
             obj.message = BetViewDataClass.set_code_message_config(res.code,res.message)
         }
     }
