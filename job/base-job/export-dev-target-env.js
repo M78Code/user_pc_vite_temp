@@ -90,7 +90,7 @@ const resolve_recent_pack_config=()=>{
          
           result_str += `//------------  布局配置： ${project_description['value']}   ${project_key}   ${project_description['description']}  --`.padEnd(100,'-') 
           result_str +=`\n` 
-          result_str += `//------------  打包配置:  ${record_item['packingConfigId']}   名字：${record_item['packingConfigName']}   备注：${record_item['packingConfigMark']}  --`.padEnd(100,'-')  
+          result_str += `//------------  打包配置:  ${record_item['packingConfigId']}   名字：${record_item['packingConfigName']}   备注：${record_item['packingConfigMark'] ||''}  --`.padEnd(100,'-')  
           result_str +=`\n` 
           // result_str += `//------------  打包配置备注:   ${record_item['packingConfigMark']}    --`.padEnd(100,'-')  
           
@@ -103,7 +103,7 @@ const resolve_recent_pack_config=()=>{
 
 
             result_str +=`
-// ${ ENVSTR_MAP[env_key]}    ${ env_key.padEnd(8,' ') }  ${ format_date(new Date(record_item.createdAt).getTime())  }   备注：${   record_item.mark}
+// ${ ENVSTR_MAP[env_key]}    ${ env_key.padEnd(8,' ') }  ${ format_date(new Date(record_item.createdAt).getTime())  }   备注：${   record_item.mark ||''}
 // DEV_TARGET_VERSION = "${record_item.base_name}"  `             
                  
          }
