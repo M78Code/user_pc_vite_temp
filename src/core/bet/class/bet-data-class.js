@@ -52,7 +52,7 @@ class BetData {
     // 投注记录数量
     this.bet_record_count = 0
     // 是否勾选常用金额
-    this.is_regular_amount = true
+    this.is_regular_amount = false
     this.regular_amount = 0
 
     // 是否为合并模式
