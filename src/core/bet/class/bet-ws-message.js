@@ -43,10 +43,12 @@ class BetWsMessage {
     // {cmd: "C2", hid: ""}
     let cmd_obj = {};
     cmd_obj.cmd = "C2";
-    cmd_obj.hid = obj.hid;
+    // cmd_obj.hid = obj.hid;
     cmd_obj.mid = obj.mid;
+    cmd_obj.cd = obj.cd;
+
     cmd_obj.marketLevel = obj.marketLevel;
-    if (cmd_obj.hid != "" && cmd_obj.mid != "") {
+    if ( cmd_obj.mid != "" ) {
      this.send_msg(cmd_obj);
     }
   }
