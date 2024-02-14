@@ -35,12 +35,14 @@ class MatchMeta {
     this.axios_cancel = {}
     // 接口 timer
     this.axios_debounce_timer = null
+    // 获取赔率定时器
+    this.axios_get_hps_timer = null
     // 赛事新增防抖
     this.debounce_add_match = lodash.debounce(this.handle_ws_add_match, 2500)
     // 赛事移除防抖
     this.debounce_remove_match = lodash.debounce(this.handle_ws_remove_match, 1500)
     // 获取赔率防抖
-    this.debounce_get_hps = lodash.debounce(this.handle_ws_get_hps, 2500)
+    this.debounce_get_hps = lodash.debounce(this.handle_ws_get_hps, 2000)
   }
 
   init() {
@@ -1697,16 +1699,21 @@ class MatchMeta {
         if (active_index > -1) this.debounce_remove_match()
       }
     }
-    // 调用 mids  接口 C303 先注释 推送太频繁 防抖也没用
-    if (['C114'].includes(cmd)) {
+    // 调用 mids 接口
+    if (['C114', 'C303'].includes(cmd)) {
       const { mid = '' } = data.cd || {};
       let _mids = String(mid).split(',')
-      if (_mids.some((_mid) => this.match_mids.includes(_mid)))  this.debounce_get_hps()
+      if (_mids.some((_mid) => this.match_mids.includes(_mid))) this.handle_ws_get_hps(cmd === 'C303' ? 5000 : 2000)
+      // if (_mids.some((_mid) => this.match_mids.includes(_mid))) this.debounce_get_hps(cmd === 'C303' ? 5000 : 2000)
     }
   }
   // 赛事新增
   handle_ws_add_match () {
     this.is_ws_trigger = true
+    // 清除获取赔率
+    // this.debounce_get_hps.cancel()
+    clearTimeout(this.axios_get_hps_timer)
+    this.axios_get_hps_timer = null
     this.get_target_match_data({ scroll_top: this.prev_scroll, md: this.http_params.md })
   }
   // 删除赛事
@@ -1714,9 +1721,14 @@ class MatchMeta {
     this.is_ws_trigger = true
     this.handler_match_list_data({ list: this.complete_matchs, scroll_top: this.prev_scroll, merge: 'cover', type: 2 })
   }
-  // 获取赔率
-  handle_ws_get_hps () {
-    this.get_match_base_hps_by_mids({})
+  // 获取赔率 C303 先 5s  业务那边说他们也控制下， 等他们改了  在改成 2s
+  handle_ws_get_hps (delay = 2000) {
+    if (this.axios_get_hps_timer) return
+    this.axios_get_hps_timer = setTimeout(() => {
+      this.get_match_base_hps_by_mids({})
+      clearTimeout(this.axios_get_hps_timer)
+      this.axios_get_hps_timer = null
+    }, delay)
   }
   /**
    * @description 获取赛事赔率
