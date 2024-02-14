@@ -19,7 +19,10 @@
       <img class="" v-if="BetData.is_regular_amount" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/select_a.svg`" alt="" />
       <img class="" v-else :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/select_b.svg`" alt="" />
     </div>
-    <q-dialog v-model="alert">
+  </div>
+  <!-- 合并投注toast 提示语 -->
+  <div class="text-confirm" v-if="alert">
+    <q-dialog v-model="alert" persistent>
       <div class="toast">
         <div class="prompt_boby">
           <div class="cue_head">{{i18n_t('tips.msg1')}}</div>
@@ -61,6 +64,16 @@ const open_toast = () => {
 </script>
 
 <style lang="scss" scoped>
+.text-confirm {
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  backdrop-filter: blur(5px);
+  background: rgba(0, 0, 0, 0.2);
+}
 .toast{
   background: #ffffff;
   width: 320px;
