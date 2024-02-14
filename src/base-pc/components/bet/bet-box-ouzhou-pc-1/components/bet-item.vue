@@ -88,16 +88,13 @@
 <script setup>
 
 import { reactive, computed } from "vue"
-import {LOCAL_PROJECT_FILE_PREFIX,compute_value_by_cur_odd_type,useMittOn,MITT_TYPES,useMittEmit,UserCtr,formatMoney,only_win } from "src/output/index.js"
+import {LOCAL_PROJECT_FILE_PREFIX,compute_value_by_cur_odd_type,UserCtr } from "src/output/index.js"
 import BetData from 'src/core/bet/class/bet-data-class.js'
 import BetViewDataClass from 'src/core/bet/class/bet-view-data-class.js'
 import betInput from "./bet-input.vue"
 import { get_query_bet_amount_pre } from "src/core/bet/class/bet-box-submit.js"
 import BetProAppoint from "./bet-pre-appoint.vue"
-import lodash_ from 'lodash'
-import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
-import betDataClass from "src/core/bet/class/bet-data-class.js"
-const { PROJECT_NAME,IS_FOR_NEIBU_TEST } = BUILD_VERSION_CONFIG;
+import { set_ref_data } from "src/core/bet/common/appoint-data.js"
 
 const props = defineProps({
     items:{},
@@ -123,14 +120,15 @@ const set_delete = () => {
 // 预约投注
 const set_show_appoint = () =>{
   // 预约投注点击后展示后 需要请求预约限额接口
-  if(!ref_data.show_appoint){
+
     get_query_bet_amount_pre()
-  }
-  // 显示预约投注内容
-  ref_data.show_appoint = !ref_data.show_appoint
-  BetData.set_is_bet_pre(true)
-  BetData.set_bet_appoint_obj_playOptionId(props.items.playOptionsId)
-//   console.log(props.items, BetData.bet_appoint_obj, BetData.bet_pre_list)
+    ref_data.show_appoint = true
+    BetData.set_is_bet_pre(true)
+    BetData.set_current_bet_pre_obj(props.items) // 设置当前投注items数据
+    set_ref_data(props.items)
+    // 设置预约投注id
+    BetData.set_bet_appoint_obj_playOptionId(props.items.playOptionsId)
+
 }
 
 const cancel_operate = () =>{

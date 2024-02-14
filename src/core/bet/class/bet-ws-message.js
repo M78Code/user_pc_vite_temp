@@ -43,11 +43,20 @@ class BetWsMessage {
     // {cmd: "C2", hid: ""}
     let cmd_obj = {};
     cmd_obj.cmd = "C2";
-    // cmd_obj.hid = obj.hid;
+    cmd_obj.hid = obj.hid;
     cmd_obj.mid = obj.mid;
     cmd_obj.cd = obj.cd;
 
     cmd_obj.marketLevel = obj.marketLevel;
+
+    // 取消订阅  盘口id 没有的情况下 cd 也不要
+    if(!obj.hid){
+      delete cmd_obj.hid
+    }
+    if(!obj.cd.length){
+      delete cmd_obj.cd
+    }
+
     if ( cmd_obj.mid != "" ) {
      this.send_msg(cmd_obj);
     }
@@ -143,6 +152,16 @@ class BetWsMessage {
           case 'C112':
             this.MSG_C112(data);
             break;
+
+          // 赛事开启
+          case 'C109':
+            this.MSG_C109(data);
+            break;
+
+           // 赛事盘口变化
+          case 'C303':
+            this.MSG_C303(data);
+            break;
           
           default:
             break;
@@ -210,6 +229,14 @@ class BetWsMessage {
     BetData.set_bet_c112_change(obj.cd)
   }
 
+  // 赛事开启
+  MSG_C109(obj) {
+    BetData.set_bet_c109_change(obj.cd)
+  }
+  MSG_C303(obj) {
+    BetData.set_bet_c303_change(obj.cd)
+  }
+  
   
 }
 

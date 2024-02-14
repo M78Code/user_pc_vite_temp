@@ -1,7 +1,7 @@
 <!-- @Description: 一小时以内的开赛计时器（累加计时|倒计时）-->
 <template>
   <!--凡是小于一个小时开赛的都显示为 * 分钟后开赛-->
-        <div v-show="show && +start_minutes > 0" :mid="match.mid" style="color:#7d87a5">
+        <div v-show="show && +start_minutes > 0" style="color:#7d87a5">
           <div :class="{ 'counting-down-start': get_lang != 'en' }">
             {{ i18n_tc('list.after_time_start', [+start_minutes]) }}
     </div>
