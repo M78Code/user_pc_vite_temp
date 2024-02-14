@@ -679,6 +679,7 @@ const set_computed_appoint_ball_head = () => {
       border-radius: 4px 0px 0px 4px;
       border: 1px solid var(--q-gb-bd-c-5);
       border-right: 0;
+      cursor: pointer;
     }
 
     //预约投注输入框样式

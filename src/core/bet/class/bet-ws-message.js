@@ -51,8 +51,10 @@ class BetWsMessage {
 
     // 取消订阅  盘口id 没有的情况下 cd 也不要
     if(!obj.hid){
-      delete cmd_obj.cd
       delete cmd_obj.hid
+    }
+    if(!obj.cd.length){
+      delete cmd_obj.cd
     }
 
     if ( cmd_obj.mid != "" ) {

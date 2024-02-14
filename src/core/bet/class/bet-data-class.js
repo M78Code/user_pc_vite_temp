@@ -302,7 +302,7 @@ this.bet_appoint_ball_head= null */
    * 设置 是否接受更好赔率
   */
   set_bet_is_accept(val) {
-    console.error('sssssss',val)
+    // console.error('sssssss',val)
     this.bet_is_accept = val
     // BetViewDataClass.set_bet_before_message({code:'0402018',message:"bet.bet_upd"})
 
@@ -1729,8 +1729,38 @@ this.bet_appoint_ball_head= null */
     this.set_options_state()
     
   }
-  set_bet_c303_change(){
-    get_lastest_market_info()
+  set_bet_c303_change(obj){
+    // ws 每次推送的 mid只有一个 
+    let mid = lodash_.get(obj,'mid')
+    let csid = lodash_.get(obj,'csid')
+    let hpid = lodash_.get(obj,'hpid')
+    // 单关/串关 属性名
+    let single_name = ''
+    // 单关/串关 属性值
+    let array_list = []
+    // 单关/串关 赛事列表
+    let mid_list = []
+    if(this.is_bet_single){
+      single_name = 'bet_single_list'
+    } else {
+      single_name = 'bet_s_list'
+    }
+    array_list = lodash_.cloneDeep(lodash_.get(this,single_name))
+    // 获取单关下的赛事id 多个（单关合并）
+    mid_list = array_list.map(item => item.matchId) || []
+    // 赛种
+    let scid_list = array_list.map(item => item.sportId) || []
+    // 玩法
+    let hpid_list = array_list.map(item => item.playId) || []
+
+    // 判断赛事级别盘口状态 中是否包含 投注项中的赛种 赛事 玩法
+    if(scid_list.includes(csid)){
+      if(mid_list.includes(mid)){
+        if(hpid_list.includes(hpid)){
+          get_lastest_market_info()
+        }
+      }
+    }
   }
 }
 export default new BetData();

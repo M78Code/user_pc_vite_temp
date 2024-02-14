@@ -1462,13 +1462,17 @@ const set_market_id_to_ws = () => {
     let obj_hid = hid.join(',')
     obj.mid = mid.join(',')
 
-    let obj_cd = bet_list.map( item => {
-        return {
-            mid: item.matchId,
-            hpid: item.playId,
-            hn: item.placeNum ? item.placeNum : 0
+    let obj_cd = []
+    bet_list.forEach( item => {
+        if(item.bet_type == 'common_bet'){
+            obj_cd.push({
+                mid: item.matchId,
+                hpid: item.playId,
+                hn: item.placeNum ? item.placeNum : 0
+            })
         }
     })
+
     // 取消之前的所有订阅
     obj.hid = ''
     obj.cd = []
