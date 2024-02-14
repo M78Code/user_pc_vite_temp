@@ -13,7 +13,7 @@
         </template>
         <template v-if="Item.sportId == 1011 || Item.sportId == 1002">{{Item.batchNo}}</template>
         <template v-else>
-          <span v-if="matchInfo(Item.matchInfo).length >= 1 ">{{ matchInfo(Item.matchInfo)[0] }}</span>
+          <span v-if="matchInfo(Item.matchInfo).length >= 1 " style="margin-Left: 4px">{{ matchInfo(Item.matchInfo)[0] }}</span>
           <template v-if="matchInfo(Item.matchInfo).length >= 2">
             <span>VS</span>
             <span>{{ matchInfo(Item.matchInfo)[1] }}</span>

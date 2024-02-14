@@ -137,7 +137,7 @@
                     <div v-if="match.ms != 110 && show_counting_down(match)"
                       :class="['counting-down-up-container relative-position', { 'special-match-container': match.mfo || [0, 31].includes(+match.mmp) }]">
                       <!--足球csid:1 冰球csid:4 橄榄球csid:14 DotaCsid:101 累加 排球csid:9 倒计时-->
-                      <CountingDownSecond ref="counting-down-second" :title="mmp_map_title" :mmp="match.mmp"
+                      <CountingDownSecond :title="mmp_map_title" :mmp="match.mmp"
                         :is_add="[1, 4, 11, 14, 100, 101, 102, 103].includes(+match.csid)" :m_id="match.mid"
                         :second="match.mst" :match="match" @counting-wrapper-width="update_counting_down_up_wrapper_width">
                       </CountingDownSecond>
@@ -146,8 +146,7 @@
 
                   <!-- 电竞串关标识 -->
                   <!-- <div v-if="is_esports && match.ispo" class="flag-chuan" -->
-                  <div v-if="is_esports && match.ispo"  class="flag-chuan-icon" 
-                    :class="{ 'special-lang': ['zh', 'tw', 'hk'].includes(lang) }"
+                  <div v-if="is_esports && match.ispo" :class="['flag-chuan-icon', { 'special-lang': ['zh', 'tw', 'hk'].includes(lang) }]"
                     :style="compute_css_obj({key:'h5-kyapp-crosstalk-icon'})">
                     <!-- {{ i18n_t('match_info.match_parlay') }} -->
                   </div>
