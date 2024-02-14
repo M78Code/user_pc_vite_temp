@@ -92,12 +92,13 @@
 
 <script setup>
 
-import {LOCAL_PROJECT_FILE_PREFIX,compute_local_project_file_path,compute_value_by_cur_odd_type,useMittOn,MITT_TYPES,useMittEmit,UserCtr,i18n_t,formatMoney } from "src/output/index.js"
+import {LOCAL_PROJECT_FILE_PREFIX,compute_local_project_file_path,compute_value_by_cur_odd_type,MITT_TYPES,useMittEmit,UserCtr } from "src/output/index.js"
 import BetData from 'src/core/bet/class/bet-data-class.js'
 import BetViewDataClass from 'src/core/bet/class/bet-view-data-class.js'
 import { is_up_app, is_down_app } from 'src/base-h5/core/utils/local-image.js'
 import betSingleInput from "./bet-single-input.vue"
-import { watch, computed } from "vue"
+import { watch } from "vue"
+
 
 const props = defineProps({
     items:{
@@ -121,6 +122,7 @@ watch(
     }
   }
 );
+
 
 
 </script>

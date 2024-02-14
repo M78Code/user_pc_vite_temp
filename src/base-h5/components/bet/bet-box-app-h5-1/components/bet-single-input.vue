@@ -49,6 +49,8 @@ import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import { get_query_bet_amount_pre } from "src/core/bet/class/bet-box-submit.js"
 import { format_money2,currency_code,UserCtr } from "src/output/index.js"
 
+import { set_ref_data } from "src/core/bet/common/appoint-data.js"
+
 let flicker_timer = null
 
 const get_bet_status = ref()
@@ -103,10 +105,14 @@ const set_bet_pre = () => {
   // 预约开启 获取预约数据
   if(ref_data.is_bet_pre){
     get_query_bet_amount_pre()
+    BetData.set_current_bet_pre_obj(props.item) // 设置当前投注item数据
+    set_ref_data(props.item)
+    // 设置预约投注id
+    BetData.set_bet_appoint_obj_playOptionId(props.item.playOptionsId)
     // BetData.set_bet_amount(0) //预约不重置金额
   }
   // 设置是否开启预约
-  BetData.set_is_bet_pre(true)
+  BetData.set_is_bet_pre(ref_data.is_bet_pre)
 }
 
 /**
