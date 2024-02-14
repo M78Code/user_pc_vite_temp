@@ -1470,7 +1470,7 @@ const set_market_id_to_ws = () => {
         }
     })
     // 取消之前的所有订阅
-    // obj.hid = ''
+    obj.hid = ''
     obj.cd = []
     BetWsMessage.set_bet_c2_message(obj);
     // console.error('重新发起订阅：','hid:--',obj.hid, 'mid:--',obj.mid  )

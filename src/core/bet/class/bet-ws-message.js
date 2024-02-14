@@ -48,6 +48,13 @@ class BetWsMessage {
     cmd_obj.cd = obj.cd;
 
     cmd_obj.marketLevel = obj.marketLevel;
+
+    // 取消订阅  盘口id 没有的情况下 cd 也不要
+    if(!obj.hid){
+      delete cmd_obj.cd
+      delete cmd_obj.hid
+    }
+
     if ( cmd_obj.mid != "" ) {
      this.send_msg(cmd_obj);
     }
