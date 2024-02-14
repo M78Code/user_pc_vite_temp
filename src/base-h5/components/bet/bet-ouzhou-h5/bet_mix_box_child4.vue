@@ -24,22 +24,27 @@
                   <div class="nonebox4-content-left-info">
                     <div class="nonebox4-content-left-content-text">
                       <div class="nonebox4-content-left-content-text-one">{{item.playOptionName}} <span class="text-one-span">【{{ i18n_t(`odds.${item.marketType}`) }}】</span></div>
-                      <div class="nonebox4-content-left-content-text-two">{{item.matchType == 2?  i18n_t("bet.bet_inplay") :''}}   
-                         <span class="text-two-span">{{item.playName}}
+                      <div class="nonebox4-content-left-content-text-two">
+                        <span class="nonebox4-content-left-content-text-three">{{item.sportName}}:</span>
+                         [{{ i18n_t('bet.bet_book_confirm') }}]
+                         <span class="text-two-span">{{item.playName}} 
+                          <span class="nonebox4-content-left-content-text-two">[{{ i18n_t(`odds.${item.marketType}`) }}]</span>
                           <span v-if="[4,19,143,113].includes(item.playId*1)">{{item.matchType == 2? item.mark_score : ''}}</span>
                          </span>
                       </div>
                       <div class="nonebox4-content-left-content-text-three" v-if="item.matchType != 3">{{item.matchName}}</div>
-                      <div class="nonebox4-content-left-content-text-three">{{item.matchInfo}}</div>
+                      <div class="nonebox4-content-left-content-text-three">{{item.matchInfo}}
+                        <span v-if="item.score_benchmark">({{ item.score_benchmark }})</span>
+                      </div>
                     </div>
                     <div class="flex">
                       <div>
                         <div class="nonebox4-content-right">
                            <div class="nonebox4-content-right-profit">@{{item.oddsValues}}</div>
                         </div>
-                        <div class="nonebox4-content-right-bot" :class="BetViewDataClass.bet_order_status == 3?'green-color':BetViewDataClass.bet_order_status==4?'red-color':''">
+                        <!-- <div class="nonebox4-content-right-bot" :class="BetViewDataClass.bet_order_status == 3?'green-color':BetViewDataClass.bet_order_status==4?'red-color':''">
                           {{BetViewDataClass.bet_order_status==4?i18n_t('bet.bet_err'):BetViewDataClass.bet_order_status==2?i18n_t('bet.bet_loading'):i18n_t('bet.bet_suc')}}{{}}
-                        </div>
+                        </div> -->
                       </div>
                     
                     </div>
@@ -59,14 +64,19 @@
   <script setup>
   
     import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
-      import { compute_value_by_cur_odd_type,LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
-      import { i18n_t, format_currency } from "src/output/index.js"
-// import i18n from "project/activity/src/i18n";
+    import { compute_value_by_cur_odd_type,LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
+    import { i18n_t, format_currency } from "src/output/index.js"
+    import { onMounted, onUpdated } from "vue"
+    onMounted(()=>{
+      // BetViewDataClass.set_bet_order_status()
+      // console.log(1111111111111111,BetViewDataClass.orderNo_bet_obj)
+    })
 
   const props = defineProps({
     items:{}
   })
     const type = 2//1:等待   2：成功    3：失败
+
   </script>
   
   <style lang="scss" scoped>
@@ -242,6 +252,7 @@
       font-weight: bold;
       padding: 0 0.05rem;
       font-family: "DIN";
+      color: var(--q-gb-t-c-1);
   }
   .nonebox4-content-right{
     text-align: right;

@@ -369,7 +369,7 @@ const get_lastest_market_info = (type) => {
                     let market = lodash_.get(obj,'currentMarket', {}) || {}
                     
                     // 赛事id 玩法id 坑位
-                    if(obj.matchInfoId == item.matchId && obj.playId == item.playId && market.placeNum == item.placeNum){
+                    if(obj.matchInfoId == item.matchId && obj.playId == item.playId && lodash_.isEmpty(market.placeNum) == lodash_.isEmpty(item.placeNum) ){
                         // bug 需要遍历 ot == oddsType
                         let market_odds_list = lodash_.get(market,'marketOddsList',[]) || []
                         console.error('ws那边做了替换为最新的:', item.playOptionsId)
@@ -1452,25 +1452,29 @@ const set_market_id_to_ws = () => {
         bet_list = lodash_.get( BetData,'bet_s_list',[])
     }
     // 获取盘口id
-    // hid = bet_list.map(item => item.marketId)
-    // hid = lodash_.uniq(hid);
+    hid = bet_list.map(item => item.marketId)
+    hid = lodash_.uniq(hid);
     // 获取赛事id
     mid = bet_list.map(item => item.matchId)
     mid = lodash_.uniq(mid);
 
     // 普通玩法 订阅方式
-    // let obj_hid = hid.join(',')
+    let obj_hid = hid.join(',')
     obj.mid = mid.join(',')
 
-    let obj_cd = bet_list.map( item => {
-        return {
-            mid: item.matchId,
-            hpid: item.playId,
-            hn: item.placeNum ? item.placeNum : 0
+    let obj_cd = []
+    bet_list.forEach( item => {
+        if(item.bet_type == 'common_bet'){
+            obj_cd.push({
+                mid: item.matchId,
+                hpid: item.playId,
+                hn: item.placeNum ? item.placeNum : 0
+            })
         }
     })
+
     // 取消之前的所有订阅
-    // obj.hid = ''
+    obj.hid = ''
     obj.cd = []
     BetWsMessage.set_bet_c2_message(obj);
     // console.error('重新发起订阅：','hid:--',obj.hid, 'mid:--',obj.mid  )
@@ -1478,6 +1482,7 @@ const set_market_id_to_ws = () => {
     obj.marketLevel = lodash_.get(UserCtr.user_info,'marketLevel','0');
     nextTick(()=>{
         obj.cd = obj_cd
+        obj.hid = obj_hid
         BetWsMessage.set_bet_c2_message(obj);
     })
     
