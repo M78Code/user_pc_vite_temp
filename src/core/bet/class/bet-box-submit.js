@@ -60,7 +60,7 @@ const set_min_max_money = (bet_list, is_single, is_merge) => {
             "playOptionId": item.playOptionsId,   // 投注项id
             "playOptions": item.playOptions,   // 投注项配置项
             "seriesType": is_single ? 1 : 2,  // 串关类型 // 串关类型 1 单关 2串关
-            "matchProcessId": item.match_ms,  // 赛事阶段
+            "matchProcessId": item.match_mmp,  // 赛事阶段
             "scoreBenchmark": "",   // 基准分
             "tenantId": 1,   // 商户id
             "tournamentLevel": item.tournamentLevel,   // 联赛级别
@@ -72,6 +72,10 @@ const set_min_max_money = (bet_list, is_single, is_merge) => {
         // 冠军没有赛事阶段
         if(item.bet_type == 'guanjun_bet'){
             delete obj.matchProcessId
+        }
+        // 有坑位 需要传坑位
+        if(item.placeNum){
+            obj.placeNum = item.placeNum
         }
         // 串关没有 这个字段 
         if (is_single) {
@@ -1163,7 +1167,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
     // 冠军
     if(other.bet_type == 'common_bet'){
          //  ms的值，0:未开赛 1:滚球阶段 2:暂停 3:结束 4:关闭 5:取消 6:比赛放弃 7:延迟 8:未知 9:延期 10:比赛中断 110:即将开赛
-        if ([1, 2,110].includes(Number(mid_obj.ms))) {
+        if ([1,2].includes(Number(mid_obj.ms))) {
             matchType = 2
         }
     }
@@ -1234,6 +1238,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         bet_type: other.bet_type, // 投注类型
         tid_name: mid_obj.tn,  // 联赛名称
         match_ms: mid_obj.ms, // 赛事阶段
+        match_mmp: mid_obj.mmp, // 赛事阶段 限额
         match_time: mid_obj.mgt, // 开赛时间
         handicap: handicap.text, // 投注项名称
         handicap_hv: handicap.hv, // 投注项 球头
