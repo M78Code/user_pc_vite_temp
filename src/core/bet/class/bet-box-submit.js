@@ -1452,14 +1452,14 @@ const set_market_id_to_ws = () => {
         bet_list = lodash_.get( BetData,'bet_s_list',[])
     }
     // 获取盘口id
-    // hid = bet_list.map(item => item.marketId)
-    // hid = lodash_.uniq(hid);
+    hid = bet_list.map(item => item.marketId)
+    hid = lodash_.uniq(hid);
     // 获取赛事id
     mid = bet_list.map(item => item.matchId)
     mid = lodash_.uniq(mid);
 
     // 普通玩法 订阅方式
-    // let obj_hid = hid.join(',')
+    let obj_hid = hid.join(',')
     obj.mid = mid.join(',')
 
     let obj_cd = bet_list.map( item => {
@@ -1478,6 +1478,7 @@ const set_market_id_to_ws = () => {
     obj.marketLevel = lodash_.get(UserCtr.user_info,'marketLevel','0');
     nextTick(()=>{
         obj.cd = obj_cd
+        obj.hid = obj_hid
         BetWsMessage.set_bet_c2_message(obj);
     })
     
@@ -1493,7 +1494,6 @@ const set_orderNo_bet_obj = order_no_list => {
         // 玩法id
         let playId = lodash_.get( refer_obj, `playId`)
         let matchInfo = lodash_.get( refer_obj, `tid_name`)
-        let sportName = lodash_.get( refer_obj, `sportName`)
         // 基准分
         let score_benchmark = lodash_.get( item, `scoreBenchmark`, '')
         if(score_benchmark){
@@ -1508,11 +1508,9 @@ const set_orderNo_bet_obj = order_no_list => {
             match_time,
             playId,
             score_benchmark,
-            sportName,
         }
     })
-
-    BetViewDataClass.set_orderNo_bet_obj("order_list",order_no_list,5555555,item)
+    BetViewDataClass.set_orderNo_bet_obj(order_list)
 }
 
 // 获取盘口值 附加值

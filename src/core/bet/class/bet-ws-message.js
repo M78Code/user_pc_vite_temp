@@ -43,7 +43,7 @@ class BetWsMessage {
     // {cmd: "C2", hid: ""}
     let cmd_obj = {};
     cmd_obj.cmd = "C2";
-    // cmd_obj.hid = obj.hid;
+    cmd_obj.hid = obj.hid;
     cmd_obj.mid = obj.mid;
     cmd_obj.cd = obj.cd;
 
