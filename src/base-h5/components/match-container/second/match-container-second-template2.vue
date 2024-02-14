@@ -58,13 +58,15 @@
           <div :class="['team-t-title-w']">
             <div class='team-title'> {{ match.mhn }}  </div>
             <!--显示次要玩法比分 7,8,9 网,乒,斯-->
-            <div class="way-score" v-if="[1, 5, 7, 8, 9, 17].includes(+current_tab_item.id) && match.ms == 1"> {{ home_score }} </div>
+            <div :class="['way-score', { 'time': [17].includes(+current_tab_item.id) }]" 
+              v-if="[1, 5, 7, 8, 9, 17].includes(+current_tab_item.id) && match.ms == 1"> {{ home_score }} </div>
           </div>
           <!--副队名 和 比分 , { 'is-handicap': current_tab_handicap_index == 2, 'is-handicap-1': current_tab_handicap_index == 1, } -->
           <div :class="['team-t-title-w']">
             <div class='team-title'> {{ match.man }} </div>
             <!--显示次要玩法比分 7,8,9 网,乒,斯-->
-            <div class="way-score" v-if="[1, 5, 7, 8, 9, 17].includes(+current_tab_item.id) && match.ms == 1"> {{ away_score }}</div>
+            <div :class="['way-score', { 'time': [17].includes(+current_tab_item.id) }]" 
+              v-if="[1, 5, 7, 8, 9, 17].includes(+current_tab_item.id) && match.ms == 1"> {{ away_score }}</div>
           </div>
           <!--  玩法描述图标显示  玩法id: 角球 1  15分钟 17  波胆 18  特色 11  罚牌 5  晋级  3  冠军  30-->
           <div class="team-t-title-w fight-type" v-if="[1, 3, 5, 7, 8, 9].includes(+match.csid) && is_show_title">
@@ -294,6 +296,9 @@ export default defineComponent({
         font-weight: 600;
         margin: 0 8px;
         color: var(--q-gb-t-c-18);
+        &.time{
+          color: #ffb001
+        }
       }
     }
   }
