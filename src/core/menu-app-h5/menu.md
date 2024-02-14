@@ -162,8 +162,6 @@ this.current_lv_2_menu_i = 1012; //今日足球
 
 ## init接口JSON对比
 
-![Alt text](image.png)
-
 ```javascript
     {
 	"code":"0000000",
