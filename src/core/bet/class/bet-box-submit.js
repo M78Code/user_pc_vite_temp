@@ -936,26 +936,11 @@ const submit_handle_lastest_market = () => {
             // 投注确认中 ws请求
             // 6 预约确认中 3 投注确认中
             if( [2,6].includes(order_state*1)){
-                let order_no =  lodash_.get(orderDetailRespList,'[0].orderNo', '')
                 // 单关才有
                 if(BetData.is_bet_single){
+                    let order_no = lodash_.get(orderDetailRespList,'[0].orderNo', '')
                     set_order_status_info(order_no)
                 }
-
-                let obj = {};
-                obj.hid = ''
-                obj.mid = ''
-                // 盘口Id，多个Id使用逗号分隔
-                // 赛事Id，多个Id使用逗号分隔
-                let series_orders = lodash_.get(seriesOrders,'[0].orderDetailList', {})
-                series_orders.forEach( item => {
-                    obj.hid += item.marketId + ','
-                    obj.mid += item.matchId + ','
-                })
-                // 用户赔率分组
-                obj.marketLevel = lodash_.get(UserCtr.user_info,'marketLevel','0');
-                obj.esMarketLevel = lodash_.get(UserCtr.user_info,'esMarketLevel','0');
-                BetWsMessage.set_bet_c2_message(obj);
             }
         }
         set_error_message_config(res,'bet',order_state)
@@ -1283,7 +1268,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
             })
         }
     }
-    // console.error('投注项内容：',bet_obj)
+    console.error('投注项内容：',bet_obj)
 
     // 冠军 
     if(bet_obj.bet_type == 'guanjun_bet'){
@@ -1467,23 +1452,32 @@ const set_market_id_to_ws = () => {
         bet_list = lodash_.get( BetData,'bet_s_list',[])
     }
     // 获取盘口id
-    hid = bet_list.map(item => item.marketId)
-    hid = lodash_.uniq(hid);
+    // hid = bet_list.map(item => item.marketId)
+    // hid = lodash_.uniq(hid);
     // 获取赛事id
     mid = bet_list.map(item => item.matchId)
     mid = lodash_.uniq(mid);
 
-    let obj_hid = hid.join(',')
+    // 普通玩法 订阅方式
+    // let obj_hid = hid.join(',')
     obj.mid = mid.join(',')
 
+    let obj_cd = bet_list.map( item => {
+        return {
+            mid: item.matchId,
+            hpid: item.playId,
+            hn: item.placeNum ? item.placeNum : 0
+        }
+    })
     // 取消之前的所有订阅
-    obj.hid = '0'
+    // obj.hid = ''
+    obj.cd = []
     BetWsMessage.set_bet_c2_message(obj);
     // console.error('重新发起订阅：','hid:--',obj.hid, 'mid:--',obj.mid  )
     // 用户赔率分组
     obj.marketLevel = lodash_.get(UserCtr.user_info,'marketLevel','0');
     nextTick(()=>{
-        obj.hid = obj_hid
+        obj.cd = obj_cd
         BetWsMessage.set_bet_c2_message(obj);
     })
     

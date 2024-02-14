@@ -1703,7 +1703,7 @@ class MatchMeta {
     if (['C114', 'C303'].includes(cmd)) {
       const { mid = '' } = data.cd || {};
       let _mids = String(mid).split(',')
-      if (_mids.some((_mid) => this.match_mids.includes(_mid))) this.handle_ws_get_hps(cmd === 'C303' ? 5000 : 2000)
+      if (_mids.some((_mid) => this.match_mids.includes(_mid))) this.handle_ws_get_hps(cmd === 'C303' ? 3000 : 2000)
       // if (_mids.some((_mid) => this.match_mids.includes(_mid))) this.debounce_get_hps(cmd === 'C303' ? 5000 : 2000)
     }
   }
