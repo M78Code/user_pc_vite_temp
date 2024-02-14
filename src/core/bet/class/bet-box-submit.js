@@ -1493,6 +1493,7 @@ const set_orderNo_bet_obj = order_no_list => {
         // 玩法id
         let playId = lodash_.get( refer_obj, `playId`)
         let matchInfo = lodash_.get( refer_obj, `tid_name`)
+        let sportName = lodash_.get( refer_obj, `sportName`)
         // 基准分
         let score_benchmark = lodash_.get( item, `scoreBenchmark`, '')
         if(score_benchmark){
@@ -1507,9 +1508,11 @@ const set_orderNo_bet_obj = order_no_list => {
             match_time,
             playId,
             score_benchmark,
+            sportName,
         }
     })
-    BetViewDataClass.set_orderNo_bet_obj(order_list)
+
+    BetViewDataClass.set_orderNo_bet_obj("order_list",order_no_list,5555555,item)
 }
 
 // 获取盘口值 附加值
