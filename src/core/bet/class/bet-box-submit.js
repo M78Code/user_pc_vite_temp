@@ -369,7 +369,7 @@ const get_lastest_market_info = (type) => {
                     let market = lodash_.get(obj,'currentMarket', {}) || {}
                     
                     // 赛事id 玩法id 坑位
-                    if(obj.matchInfoId == item.matchId && obj.playId == item.playId && market.placeNum == item.placeNum){
+                    if(obj.matchInfoId == item.matchId && obj.playId == item.playId && lodash_.isEmpty(market.placeNum) == lodash_.isEmpty(item.placeNum) ){
                         // bug 需要遍历 ot == oddsType
                         let market_odds_list = lodash_.get(market,'marketOddsList',[]) || []
                         console.error('ws那边做了替换为最新的:', item.playOptionsId)

@@ -143,6 +143,16 @@ class BetWsMessage {
           case 'C112':
             this.MSG_C112(data);
             break;
+
+          // 赛事开启
+          case 'C109':
+            this.MSG_C109(data);
+            break;
+
+           // 赛事盘口变化
+          case 'C303':
+            this.MSG_C303(data);
+            break;
           
           default:
             break;
@@ -210,6 +220,14 @@ class BetWsMessage {
     BetData.set_bet_c112_change(obj.cd)
   }
 
+  // 赛事开启
+  MSG_C109(obj) {
+    BetData.set_bet_c109_change(obj.cd)
+  }
+  MSG_C303(obj) {
+    BetData.set_bet_c303_change(obj.cd)
+  }
+  
   
 }
 

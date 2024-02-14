@@ -1403,7 +1403,7 @@ this.bet_appoint_ball_head= null */
     // ws 每次推送的 mid只有一个 
     let mid = lodash_.get(obj,'mid')
     // 赛事级别盘口状态（0:active 开盘, 1:suspended 封盘, 2:deactivated 关盘,11:锁盘状态）
-    let mhs = lodash_.get(obj,'ms')
+    let mhs = lodash_.get(obj,'mhs')
     // 单关/串关 属性名
     let single_name = ''
     // 单关/串关 属性值
@@ -1689,6 +1689,48 @@ this.bet_appoint_ball_head= null */
         }
       })
     }
+  }
+
+  set_bet_c109_change(obj){
+
+    let c109_mid_list = obj
+    // 单关/串关 属性名
+    let single_name = ''
+    // 单关/串关 属性值
+    let array_list = []
+    // 单关/串关 赛事列表
+    let mid_list = []
+    if(this.is_bet_single){
+      single_name = 'bet_single_list'
+    } else {
+      single_name = 'bet_s_list'
+    }
+    array_list = lodash_.cloneDeep(lodash_.get(this,single_name))
+    // 获取单关下的赛事id 多个（单关合并）
+    mid_list = array_list.map(item => item.matchId) || []
+
+    // 判断赛事级别盘口状态 中是否包含 投注项中的赛事
+    c109_mid_list.forEach( obj_mid => {
+      if(mid_list.includes(obj_mid.mid)){
+        array_list.forEach(item => {
+          // 赛事状态为 3:结束 4:关闭 5:取消 6:比赛放弃 8:未知 赛事进行关盘处理
+          if(item.matchId == obj_mid.mid && ![3,4,5,6,8].includes(obj_mid.ms*1)){
+            // 更新 赛事状态
+            item.mid_mhs = obj_mid.hs 
+          }
+        })
+      }
+    })
+
+    this[single_name] = array_list
+  
+    this.set_bet_oid_list()
+
+    this.set_options_state()
+    
+  }
+  set_bet_c303_change(){
+    get_lastest_market_info()
   }
 }
 export default new BetData();
