@@ -19,7 +19,7 @@
         'is-table-tennis': match.csid == 8,
         'is-volley-ball': match.csid == 9 || match.csid == 13
       }" @scroll="score_inner2_scrolling($event, match)">
-        <div class="score-se-inner2" :ref="`score_se_inner2_${match.mid}`">
+        <div class="score-se-inner2">
           <!-- 比分 -->
           <div class="row items-center score-fle-container-1"
             :class="{ result: is_results && PageSourceData.page_source !== 'detail_match_list', }">
