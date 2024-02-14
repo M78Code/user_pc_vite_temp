@@ -168,7 +168,7 @@ const add_handle = (item, index = 1) => {
   //球头加
   let step = item.sportId == '1' ? 0.25 : 0.5;
   ref_pre_book.appoint_ball_head = math_js.add(ref_pre_book.appoint_ball_head, step);
-  console.error('球头加', ref_pre_book.appoint_ball_head);
+  // console.error('球头加', ref_pre_book.appoint_ball_head);
   const max_rang = 10;
   const max_big = 30;
   //足球
@@ -292,7 +292,7 @@ const sub_handle = (item, index = 1) => {
   ref_pre_book.appoint_ball_head = math_js.subtract(ref_pre_book.appoint_ball_head, step);
   // console.error('market_type===', this.market_type);
   // console.error('basic_score===', ref_pre_book.basic_score);
-  console.error('timerly_basic_score===', ref_pre_book.timerly_basic_score);
+  // console.error('timerly_basic_score===', ref_pre_book.timerly_basic_score);
   if ('1' == item.sportId) { //足球
     //规则又改了，全场是主客队分数相加再加0.5， 非全场是主客队对应得分数加0.5，这里有三种情况，全场， 主队和客队
     let arr = ref_pre_book.timerly_basic_score.split('-');
@@ -307,8 +307,8 @@ const sub_handle = (item, index = 1) => {
     const mix_rang = -10;
     if ((MARKET_BIG_SMALL_PLAY_LIST.includes(item.playId) || MARKET_HOME_PLAY_LIST.includes(item.playId) || MARKET_AWAY_PLAY_LIST.includes(item.playId)) && ref_pre_book.appoint_ball_head <= ref_pre_book.ball_score) {
       ref_pre_book.appoint_ball_head = ref_pre_book.ball_score;
-      console.error('ref_pre_book.appoint_ball_head====', ref_pre_book.appoint_ball_head);
-      console.error('basic_score===', ref_pre_book.basic_score);
+      // console.error('ref_pre_book.appoint_ball_head====', ref_pre_book.appoint_ball_head);
+      // console.error('basic_score===', ref_pre_book.basic_score);
       //给出弹框提示（已为最低预约盘口值，请重新调整）
       useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('pre_record.market_error_info')}`)
     } else if (FOOTBALL_PLAY_LET_BALL.includes(item.playId)) {
@@ -340,7 +340,7 @@ const sub_handle = (item, index = 1) => {
   }
   set_computed_appoint_ball_head(item)
   set_bet_obj_config()
-  console.error('球头减');
+  // console.error('球头减');
   nextTick(() => {
     search_odds_value_by_ball_head(item);
   })
