@@ -882,6 +882,29 @@ class MenuData {
     // 冠军 和 vr 加入到 今日 早盘列表
     to_day_list.push(kemp_list_,vr_list_)
     early_list.push(kemp_list_,vr_list_)
+    //真人3000 彩票4000
+    if(true){  //开关 目前没有
+      to_day_list.splice(2 , 0 ,{
+        ct:1,
+        mi:3000,
+        name:"真人",
+      })
+      to_day_list.splice(2 , 0 ,{
+        ct:1,
+        mi:4000,
+        name:"彩票",
+      })
+      early_list.splice(2 , 0 ,{
+        ct:1,
+        mi:3000,
+        name:"真人",
+      })
+      early_list.splice(2 , 0 ,{
+        ct:1,
+        mi:4000,
+        name:"彩票",
+      })
+    }
 
     this.kemp_list = kemp_list
     this.hot_list = hot_list
