@@ -4,18 +4,18 @@
 <template>
   <div
       class="counting-down-wrap"
-      :class="{'counting-down-wrap-no-timer': (!show_time_counting() || counting_time === '00:00') && !home}"
+      :class="{'counting-down-wrap-no-timer': (!show_time_counting || counting_time === '00:00') && !home}"
       :style="{width: counting_wrapper_width === 'auto' ? 'auto' : counting_wrapper_width + 'rem'}"
   >
     <!--棒球单独处理-->
-    <span class="title-space-1" ref="title-space" v-show="title">
+    <!-- <span class="title-space-1" ref="title-space" v-show="title">
       {{title}}
     </span>
-    <span v-if="show_time_counting()" ref="counting" class="counting" v-html="counting_time_ctr_show_format_ouzhou(match,counting_time)"></span>
+    <span v-if="show_time_counting" ref="counting" class="counting" v-html="counting_time_ctr_show_format_ouzhou(match,counting_time)"></span>
     <span ref="special-match" class="special" :class="{'mar-l5': u_like}" :data-d="`${match.csid}-${match.mmp}`"
       v-show="[2,4,6,15,16].includes(+match.csid) && [301,302,303].includes(+match.mmp)"><!--csid:16水球-->
       {{match.mlet}}
-    </span>
+    </span> -->
   </div>
 </template>
  
@@ -69,8 +69,7 @@ onMounted(() => {
     counting_down_wrap_width(props.title, counting_time.value)
   })
 })
-const show_time_counting = () => {
-  // console.error('show_time_counting')
+const show_time_counting = computed(() => {
   let csid = Number(props.match.csid);
   let mmp = Number(props.match.mmp);
   // 网羽乒斯棒球(3)排球(9)不显示倒计时,只显示状态标题
@@ -115,7 +114,7 @@ const show_time_counting = () => {
   {
     return ![0,30,31,32,33,34,50,61,80,90,100,110,120,301,302,303,445].includes(mmp);
   }
-}
+})
 // 赛事阶段title变化时， 更新定时器容器宽度
 watch(() => props.title, (curr_tittle, prev_tittle) => {
   if (prev_tittle) {
@@ -129,9 +128,9 @@ watch(() => counting_time, (counting_time) => {
   }
 })
 // 时间显示状态变化时， 更新定时器容器宽度
-// watch(() => show_time_counting(), () => {
-//   counting_down_wrap_width(props.title, counting_time.value)
-// })
+watch(() => show_time_counting.value, () => {
+  counting_down_wrap_width(props.title, counting_time.value)
+})
 /**
  * @description: 倒计时总时间变化执行计时
  * @param {Undefined} Undefined
@@ -180,13 +179,13 @@ const counting_down_wrap_width = (title = '', counting_time = '') => {
   if (['zh', 'tw', 'hk'].includes(lang)) {
     // 猜你喜欢
     if (props.u_like && title_length === 3) {
-      counting_wrapper_width.value = show_time_counting() ? (0.39 + 0.05 + 0.3) : 'auto'
+      counting_wrapper_width.value = show_time_counting.value ? (0.39 + 0.05 + 0.3) : 'auto'
     }
     // 上半场 xx:xx
     else if (title_length === 3 && time_length === 5) {
       // 水球等赛事，宽度适配
       const time_width = counting_time.value && isNaN(counting_time.value.charAt(0)) ? 0.55 : 0.3
-      counting_wrapper_width.value = show_time_counting() ? (0.39 + 0.05 + time_width) : special_match_time_show ? (0.39 + 0.05 + 0.3) : (0.39 + 0.05)
+      counting_wrapper_width.value = show_time_counting.value ? (0.39 + 0.05 + time_width) : special_match_time_show ? (0.39 + 0.05 + 0.3) : (0.39 + 0.05)
     }
     // 下半场 xxx:xx
     else if (title_length === 3 && time_length === 6) {
@@ -204,7 +203,7 @@ const counting_down_wrap_width = (title = '', counting_time = '') => {
       counting_wrapper_width.value = 0.63 + 0.05 + 0.36
     }
     // 其他
-    else if (title_length === 3 && !show_time_counting()) {
+    else if (title_length === 3 && !show_time_counting.value) {
       counting_wrapper_width.value = 0.39 + 0.05
     }
     // 测试假数据情况，如xxxxx:xx这样的时间
@@ -216,7 +215,7 @@ const counting_down_wrap_width = (title = '', counting_time = '') => {
   else {
     // 猜你喜欢
     if (props.u_like) {
-      counting_wrapper_width.value = show_time_counting() ? 0.54 : 'auto'
+      counting_wrapper_width.value = show_time_counting.value ? 0.54 : 'auto'
     }
     // 其他
     else {
@@ -226,7 +225,7 @@ const counting_down_wrap_width = (title = '', counting_time = '') => {
           (
           mfo ||
           mmp == 0 ||
-          !show_time_counting() ||
+          !show_time_counting.value ||
           MenuData.get_menu_type() === 3000 && counting_time.value == '00:00'
           )
           ? 'auto' : ((title_length > 2 ? 0.35 : 0.19) + 0.05 + 0.06 * (time_length || 5))
