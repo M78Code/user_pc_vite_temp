@@ -13,7 +13,7 @@
     </span>
     <span v-if="show_time_counting()" ref="counting" class="counting" v-html="counting_time_ctr_show_format_ouzhou(match,counting_time)"></span>
     <span ref="special-match" class="special" :class="{'mar-l5': u_like}" :data-d="`${match.csid}-${match.mmp}`"
-      v-show="[2,4,6,15,16].includes(+match.csid) && [301,302,303].includes(+match.mmp)">
+      v-show="[2,4,6,15,16].includes(+match.csid) && [301,302,303].includes(+match.mmp)"><!--csid:16水球-->
       {{match.mlet}}
     </span>
   </div>
