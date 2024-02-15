@@ -112,27 +112,21 @@ const set_bet_order_list = (bet_list, is_single) => {
             }
             bet_list.forEach(item => {
                 let bet_s_obj = {
-                    "sportId": item.sportId,   // 赛种id
-                    "matchId": item.matchId,   // 赛事id
-                    "tournamentId": item.tournamentId,   // 联赛id
-                    // "scoreBenchmark": "",    // 基准分
-                    "betAmount": obj.bet_amount,  //投注金额         
-                    // "placeNum": item.placeNum, //盘口坑位
+                    "betAmount": obj.bet_amount,  //投注金额
                     "marketId": item.marketId,  //盘口id
-                    "playOptionsId": item.playOptionsId,   // 投注项id
                     "marketTypeFinally": UserCtr.odds.cur_odds,     // 欧洲版默认是欧洲盘 HK代表香港盘
-                    "marketValue": item.marketValue,
-                    "odds": item.odds,  // 赔率 万位
-                    "oddFinally": compute_value_by_cur_odd_type(item.odds, item.playId, item.odds_hsw, item.sportId),  //赔率
-                    "playName": item.playName, //玩法名称
-                    "sportName": item.sportName,  // 球种名称
-                    "matchType": item.matchType, // 1 ：早盘赛事 ，2： 滚球盘赛事，3：冠军，4：虚拟赛事，5：电竞赛事
+                    "matchId": item.matchId,   // 赛事id
                     "matchName": item.matchName,   //赛事名称
+                    "matchType": item.matchType, // 1 ：早盘赛事 ，2： 滚球盘赛事，3：冠军，4：虚拟赛事，5：电竞赛事
+                    "oddFinally": compute_value_by_cur_odd_type(item.odds, item.playId, item.odds_hsw, item.sportId),  //赔率
+                    "odds": item.odds,  // 赔率 万位
+                    "playId": item.playId,   // 玩法id
+                    "playName": item.playName, //玩法名称
                     "playOptionName": item.playOptionName,   // 投注项名称
                     "playOptions": item.playOptions,   // 投注项配置项
-                    // "tournamentLevel": item.tournamentLevel,   // 联赛级别
-                    "playId": item.playId,   // 玩法id
-                    // "dataSource": item.dataSource,   // 数据源
+                    "playOptionsId": item.playOptionsId,   // 投注项id
+                    "sportId": item.sportId,   // 赛种id
+                    "tournamentId": item.tournamentId,   // 联赛id
                 }
                 
                 // 电竞 vr 投注不需要一下数据
@@ -141,6 +135,16 @@ const set_bet_order_list = (bet_list, is_single) => {
                     bet_s_obj.placeNum = item.placeNum //盘口坑位
                     bet_s_obj.tournamentLevel = item.tournamentLevel   // 联赛级别
                     bet_s_obj.dataSource = item.dataSource  // 数据源
+                    bet_s_obj.sportName = item.sportName  // 球种名称
+                }
+                // vr 专属数据
+                if(item.bet_type == 'vr_bet'){
+                    bet_s_obj.sportName = item.sportName  // 球种名称
+                    bet_s_obj.marketValue = item.marketValue
+                }
+                // 电竞 专属数据
+                if(item.bet_type == 'esports_bet'){
+                    bet_s_obj.marketValue = item.marketValue
                 }
                 
                 // 获取当前的盘口赔率
@@ -188,7 +192,7 @@ const set_bet_order_list = (bet_list, is_single) => {
                 "marketId": item.marketId,  //盘口id
                 "playOptionsId": item.playOptionsId,   // 投注项id
                 "marketTypeFinally": UserCtr.odds.cur_odds,     // 欧洲版默认是欧洲盘 HK代表香港盘
-                "marketValue": marketValue,
+                // "marketValue": marketValue,
                 "odds": odds,  // 赔率 万位
                 "oddFinally": odd_finally,  //赔率
                 "playName": item.playName, //玩法名称
@@ -200,6 +204,11 @@ const set_bet_order_list = (bet_list, is_single) => {
                 "tournamentLevel": item.tournamentLevel,   // 联赛级别
                 "playId": item.playId,   // 玩法id
                 "dataSource": item.dataSource,   // 数据源
+            }
+
+            // 冠军玩法 增加赛事信息
+            if(item.bet_type == 'guanjun_bet'){
+                bet_s_obj.matchInfo = item.matchName   //赛事名称
             }
 
             // 获取当前的盘口赔率
