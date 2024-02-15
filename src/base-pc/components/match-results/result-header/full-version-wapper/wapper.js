@@ -1,5 +1,5 @@
-// import ResultHeader from "../result-header-1/new-pc-index.vue";
-import ResultHeader from "../result-header-1/index.vue";
+import ResultHeader from "../result-header-1/new-pc-index.vue";
+// import ResultHeader from "../result-header-1/index.vue";
 import { compute_component_wapper_config } from "app/job/use-output/index.js";
 const all_components_obj = {
   ResultHeader,

@@ -111,15 +111,15 @@
             <!-- 滚球 -->
             <span>{{ i18n_t("results.roll_ball") }}</span>
           </div>
-          <!-- <div
+          <div
             class="checkbox"
             v-if="results_params.sportType == '1' && show_play_back"
-            @click="highlights_input_radio"
+            @click="highlights_input_radio_fn"
           >
-            <fliter-checkbox :checked="is_highlights" /> -->
+            <fliter-checkbox :checked="is_highlights" />
             <!-- 精彩回放筛选 -->
-            <!-- <span>{{ i18n_t("video.video_event_history") }}</span>
-          </div> -->
+            <span>{{ i18n_t("video.video_event_history") }}</span>
+          </div>
         </div>
       </div>
       <div class="flex items-center">
@@ -205,6 +205,10 @@ const props = defineProps({
     type:Boolean,
     default:false
   },
+  is_highlights:{
+    type:Boolean,
+    default:false
+  },
   startTimeShowFunc:{
     type: Function,
   },
@@ -230,6 +234,9 @@ const props = defineProps({
     type: Function,
   },
   search_hot:{
+    type: Function,
+  },
+  highlights_input_radio:{
     type: Function,
   },
   startTimeShow:{
@@ -304,6 +311,13 @@ const  showBtn = ref(props.is_show)
 const confirmDate=()=>{
   useMittEmit(MITT_TYPES.EMIT_INIT_SELECT, 1)
   props.hideSelect(date.value)
+}
+/**
+ * @description: 勾选精彩回放
+ *
+ */
+const highlights_input_radio_fn=()=> {
+     props.highlights_input_radio()
 }
 
 /**

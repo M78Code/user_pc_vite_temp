@@ -36,12 +36,14 @@
         :results_params="results_params"
         :input_radio="input_radio"
         :is_bowls="is_bowls"
+        :is_highlights="is_highlights"
         :cancel="cancel"
         :is_show="is_show"
         :click_popup="click_popup"
         :img_mouseleave="img_mouseleave"
         :timeChanged="timeChanged"
         :search_hot="search_hot"
+        :highlights_input_radio="highlights_input_radio"
       ></result-header>
       <!-- 筛选条件 E-->
 
@@ -135,6 +137,7 @@ const {
   pournament_params,
   results_params,
   is_bowls,
+  is_highlights,
   is_show,
   cancel,
   timeChanged,
