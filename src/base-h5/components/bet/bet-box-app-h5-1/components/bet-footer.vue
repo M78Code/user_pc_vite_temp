@@ -72,7 +72,7 @@ import { UserCtr ,format_money2,compute_local_project_file_path,MenuData, comput
 import { odds_table } from "src/core/constant/common/module/csid.js"
 import { i18n_tc } from "src/boot/i18n.js"
 import { useRoute,useRouter } from "vue-router"
-
+import { ref_pre_book } from "src/core/bet/common/appoint-data.js"
 
 const router = useRouter()
 
@@ -204,11 +204,15 @@ const get_leng_px = () => {
 // status 是响应式的 可以用于重新计算
 const bet_win_money = computed(()=> status => {
   // 获取单关投注的数据
-  const { bet_amount ='', oddFinally = '', odds_hsw = '' } = lodash_.get(BetData,'bet_single_list[0]',{})
+  let { bet_amount ='', oddFinally = '', odds_hsw = '' } = lodash_.get(BetData,'bet_single_list[0]',{})
   let bet_win = bet_amount
   // 香港赔 不用减去投注金额
   if(odds_hsw.includes(odds_table[UserCtr.odds.cur_odds]) && UserCtr.odds.cur_odds == 'HK' ){
     bet_win = 0
+  }
+  // 预约投注 赔率
+  if(BetData.is_bet_pre){
+    oddFinally = ref_pre_book.appoint_odds_value
   }
   // 计算出可赢金额
   return format_money2(mathJs.subtract(mathJs.multiply(bet_amount,oddFinally), bet_win)) 
