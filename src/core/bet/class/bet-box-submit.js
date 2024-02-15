@@ -1084,7 +1084,7 @@ const set_error_message_config = (res ={},type,order_state) => {
  * @returns 
  */
 const set_bet_obj_config = (params = {}, other = {}) => {
-    console.error('投注项需要数据', params, 'other', other);
+    // console.error('投注项需要数据', params, 'other', other);
     // 切换投注状态
     const { oid, _hid, _hn, _mid } = params
 
@@ -1282,7 +1282,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
             })
         }
     }
-    console.error('投注项内容：',bet_obj)
+    // console.error('投注项内容：',bet_obj)
 
     // 冠军 
     if(bet_obj.bet_type == 'guanjun_bet'){

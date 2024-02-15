@@ -18,23 +18,23 @@
         <!-- 单关 投注 -->
         <div class="bet-scroll" ref="bet_scroll" @scroll="handle_bet_scroll"
         :class="!BetData.is_bet_single && BetData.bet_keyboard_show && BetViewDataClass.bet_order_status == 1  ?'h344':''">
-          <div v-if="BetViewDataClass.bet_order_status == 1">
+          <template v-if="BetViewDataClass.bet_order_status == 1">
             <template v-if="BetData.is_bet_single">
-              <div
+              <template
                 v-for="(item, index) in BetData.bet_single_list"
                 :key="item.playOptionsId"
               >
-                <betItem :items="item" :key="index" :index="index" />
-              </div>
+                <betItem :items="item" :index="index" />
+              </template>
             </template>
             <!-- 串关 投注 -->
             <template v-else>
-              <div
+              <template
                 v-for="(item, index) in BetData.bet_s_list"
                 :key="item.playOptionsId"
               >
-                <betItem :items="item" :key="index" :index="index" />
-              </div>
+                <betItem :items="item" :index="index" />
+              </template>
 
               <!-- 串关投注 限额 -->
               <!-- 复式连串过关投注 限额 -->
@@ -56,7 +56,7 @@
               </div>
              
             </template>
-          </div>
+          </template>
 
           <!-- 投注后的结果 -->
           <template v-else>
