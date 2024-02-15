@@ -1090,6 +1090,7 @@ this.bet_appoint_ball_head= null */
     // 重新设置投注项
     this.set_bet_oid_list()
 
+    // console.error('set_bet_single_special',list)
     this.set_bet_data_class_version()
   }
 
@@ -1153,7 +1154,8 @@ this.bet_appoint_ball_head= null */
   // 删除投注项
   // oid 投注项id  index 投注项下标
   set_delete_bet_info(oid,index) {
-    console.error('删除投注项')
+    // console.error('删除投注项')
+    this.set_bet_single_special_list()
     let single = false
     let single_list = []
     let cur_index = 0
@@ -1235,6 +1237,7 @@ this.bet_appoint_ball_head= null */
     let market_list = []
 
     let single_list = []
+    this.set_bet_single_special_list()
     // 单关 切 有投注项
     if(this.is_bet_single){
       single_list = this.bet_single_list || []
@@ -1649,7 +1652,7 @@ this.bet_appoint_ball_head= null */
    * @return {undefined} undefined
    */
   set_bet_c112_change(obj){
-    console.error('set_bet_c112_change',obj)
+    // console.error('set_bet_c112_change',obj)
     let mid = lodash_.get(obj,'mid', '')
 
     // 单关/串关 属性名

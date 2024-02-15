@@ -511,7 +511,7 @@ class BetViewData {
   }
 
   orderNo_bet_obj_config(obj) {
-    console.error('orderNo_bet_obj_config',obj)
+    // console.error('orderNo_bet_obj_config',obj)
     this.orderNo_bet_obj = this.orderNo_bet_obj.map(item => {
       if(item.orderNo == obj.orderNo){
         item.orderStatusCode = obj.status
