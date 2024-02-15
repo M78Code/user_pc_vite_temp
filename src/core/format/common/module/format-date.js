@@ -309,6 +309,8 @@ export const counting_time_ctr_show_format = (match, counting_time) => {
      * @return undefined
      */
     export function   counting_time_ctr_show_format_ouzhou(match,counting_time) {
+      // console.error('match',match)
+      // console.error('counting_time',counting_time)
       // counting_time 格式00:00
       let counting_time_ = counting_time;
       // C01赛事只显示分钟不显示秒
