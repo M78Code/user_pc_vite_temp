@@ -94,6 +94,13 @@ let is_bet_single = true
 // 是否支持串关
 let is_bet_special = true
 
+const fit_lsit = ['number_family','yb_fontsize14 limit-txt','content-b','bet_single_detail f-b-c','alert-rules',
+'bet_single_info f-b-c','add-match fw-c-c cursor h44 pl-30','fon12 font500 f-e-c','icon-del1 icon-add','f-b-s bet-content',
+'fw-s-s bet-left','w-100 f-s-c font14 font500','text-flow-none','ty-span','my-left','w-100 handicap','mr-4 text-009 text-flow-none',
+'text-a1a text-flow-none mr-4 font400','text-a1a text-flow-none text-009 font400','w-100 fon12 font400 mt-4','fw-e-s bet-right','f-c-c bet-money',
+'font14 font700 bet-odds-value f-c-c','font14','bet-delete','bet-scroll h344'
+]
+
 onMounted(()=>{
   ref_data.emit_lsit = {
     emitter_1: useMittOn(MITT_TYPES.EMIT_INIT_SLIDER_CONFIG, init_slider_config).off,
@@ -106,13 +113,19 @@ onMounted(()=>{
 
 // 滑动监听
 const set_touch_move_bet = event => {
-  event.preventDefault();
-  let fit = lodash_.get(event,'target.className','')
-  get_leng_px()
-  if(fit == 'bet-box'){
-    let page_x = lodash_.get(event,'changedTouches[0].pageX',0)- ref_data.bet_leng
-    if(page_x > 5 && page_x < ref_data.move_leng){
-      ref_data.basic_model = page_x
+  if(event){
+    console.error('滑动监听')
+    // event.preventDefault();
+    let fit = lodash_.get(event,'target.className','')
+    get_leng_px()
+    if(!fit_lsit.includes(fit)){
+      event.preventDefault();
+    }
+    if(fit == 'bet-box'){
+      let page_x = lodash_.get(event,'changedTouches[0].pageX',0)- ref_data.bet_leng
+      if(page_x > 5 && page_x < ref_data.move_leng){
+        ref_data.basic_model = page_x
+      }
     }
   }
 }
