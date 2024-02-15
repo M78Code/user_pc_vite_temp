@@ -5,6 +5,7 @@
   <div
       class="counting-down-wrap"
       :class="{'counting-down-wrap-no-timer': (!show_time_counting() || counting_time === '00:00') && !home}"
+      :style="{width: counting_wrapper_width === 'auto' ? 'auto' : counting_wrapper_width + 'rem'}"
   >
     <!--棒球单独处理-->
     <span class="title-space-1" ref="title-space" v-show="title">
@@ -44,7 +45,7 @@ const reduce_second = ref(0)  // 计时器开始计时时间
 const is_destroyed = ref(false)     // 本组件是否已销毁
 const counting_time = ref('00:00')  // 计时器显示的时间
 const goon = ref(true)              // 计时器是否暂停或继续
-// const counting_wrapper_width = ref(.8)  // 定时器容器宽度
+const counting_wrapper_width = ref(.8)  // 定时器容器宽度
 const counting_time_out = ref(null)
 
 // TODO: 代替换
@@ -64,9 +65,9 @@ onMounted(() => {
   // 计时器setTimeout对象，可用于clearTimeout
   reduce_second.value = props.match.mst * 1
   counting_frame();
-  // nextTick(() => {
-  //   counting_down_wrap_width(props.title, counting_time.value)
-  // })
+  nextTick(() => {
+    counting_down_wrap_width(props.title, counting_time.value)
+  })
 })
 const show_time_counting = () => {
   // console.error('show_time_counting')
@@ -116,17 +117,17 @@ const show_time_counting = () => {
   }
 }
 // 赛事阶段title变化时， 更新定时器容器宽度
-// watch(() => props.title, (curr_tittle, prev_tittle) => {
-//   if (prev_tittle) {
-//     counting_down_wrap_width(props.title, counting_time.value)
-//   }
-// })
+watch(() => props.title, (curr_tittle, prev_tittle) => {
+  if (prev_tittle) {
+    counting_down_wrap_width(props.title, counting_time.value)
+  }
+})
 // 赛事时间超过100分钟时， 更新定时器容器宽度
-// watch(() => counting_time, (counting_time) => {
-//   if (counting_time.length > 5) {
-//     counting_down_wrap_width(props.title, counting_time.value)
-//   }
-// })
+watch(() => counting_time, (counting_time) => {
+  if (counting_time.length > 5) {
+    counting_down_wrap_width(props.title, counting_time.value)
+  }
+})
 // 时间显示状态变化时， 更新定时器容器宽度
 // watch(() => show_time_counting(), () => {
 //   counting_down_wrap_width(props.title, counting_time.value)
@@ -452,7 +453,7 @@ const get_counting_time = () => {
   }
 }
 onActivated(() => {
-  // counting_down_wrap_width(props.title, counting_time.value)
+  counting_down_wrap_width(props.title, counting_time.value)
 })
 onDeactivated(() => {
   is_destroyed.value = true;
