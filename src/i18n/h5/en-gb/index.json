@@ -229,11 +229,232 @@
     ]
   },
 "app_h5": {
-  "bet":{"bet_win": "可赢{total}"},
+  "cathectic": {
+      "handicap_tutorial": "Handicap Tutorial",
+      "open_bets": "Unsettled Bets",
+      "closed_bets": "Settled Bets",
+      "no_data_pre": "No upcoming data available",
+      "no_data_unsettle": "No unsettled data available",
+      "no_data_settle": "No settled data available",
+      "no_data_invalid": "No invalid data available",
+      "data_loading": "Loading data...",
+      "kind_tips": "Friendly reminder",
+      "adjustment_amount": "Adjust amount",
+      "winnable": "Potential winning Amount",
+      "bet_number": "Bet ID",
+      "bets": "Bet item",
+      "settle": "Settlement",
+      "bet_status": "Bet Status",
+      "cash_failed": "Early Cash-Out Failed",
+      "sub_wait": "Application submitted, please be patient",
+      "all_cash_sess": "All Early Cash-Outs Successful",
+      "cash_details": "Early Cash-Out Details",
+      "cash_rules": "Declaration of Early Cash-Out Rules",
+      "explain1": "Early cash-out is only applicable to specified events and handicaps. In the event of a match or handicap cancellation, early cash-out bets will be withdrawn for reevaluation. We reserve the right to interpret the final results.",
+      "explain2": "For specific cash-out rules, please refer to the [Help Center] - [OpenCloud KY Sports Early Cash-Out Rules]",
+      "confirm_cancel_reservation": "Confirm the cancellation of the reservation for this match?"
+  },
+  "handicap_tutorial": {
+      "answer_question": "Over/Under Simulation Training",
+      "football_master": "Congratulations, you upgraded to football master",
+      "training_camp": "Training Camp",
+      "actual_combat": "Place a real bet",
+      "practise": "Simulated practice",
+      "again": "Learn again",
+      "single": "Single choice",
+      "return_home": "Back to homepage",
+      "next": "Next question",
+      "introdution": "Strategy",
+      "results_appear": "When such a result occurs",
+      "red_list": "Congratulations on winning",
+      "not_master": "Unfortunately, you haven't fully mastered",
+      "big_small_ball": "Over/Under",
+      "big_small_ball_tip": "The total number of goals scored by both teams in the full 90 minutes (including injury time)",
+      "handicapData_condition": "Handicap of 0",
+      "handicapData_condition_1": "Sum of goals",
+      "all_win": "Win all",
+      "home_team": "Home team",
+      "bet_home_team": "Bet on home team",
+      "bet_away_team": "Bet on away team",
+      "away_team": "Away team",
+      "all_lose": "All lose",
+      "win_half": "Win half",
+      "lose_half": "Lose half",
+      "tie_handicap": "Draw",
+      "tie_half_plate": "Draw Half-Ball Handicap",
+      "big_bet": "Bet Over %s",
+      "small_bet": "Bet Under %s",
+      "enter_ball": "Sum of Goals",
+      "vice_versa": "Vice versa",
+      "return_principal_discount": "Return Stake (Draw)",
+      "return_principal": "Return Stake",
+      "home_team_handicap": "Home team gives %s goals",
+      "ball_plate_1": "2/1 Ball odds",
+      "ball_plate_2": "2/1 Ball/1 Ball odds",
+      "ball_plate_3": "1 Ball odds",
+      "ball_plate_4": "1 Ball/ 1 2/1 Ball odds",
+      "ball_plate_5": "1 & 2/1 Ball odds",
+      "ball_plate_6": "1 & 2/1 / 2 Ball odds",
+      "note_1": "Bet on the home team to win all, bet on the away team to lose all",
+      "note_2": "Draw, return stake (void)",
+      "note_3": "Bet on the home team to win all, bet on the away team to lose all",
+      "note_4": "Draw, bet on the home team to lose all, bet on the away team to win all",
+      "note_5": "Bet on the home team to lose all, bet on the away team to win all",
+      "note_6": "Bet on the home team to win half, bet on the away team to lose half",
+      "note_7": "Bet on the home team to win all, bet on the away team to lose all",
+      "note_8": "Bet on both home and away teams, return stake (void)",
+      "note_9": "Bet on the home team to lose half, bet on the away team to win half",
+      "note_10": "Bet on the home team to lose all, bet on the away team to win all",
+      "note_11": "Bet on the home team to lose all, bet on the away team to win all",
+      "note_12": "Bet on the home team to win half, bet on the away team to lose half",
+      "note_13": "Bet on the home team to win all, bet on the away team to lose all",
+      "note_14": "Bet Over 2.5 all win, Bet Under 2.5 all lose",
+      "note_15": "Bet Over 2.5/3 win half, Bet Under 2.5/3 lose half",
+      "note_16": "Bet Over 3/3.5 lose half, Bet Under 3/3.5 win half",
+      "note_17": "Bet Over 3 returns the stake (void), Bet Under 3 returns the stake (void)",
+      "questionsData": {
+          "1": {
+              "note_1": "Goals 2, less than 2.5",
+              "note_2": "Betting on <span>Under 2.5</span> wins all, betting on <span>Over 2.5</span> loses all"
+          },
+          "2": {
+              "note_1": "If the number of Goals 2, less than 2/2.5",
+              "note_2": "Basic splitting principle, betting on <span>Under 2/2.5</span> wins half"
+          }
+      },
+      "ball": "%s goals",
+      "big": "Over %s",
+      "small": "Under %s",
+      "which_win": "Which option can win all?",
+      "which_win_half": "Which option can win half?",
+      "real_madrid": "Real Madrid",
+      "m_chesester_city": "Manchester City",
+      "m_chesester_untied": "Manchester United",
+      "chelsea": "Chelsea",
+      "barcelona": "Barcelona"
+  },
+  "bet": {
+      "bet_win": "Potential Winnings: {total}",
+      "delete": "Delete",
+      "confirm": "Confirm",
+      "parlay": "Parlay",
+      "odd": "Single",
+      "limit": "Limit",
+      "cancel_appoint": "Cancel Reservation",
+      "pm_sport": "PM Sports",
+      "bet_confirm": "Bet Confirmed",
+      "bet_error": "Bet Failed",
+      "reserve_win": "Reserved Amount",
+      "win_amount": "Potential Winnings",
+      "toltip1": "What is",
+      "toltipc": "Parlay",
+      "toltips": {
+          "2001": {
+              "title": "\"2 parlay 1 = ",
+              "content": "When selecting 2 events for 2 parlay 1, the system will combine the chosen 2 events into a single bet. Both events must win for the bet to be profitable"
+          },
+          "3001": {
+              "title": "3 parlay 1 = A bet consisting of 3 events.",
+              "content": "When selecting 3 events for 3 parlay 1, the system will combine the chosen 3 events into a single bet. All 3 events must win for the bet to be profitable."
+          },
+          "3004": {
+              "title": "3 parlay 4 = Four separate bets, each consisting of 3 events.",
+              "content": "\"When choosing to bet on a 3 parlay 4, the system will create four separate bets from the selected 3 events. It will generate three 2 parlay 1 and one 3 parlay 1. Each combination of events in the parlay is treated as a single bet, resulting in a total of four separate bets."
+          },
+          "4001": {
+              "title": "4 parlay 1 = A bet consisting of 4 events.",
+              "content": "\""
+          },
+          "5001": {
+              "title": "5 parlay 1 = A bet consisting of 5 events.",
+              "content": "When selecting 5 events for 5 parlay 1, the system will combine the chosen 5 events into a single bet. All 5 events must win for the bet to be profitable."
+          },
+          "6001": {
+              "title": "6 parlay 1 = A bet consisting of 6 events.",
+              "content": "When selecting 6 events for  6 parlay 1, the system will combine the chosen 6 events into a single bet. All 6 events must win for the bet to be profitable."
+          },
+          "7001": {
+              "title": "7 parlay 1 = A bet consisting of 7 events.",
+              "content": "When selecting 7 events for a 7 parlay 1, the system will combine the chosen 7 events into a single bet. All 7 events must win for the bet to be profitable."
+          },
+          "8001": {
+              "title": "8 parlay 1 = A bet consisting of 8 events.",
+              "content": "When selecting 8 events for an 8 parlay 1, the system will combine the chosen 8 events into a single bet. All 8 events must win for the bet to be profitable."
+          },
+          "9001": {
+              "title": "9 parlay 1 = A bet consisting of 9 events.",
+              "content": "When selecting 9 events for a 9 parlay 1, the system will combine the chosen 9 events into a single bet. All 9 events must win for the bet to be profitable."
+          },
+          "10001": {
+              "title": "10 parlay 1 = A bet consisting of 10 events.",
+              "content": "When selecting 10 events for a 10 parlay 1, the system will combine the chosen 10 events into a single bet. All 10 events must win for the bet to be profitable."
+          },
+          "40011": {
+              "title": "\"4 parlay 11 = 11 distinct bets from the selection of 4 events.",
+              "content": "when choosing 4 matches to bet on 4 parlay 11 system. The system will split the 4 selected matches into 6 x 2 parlay 1, 4 x 3 parlay 1 and 1 x 4 parlay 1. Each combination forms a separate bet, resulting in a total of 11 bets."
+          },
+          "50026": {
+              "title": "5 parlay26 = 26 distinct bets from the selection of 5 events.",
+              "content": "When choosing 5 matches to bet on 5 parlay 26 system. The system will split the 5 selected matches into 10 x 2 parlay 1, 10 x  3 parlay 1 , 5 x 4 parlay 1 and 1 x 5 parlay 1. Each combination forms a separate bet, resulting in a total of 26 bets."
+          },
+          "60057": {
+              "title": "6 parlay 57 = 57 distinct bets from the selection of 6 events.",
+              "content": "When choosing 6 matches to bet on 6 parlay 57 system. The system will split the 6 selected matches into 15 x 2 parlay 1, 20 x  3 parlay 1 , 15 x 4 parlay 1 ,6  x 5 parlay 1 and 1 x 6 parlay 1. Each combination forms a separate bet, resulting in a total of 57 bets."
+          },
+          "700120": {
+              "title": "7 parlay 120 =  120 distinct bets from the selection of 7 events.",
+              "content": "When choosing 7 matches to bet on 7 parlay 120 system. The system will split the 7 selected matches into 21 x 2 parlay 1, 35 x  3 parlay 1 , 35 x 4 parlay 1 ,21  x 5 parlay 1 , 7 x 6 parlay 1 and 1 x  7 parlay 1.Each combination forms a separate bet, resulting in a total of 120 bets."
+          },
+          "800247": {
+              "title": "8 parlay 247 =  247 distinct bets from the selection of 8 events.",
+              "content": "When choosing 8 matches to bet on 8 parlay 247 system. The system will split the 8 selected matches into 28 x 2 parlay 1, 56 x  3 parlay 1 , 70 x 4 parlay 1 ,56  x 5 parlay 1 , 28 x 6 parlay 1 , 8  x  7 parlay 1 and 1 x 8 parlay 1  .Each combination forms a separate bet, resulting in a total of 247 bets."
+          },
+          "900502": {
+              "title": "9 parlay 502 =  502 distinct bets from the selection of 9 events.",
+              "content": "When choosing 9 matches to bet on 9 parlay 502 system. The system will split the 9 selected matches into 36 x 2 parlay 1, 84 x  3 parlay 1 , 126 x 4 parlay 1 ,126  x 5 parlay 1 , 84 x 6 parlay 1 , 36  x  7 parlay 1 , 9 x 8 parlay 1 and 1 x 9 parlay 1 .Each combination forms a separate bet, resulting in a total of 502 bets."
+          },
+          "10001013": {
+              "title": "10 parlay 1013 =  1013 distinct bets from the selection of 10 events.",
+              "content": "When choosing 10 matches to bet on 10 parlay 1013 system. The system will split the 10 selected matches into 45 x 2 parlay 1, 120 x  3 parlay 1 , 210 x 4 parlay 1 ,252  x 5 parlay 1 , 210 x 6 parlay 1 , 120  x  7 parlay 1 , 45 x 8 parlay 1 , 10  x 9 parlay 1 and 1 x 10 parlay 1.Each combination forms a separate bet, resulting in a total of 1013 bets."
+          }
+      }
+  },
+  "match": {
+      "all": "All",
+      "champions": "UEFA Champions League",
+      "premier": "English Premier League",
+      "serie": "Italian Serie A",
+      "laliga": "Spanish La Liga",
+      "ligue": "French Ligue 1",
+      "bundesliga": "Bundesliga",
+      "china_super": "Chinese Super League",
+      "normal_results": "Regular Results",
+      "game_results": "Esports Results",
+      "vr_results": "VR Results",
+      "championship_results": "Championship Results"
+  },
+  "filter": {
+      "more": "More >",
+      "enlarge": "Enlarge",
+      "font_size": "Font Size",
+      "default": "Default",
+      "turn_on": "Open",
+      "daily_activities": "Daily Activities",
+      "go_old_version": "Go to Old Version",
+      "go_web_version": "Go to Web Version"
+  },
+  "v_sports": {
+      "event_status": "Match Status"
+  },
   "detail": {
-    "highlights": "Highlights",
-    "events": "events",
-    "technical_statistics": "Technical Statistics"
+      "half": "First Half",
+      "not_data_Injury": "No injury list available",
+      "not_data_substitute": "No substitute list available",
+      "not_data_starter": "No starting lineup available",
+      "acronym_half": "Half",
+      "highlights": "Highlights",
+      "events": "Match Events",
+      "technical_statistics": "Technical Statistics"
   }
 },
   "ac_rules": {
@@ -1093,8 +1314,12 @@
     "theme": "Theme Style",
     "time": "Time",
     "time2": "By Time",
+    "daily_activities": "Daily Activities",
+    "turn_on": "Open",
     "time_order": "Time Order",
-    "win_alone": "1X2"
+    "win_alone": "1X2",
+    "open_bets":"Unsettled Bets",
+    "closed_bets":"Settled Bets"
   },
   "home": {
     "can_bet": "Bet Item",
@@ -2455,10 +2680,12 @@
     "2": "Today",
     "3": "Early",
     "4": "Parlay",
+    "6": "Multi",
     "7": "Esports",
     "8": "VR",
     "30": "Lottery",
-    "28": "Results"
+    "28": "Results",
+    "400": "Parlay"
   },
   "virtual_sports": {
     "rank": "Ranking",

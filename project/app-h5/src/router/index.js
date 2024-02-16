@@ -90,7 +90,15 @@ const router = createRouter({
             preload: true,
           },
         },
-       
+       // 切换语言
+        {
+          path: "/language_switch",
+          name: "language_switch",
+          component: () => import( "../pages/language-switch/index.vue" ),
+          meta: {
+            preload: true,
+          },
+        },
         {
           path: "/rule_description",
           name: "rule_description",

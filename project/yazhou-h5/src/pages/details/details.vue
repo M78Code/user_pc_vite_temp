@@ -19,7 +19,7 @@
       <div>
         <div  class="header-fix">
           <div ref="scroll_video_height" class="relative-position scroll_video_h">
-            <videos v-if="get_show_video" :detail_data="detail_data" :tips.sync="tips" :is_show_text="is_show_text"  :show_go_back="show_go_back" @change_go_back="change_go_back"></videos>
+            <videos v-if="get_show_video" :math_list_data="math_list_data" :detail_data="detail_data" :tips.sync="tips" :is_show_text="is_show_text"  :show_go_back="show_go_back" @change_go_back="change_go_back"></videos>
             <details-header  @click.stop :detail_data="detail_data" :view_tab="viewTab" :style="{display:get_show_video?'none':'block'}"></details-header>
           </div>
         </div>

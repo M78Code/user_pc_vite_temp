@@ -373,7 +373,7 @@ template {
       width: 100%;
       height: 0.4rem;
       line-height: 0.4rem;
-      font-size: 0.16rem;
+      font-size: 0.12rem;
       border-radius: 0.1rem;
       &.disabled-btn {
         background-color: var(--q-gb-bg-c-9);

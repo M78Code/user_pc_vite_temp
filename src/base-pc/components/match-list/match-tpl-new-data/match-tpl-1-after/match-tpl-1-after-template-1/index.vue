@@ -86,8 +86,80 @@
           <div class="basic-col" :style="`width:${match_list_tpl_size.team_width}px !important;`">
             <basis-info4 v-if="is_mounted && match" :is_other_concede="true" :match="match" :is_show_score="true" />
           </div>
+          <div v-if="match?.play_current_key == 'hpsCompose'">
+            <match-handicap
+              :handicap_list="concat_compose_list(match?.other_handicap_list).compose_list_first"
+              :match="match"
+              :isCompose="true"
+              other_play
+            />
+            <div
+              :class="[
+                'fifteen-box',
+                { 'double-title': ['en', 'ad', 'ms','es'].includes(get_lang) },
+              ]"
+              v-if="
+                match.has_other_play &&
+                !match_style_obj.is_fold_tab_play &&
+                !showMode
+              "
+            >
+              <div class="row">
+                <div
+                  v-for="(item, key) in special_bet_col"
+                  :key="key"
+                  class="handicap-col fifteen-item bet-item-wrap fifteen_tab_txt"
+                  :class="[
+                    {
+                      'tab-tilte-bg': set_secondary_bg(
+                        key,
+                        special_bet_col.length
+                      ),
+                    },
+                    { 'flex justify-center items-center': item.includes('%n') },
+                    {
+                      'highlight-t':
+                        set_secondary_bg(key, special_bet_col.length) &&
+                        !item.includes('%n'),
+                    },
+                  ]"
+                  :style="`width:${get_bet_width(
+                    key,
+                    special_bet_col.length,
+                    match.play_current_key == 'hpsCompose'
+                  )}px !important;`"
+                  v-tooltip="{
+                    content: item.includes('%n') ? '' : item,
+                    overflow: 1,
+                  }"
+                >
+                  <div class="double-row" v-if="item.includes('%n')">
+                    <div
+                      v-for="(text, i) in item.split('%n')"
+                      :class="[
+                        { 'highlight-t': i === 1 && [3, 4, 5].includes(key) },
+                      ]"
+                      :key="i"
+                    >
+                      {{ text }}
+                    </div>
+                  </div>
+                  <template v-else>
+                    {{ item }}
+                  </template>
+                </div>
+              </div>
+            </div>
+            <match-handicap
+              v-if="!showMode"
+              :handicap_list="concat_compose_list(match?.other_handicap_list).compose_list_last"
+              :match="match"
+              :isCompose="true"
+              other_play
+            />
+          </div>
           <!-- 赛事盘口投注项 -->
-          <match-handicap :handicap_list="match?.other_handicap_list" :match="match" other_play />
+          <match-handicap  v-else :handicap_list="match?.other_handicap_list" :match="match" other_play />
           <!-- 视频按钮 -->
           <div class="media-col"></div>
         </div>
@@ -124,6 +196,18 @@ const props = defineProps({
   }
 })
 const match = inject("match")
+
+const special_bet_col = computed(() => {
+  let multi_column = match.value.tpl_id == 13;
+  let special_bet_col = [
+    i18n_t("hps.compose.details.all_total_goal"),
+    i18n_t("hps.compose.details.half_total_goal"),
+  ];
+  if (multi_column) {
+    special_bet_col.push(...["", "", ""]);
+  }
+  return special_bet_col;
+})
 const play_name_list = computed(() => {
   /**
    * @Description 设置次要玩法 tab
@@ -300,7 +384,14 @@ const bet_col = computed(() => {
   return bet_col
 })
 
-
+const concat_compose_list = (payload) => {
+  let compose_list_first = payload.slice(0, 4).concat(payload.slice(8, 17));
+  let compose_list_last = payload.slice(4, 17);
+  return {
+    compose_list_first,
+    compose_list_last,
+  };
+}
 
 /**
  * @Description 设置次要玩法 bg
@@ -371,6 +462,51 @@ function get_bet_width(index, length, isCompose) {
   return bet_width
 }
 
+// 是否显示更多一行
+const showMode = computed(() => {
+    let {
+      play_current_key,
+      play_current_index,
+      has_other_play,
+      other_handicap_list,
+    } = match.value;
+    // 特色组合
+  //   if (["hpsCompose"].includes(play_current_key)) {
+  //     if (this.show_more_other_list&&this.show_more_other_list[this.mid]&&this.show_more_other_list[this.mid][play_current_index]) {
+  //       return (
+  //       has_other_play &&
+  //       this.get_additional_plays_list_num == 3 &&
+  //       !this.show_more_other_list[this.mid][play_current_index] &&
+  //       !this.match_style_obj.is_fold_tab_play
+  //     );
+  //     }else{
+  //       return (
+  //       has_other_play &&
+  //       this.get_additional_plays_list_num == 3 &&
+  //       !this.match_style_obj.is_fold_tab_play
+  //     );
+  //     }
+  //   } else {
+  //     // 其他
+  //     if (this.show_more_other_list&&this.show_more_other_list[this.mid]&&this.show_more_other_list[this.mid][play_current_index]) {
+  //       return (
+  //       has_other_play &&
+  //       this.get_additional_plays_list_num == 3 &&
+  //       !this.show_more_other_list[this.mid][play_current_index] &&
+  //       other_handicap_list[0].ols.length > 3 &&
+  //       !this.match_style_obj.is_fold_tab_play
+  //     );
+  //     }else{
+  //     return (
+  //       has_other_play &&
+  //       this.get_additional_plays_list_num == 3 &&
+  //       other_handicap_list[0].ols.length > 3 &&
+  //       !this.match_style_obj.is_fold_tab_play
+  //     );
+  //   }
+  // }
+  return false;
+})
 
 /**
  * @Description 点击tab玩法

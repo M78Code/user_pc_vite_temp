@@ -91,8 +91,9 @@
             :src="`${iframe_src}&rdm=${iframe_rdm}`"
           ></iframe> -->
         <BetScreen :type="video" :is_full_screen="!orientation" 
-                    @switch_type="switch_type"
+                    @switch_type="switch_video_url"
                    :team_score_detail="title" 
+                   @exit="exit_callback"
                    :style="{
                       'height': !orientation ? '100vh':'',
                       'z-index': !orientation?'9999':'',
@@ -113,7 +114,16 @@
             allow="autoplay"
             :src="`${iframe_src}&rdm=${iframe_rdm}`"
           ></iframe>
+          <template v-slot:live>
+           <details-dialog
+              :detail_data="get_detail_data"
+              :math_list_data="math_list_data"
+            ></details-dialog>
+          </template>
+
         </BetScreen>
+        <!-- 直播赛事 -->
+       
         <!-- 视频单页项目精彩回放页面-->
         <iframe
           v-if="is_playing_replay"
@@ -359,7 +369,9 @@ import OrientationSubscrbe from 'src/base-h5/components/common/orientation/orien
 import { useRoute } from "vue-router"
 import { project_name ,into_video_anima_event} from "src/output/index.js"
 import BUILDIN_CONFIG from "app/job/output/env/index.js";;
-import BetScreen from 'src/base-h5/components/screen-bet/screen-bet.vue'
+import BetScreen from 'src/base-h5/components/screen-bet/screen-bet.vue';
+import detailsDialog from "src/base-h5/components/details/details-dialog.vue";   // 详情赛事下拉,赛事列表组件
+
 export default {
   name: "videos",
   components: {
@@ -371,7 +383,8 @@ export default {
     "slider-x": () => import("src/base-h5/components/details/analysis-matches/components/slider-x.vue"),
     slider: slider,
     AnimationSlider,
-    BetScreen
+    BetScreen,
+    "details-dialog": detailsDialog
   },
   data() {
     return {
@@ -614,6 +627,7 @@ export default {
     'show_icon_status', // 是否展示图标
     'fix_status', // 是否显示固钉
     'show_exit_btn', // 欧洲版显示旧的退出全屏
+    'math_list_data', // 赛事数据列表
   ],
   watch: {
     get_is_full_screen(value) {
@@ -714,7 +728,7 @@ export default {
     get_video_url(new_value, old_value) {
       if(new_value.active == 'muUrl'){
         if ([100,101,102,103].includes(+this.get_detail_data.csid)){
-          this.iframe_src = new_value.media_src + this.dj_http_fix(new_value.media_src) +'controls=1'
+          this.iframe_src = new_value.media_src + this.dj_http_fix(new_value.media_src) +'controls=1&load_error=抱歉，暂时无法加载资源&refresh=刷新&pause=暂停&play=播放&mute=静音&cancel_mute=取消静音&refresh-icon=0&controls=1&is_client=1'
         } else {
           this.iframe_src = new_value.media_src + '&controls=1'
         }
@@ -863,6 +877,11 @@ export default {
       fix_top() {
 
       },
+      exit_callback() {
+        console.log(222)
+        // this.close_video();
+        // OrientationSubscrbe.instance.notify(false)
+      },
       // 设置音量
       change_volumn(volume) {
         console.log(volume,'volume');
@@ -886,6 +905,8 @@ export default {
      * @return {*}
      */
     switch_video_url(type = 1) {
+      console.log(1111, type);
+      window.video_type = type;
       video.send_message({
         cmd:'switch_type',
         val:type
@@ -1908,7 +1929,9 @@ export default {
         // 旋转横屏
         
       }
-      this.set_full_screen();
+      if (!this.get_is_full_screen) {
+        this.set_full_screen();
+      }
     }
   },
   mounted() {
