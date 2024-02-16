@@ -34,7 +34,7 @@
     "bet": {
         "place_bet": "Place Bet",
         "limit":"limit",
-        "book_bet_amount": "Reserved betting amount"
+        "book_bet_amount": "Booked bet amt"
     },
     "menu": {
         "collect": "Favourites",
