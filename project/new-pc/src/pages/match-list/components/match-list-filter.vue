@@ -389,7 +389,7 @@ onMounted(() => {
         gap: 8px;
         border-radius: 6px;
         //border: 2px solid #FFF;
-        //background: #F6F9FF;
+        background: #FFFFFF;
          border: 2px solid var(--q-gb-bd-c-8);
         color: var(--q-gb-t-c-6);
         box-shadow: 0px 0px 12px 0px rgba(39, 39, 39, 0.16);
@@ -412,14 +412,15 @@ onMounted(() => {
                 align-items: center;
                 flex-shrink: 0;
                 border-radius: 40px;
-                //background: #FFF;
-                background: var(--q-gb-bg-lg-6);
+                background: #F8F8F8;
+                //background: var(--q-gb-bg-lg-6);
 
                 .search-input {
                     flex: 1;
                     height: 100%;
                     border: none;
-                    background: var(--q-gb-bg-lg-6);
+                    //background: var(--q-gb-bg-lg-6);
+                    background: #F8F8F8;
 
                     &:focus {
                         border: none !important;
@@ -445,8 +446,8 @@ onMounted(() => {
                 border-radius: 10000px;
                 border: 1px solid #179CFF;
                 //background: #FFF;
-                background: var(--q-gb-bg-lg-6);
-
+                //background: var(--q-gb-bg-lg-6);
+                background: #F8F8F8;
                 .arrow {
                     width: 10px;
                     height: 10px;

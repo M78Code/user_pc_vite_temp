@@ -2935,5 +2935,16 @@
 	"basketball": {
 		"pause": "Tiempo muerto",
 		"penalty": "Tiro Libre"
+	},
+	"hps": {
+	  "compose": {
+		"details": {
+		  "feature": "Combinaciones destacadas",
+		  "all_both": "1X2 & Ambos Equipos Marcarán",
+		  "all_total_goal": "1X2 & Gol O/U",
+		  "half_both": "1ra Mitad 1X2 & Ambos Equipos Marcarán",
+		  "half_total_goal": "1ra Mitad 1X2 & Gol O/U"
+		}
+	  }
 	}
 }
