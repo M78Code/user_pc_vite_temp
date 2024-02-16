@@ -1271,6 +1271,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         device_type: BetData.deviceType, // 设备号
         odds_hsw: ol_obj._hsw, // 投注项支持的赔率
         ispo: ol_obj._ispo || 0, // 电竞赛事 不支持串关的赛事
+       
         // oid, _hid, _hn, _mid, // 存起来 获取最新的数据 判断是否已失效
     }
 
@@ -1278,6 +1279,8 @@ const set_bet_obj_config = (params = {}, other = {}) => {
     bet_obj.score_home = get_score(bet_obj,'home')
     // 客队进球数
     bet_obj.score_away = get_score(bet_obj,'away')
+
+    bet_obj.score_home_away = bet_obj.score_home +':'+bet_obj.score_away
 
     // 获取当前的盘口赔率
     let cur_odds = lodash_.get(odds_table,`${UserCtr.odds.cur_odds}`, '1' )
@@ -1832,4 +1835,5 @@ export {
     bet_special_series_change,
     go_to_bet,
     get_lastest_market_info,
+    get_score,
 }
