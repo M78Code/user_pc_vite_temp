@@ -1465,41 +1465,56 @@ const set_market_id_to_ws = () => {
     }else{
         bet_list = lodash_.get( BetData,'bet_s_list',[])
     }
-    // 获取盘口id
-    hid = bet_list.map(item => item.marketId)
-    hid = lodash_.uniq(hid);
-    // 获取赛事id
-    mid = bet_list.map(item => item.matchId)
-    mid = lodash_.uniq(mid);
-
-    // 普通玩法 订阅方式
-    let obj_hid = hid.join(',')
-    obj.mid = mid.join(',')
-
+ 
+    let bet_type = ''
     let obj_cd = []
+
+    // 用户赔率分组
+    obj.marketLevel = lodash_.get(UserCtr.user_info,'marketLevel','0');
+    obj.esMarketLevel = lodash_.get(UserCtr.user_info,'esMarketLevel','0');
+
+    if(bet_list.length == 0){
+        BetWsMessage.set_bet_c2_message(obj,'clear');
+        BetWsMessage.set_bet_c10_message(obj,'clear');
+    }
+
     bet_list.forEach( item => {
         if(item.bet_type == 'common_bet'){
+            bet_type = 'common_bet'
             obj_cd.push({
                 mid: item.matchId,
                 hpid: item.playId,
                 hn: item.placeNum ? item.placeNum : 0
             })
         }
+        // 电竞/vr 走常规订阅
+        if(['esports_bet','vr_bet'].includes(item.bet_type)){
+            bet_type = 'other_bet'
+            hid.push(item.marketId)
+            mid.push(item.matchId)
+        }
     })
 
-    // 取消之前的所有订阅
-    obj.hid = ''
-    obj.cd = []
-    BetWsMessage.set_bet_c2_message(obj);
-    // console.error('重新发起订阅：','hid:--',obj.hid, 'mid:--',obj.mid  )
-    // 用户赔率分组
-    obj.marketLevel = lodash_.get(UserCtr.user_info,'marketLevel','0');
-    nextTick(()=>{
-        obj.cd = obj_cd
-        obj.hid = obj_hid
+    // 电竞 vr
+    if(bet_type == 'other_bet'){
+        // 取消之前的所有订阅
+        obj.hid = ''
+        obj.mid = mid.join(',')
         BetWsMessage.set_bet_c2_message(obj);
-    })
-    
+        nextTick(()=>{
+            // 重新发起
+            obj.hid = hid.join(',')
+            BetWsMessage.set_bet_c2_message(obj);
+        })
+    }
+
+    // 常规赛事
+    if(bet_type == 'common_bet'){
+       
+        obj.cd = obj_cd
+        // obj.cn = obj_cn
+        BetWsMessage.set_bet_c10_message(obj);
+    }
 }
 
 // 设置投注后的数据内容

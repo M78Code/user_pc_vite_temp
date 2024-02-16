@@ -850,6 +850,7 @@ this.bet_appoint_ball_head= null */
     this.set_bet_data_class_version()
     this.set_is_bet_pre(false)
     this.set_bet_appoint_obj_playOptionId(0)
+    set_market_id_to_ws()
   }
 
   /**
