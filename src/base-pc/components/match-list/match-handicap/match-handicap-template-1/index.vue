@@ -113,7 +113,7 @@ const col_ols_data = computed(() => {
         // 投注项数据拼接
         let hn_obj_config = MatchListData.get_list_to_obj_key(mid, `${mid}_${item._hpid}_${handicap_type}_${item.ot}`, 'hn')
         // 获取投注项内容 
-        return lodash.get(hn_obj, hn_obj_config) || not_hn_obj_map.value[hn_obj_config] || {};
+        return Object.assign({other_class:item.other_class},lodash.get(hn_obj, hn_obj_config) || not_hn_obj_map.value[hn_obj_config] || {});
       })
       col.csid = csid;
       return col

@@ -165,6 +165,7 @@ onMounted(() => {
   width: 12px;
   height: 12px;
   background-size: 100%;
+  margin: 0 auto;
 }
 
 .has-hv {
