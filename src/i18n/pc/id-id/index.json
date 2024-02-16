@@ -3004,5 +3004,16 @@
     "basketball": {
 		"pause": "Henti",
 		"penalty": "Free Throw"
+	},
+	"hps": {
+	  "compose": {
+		"details": {
+		  "feature": "Bursa campuran",
+		  "all_both": "FT 1X2 & Kedua tim mencetak goal",
+		  "all_total_goal": "FT 1X2 & Gol O/U",
+		  "half_both": "HT 1X2 & Kedua tim mencetak goal",
+		  "half_total_goal": "HT 1X2  & Gol O/U"
+		}
+	  }
 	}
 }
