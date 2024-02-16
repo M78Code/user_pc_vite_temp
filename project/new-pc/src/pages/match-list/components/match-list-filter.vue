@@ -366,8 +366,8 @@ onMounted(() => {
     .scroll-container {
         padding-bottom: 80px;
         flex: 1;
-        //background: #F6F9FF;
-        background: var(--q-gb-bg-lg-6);
+        background: #FFFFFF;
+        //background: var(--q-gb-bg-lg-6);
         /* 全局白框区投影效果 */
         box-shadow: 0px 2px 8px 0px #E2E2E4;
         margin-top: 5px;
@@ -494,7 +494,8 @@ onMounted(() => {
 
         .item {
             padding: 10px 0 45px;
-            border-bottom: 0.5px solid var(---DEE4F2, #DEE4F2);
+            //border-bottom: 0.5px solid var(---DEE4F2, #DEE4F2);
+            border-bottom: 0.5px solid #E2E2E2;
 
             .item-header {
                 display: flex;
@@ -566,9 +567,11 @@ onMounted(() => {
                 justify-content: center;
                 align-items: center;
                 border-radius: 35px;
-                border: 0.5px solid #D7E1FD;
-                background: linear-gradient(180deg, #E5EDFE 0%, #F7FAFF 53.65%, #F6F9FF 100%);
-                box-shadow: 0px 2px 2px 0px rgba(24, 81, 130, 0.12);
+                //border: 0.5px solid #D7E1FD;
+                border: 0.5px solid #D7DEE3;
+                //background: linear-gradient(180deg, #E5EDFE 0%, #F7FAFF 53.65%, #F6F9FF 100%);
+                background:#FFFFFF;
+                //box-shadow: 0px 2px 2px 0px rgba(24, 81, 130, 0.12);
             }
         }
     }

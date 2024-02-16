@@ -487,8 +487,14 @@ const set_bet_obj_config = (item) => {
 
 const set_ref_data = (item) => {
   // console.error('set_ref_dataset_ref_dataset_ref_data')
+  let bet_list = []
   // 获取投注项 盘口信息
-  let market_info = lodash_.get(BetData.bet_read_write_refer_obj, `${item.playOptionsId}`, {})
+  if(BetData.is_bet_single){
+    bet_list = lodash_.cloneDeep(BetData.bet_single_list)
+  }else{
+    bet_list = lodash_.cloneDeep(BetData.bet_s_list)
+  }
+  let market_info = bet_list.find(obj => obj.playOptionsId == item.playOptionsId ) || {}
   // 球头处理
   let handicap = lodash_.toString(market_info.handicap_hv);
   let init_ball_head = 0

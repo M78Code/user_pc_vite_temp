@@ -850,6 +850,7 @@ this.bet_appoint_ball_head= null */
     this.set_bet_data_class_version()
     this.set_is_bet_pre(false)
     this.set_bet_appoint_obj_playOptionId(0)
+    set_market_id_to_ws()
   }
 
   /**
@@ -1759,7 +1760,8 @@ this.bet_appoint_ball_head= null */
     if(scid_list.includes(csid)){
       if(mid_list.includes(mid)){
         if(hpid_list.includes(hpid)){
-          get_lastest_market_info()
+          // 303 推送不会推送105 106
+          get_lastest_market_info('submit_bet')
         }
       }
     }

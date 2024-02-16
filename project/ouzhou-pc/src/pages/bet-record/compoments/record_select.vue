@@ -43,7 +43,7 @@
         </div>
         <div class="tips">
           <span class="dot"></span>
-          {{i18n_t(BetRecordHistory.tipMsg)}}
+          {{i18n_t("bet_record.msg_2")}}
         </div>
         <div class="record-query" @click="search">
           {{i18n_t("bet_record.query")}}
