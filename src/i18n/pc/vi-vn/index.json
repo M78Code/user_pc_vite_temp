@@ -2861,5 +2861,16 @@
   "basketball": {
     "penalty": "Phạt bóng",
     "pause": "Tạm dừng"
+  },
+  "hps": {
+    "compose": {
+      "details": {
+        "feature": "Tổ hợp đặc biệt",
+        "all_both": "1X2 & Hai đội ghi bàn",
+        "all_total_goal": "1X2 & Bàn thắng Trên/Dưới",
+        "half_both": "1x2 - Hiệp 1 & Hai đội ghi bàn",
+        "half_total_goal": "1x2 - Hiệp 1 & Bàn thắng Trên/Dưới"
+      }
+    }
   }
 }

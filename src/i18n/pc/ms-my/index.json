@@ -2831,5 +2831,16 @@
   "basketball": {
     "pause": "Suspend",
     "penalty": "Penalty"
+  },
+  "hps": {
+    "compose": {
+      "details": {
+        "feature": "Mix markets",
+        "all_both": "1X2 & Both Team To Score",
+        "all_total_goal": "1X2 & Goal O/U",
+        "half_both": "1st Half 1X2 & Both Team To Score",
+        "half_total_goal": "1st Half 1X2 & Goal O/U"
+      }
+    }
   }
 }

@@ -2968,5 +2968,16 @@
   "basketball": {
     "pause": "Pausa",
     "penalty": "Tiros de pênalti"
+  },
+  "hps": {
+    "compose": {
+      "details": {
+        "feature": "Mercados mistos",
+        "all_both": "1X2 & Ambas as Equipas a Marcar",
+        "all_total_goal": "1X2 & Golo S/I",
+        "half_both": "1ª Parte 1X2 & Ambas as Equipas a Marcar",
+        "half_total_goal": "1ª Parte 1X2 e Golo S/I"
+      }
+    }
   }
 }
