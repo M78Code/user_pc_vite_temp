@@ -39,6 +39,13 @@
         <div v-if="current_match.csid">
           <div class="team-title"  v-if="current_match.csid == 1001 || current_match.csid == 1004">
             <div class="info">
+                <div v-if="current_match.match_status == 0" class="time">
+                  <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/countdown.png`" />
+                  {{ match_list_all_batches[0] && match_list_all_batches[0].timer_format }}
+                </div>  
+                <div v-else class="live">
+                  <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/live.png`" />
+                </div> 
             </div>
             <div class="title">
                 {{ lengue_name }} {{ current_match.no }}
@@ -46,10 +53,13 @@
           </div>
           <div class="team-title horse-title" v-else>
               <div class="info">
-                <span v-if="current_match.match_status == 0">
+                <div v-if="current_match.match_status == 0" class="time">
+                  <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/countdown.png`" />
                   {{ match_list_all_batches[0] && match_list_all_batches[0].timer_format }}
-                </span>  
-                <img v-else :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/live.png`" />
+                </div>  
+                <div v-else class="live">
+                  <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/live.png`" />
+                </div> 
               </div>
               <div class="title">
                   {{ lengue_name }} {{ current_match.no }}
@@ -333,12 +343,26 @@ export default {
   color: #fff;
   background: linear-gradient(to right, #3B3B3B 0%, #9C9C9C);
   .info {
-    width: 68px;
+    width: auto;
     height: 34px;
     background-color: var(--q-gb-bg-c-1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    div {
+      height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    div.time {
+      width: 68px;
+      img {
+        width: 14px;
+        margin-right: 5px;
+        margin-top: -2px;
+      }
+    }
+    div.live {
+      width: 30px;
+    }
   }
   .title {
     padding-left: 10px;
