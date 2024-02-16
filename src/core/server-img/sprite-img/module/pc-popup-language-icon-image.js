@@ -12,8 +12,8 @@ const config = {
 };
 
 // 字母顺序
-// const item = { zh: 0, tw: 1, tw: 2, vi: 3, ms: 4, th: 5, ad: 6, md: 7, ry: 8, pty: 9, hy: 10 }
-const item = { zh: 0, en: 1, tw: 2,  vi: 3,  ms: 4, th: 5, ad: 6, mya: 7,ry:8, pt: 9, ko: 10, es: 11}
+// const item = { zh: 0, tw: 1, tw: 2, vi: 3, ms: 4, th: 5, ad: 6, md: 7, ry: 8, pty: 9, hy: 10, ru: 12 }
+const item = { zh: 0, en: 1, tw: 2,  vi: 3,  ms: 4, th: 5, ad: 6, mya: 7,ry:8, pt: 9, ko: 10, es: 11, ru: 12}
 
 /**
  * 根据item 计算雪碧图位置

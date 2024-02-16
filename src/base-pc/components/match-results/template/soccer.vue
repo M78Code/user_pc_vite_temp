@@ -466,12 +466,12 @@
               </div>
             </div>
             <div v-if="index == activeIndex" class="wrap-load">
-              <!-- v-if="item.playBack&&show_play_back" -->
+              <!--v-if="item.playBack&&show_play_back"-->
               <div class="tab_change_content"  v-if="false">
                 <q-tabs :value="current_events_type" :tabs="tab_list" @click="change_video_history_list"></q-tabs>
               </div>
               <!-- 精彩回放视频滚动列表 -->
-              <div class="play_back_event" v-if="item.playBack&&show_play_back">
+              <!-- <div class="play_back_event" v-if="item.playBack&&show_play_back">
                 <slider-x ref="drag_scroll" v-if="item.playBack && results_playback_list.length">
                   <section v-for="(slotProps,index) in results_playback_list" :key="index">
                     <div class="video-history-item"  @click="handle_item_click(slotProps)">
@@ -493,12 +493,12 @@
                         </div>
                     </div>
                   </section>
-                </slider-x>
-                <no-data v-else :width="'141px'" :height="'80px'"></no-data>
+                </slider-x> -->
+                <!-- <no-data v-else :width="'141px'" :height="'80px'"></no-data> -->
                 <!-- <div style="width: 100%; height: 100%" class="flex   yb-flex-center" v-else>
                   <div class="no-data-bg"></div>
                 </div> -->
-              </div>
+              <!-- </div> -->
               <load-data :state="details_load" color="light">
                 <div v-for="(list, i) in results_order_list" :key="i">
                   <div
@@ -536,7 +536,6 @@ import UserCtr from "src/core/user-config/user-ctr.js";
 import loadData from "src/components/load_data/load_data.vue"
 import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
 import { IconWapper } from 'src/components/icon'
-import { format_second_ms } from "src/output/index.js";
 // import Tabs from "../components/playback_tabs.vue";
 // import SliderX from "../components/playback_slider.vue";
 // import no_data from "src/components/no_data/no_data";
@@ -585,7 +584,7 @@ export default {
     },
     handle_item_click(item) {
       // 弹出新视频
-      let title = item.homeAway+' '+format_second_ms(item.secondsFromStart)+' '+this.show_code_name(item.eventCode)+': '+item.firstNum;
+      let title = item.homeAway+' '+this.format_second_ms(item.secondsFromStart)+' '+this.show_code_name(item.eventCode)+': '+item.firstNum;
       useMittEmit(MITT_TYPES.EMIT_VIDEO_ZONE_EVENT_CMD, {
         cmd: "resultPlay",
         url: item.fragmentVideo,

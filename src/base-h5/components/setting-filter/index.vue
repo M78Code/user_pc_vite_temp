@@ -43,6 +43,15 @@
           />
         </div>
       </div>
+      <div class="setting-item border" @click="jumpLanguage">
+      <!-- 切换语言 -->
+        <div class="title">{{ i18n_t('setting_menu.chan_lan') }}</div>
+        <div class="more">
+        <img  
+        :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/left_icon.svg`"
+         srcset="">
+        </div>
+      </div>
       <div class="setting-item border" @click="jumpHandle">
       <!-- 盘口教程 -->
         <div class="title">{{ i18n_t('app_h5.cathectic.handicap_tutorial') }}</div>
@@ -104,6 +113,15 @@ const router = useRouter();
  */
 const jumpHandle = () => {
   router.push({ name: "handicapTutorial" }); // 
+  closedHandle();
+};
+/**
+ * @description 跳转至切换语言页面
+ * @param 
+ * @return 
+ */
+const jumpLanguage = () => {
+  router.push({ name: "language_switch" }); 
   closedHandle();
 };
 /**

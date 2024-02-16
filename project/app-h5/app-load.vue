@@ -22,7 +22,7 @@ import iframeBeforeLoading from "src/components/iframe-before-loading/iframe-bef
 import { wslog } from "src/core/log/";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import { compute_css_variables } from "src/core/css-var/index.js"
-import { PageSourceData, GlobalAccessConfig, ServerTime,set_css ,set_theme_style_sheet_by_css_obj,pre_load_img, BUILDIN_CONFIG} from "src/output/index.js";
+import { PageSourceData, GlobalAccessConfig, ServerTime,set_css ,set_theme_style_sheet_by_css_obj,pre_load_img, BUILDIN_CONFIG, UserCtr} from "src/output/index.js";
 import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
 import { reactive, onBeforeMount, onMounted, onUnmounted, ref, watch, nextTick } from "vue";
 import { useRoute } from "vue-router";
@@ -94,7 +94,6 @@ onBeforeMount(() => {
   timer2 = null;
   // 设置商户样式
   // 复刻版默认中文
-  LocalStorage.set('lang','zh')
   // this.init_version_name();
   on_listeners();
   // 公共主题色
@@ -113,30 +112,31 @@ onBeforeMount(() => {
   timer2 = setTimeout(() => {
     vue_hidden_run_flg = true;
   }, 4000);
-
+  
   let url_search = SEARCH_PARAMS.init_param;
   let vlg = url_search.get("vlg");
   if (vlg) {
     sessionStorage.setItem("vlg", vlg);
   }
-
+  
   // 移动端设备下 url参数 vlg=1 开启vconsole调试
   if (sessionStorage.getItem("vlg")) {
     const script = document.createElement("script");
     let BUILD_VERSION = window.BUILDIN_CONFIG.BUILD_VERSION;
-
+    
     script.src = `${BUILD_VERSION ? "/" + BUILD_VERSION : ""
-      }/other-assets/lib/js/vconsole.min.js`;
-    script.async = false;
+  }/other-assets/lib/js/vconsole.min.js`;
+  script.async = false;
+  
+  script.onload = function () {
+    new VConsole();
+  };
+  document.head.appendChild(script);
+}
 
-    script.onload = function () {
-      new VConsole();
-    };
-    document.head.appendChild(script);
-  }
-
-  // 复刻版默认设置中文
-  LocalStorage.set('lang','zh')
+// 复刻版默认设置中文
+// LocalStorage.set('lang','zh')
+LocalStorage.set('lang', UserCtr.lang || 'zh')
 });
 
 

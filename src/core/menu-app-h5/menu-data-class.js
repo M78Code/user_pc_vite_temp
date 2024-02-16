@@ -132,6 +132,10 @@ class MenuData {
     }
   }
 
+  set_menu_data_version(){
+    this.update()
+  }
+
   // 设置收藏数量
   set_collect_count(count){
     this.collect_count.value = count
