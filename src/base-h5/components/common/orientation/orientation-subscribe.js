@@ -22,6 +22,7 @@ class OrientationSubscribe {
         this.status = status;
         // console.log(this.callback);
         this.callback(status);
+        // this.notify()
     }
 
     add_notify(callback) {
@@ -33,6 +34,7 @@ class OrientationSubscribe {
      * @param {boolean} value true -> 竖屏 false -> 横屏
      */
     notify(value) {
+        console.log("notify", this.notifyList);
         this.notifyList.forEach(e => {
             e?.(value);
         })
