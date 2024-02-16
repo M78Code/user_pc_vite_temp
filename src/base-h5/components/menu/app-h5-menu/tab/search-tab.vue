@@ -18,7 +18,7 @@
                     <!-- :style="compute_css_obj({key: activeOn === index ? 'league-sport-active-image' :UserCtr.theme == 'theme-1'?'league-sport-icon-atnight-image':'league-sport-icon-image', position:format_type(item)})"></span> -->
                     <span v-if="item.tid !== '0'" class="sport-icon-wrap"
                       :style="compute_css_obj({key: activeOn === index ? 'league-sport-active-image' :'league-sport-icon-image', position:format_type(item)})"></span>
-                    {{ item.name }}
+                    {{ i18n_t(item.name) }}
                 </li>
                 <div v-show="!drawerRight" class="search-tab-content-img" @click="handler_search"
                 >
