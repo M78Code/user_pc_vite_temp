@@ -22,10 +22,11 @@
         </div>
       </template>
       <div class="item ol-name" :alt="olName">
-        <span class="ol-name-span" v-if="route.name != 'virtual_sports' && !lodash.isArray(olName)">
-          <span v-if="txt_ol_name" class="ol-name-span2">{{ txt_ol_name }}</span>
+        <span :class="['ol-name-span',{'ol-name-space':textOlOU}]" v-if="route.name != 'virtual_sports' && !lodash.isArray(olName)">
+          <span v-if="txt_ol_mnae" class="ol-name-span2">{{ txt_ol_name }}</span>
           <span v-else-if="textOlOU" class="ol-name-ou">{{ textOlOU }}</span>
-          {{ olName }}
+          <span>{{ olName }}</span>
+        
         </span>
         <span class="ol-name-span" v-if="route.name == 'virtual_sports' && lodash.isArray(olName)">
           <img v-if="olName.length == 2" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/vr/${olName[0]}.png`">
@@ -275,6 +276,14 @@ function resetStatus() {
   &.ol-result{
     --private-ol-content-color: #8A8986; //#TODO: css var
   }
+   // 标签带O U 需要左对齐
+  .ol-name-space{   
+    display: flex;
+    justify-content: flex-start;
+    // display: inline-block;
+    //    text-align: left;
+        min-width: 48px;
+      }
 
   // .mock{
   //   position: absolute; 

@@ -11,6 +11,8 @@ class BetWsMessage {
   constructor(){
     // ws调用次数
     this.count = 0
+    // 记录上一次的c10订阅数据 下一次会取消其中的部分订阅
+    this.c10_obj = {}
   }
 
   init(){
@@ -38,28 +40,60 @@ class BetWsMessage {
     // 增加ws消息监听
     window.addEventListener("message",this.message_fun);
   }
-
-  set_bet_c2_message(obj){
+  // 电竞/电竞冠军 / vr 
+  set_bet_c2_message(obj,type){
     // {cmd: "C2", hid: ""}
     let cmd_obj = {};
     cmd_obj.cmd = "C2";
     cmd_obj.hid = obj.hid;
     cmd_obj.mid = obj.mid;
-    cmd_obj.cd = obj.cd;
-
     cmd_obj.marketLevel = obj.marketLevel;
+    cmd_obj.esMarketLevel = obj.esMarketLevel;
 
-    // 取消订阅  盘口id 没有的情况下 cd 也不要
-    if(!obj.hid){
-      delete cmd_obj.hid
+    // 取消订阅
+    if(type == 'clear'){
+      cmd_obj.hid = ''
+      this.send_msg(cmd_obj);
+      return
     }
-    if(!obj.cd.length){
-      delete cmd_obj.cd
-    }
-
+  
     if ( cmd_obj.mid != "" ) {
      this.send_msg(cmd_obj);
     }
+  }
+
+  // 常规赛事 / 冠军
+  set_bet_c10_message(obj,type){
+    let cmd_obj = {};
+    cmd_obj.cmd = "C10";
+    // 需要订阅的数据
+    cmd_obj.cd = obj.cd || [];
+    // 是否全局取消订阅
+    cmd_obj.cws = false
+    // 需求取消订阅的数据 
+    cmd_obj.cn = []
+
+    cmd_obj.marketLevel = obj.marketLevel;
+    cmd_obj.esMarketLevel = obj.esMarketLevel; 
+
+    if(type == 'clear'){
+      cmd_obj.cws = true
+      this.c10_obj = []
+      this.send_msg(cmd_obj);
+      console.error('clear',cmd_obj)
+      return
+    }
+
+    // 上次订阅的内容 和当前订阅的内容做对比，当前没有订阅的上次内容需要做 取消订阅处理
+    let obj_cn = lodash_.get(this.c10_obj,'cd',[]) || []
+
+    if(obj_cn.length){
+      // 数据筛选
+      cmd_obj.cn = lodash_.differenceWith(obj_cn,obj.cd,lodash_.isEqual)
+    }
+
+    this.c10_obj = cmd_obj
+    
   }
 
   // 订单订阅
