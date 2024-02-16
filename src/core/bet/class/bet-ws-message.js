@@ -80,7 +80,7 @@ class BetWsMessage {
       cmd_obj.cws = true
       this.c10_obj = []
       this.send_msg(cmd_obj);
-      console.error('clear',cmd_obj)
+      // console.error('clear',cmd_obj)
       return
     }
 

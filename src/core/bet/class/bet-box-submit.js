@@ -415,7 +415,7 @@ const get_lastest_market_info = (type) => {
                                 }else{
                                     BetData.set_bet_is_accept(false)
                                 }
-                                console.error('sssssss',BetData.bet_is_accept)
+                                // console.error('sssssss',BetData.bet_is_accept)
                                 // 投注项id
                                 bet_item.playOptionsId = odds.id
                                 // 盘口id
@@ -430,15 +430,26 @@ const get_lastest_market_info = (type) => {
                                     BetData.set_bet_is_accept(false)
                                 },5000)
                             }
+
+                            if(BetData.is_bet_pre){
                            
-                            // 预约投注编辑中 盘口赔率发生变化
-                            if( BetData.bet_pre_appoint_id == bet_item.playOptionsId ){
-                                BetData.set_bet_appoint_obj_playOptionId(odds.id)
-                                let pre_id = lodash_.get(BetData.bet_pre_obj,'custom_id','')
-                                if(pre_id == bet_item.playOptionsId){
-                                    BetData.bet_pre_obj.custom_id = odds.id
+                                // 哎 303 推送后 不推送 105 106 导致预约中的数据不会更新 一种植物
+                                // 获取当前预约中的投注项id 在 投注项中的数据
+                                let pre_obj = bet_list.find(item => item.playOptionsId == BetData.bet_pre_appoint_id) || {}
+
+                                // 预约投注编辑中 盘口赔率发生变化
+                                // 接上面的 哎 ws那边没有进行数据赋值替换 这里需要用或 
+                                if( BetData.bet_pre_appoint_id == bet_item.playOptionsId || (BetData.bet_pre_appoint_id == pre_obj.playOptionsId && BetData.bet_pre_appoint_id ) ){
+                                    BetData.set_bet_appoint_obj_playOptionId(odds.id)
+                                    let pre_id = lodash_.get(BetData.bet_pre_obj,'custom_id','')
+                                    if(pre_id == bet_item.playOptionsId){
+                                        BetData.bet_pre_obj.custom_id = odds.id
+                                    }
                                 }
+
+                                set_bet_pre_list(list)
                             }
+
                             // 红绿升降
                             // bet_item.red_green = ''
                             // if(bet_item.odds == odds.oddsValue ){
