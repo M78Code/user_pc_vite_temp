@@ -69,7 +69,8 @@
         </template>
       </div>
       <template v-if="lodash.get(match_list_all_batches,'length') && (sub_menu_type+'' == lodash.get(match_list_all_batches,'[0].matchs[0].csid'))">
-      <div class="virtual-sports-card" v-for="(match_item_batch, i) in match_list_all_batches" :key="i">
+      <div class="virtual-sports-card" v-for="(match_item_batch, i) in match_list_all_batches" :key="i" 
+      :class="[ i+1 == match_list_all_batches.length && 'last']">
        <div v-if="match_item_batch.remaining_time > 0" class="virtual-sports-card-content" :class="{'virtual-sports-card-simple': standard_edition === 1}">
         <template v-if="match_item_batch.is_expend">
             <!--  虚拟体育主列表页面  -->
@@ -291,7 +292,7 @@ export default {
 }
 .virtual-sports-card {
   &-content {
-    background: var(--q-gb-bg-c-18);
+    background: var(--q-gb-bd-c-2);
     border-radius: .08rem;
     margin-bottom: .08rem;
   }
@@ -300,6 +301,9 @@ export default {
   }
   &-simple{
     background: var(--q-gb-bg-c-28);
+  }
+  &.last {
+    margin-bottom: 100px;
   }
 }
 

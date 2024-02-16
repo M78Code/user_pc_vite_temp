@@ -333,12 +333,14 @@ const onScroll = (evt) => {
   const { scrollTop } = scrollerContainerDom
   
   const length = lodash.get(positionDataArr, 'length', 0)
-  if (length < 1) return start.value = 0
 
-  handler_render_data(scrollTop)
-
-  useMittEmit(MITT_TYPES.EMIT_MATCH_LIST_SCROLLING);
-
+  if (length < 1) {
+    start.value = 0
+    contentListOffset.value = 0
+  } else {
+    handler_render_data(scrollTop)
+    useMittEmit(MITT_TYPES.EMIT_MATCH_LIST_SCROLLING);
+  }
 }
 
 /**
@@ -405,6 +407,7 @@ const findStartByBinarySearch = (_positionDataArr, scrollTop) => {
  */
 const gotTop = () => {
   start.value = 0
+  contentListOffset.value = 0
   let timer = setTimeout(() => {
     scrollerContainerRef.value && scrollerContainerRef.value.scrollTo({ top: 0 });
     clearTimeout(timer)

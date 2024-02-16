@@ -90,9 +90,9 @@
             "242": "Winner",
             "243": "HDP",
             "244": "Total Goals",
-            "30001": "Match Winner",
+            "30001": "승패",
             "30002": "Map Handicap",
-            "30003": "Total Maps",
+            "30003": "총 세트수 오버/언더",
             "12_2": "Total Rounds"
           }
     },
