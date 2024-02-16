@@ -1084,7 +1084,7 @@ const set_error_message_config = (res ={},type,order_state) => {
  * @returns 
  */
 const set_bet_obj_config = (params = {}, other = {}) => {
-    // console.error('投注项需要数据', params, 'other', other);
+    console.error('投注项需要数据', params, 'other', other);
     // 切换投注状态
     const { oid, _hid, _hn, _mid } = params
 
@@ -1755,7 +1755,7 @@ const get_score = (obj,type,mmp = 'S1') => {
     }
     const mid_obj = lodash_.get(query.list_to_obj, `mid_obj.${obj.matchId}_`, {})
     // 获取阶段比分 主客队分开 获取 home/away
-    const score = lodash_.get(mid_obj,`msc_obj${mmp}`,{}) || []
+    const score = lodash_.get(mid_obj,`msc_obj[${mmp}]`,{}) || {}
     return score[type]
 }
 
