@@ -17,4 +17,5 @@ export default {
     "es": "Español",
     "mya": "မြန်မာ",
     "ry": "Japanese",
+    "ru": "ру́сский язы́к",
 } 

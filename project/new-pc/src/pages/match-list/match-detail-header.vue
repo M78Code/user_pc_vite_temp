@@ -47,8 +47,8 @@
         </div> 
         <!-- 欧盘/亚盘 -->
         <ul class="select-type row items-center curson-point">
-          <li :class="[select_type == 0 ? 'select-type-active':'']" @click="handle_select_type(0)">欧盘</li>
-          <li :class="[select_type == 1 ? 'select-type-active':'']" @click="handle_select_type(1)">亚盘</li>
+          <li :class="[select_type == 0 ? 'select-type-active':'']" @click="handle_select_type(0)">{{i18n_t("odds.EU")}}</li>
+          <li :class="[select_type == 1 ? 'select-type-active':'']" @click="handle_select_type(1)">{{i18n_t("odds.HK")}}</li>
         </ul>
         <!-- 专业、新手 切换-->
         <!-- <div show_type="sort" class="flex list-sort select-btn ya-zhou-border yb-hover-bg base-bg">
