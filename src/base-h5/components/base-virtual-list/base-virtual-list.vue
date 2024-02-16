@@ -111,7 +111,7 @@ const end = computed(() => {
   if (!allData.value || allData.value.length <= 0) return 15
 
   // 将start.value作为遍历positionDataArr的开始位置
-  let endPos = start.value
+  let endPos = start.value || 0
   // contentDomTotalHeight存放从start位置开始的dom节点总高度
   let contentDomTotalHeight = positionDataArr[endPos]?.height
   // 获取视口高度
@@ -333,6 +333,9 @@ const onScroll = (evt) => {
   if (!scrollerContainerDom) return
 
   const { scrollTop } = scrollerContainerDom
+  
+  const length = lodash.get(positionDataArr, 'length', 0)
+  if (length < 1) return start.value = 0
 
   handler_render_data(scrollTop)
 
@@ -403,6 +406,7 @@ const findStartByBinarySearch = (_positionDataArr, scrollTop) => {
  * 列表回到顶部
  */
 const gotTop = () => {
+  start.value = 0
   let timer = setTimeout(() => {
     scrollerContainerRef.value && scrollerContainerRef.value.scrollTo({ top: 0 });
     clearTimeout(timer)
