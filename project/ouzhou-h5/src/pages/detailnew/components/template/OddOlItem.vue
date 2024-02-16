@@ -123,7 +123,7 @@ const computedOlName = (olName)=>{
 }
 
 // @ts-ignore
-const vif =computed(()=> isPlacehold || props.value._mhs == 0||props.value._mhs == 11 || props.value._mhs == 1)
+const vif =computed(()=> isPlacehold.value || props.value._mhs == 0||props.value._mhs == 11 || props.value._mhs == 1)
 const olName = (function(){
   let olName = '';
   if(props.type == 'fill'){
