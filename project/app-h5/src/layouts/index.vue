@@ -428,7 +428,7 @@ if (UserCtr.get_user_token()) {
   /* ************** 悬浮按钮 ************** -E */
   /* **********注单记录********************* *-S*/
   .shadow-box {
-    background-color: rgba(0, 0, 0, .4); //var(--q-color-page-bg-color-4);
+    background-color: rgba(0, 0, 0, .55); //var(--q-color-page-bg-color-4);
     opacity: 1;
     transition: opacity 0.3s;
     backdrop-filter: var(--q-color-backdrop-filter-bg-1);
@@ -455,12 +455,13 @@ if (UserCtr.get_user_token()) {
 
   /* **********注单记录********************* *-S*/
   .bet-record-box {
-    width: 80%;
+    width: 70%;
     max-width: 7.7rem !important;
     transition: bottom 0.3s;
     position: fixed;
-    left: 10%;
-    top: 10vh;
+    left: 15%;
+    // top: 10vh;
+    top: 0.55rem;
     z-index: 1000;
   }
 

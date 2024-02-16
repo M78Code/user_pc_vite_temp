@@ -35,8 +35,8 @@ let alertTips = ref(false)
     justify-content: right;
     align-items: center;
     margin-bottom: 0.08rem;
-    color: var(--q-gb-t-c-18);
-    font-size: 0.12rem;
+    color: var(--q-gb-t-c-19);
+    font-size: 12px;
     line-height: 2;
     i {
       margin: 0 0.14rem 0 0.04rem;
