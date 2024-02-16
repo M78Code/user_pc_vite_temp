@@ -21,7 +21,7 @@
         'injury-time-goal': ol_data.ot === 'ClutchGoal',
         nogoal: ol_data.ot === 'NoGoal',
       },
-    ]" v-if="ol_data.onbl || score || ol_data.onb">
+    ]" v-if="(ol_data.onbl || score || ol_data.onb) && odds_state != 'seal'">
       <span class="handicap-more" v-show="ol_data.onbl">{{ ol_data.onbl }}&nbsp;</span>
       <div class="handicap-value-text handicap-value-ranks">{{ score }} {{ ol_data.onb }}</div>
     </div>
@@ -164,6 +164,7 @@ onMounted(() => {
 .lock {
   width: 12px;
   height: 12px;
+  background-size: 100%;
 }
 
 .has-hv {
