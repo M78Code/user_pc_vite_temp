@@ -215,7 +215,7 @@ const initDataPostion = () => {
         endPos: item.endPos
       }
     })
-    console.log('positionDataArr', positionDataArr)
+    // console.log('positionDataArr', positionDataArr)
   } else {
     positionDataArr = allData.value.map((item, idx) => {
       return {
@@ -432,7 +432,7 @@ const get_container_style = computed(() => {
   Object.assign(style_obj, {
     ...compute_css_obj({key: 'h5-kyapp-speciality-bg' })
   })
-  console.log(style_obj)
+  // console.log(style_obj)
   return style_obj
 })
 

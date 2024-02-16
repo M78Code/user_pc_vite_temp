@@ -55,7 +55,7 @@ export default defineComponent({
 
       //自动展开次要玩法
       this.init_unfold_play_way('mounted');
-      this.on_listeners();
+      // this.on_listeners();
 
       // 足球进行到加时赛及以后阶段不显示加时赛玩法
       this.not_show_overtime_play()
@@ -683,10 +683,10 @@ export default defineComponent({
       // c105  盘口/投注项
       // c303  滚球新赛事通知
       // c305  赛事订阅(C8)-玩法tab(C305)
-      this.emitters = {
-        // 封盘事件
-        emitter_1: useMittOn(MITT_TYPES.EMIT_FAPAI_WAY_TIPS_STATUS_CHANGE, this.fapai_way_tips_status_change_h).off,
-      }
+      // this.emitters = {
+      //   // 封盘事件
+      //   emitter_1: useMittOn(MITT_TYPES.EMIT_FAPAI_WAY_TIPS_STATUS_CHANGE, this.fapai_way_tips_status_change_h).off,
+      // }
     },
     off_listeners() {
       Object.values(this.emitters).map((x) => x());
@@ -812,10 +812,10 @@ export default defineComponent({
   },
   destroyed(){
     this.clear_timer()
-    this.off_listeners()
+    // this.off_listeners()
   },
   deactivated() {
     this.clear_timer()
-    this.off_listeners()
+    // this.off_listeners()
   }
 })
