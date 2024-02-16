@@ -301,7 +301,7 @@ const set_order_status_info = (orderNo) => {
                 UserCtr.get_balance()
                 set_error_message_config({code:200,message:''},'bet',3)
                 // 1-投注状态,2-投注中状态,3-投注成功状态(主要控制完成按钮),4-投注失败状态,5-投注项失效
-                BetViewDataClass.set_bet_order_status(3)
+                BetViewDataClass.set_bet_order_status(3);
             }
         }
     }).catch(()=>{
@@ -1027,7 +1027,7 @@ const set_error_message_config = (res ={},type,order_state) => {
                         message: "bet.bet_booked"
                     }
                     // matchInfo + playName + i18
-                    useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${matchInfo} ${playName} ${i18n_t('bet.bet_booked')}`);
+                    // useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${matchInfo} ${playName} ${i18n_t('bet.bet_booked')}`);
                     break;
                 case 8: 
                     // 预约失败
@@ -1532,8 +1532,11 @@ const set_orderNo_bet_obj = order_no_list => {
         // 玩法id
         let playId = lodash_.get( refer_obj, `playId`)
         let matchInfo = lodash_.get( refer_obj, `tid_name`)
+        // 球类
+        let sportName = lodash_.get( refer_obj, `sportName`)
         // 基准分
         let score_benchmark = lodash_.get( item, `scoreBenchmark`, '')
+
         if(score_benchmark){
             score_benchmark = `(${ score_benchmark.replace(':','-') })`
         }
@@ -1546,6 +1549,7 @@ const set_orderNo_bet_obj = order_no_list => {
             match_time,
             playId,
             score_benchmark,
+            sportName,
         }
     })
     BetViewDataClass.set_orderNo_bet_obj(order_list)
