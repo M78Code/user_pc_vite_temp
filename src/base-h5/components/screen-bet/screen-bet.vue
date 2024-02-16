@@ -14,7 +14,7 @@
                     <span>{{ props.team_score_detail?.man }}</span>
                 </div>
                 <div class="actions" @click.stop="show_line_callback">
-                    高清
+                    {{ i18n_t(props.play_type_list[select_line].name) }}
                 </div>
             </div>
             <div class="body" v-show="!is_bet">
@@ -97,7 +97,8 @@ const props = defineProps({
     team_score_detail: {
         type: Object,
         default: () => ({})
-    }
+    },
+    
 });
 
 const emits = defineEmits(['exit', 'switch_type'])
