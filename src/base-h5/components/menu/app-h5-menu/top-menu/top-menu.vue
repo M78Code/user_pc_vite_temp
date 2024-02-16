@@ -190,6 +190,9 @@ const get_user_balance = _.throttle(() => {
             text-align: center;
             font-size: 0.14rem;
             color: var(--q-gb-t-c-19);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
             &.current {
                 .i-title {
                     font-weight: 500;

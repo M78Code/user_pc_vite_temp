@@ -426,6 +426,7 @@
             "serie": "ty_pc.k_app_h5.k_match.k_serie",
             "laliga": "ty_pc.k_app_h5.k_match.k_laliga",
             "ligue": "ty_pc.k_app_h5.k_match.k_ligue",
+            "bundesliga": "ty_pc.k_app_h5.k_match.k_bundesliga",
             "china_super": "ty_pc.k_app_h5.k_match.k_china_super",
             "normal_results": "ty_pc.k_app_h5.k_match.k_normal_results",
             "game_results": "ty_pc.k_app_h5.k_match.k_game_results",

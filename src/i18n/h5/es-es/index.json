@@ -227,7 +227,235 @@
       "2H 75:00~FT"
     ]
   },
-
+  "app_h5": {
+    "cathectic": {
+        "handicap_tutorial": "Tutorial de Handicap",
+        "open_bets": "Apuestas no liquidadas",
+        "closed_bets": "Apuestas liquidadas",
+        "no_data_pre": "No hay datos disponibles",
+        "no_data_unsettle": "No hay datos disponibles",
+        "no_data_settle": "No hay datos disponibles",
+        "no_data_invalid": "No hay datos no válidos disponibles",
+        "data_loading": "Cargando datos...",
+        "kind_tips": "Recordatorio amistoso",
+        "adjustment_amount": "Ajustar importe",
+        "winnable": "Importe potencial ganador",
+        "bet_number": "ID de la apuesta",
+        "bets": "Apuesta",
+        "settle": "Liquidación",
+        "bet_status": "Estado de la apuesta",
+        "cash_failed": "Retiro de dinero anticipado fallido",
+        "sub_wait": "Solicitud enviada, por favor sea paciente",
+        "all_cash_sess": "Todos los retiros de dinero realizados con éxito",
+        "cash_details": "Detalles de retirada de dinero anticipada",
+        "cash_rules": "Declaración de Reglas de Retiro de Dinero",
+        "explain1": "El retiro de dinero sólo es aplicable a eventos y hándicaps específicos. En caso de cancelación de un partido o hándicap, las apuestas de cobro anticipado se retirarán para su reevaluación. Nos reservamos el derecho a interpretar los resultados finales.",
+        "explain2": "Para conocer las reglas específicas de cobro, consulte el [Centro de ayuda] - [Reglas de cobro anticipado de OpenCloud KY Deportes].",
+        "confirm_cancel_reservation": "¿Confirmar la cancelación de la reserva para este partido?"
+    },
+    "handicap_tutorial": {
+        "answer_question": "Entrenamiento de Simulación Superior / Inferior",
+        "football_master": "Enhorabuena, has ascendido a maestro del fútbol",
+        "training_camp": "Campo de entrenamiento",
+        "actual_combat": "Realiza una apuesta real",
+        "practise": "Entrenamiento simulado",
+        "again": "Aprender de nuevo",
+        "single": "Opción única",
+        "return_home": "Volver a la página de inicio",
+        "next": "Siguiente pregunta",
+        "introdution": "Estrategia",
+        "results_appear": "Cuando se produce un resultado así",
+        "red_list": "Enhorabuena por haber ganado",
+        "not_master": "Por desgracia, no dominas del todo",
+        "big_small_ball": "Superior/Inferior",
+        "big_small_ball_tip": "Número total de goles marcados por ambos equipos en los 90 minutos (incluido el tiempo añadido)",
+        "handicapData_condition": "Handicap de 0",
+        "handicapData_condition_1": "Suma de goles",
+        "all_win": "Ganar todos",
+        "home_team": "Equipo local",
+        "bet_home_team": "Apuesta por el equipo local",
+        "bet_away_team": "Apuesta por el equipo visitante",
+        "away_team": "Equipo visitante",
+        "all_lose": "Todos pierden",
+        "win_half": "Gana la mitad",
+        "lose_half": "Pierde la mitad",
+        "tie_handicap": "Empate",
+        "tie_half_plate": "Empate Hándicap Media Balón",
+        "big_bet": "Apuesta Superior %s",
+        "small_bet": "Apuesta Inferior %s",
+        "enter_ball": "Suma de Goles",
+        "vice_versa": "Viceversa",
+        "return_principal_discount": "Retorno Apuesta (Empate)",
+        "return_principal": "Retorno de la apuesta",
+        "home_team_handicap": "El equipo en casa marca %s goles",
+        "ball_plate_1": "2/1 Balón Cuota",
+        "ball_plate_2": "2/1 Balón/1 Balón Cuota",
+        "ball_plate_3": "1 Balón Cuota",
+        "ball_plate_4": "1 Balón/ 1 2/1 Balón Cuota",
+        "ball_plate_5": "1 & 2/1 Balón Cuota",
+        "ball_plate_6": "1 & 2/1 / 2 Balón Cuota",
+        "note_1": "Apuesta a que el equipo local gana todo, apuesta a que el equipo visitante pierde todo",
+        "note_2": "Empate, devolución de la apuesta (nula)",
+        "note_3": "Apuesta a que el equipo local gana todo, apuesta a que el equipo visitante pierde todo",
+        "note_4": "Empate, apuesta a que el equipo local pierde todo, apuesta a que el equipo visitante gana todo",
+        "note_5": "Apuesta a que el equipo local lo pierde todo, apuesta a que el equipo visitante lo gana todo",
+        "note_6": "Apuesta a que el equipo local gana la mitad, apuesta a que el equipo visitante pierde la mitad",
+        "note_7": "Apuesta a que el equipo local gana todo, apuesta a que el equipo visitante pierde todo",
+        "note_8": "Apuesta tanto al equipo local como al visitante, devolución de la apuesta (nula)",
+        "note_9": "Apuesta a que el equipo local pierde la mitad, apuesta a que el equipo visitante gana la mitad",
+        "note_10": "Apuesta a que el equipo local pierde todo, apuesta a que el equipo visitante gana todo",
+        "note_11": "Apuesta a que el equipo local pierde todo, apuesta a que el equipo visitante gana todo",
+        "note_12": "Apuesta a que el equipo de casa gana la mitad, apuesta a que el equipo visitante pierde la mitad",
+        "note_13": "Apuesta a que el equipo local gana todo, apuesta a que el equipo visitante pierde todo",
+        "note_14": "Apuesta Superior a 2.5 todos ganan, Apuesta Inferior a 2.5 todos pierden",
+        "note_15": "Apuesta Superior a 2,5/3 a ganar la mitad, Apuesta Inferior a 2,5/3 a perder la mitad",
+        "note_16": "Apuesta Superior a 3/3.5 pierde la mitad, Apuesta Inferior a 3/3.5 gana la mitad",
+        "note_17": "Apuesta Superior a 3 devuelve lo apostado (nulo), Apuesta Inferior a 3 devuelve lo apostado (nulo)",
+        "questionsData": {
+            "1": {
+                "note_1": "Goles 2, menos de 2,5",
+                "note_2": "Apuesta en <span>Inferior 2.5</span> ganar todo, apostando por <span>Superior2.5</span> pierde todo"
+            },
+            "2": {
+                "note_1": "Si el número de Goles 2, inferior a 2/2,5",
+                "note_2": "Principio básico de división, apostar a <span>Inferior a 2/2,5</span> gana la mitad"
+            }
+        },
+        "ball": "%s goels",
+        "big": "Superior a %s",
+        "small": "Inferior a %s",
+        "which_win": "¿Qué opción puede ganar todo?",
+        "which_win_half": "Qué opción puede ganar la mitad?",
+        "real_madrid": "Real Madrid",
+        "m_chesester_city": "Manchester City",
+        "m_chesester_untied": "Manchester United",
+        "chelsea": "Chelsea",
+        "barcelona": "Barcelona"
+    },
+    "bet": {
+        "bet_win": "Ganancias potenciales: {total}",
+        "delete": "Eliminar",
+        "confirm": "Confirmar",
+        "parlay": "Parlay",
+        "odd": "Único",
+        "limit": "Límite",
+        "cancel_appoint": "Cancelar Reserva",
+        "pm_sport": "Deportes PM",
+        "bet_confirm": "Apuesta Confirmada",
+        "bet_error": "Apuesta Fallida",
+        "reserve_win": "Cantidad Reservada",
+        "win_amount": "Ganancias potenciales",
+        "toltip1": "Qué es",
+        "toltipc": "Parlay",
+        "toltips": {
+            "2001": {
+                "title": "\"2 parlay 1 = ",
+                "content": "Cuando seleccione 2 eventos para 2 parlay 1, el sistema combinará los 2 eventos elegidos en una sola apuesta. Ambos eventos deben ganar para que la apuesta sea rentable."
+            },
+            "3001": {
+                "title": "3 parlay 1 = Apuesta compuesta por 3 eventos.",
+                "content": "Cuando seleccione 3 eventos para 3 parlay 1, el sistema combinará los 3 eventos elegidos en una sola apuesta. Los 3 eventos deben ganar para que la apuesta sea rentable."
+            },
+            "3004": {
+                "title": "3 parlay 4 = Cuatro apuestas separadas, cada una de las cuales consta de 3 eventos.",
+                "content": "\" Cuando elija apostar a un 3 parlay 4, el sistema creará cuatro apuestas separadas a partir de los 3 eventos seleccionados. Generará tres 2 parlay 1 y una 3 parlay 1. Cada combinación de eventos en el parlay se trata como una única apuesta, lo que da como resultado un total de cuatro apuestas separadas."
+            },
+            "4001": {
+                "title": "4 parlay 1 = Una apuesta que consta de 4 eventos.",
+                "content": "\""
+            },
+            "5001": {
+                "title": "5 parlay 1 = Apuesta formada por 5 eventos.",
+                "content": "Cuando se seleccionan 5 eventos para la apuesta 5 parlay 1, el sistema combinará los 5 eventos elegidos en una sola apuesta. Los 5 eventos deben ganar para que la apuesta sea rentable."
+            },
+            "6001": {
+                "title": "6 parlay 1 = Apuesta compuesta por 6 eventos.",
+                "content": "Cuando seleccione 6 eventos para la apuesta 6 parlay 1, el sistema combinará los 6 eventos elegidos en una sola apuesta. Los 6 eventos deben ganar para que la apuesta sea rentable."
+            },
+            "7001": {
+                "title": "7 parlay 1 = Apuesta compuesta por 7 eventos.",
+                "content": "Cuando se seleccionan 7 eventos para un 7 parlay 1, el sistema combinará los 7 eventos elegidos en una sola apuesta. Los 7 eventos deben ganar para que la apuesta sea rentable."
+            },
+            "8001": {
+                "title": "8 parlay 1 = Apuesta compuesta por 8 eventos.",
+                "content": "Cuando se seleccionan 8 eventos para un 8 parlay 1, el sistema combinará los 8 eventos elegidos en una sola apuesta. Los 8 eventos deben ganar para que la apuesta sea rentable."
+            },
+            "9001": {
+                "title": "9 parlay 1 = Apuesta compuesta por 9 eventos.",
+                "content": "Cuando se seleccionan 9 eventos para un 9 parlay 1, el sistema combinará los 9 eventos elegidos en una sola apuesta. Los 9 eventos deben ganar para que la apuesta sea rentable."
+            },
+            "10001": {
+                "title": "10 parlay 1 = Apuesta compuesta por 10 eventos.",
+                "content": "Cuando se seleccionan 10 eventos para un 10 parlay 1, el sistema combinará los 10 eventos elegidos en una sola apuesta. Los 10 eventos deben ganar para que la apuesta sea rentable."
+            },
+            "40011": {
+                "title": "\" 4 parlay 11 = 11 apuestas distintas a partir de la selección de 4 eventos.",
+                "content": "Cuando elija 4 partidos para apostar al sistema 4 parlay 11. El sistema dividirá los 4 partidos seleccionados en 6 x 2 parlay 1, 4 x 3 parlay 1 y 1 x 4 parlay 1. Cada combinación forma una apuesta distinta, lo que da como resultado un total de 11 apuestas."
+            },
+            "50026": {
+                "title": "5 parlay26 = 26 apuestas distintas a partir de la selección de 5 eventos.",
+                "content": "Cuando elija 5 partidos para apostar en el sistema 5 parlay 26. El sistema dividirá los 5 partidos seleccionados en 10 x 2 parlay 1 , 10 x 3 parlay 1 , 5 x 4 parlay 1 y 1 x 5 parlay 1 . Cada combinación forma una apuesta distinta, lo que da como resultado un total de 26 apuestas."
+            },
+            "60057": {
+                "title": "6 parlay 57 = 57 apuestas distintas a partir de la selección de 6 eventos.",
+                "content": "Cuando elija 6 partidos para apostar en el sistema 6 parlay 57. El sistema dividirá los 6 partidos seleccionados en 15 x 2 parlay 1, 20 x 3 parlay 1 , 15 x 4 parlay 1 ,6 x 5 parlay 1 y 1 x 6 parlay 1. Cada combinación forma una apuesta distinta, lo que da como resultado un total de 26 apuestas. Cada combinación forma una apuesta distinta, lo que da un total de 57 apuestas."
+            },
+            "700120": {
+                "title": "7 parlay 120 = 120 apuestas distintas a partir de la selección de 7 eventos.",
+                "content": "Cuando elija 7 partidos para apostar al sistema 7 parlay 120. El sistema dividirá los 7 partidos seleccionados en 21 x 2 parlay 1, 35 x 3 parlay 1 , 35 x 4 parlay 1 ,21 x 5 parlay 1 , 7 x 6 parlay 1 y 1 x 7 parlay 1. Cada combinación forma una apuesta distinta, lo que da un total de 120 apuestas."
+            },
+            "800247": {
+                "title": "8 parlay 247 = 247 apuestas distintas a partir de la selección de 8 eventos.",
+                "content": "Cuando elija 8 partidos para apostar en el sistema 8 parlay 247. El sistema dividirá los 8 partidos seleccionados en 28 x 2 parlay 1, 56 x 3 parlay 1 , 70 x 4 parlay 1 ,56 x 5 parlay 1 , 28 x 6 parlay 1 , 8 x 7 parlay 1 y 1 x 8 parlay 1. Cada combinación forma una apuesta distinta, lo que da un total de 247 apuestas."
+            },
+            "900502": {
+                "title": "9 parlay 502 = 502 apuestas distintas a partir de la selección de 9 eventos.",
+                "content": "Cuando elija 9 partidos para apostar en el sistema 9 parlay 502. El sistema dividirá los 9 partidos seleccionados en 36 x 2 parlay 1, 84 x 3 parlay 1 , 126 x 4 parlay 1 ,126 x 5 parlay 1 , 84 x 6 parlay 1 , 36 x 7 parlay 1 , 9 x 8 parlay 1 y 1 x 9 parlay 1 .Cada combinación forma una apuesta distinta, resultando un total de 502 apuestas."
+            },
+            "10001013": {
+                "title": "10 parlay 1013 = 1013 apuestas distintas a partir de la selección de 10 eventos.",
+                "content": "Al elegir 10 partidos para apostar en el sistema 10 parlay 1013. El sistema dividirá los 10 partidos seleccionados en 45 x 2 parlay 1, 120 x 3 parlay 1 , 210 x 4 parlay 1 ,252 x 5 parlay 1 , 210 x 6 parlay 1 , 120 x 7 parlay 1 , 45 x 8 parlay 1 , 10 x 9 parlay 1 y 1 x 10 parlay 1. Cada combinación forma una apuesta separada, resultando en un total de 1013 apuestas."
+            }
+        }
+    },
+    "match": {
+        "all": "Todos",
+        "champions": "Liga de Campeones de la UEFA",
+        "premier": "Premier League Inglesa",
+        "serie": "Serie A italiana",
+        "laliga": "La Liga Española",
+        "ligue": "Ligue 1 Francesa",
+        "china_super": "Superliga China",
+        "bundesliga": "Bundesliga",
+        "normal_results": "Resultados Regulares",
+        "game_results": "Resultados de Deportes Electrónicos",
+        "vr_results": "Resultados VR",
+        "championship_results": "Resultados del Campeonato"
+    },
+    "filter": {
+        "more": "Más >",
+        "enlarge": "Ampliar",
+        "font_size": "Tamaño de fuente",
+        "default": "Por defecto",
+        "turn_on": "Abierto",
+        "daily_activities": "Actividades diarias",
+        "go_old_version": "Ir a la versión antigua",
+        "go_web_version": "Ir a la versión web"
+    },
+    "v_sports": {
+        "event_status": "Estado del partido"
+    },
+    "detail": {
+        "half": "Primera parte",
+        "not_data_Injury": "No hay lista de lesionados",
+        "not_data_substitute": "No hay lista de suplentes",
+        "not_data_starter": "No hay alineación inicial disponible",
+        "acronym_half": "Mitad",
+        "highlights": "Destacados",
+        "events": "Acontecimientos del partido",
+        "technical_statistics": "Estadísticas Técnicas"
+    }
+},
   "ac_rules": {
     "auto": "Aceptar automáticamente cuotas más altas",
     "rules": {
@@ -1080,8 +1308,12 @@
     "sort_title": "Reglas de ordenación",
     "time2": "Por hora",
     "time": "Hora",
+    "daily_activities": "Actividades diarias",
+    "turn_on": "Abierto",
     "time_order": "Orden de tiempo",
-    "win_alone": "1X2"
+    "win_alone": "1X2",
+    "open_bets":"Apuestas no liquidadas",
+    "closed_bets":"Apuestas liquidadas"
   },
   "home": {
     "can_bet": "Artículo de apuesta",
@@ -2498,14 +2730,17 @@
     "video_line": "Línea de vídeo"
   },
   "new_menu": {
-    "1": "In-Play",
-    "2": "Today",
-    "3": "Early",
-    "4": "Parlay",
+    "1": "En Juego",
+    "2": "Hoy",
+    "3": "Temprano",
+    "4": "Outrights",
+    "5": "Próximamente",
+    "6": "Mix Parlay",
     "7": "Esports",
     "8": "VR",
     "30": "Lottery",
-    "28": "Results"
+    "28": "Resultados",
+    "400": "Outrights"
   },
   "virtual_sports": {
     "comprehensive_rating": "Calificación global",

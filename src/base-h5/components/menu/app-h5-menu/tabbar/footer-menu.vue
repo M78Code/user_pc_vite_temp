@@ -162,4 +162,7 @@ const menu_item_click = (item = {}) => {
 <style lang="scss" scoped>
 @import url(./footer.scss);
 @import url(./footer_menu.scss);
+.title-p1 {
+  text-align: center;
+}
 </style>
