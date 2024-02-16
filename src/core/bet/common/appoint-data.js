@@ -507,12 +507,13 @@ const set_ref_data = (item) => {
   } else if (handicap || handicap == '0') {
     init_ball_head = Number(handicap);
   }
+
   // 赔率
   ref_pre_book.appoint_odds_value = market_info.oddFinally
   // 最小赔率是它本身
   ref_pre_book.min_odds_value = market_info.oddFinally
   // 球头 显示
-  ref_pre_book.appoint_ball_value = market_info.handicap_hv
+  ref_pre_book.appoint_ball_value = market_info.handicap_hv || market_info.marketValue
   // 球头 计算
   ref_pre_book.appoint_ball_head = init_ball_head
   // 获取及时比分 格式: (主队比分-客队比分)
