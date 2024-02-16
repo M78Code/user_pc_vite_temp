@@ -117,7 +117,7 @@ export default defineComponent({
     // 切换菜单时，加载赛马所需数据
     watch(() => props.current_match.mid, ()=>{
       match.value = MatchListData.get_quick_mid_obj_ref(props.current_match.mid)?.value;
-      console.log('sub_menu_type', match.value, sub_menu_type.value);
+      console.log('sub_menu_type', match.value, sub_menu_type.value, props.current_match.mid);
       
       if(sub_menu_type.value != '1001' && sub_menu_type.value != '1004' && match?.value){
         item_data.value = {

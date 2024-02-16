@@ -107,7 +107,7 @@
       </div>
 
       <!-- vr详情页右侧区域，包括足蓝队伍比分，赛马队伍和赛果 -->
-      <virtual-sports-right v-if="match" :current_match="match" :match_list_by_no="match_list_by_no" :switch_match_handle="()=>{}" />
+      <virtual-sports-right v-if="sub_menu_type && match" :detail_match="current_batch.match" :current_match="match" :match_list_by_no="match_list_by_no" :switch_match_handle="()=>{}" />
 
       <!-- 排行榜页面,小组赛淘汰赛页面  -->
       <div v-if="match" class="list-wrapper">
