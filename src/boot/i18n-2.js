@@ -22,6 +22,7 @@ const server_key_map = {
   "ja-jp": "ry",
   "ko-kr": "ko",
   "es-es": "es",
+  "ru-ru": "ru",
 }
 
 //语言key对应的本地 文件夹
@@ -38,6 +39,7 @@ const map_lang = {
   ry: "ja-jp",
   ko: "ko-kr",
   es: "es-es",
+  ru: "ru-ru"
 };
 
 

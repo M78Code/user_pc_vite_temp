@@ -306,6 +306,50 @@
     "win_lose": "နိုင်/ရှုံး",
     "match_re": ""
   },
+  "footer_menu": {
+    "adviser": "အကြံပေး",
+    "all": "အားလုံး",
+    "analysis": "ခွဲခြမ်းစိတ်ဖြာခြင်း",
+    "bet_model": "လောင်းကစားပုံစံ",
+    "bet_record": "Bet Slip",
+    "bet_order": "ကျွန်ုပ်၏လောင်းကြေးများ",
+    "change_simple01": "ပြောင်းလဲပါ။",
+    "change_simple02": "ဗားရှင်းအတို",
+    "collect": "အကြိုက်ဆုံးများ",
+    "corner_kick": "ထောင့်ကန်ဘော",
+    "daxiao": "O/U",
+    "corner": "Corner O/U",
+    "Day_mode": "နေ့ ပုံစံ",
+    "daytime": "နေ့အချိန်",
+    "follow": "အကြိုက်ဆုံးများ",
+    "hot": "ဟော့",
+    "full_time": "",
+    "hot2": "ဟော့အားဖြင့်",
+    "filter": "ဇကာ",
+    "league_filter": "လိဂ်က စိစစ်တယ်။",
+    "mode": "ပုံစံ",
+    "more": "More",
+    "new_v": "လူသစ် ပုံစံ",
+    "night": "ညအချိန်",
+    "odds_set": "ဂိုးအကြောပေးဆက်တင်",
+    "play_way_f": "ကစားနည်း",
+    "night_mode": "ညပုံစံ",
+    "popular_Sort": "လူကြိုက်များသောအမျိုးအစား",
+    "rangfen": "ဂိုးအကြောပေး",
+    "pro_v": "ပရော်ဖက်ရှင်နယ်ဗားရှင်း",
+    "rangqiu": "Handicap",
+    "search": "ရှာဖွေပါ။",
+    "selected": "ရွေးချယ်ထားသော",
+    "refresh": "Refresh",
+    "set_menu": "မီနူး",
+    "settings": "ဆက်တင်များ",
+    "theme": "အပြင်အဆင်ပုံစံ",
+    "sort_title": "စည်းမျဥ်းစည်းကမ်းများ",
+    "time2": "အချိန်အားဖြင့်",
+    "time": "အချိန်",
+    "time_order": "အချိန်ယူမှု",
+    "win_alone": "1X2"
+  },
   "browser": {
     "browser1": "Google",
     "browser3": "Sogou",
@@ -2991,5 +3035,16 @@
   "basketball": {
     "pause": "ခေတ္တရပ်ပါ။",
     "penalty": "ပြစ်ဒဏ်"
+  },
+  "hps": {
+    "compose": {
+      "details": {
+        "feature": "စျေးကွက်မျိုးစုံ",
+        "all_both": "1x2 နှင့် နှစ်သင်းလုံး ဂိုးသွင်း",
+        "all_total_goal": "1x2 နှင့် ဂိုးပေါင်း အပေါ် / အောက်",
+        "half_both": "ပထမပိုင်း 1x2 နှင့် နှစ်သင်းလုံး ဂိုးသွင်း",
+        "half_total_goal": "ပထမပိုင်း  ဂိုးပေါင်း အပေါ် / အောက်"
+      }
+    }
   }
 }

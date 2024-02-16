@@ -191,6 +191,7 @@ onUnmounted(() => {
         flex: 1;
         position: relative;
         margin: 0 0.1rem;
+        max-width: 1.18rem;
         .mask{
             position: absolute;
             top: 0;

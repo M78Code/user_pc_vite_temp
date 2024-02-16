@@ -102,6 +102,9 @@
                 line-height: 0.2rem;
                 width: 50%;
                 
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
                 &.active{
                     border-radius: 0.25rem;
                     // background:var(--q-gb-bg-c-11); 
