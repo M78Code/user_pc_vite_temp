@@ -48,10 +48,29 @@ const is_serial = () => {
 
 // 单串关切换
 const set_bet_single_change = () => {
+
+
   // 冠军不能串 电竞冠军也不行
   if(MenuData.is_kemp() || MenuData.get_mm_is_champion()){
     return
   }
+
+  
+  if(BetData.bet_single_list.length > 1){
+    try{
+      BetData.bet_single_list.forEach(item => {
+        if(item.is_guanjun){
+          throw new Error('loop_C')
+        }
+      });
+    }catch(e){
+      console.error("合并项目中有冠军投注项 不允许切换串单")
+      return 
+    }
+  }
+  
+  
+ 
   // 有O01赛事 则不能切换串关
   if(lodash.get(BetData.bet_single_list,'[0].is_serial') && lodash.get(BetData.bet_single_list,'[0].dataSource') == 'O01') {
     return
