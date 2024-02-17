@@ -1,6 +1,8 @@
 <template>
     <!-- 禁止触摸滚动 -->
-    <div class="screen-bet-container" @touchmove.stop>
+    <!-- 测试： style="width: 100vw; height: 100vh;position: fixed;z-index: 10000;background-color: black;"-->
+    <div class="screen-bet-container" @touchmove.stop 
+         >
         <!-- 视频/动画插槽 -->
         <slot />
         <div class="screen-bet" v-show="!show_line"  v-if="is_full_screen">
@@ -27,7 +29,7 @@
             </div>
 
             <div class="footer" v-show="!is_bet">
-                <IconInfo />
+                <IconInfo @click="handle_rule_status"/>
                 <div class="actions">
                     <IconExitScreen @click="handle_exit"/>
                 </div>
@@ -50,13 +52,19 @@
             'z-index': is_bet ?  '20':''
         }">
             <div :class="['bet', is_bet ? 'bet-ani' : '']" @click.stop>
+                
                 <!-- 详情下注弹窗 -->
-                <slot name="bet" />
+                <slot name="bet"></slot>
                 <!-- 直播中的赛事 -->
-                <slot name="live" />
+                <div>
+                    <Live :data="props.data"/>
+                </div>
             </div>
         </div>
     </div>
+    <q-dialog v-model="rule_status">
+        <div>11221</div>
+    </q-dialog>
 </template>
 
 <script setup>
@@ -67,7 +75,8 @@ import IconExitScreen from "./components/exit-screen-icon.vue";
 import IconDetail from "./components/detail-icon.vue";
 import IconDate from "./components/date-icon.vue";
 import IconLive from "./components/live-icon.vue";
-import IconAni from "./components/ani.icon.vue"
+import IconAni from "./components/ani.icon.vue";
+import Live from "./components/live-competition.vue";
 /** @type {{type: 'animation' | 'video'}} */
 const props = defineProps({
     /** 全屏的是动画还是视频 */
@@ -88,7 +97,7 @@ const props = defineProps({
         type: Number,
         default: 0
     },
-    // 是否是全屏
+    // 是否是全屏, 测试值默认为 true
     is_full_screen: {
         type: Boolean,
         default: false
@@ -98,7 +107,11 @@ const props = defineProps({
         type: Object,
         default: () => ({})
     },
-    
+    // 直播中的赛事数据
+    data: {
+        type: Array,
+        default: () => ([])
+    }
 });
 
 const emits = defineEmits(['exit', 'switch_type'])
@@ -117,7 +130,8 @@ const is_bet = ref(false);
 
 /** @type {import('vue').Ref<'video'|'animation'>} */
 const type = ref('video');
-
+/** 展示规则说明弹窗状态 */
+const rule_status = ref(false);
 watch(() => props.current_play_type, (value) => {
     select_line.value = value;
 })
@@ -158,6 +172,13 @@ const change_bet_status = () => {
  */
 const handle_exit = ()=> {
     emits('exit')
+}
+
+/**
+ * 修改展示弹窗状态
+ */
+const handle_rule_status = () => {
+    rule_status.value = !rule_status.value;
 }
 </script>
 
