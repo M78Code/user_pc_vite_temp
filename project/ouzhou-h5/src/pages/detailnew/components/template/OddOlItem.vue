@@ -8,7 +8,21 @@
       status, type, calcOlResult(value['result']),
     ]"
   >
-    <div class="icontainer" v-if="vif"
+    <!-- 赛果 -->
+    <div class="icontainer ol-result" v-if="value['result']"
+    >
+      <div class="item ol-name" :alt="olName">
+        <span class="ol-name-span">{{ olName }}</span>
+      </div>
+      <div class="separate"></div>
+      <div class="item ol-content or-state">
+        <div class="ol-content-ov">
+          {{ i18n_t('bet_record.bet_no_status0'+value['result']) }}
+        </div>
+      </div>
+    </div>
+    <!-- 投注项 -->
+    <div class="icontainer" v-else-if="vif"
       :class="{'ol-v-hide': isLock}"
       @click="onClick"
     >
@@ -40,19 +54,6 @@
           <span v-else>{{ compute_value_by_cur_odd_type(value.ov, value._hpid,value._hsw, sportId) }}</span>
           <img class="odd-image" v-show="status != 'none'"
             :src="oddUp ? ouzhou_hps_up : ouzhou_hps_down" />
-        </div>
-      </div>
-    </div>
-    <!-- 赛果 -->
-    <div class="icontainer ol-result" v-if="value['result']"
-    >
-      <div class="item ol-name" :alt="olName">
-        <span class="ol-name-span">{{ olName }}</span>
-      </div>
-      <div class="separate"></div>
-      <div class="item ol-content or-state">
-        <div class="ol-content-ov">
-          {{ i18n_t('bet_record.bet_no_status0'+value['result']) }}
         </div>
       </div>
     </div>
@@ -122,7 +123,7 @@ const computedOlName = (olName)=>{
 }
 
 // @ts-ignore
-const vif =computed(()=> isPlacehold || props.value._mhs == 0||props.value._mhs == 11 || props.value._mhs == 1)
+const vif =computed(()=> isPlacehold.value || props.value._mhs == 0||props.value._mhs == 11 || props.value._mhs == 1)
 const olName = (function(){
   let olName = '';
   if(props.type == 'fill'){
