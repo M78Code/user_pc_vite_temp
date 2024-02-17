@@ -6,10 +6,9 @@
        <div class="info_left">
        <div class="size_16 color_a1a1">{{i18n_t('bet.bet')}}</div>
         <div class="size_14">
-            asdasda
             <span>{{i18n_t('bet.total_win2')}}</span>
             <span class="margin_left_4">
-                {{ bet_win_money }}
+                {{ bet_win_money() }}
             </span>
         </div>
        </div>
@@ -28,8 +27,8 @@
 
 <script setup>
 import lodash_ from "lodash"
-import { onMounted, onUnmounted, reactive,ref,computed } from "vue"
-import {MITT_TYPES,useMittOn,formatMoney,UserCtr,LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
+import { onMounted, onUnmounted, reactive,ref ,computed} from "vue"
+import {MITT_TYPES,useMittOn,formatMoney,UserCtr,LOCAL_PROJECT_FILE_PREFIX,format_money2 } from "src/output/index.js"
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js"
 import mathJs from 'src/core/bet/common/mathjs.js'
