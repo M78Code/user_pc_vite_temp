@@ -55,7 +55,6 @@ const set_bet_single_change = () => {
     return
   }
 
-  
   if(BetData.bet_single_list.length > 1){
     try{
       BetData.bet_single_list.forEach(item => {
