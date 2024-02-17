@@ -55,7 +55,7 @@ const props = defineProps({
   // 是否是附加盘 且有type
   add_type: {
     type: [String, Number],
-    default: () => 1,
+    default:1,
   },
   // 是否主球次要玩法
   other_play: {
@@ -82,18 +82,17 @@ onMounted(() => {
 })
 
 //坑位对象
+const hn_obj = toRef(MatchListData.list_to_obj,'hn_obj')
 const col_ols_data = computed(() => {
   try {
-    let { hn, mid, csid } = match.value
+    let { mid, csid } =match.value
     let handicap_type = props.add_type
-    const hn_obj = lodash.get(MatchListData, "list_to_obj.hn_obj", {})
     return lodash.cloneDeep(props.handicap_list || []).map(col => {
       col.ols = col.ols.map(item => {
         if (item.empty) { return }
         // 投注项数据拼接
         let hn_obj_config = MatchListData.get_list_to_obj_key(mid, `${mid}_${item._hpid}_${handicap_type}_${item.ot}`, 'hn')
-        // 获取投注项内容 
-        return Object.assign({other_class:item.other_class},lodash.get(hn_obj, hn_obj_config) || not_hn_obj_map.value[hn_obj_config] || {});
+        return Object.assign({other_class:item.other_class},lodash.get(hn_obj.value, hn_obj_config) || not_hn_obj_map.value[hn_obj_config] || {}) 
       })
       col.csid = csid;
       return col
