@@ -89,7 +89,7 @@
 
 <script setup>
 
-import { reactive, computed } from "vue"
+import { reactive, computed, watch } from "vue"
 import {LOCAL_PROJECT_FILE_PREFIX,compute_value_by_cur_odd_type,UserCtr } from "src/output/index.js"
 import BetData from 'src/core/bet/class/bet-data-class.js'
 import BetViewDataClass from 'src/core/bet/class/bet-view-data-class.js'
@@ -133,8 +133,9 @@ const set_show_appoint = () =>{
 
 }
 
+
 const cancel_operate = () =>{
-  ref_data.show_appoint = !ref_data.show_appoint
+  ref_data.show_appoint = false
   BetData.set_is_bet_pre(false)
 }
 
@@ -146,6 +147,11 @@ const is_bet_appoint_disable = computed(() => state => {
     if(!BetData.is_bet_pre) {
         return true
     }
+})
+
+
+watch(()=>UserCtr.odds.cur_odds,()=>{
+    cancel_operate()
 })
 
 </script>
