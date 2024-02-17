@@ -6,7 +6,7 @@
         :rows="BetRecordHistory.table_data" 
         style="max-height:calc(100vh - 316px)" 
         :rows-per-page-options="[0]" 
-        :columns="columns[BetRecordHistory.selected]"
+        :columns="show_columns(BetRecordHistory.selected, BetRecordHistory.preStatus)"
         row-key="orderNo" 
         separator="cell" 
         hide-pagination
@@ -569,8 +569,9 @@ const base_columns = [
     field: 'detail' 
   }
 ]
-const columns = reactive({
-  0: [
+const show_columns = (selected, preStatus) => {
+  if(selected == 0) {
+    return reactive([
     ...base_columns,
     {
       name: 'totalStake',
@@ -591,9 +592,11 @@ const columns = reactive({
       field: 'status'
       // sortable: true,
     }
-  ],
-  1: [
-  ...base_columns,
+  ])
+  }
+  if(selected == 1) {
+    return reactive([
+    ...base_columns,
     {
       name: 'totalStake',
       label: computed(()=>{ return i18n_t("bet_record.bets_forehead")}),
@@ -613,24 +616,53 @@ const columns = reactive({
       field: 'status'
       // sortable: true,
     }
-  ],
-  2: [
-  ...base_columns,
-    {
-      name: 'totalStake',
-      label: computed(()=>{ return i18n_t("bet.bet_book_stake")}),
-      align: 'left',
-      field: 'totalStake'
-    },
-    {
-      name: 'status',
-      label: computed(()=>{ return i18n_t("bet_record.status")}),
-      align: 'left',
-      field: 'status'
-      // sortable: true,
+  ])
+  }
+  // 预约，进行中，要展示最高可赢。 已取消和预约失败不展示最高可赢
+  if(selected == 2) {
+    if(preStatus == 0) {
+      return reactive([
+      ...base_columns,
+      {
+        name: 'totalStake',
+        label: computed(()=>{ return i18n_t("bet.bet_book_stake")}),
+        align: 'left',
+        field: 'totalStake'
+      },
+      {
+        name: 'highestWin',
+        label: computed(()=>{ return i18n_t("common.maxn_amount_val")}),
+        align: 'left',
+        field: 'highestWin'
+      },
+      {
+        name: 'status',
+        label: computed(()=>{ return i18n_t("bet_record.status")}),
+        align: 'left',
+        field: 'status'
+        // sortable: true,
+      }
+    ])
+    } else {
+      return reactive([
+      ...base_columns,
+      {
+        name: 'totalStake',
+        label: computed(()=>{ return i18n_t("bet.bet_book_stake")}),
+        align: 'left',
+        field: 'totalStake'
+      },
+      {
+        name: 'status',
+        label: computed(()=>{ return i18n_t("bet_record.status")}),
+        align: 'left',
+        field: 'status'
+        // sortable: true,
+      }
+    ])
     }
-  ]
-})
+  }
+}
 </script>
 
 <style lang="scss" scoped>

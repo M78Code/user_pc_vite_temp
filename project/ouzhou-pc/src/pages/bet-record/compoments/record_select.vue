@@ -88,6 +88,20 @@ const emit_value = (value) => {
     Object.assign(BetRecordHistory.params, {
       preOrderStatusList: value.split(',')
     })
+    // 预约中状态   0 预约中  1 已取消    2 预约失败
+    let preStatus = 0
+    switch (value) {
+      case '0':
+        preStatus = 0
+        break;
+      case '4':
+        preStatus = 1
+        break;
+      case '2,3':
+        preStatus = 2
+        break;
+    }
+    BetRecordHistory.set_pre_status(preStatus)
   }
   BetRecordHistory.handle_fetch_order_list()
 }
