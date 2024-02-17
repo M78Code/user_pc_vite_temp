@@ -1,8 +1,22 @@
 
   
 <template>
-
-<div>
+    <div>
+        <div class="c-simple-header">
+      <div class="logo-icon"  :style="compute_css_obj({ key: 'pc-rule-logo' })"></div>
+          <div class="head-info">
+            <div class="rule-title">
+              赛果
+            </div>
+            <div class="systime">
+              <div class="refresh" v-if="$route.name == 'match_results'">
+                <refresh-comp :loaded="data_loaded" @click="refresh()" />
+              </div>
+              <!--右侧时间-->
+              <span>{{date_time}} (GMT+8)</span>
+            </div>
+          </div>
+    </div>
       <q-separator class="divider" color="#F2F5F8" inset />
     <div class="search-header">
     <div class="wrap-select">
@@ -160,6 +174,9 @@ import { GlobalSwitchClass} from "src/output/index.js";
 
 import { loadLanguageAsync } from "src/output/index.js";
 import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
+import refreshComp from "src/components/refresh/refresh.vue";
+import { compute_css_obj } from 'src/core/server-img/index.js'
+import { get_remote_time,utc_to_gmt_no_8_ms2 } from "src/output/index.js"
 import {
   i18n_t,
   useMittEmit,
@@ -168,7 +185,13 @@ import {
 } from "src/output/index.js";
 import lodash from "lodash"
 const emit = defineEmits(['refresh'])
+const date_time = ref('')
+const timer_id = ref(null)
 const props = defineProps({
+  data_loaded:{
+    type: Boolean,
+    default: true//刷新按钮动画开关
+  },
   current_sport_id:{
     type: null
   },
@@ -327,14 +350,72 @@ const highlights_input_radio_fn=()=> {
 function refresh() {
   emit("refresh")
 }
+/**
+ * @Description:获取当前系统时间
+ * @return {undefined} undefined
+ */
+function get_date_time() {
+  let time = get_remote_time()
+  date_time.value = utc_to_gmt_no_8_ms2(time);
+  timer_id.value = setInterval(() => {
+    time += 1000;
+    date_time.value = utc_to_gmt_no_8_ms2(time);
+  }, 1000);
+}
 onMounted(()=>{
  loadLanguageAsync(LocalStorage.get('lang'));
+  get_date_time()
 })
 </script>
 
 <style scoped lang="scss">
 
-@import "./result-header.scss";
+@import "./new-pc-result-header.scss";
+.head-info {
+  display: flex;
+  justify-content: space-between;
+  flex: 1;
+  .rule-title {
+    color:var(--q-match-result-title-color);
+    font-size: 12px;
+  }
+  .systime {
+    min-width: 96px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    .refresh {
+      width: 20px;
+      height: 20px;
+      margin-right: 5px;
+      cursor: pointer;
+    }
+  }
+}
+
+.c-simple-header{
+  display: flex;
+  padding: 0 20px 0 15px;
+  height: 61px;
+  min-height: 61px;
+  align-items: center;
+  text-transform: uppercase;
+  background-color: var(--q-match-result-bg-head-color-1);
+  .header-title{
+    color:var(--q-match-result-title-color);
+  }
+  .rule-logo {
+    margin-right: 33.3px;
+    height: 100%;
+    .img-logo {
+      width: 130px;
+      height: 100%;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+    }
+  }
+}
 .top-menu-content {
     height: 40px;
     border-top: 1px solid var(--q-announce-left-menu-color-2);
@@ -614,5 +695,69 @@ background: #ffffff;
     line-height: 12px !important;
   }
 }
-
+.e-select {
+  width: 100px;
+  height: 28px;
+  color: var(--qq--yb-text-color3);
+  border-radius: 2px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 12px;
+  position: relative;
+  .select-value {
+    width: 100%;
+    height: 28px;
+    line-height: 28px;
+    padding: 0 6px;
+    position: relative;
+    border: 1px solid var(--q-match-result-boreder-1);
+    background: #ffffff;
+    cursor: pointer;
+    &:hover {
+      border: 1px solid var(--qq--y0-text-color1);
+    }
+  }
+  .select-input {
+    cursor: text;
+    outline: none;
+    // background-color: rgba(16,16,16,0.95);
+  }
+  .opitons-wrap {
+    width: 100%;
+    height: 420px;
+    max-height: 65vh;
+    position: absolute;
+    left: 0;
+    z-index: 1;
+    background: transparent;
+    border-bottom: 1px solid #d0d8de;
+    .item {
+      width: 100%;
+      height: 30px;
+      line-height: 30px;
+      margin: 0;
+      padding-left: 15px;
+      cursor: pointer;
+      color: #1d1d1d;
+      border-left: 1px solid #d0d8de;
+      border-right: 1px solid #d0d8de;
+      &:first-child {
+        border-top: 1px solid #d0d8de;
+      }
+      &:hover {
+        background: #e3e9ee;
+      }
+    }
+    .active {
+      background: #e3e9ee;
+    }
+    .rule-scroll-area {
+      &:deep(.q-scrollarea__content){
+        width: 100%;
+        background: #fff;
+  }
+     
+    }
+  }
+}
 </style>
