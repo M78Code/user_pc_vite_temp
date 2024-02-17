@@ -143,8 +143,13 @@ const init = () => {
  */
 const get_video_url = () => {
   // play_type  数据源类型 1 ：源视频 2：动画 3 ：演播室 4 ：主播 5：专题
-
-  // 目标赛事视频url相关信息获取
+  // 电竞处理
+  if ([100,101,102,103].includes(+props.detail_info.csid))  {
+    iframe_loading.value = false;
+    let url = props.detail_info.varl || props.detail_info.vurl
+    media_src.value = url
+  }else{
+      // 目标赛事视频url相关信息获取
   video.get_video_url(
     props.detail_info,
     { params: { play_type: 1 } },
@@ -163,8 +168,12 @@ const get_video_url = () => {
         url_add_param(url_src, "video_type", 1) +
         `&live_type=${live_type}&csid=${props.detail_info.csid}&icons_right=163&pip_right=80`;
         iframe_loading.value = false;
+        
     }
   );
+
+  }
+
 };
 
 /**
