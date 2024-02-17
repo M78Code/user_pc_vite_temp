@@ -60,7 +60,7 @@ import {scrollMenuEvent} from "../utils";
 // import {  menu_lv2 } from 'src/base-h5/mixin/menu.js'
 // import  screenModal from './screen-modal.vue';
 // import { MenuData } from "src/output/index.js";
-// import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt";
+import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt";
 // import { theme_list, theme_map } from "src/core/theme/"
 import UserCtr from "src/core/user-config/user-ctr.js"
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
