@@ -7,11 +7,8 @@
             <div class="size_16 color_a1a1">{{ i18n_t('bet.bet') }}</div>
             <div class="size_14">
                 <span>{{ i18n_t('bet.total_win2') }}</span>
-                <span class="margin_left_4" v-if="BetData.is_bet_pre && BetData.bet_pre_appoint_id == item.playOptionsId">
-                    {{ formatMoney(mathJs.subtract(mathJs.multiply(item.bet_amount,ref_pre_book.appoint_odds_value), item.bet_amount)) }}
-                </span>
-                <span class="margin_left_4" v-else>
-                    {{ formatMoney(mathJs.subtract(mathJs.multiply(item.bet_amount,item.oddFinally), item.bet_amount)) }}
+                <span class="margin_left_4">
+                    {{ bet_win_money() }}
                 </span>
             </div>
         </div>
@@ -24,7 +21,7 @@
 
                 <span class="yb_fontsize14 limit-txt" v-show="!item.bet_amount">{{ i18n_t('bet.money_range') }} {{ ref_data.min_money }}~{{ formatMoney(ref_data.max_money) }}</span>
 
-                <img class="del_btn_money" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/delete.svg`"  @click="del_btn_money()" alt=""/>
+                <img v-if="item.bet_amount" class="del_btn_money" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/delete.svg`"  @click="del_btn_money()" alt=""/>
                 
             </div>
 
@@ -34,12 +31,13 @@
 
 <script setup>
 import lodash_ from "lodash"
-import { onMounted, onUnmounted, reactive, ref,watch, nextTick } from "vue"
-import { MITT_TYPES, useMittOn, formatMoney, UserCtr } from "src/output/index.js"
+import { onMounted, onUnmounted, reactive, ref,watch, nextTick, computed } from "vue"
+import { MITT_TYPES, useMittOn, formatMoney, UserCtr,format_money2 } from "src/output/index.js"
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js"
 import mathJs from 'src/core/bet/common/mathjs.js'
 import { ref_pre_book } from "src/core/bet/common/appoint-data.js"
+import { odds_table } from "src/core/constant/common/module/csid.js"
 
 const props = defineProps({
     item: {
@@ -101,20 +99,13 @@ onUnmounted(() => {
     Object.values(ref_data.emit_lsit).map((x) => x());
 })
 
-
-
 /**
  *@description 单个输入框金额删除按钮
  *
  */
  const del_btn_money = () => {
-
     BetData.set_bet_obj_amount(0, props.item.playOptionsId)
-    
- 
  }
-
-
 
 /**
  *@description 金额改变事件
@@ -164,6 +155,24 @@ const cursor_flashing = () => {
         money_span.value && money_span.value.classList.toggle('money-span3')
     }, 1000);
 }
+
+const bet_win_money = computed(()=> status => {
+  // 获取单关投注的数据
+  let { bet_amount ='', oddFinally = '', odds_hsw = '' } = lodash_.get(props,'item',{})
+  let bet_win = bet_amount
+  // 香港赔 不用减去投注金额
+  if(odds_hsw.includes(odds_table[UserCtr.odds.cur_odds]) && UserCtr.odds.cur_odds == 'HK' ){
+    bet_win = 0
+  }
+  // 预约投注 赔率
+  if(BetData.is_bet_pre){
+    oddFinally = ref_pre_book.appoint_odds_value
+  }
+  // 计算出可赢金额
+  return format_money2(mathJs.subtract(mathJs.multiply(bet_amount,oddFinally), bet_win)) 
+})
+
+
 
 </script>
 

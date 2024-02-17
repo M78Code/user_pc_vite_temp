@@ -6,7 +6,7 @@
   
   <!-- 自动接受更好的赔率 -->
   <div class="accept" :class="UserCtr.user_bet_prefer == 1 ? 'active':'' " @click="set_bet_is_accept()" v-if="BetViewDataClass.bet_order_status == 1">
-      自动接受更好的赔率
+      自动接受更好的赔率 
   </div>
 
   <!-- 盘口值已变更,赔率已变更 -->
@@ -118,6 +118,7 @@ onMounted(()=>{
 // 滑动监听
 const set_touch_move_bet = event => {
   if(event){
+    console.error('滑动监听')
     // event.preventDefault();
     let fit = lodash_.get(event,'target.className','')
     get_leng_px()

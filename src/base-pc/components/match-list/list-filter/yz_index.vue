@@ -52,7 +52,7 @@
           v-if="
             item.ct &&
             !BaseData.filterSport_arr.includes(
-              '' + BaseData.compute_sport_id(item.mif)
+              '' + BaseData.compute_sport_id(item.mif || item.mi)
             )
           "
           @click="
@@ -76,11 +76,11 @@
           <div
             class="name menu-inline name-margin-left"
             v-tooltip="{
-              content: BaseData.menus_i18n_map[item.mif] || '',
+              content: BaseData.menus_i18n_map[item.mif || item.mi] || '',
               overflow: 1,
             }"
           >
-            <span> {{ BaseData.menus_i18n_map[item.mif] || "" }} </span>
+            <span> {{ BaseData.menus_i18n_map[item.mif || item.mi] || "" }} </span>
             <span class="count-text"> {{ item.ct }}</span>
           </div>
         </div>

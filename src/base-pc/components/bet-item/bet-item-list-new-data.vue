@@ -4,13 +4,13 @@
     :class="[
       ol_data.class,
       odds_state,
-      BetData.bet_oid_list.includes(ol_data.oid) ? 'active' : '',
+      BetData.bet_oid_list.includes(ol_data?.oid) ? 'active' : '',
       `csid${ol_data.csid}`,
       odds_lift,
       { 'show-odds-icon': odds_state != 'seal' },
       { 'oddsup': odds_lift == 'up' },
       { 'oddsdown': odds_lift == 'down' }
-    ]" @click.stop="bet_click_ol" :id="`list-${ol_data.oid}`">
+    ]" @click.stop="bet_click_ol" :id="`list-${ol_data?.oid}`">
     <!-- 盘口 -->
     <div :class="[
       'handicap-value',
@@ -85,7 +85,7 @@ const props = defineProps({
   }
 });
 const match = inject('match', null)
-const emit = defineEmits(['oddsChange', 'stateChage'])
+const emit = defineEmits(['oddsChange'])
 const {
   bet_click_ol, score, odds_state, odds_lift, is_mounted
 } = use_bet_item(props, emit)
@@ -96,10 +96,6 @@ defineExpose({
 
 onMounted(() => {
   // 异步设置组件是否挂载完成
-  setTimeout(()=>{
-    // 冒泡初始化时的选中状态
-    emit('stateChage', odds_state)
-  })
 })
 
 </script>

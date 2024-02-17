@@ -115,7 +115,7 @@ class MatchMeta {
     this.http_params.md = md
 
     // 是否需要开赛、未开赛归类
-    is_match && this.get_target_match_data({ md })
+    is_match && this.get_target_match_data({ md, is_clear: true })
 
     // 滚球全部
     if (+menu_lv_v1 === 1 && menu_lv_v2 == 0) return this.get_origin_match_mids_by_mis(menu_lv_v1_sl)
@@ -741,7 +741,7 @@ class MatchMeta {
    *  ouzhou-h5 不需要
    *  yazhou-h5 需要
    */
-  async get_target_match_data({ scroll_top = 0, md = '', is_error = false, tid = '' }) {
+  async get_target_match_data({ scroll_top = 0, md = '', is_error = false, tid = '', is_clear = false }) {
     // 有的项目菜单类不存在 data_time
     const data_time = String(md || MenuData?.data_time || this.http_params.md)
     // 球种 euid
@@ -761,7 +761,7 @@ class MatchMeta {
       ...params,
       ...other_params
     }
-    if (params_tid) this.set_show_skeleton_state(true)
+    if (params_tid && !this.is_ws_trigger) this.set_show_skeleton_state(true)
     // 取消上一次的  限频重新请求逻辑
     this.axios_cancel['match'] && this.axios_cancel['match']()
     const res = await this.handler_axios_loop_func({ http: api_common.post_match_full_list, params: target_params, key: 'post_match_full_list', axios_key: "match"  })
@@ -783,7 +783,7 @@ class MatchMeta {
     // 复刻版下的新手版 和 赛果 不需要  虚拟计算
     const is_virtual = !(project_name === 'app-h5' && (MenuData.is_results() || UserCtr.standard_edition == 1))
     // 时间 热门相互切换 会导致 is_show_league 不对 需要 清一下 仓库
-    if (!is_virtual) MatchDataBaseH5.clear()
+    if (!is_virtual || is_clear) MatchDataBaseH5.clear()
     this.handler_match_list_data({ list: list, scroll_top, is_virtual, type: !is_virtual ? 2 : 1 })
 
     // 模拟删除赛事
@@ -1902,6 +1902,18 @@ class MatchMeta {
     warehouse.set_list(result)
     this.is_ws_trigger = false
     this.get_match_base_hps_by_mids({ })
+  }
+  // 销毁
+  destroy () {
+    clearTimeout(this.debounce_timer)
+    clearTimeout(this.axios_debounce_timer)
+    clearTimeout(this.axios_get_hps_timer)
+    this.debounce_timer = null
+    this.axios_debounce_timer = null
+    this.axios_get_hps_timer = null
+    this.debounce_add_match.cancel()
+    this.debounce_remove_match.cancel()
+    this.debounce_get_hps.cancel()
   }
 }
 

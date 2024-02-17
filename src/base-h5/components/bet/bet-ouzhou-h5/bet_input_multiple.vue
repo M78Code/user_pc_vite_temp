@@ -23,7 +23,7 @@
                 <span class="money-span" ref="money_span" v-if="BetData.active_index == BetData.bet_single_list.length" :style="{ opacity: '1' }"></span>
 
                 <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">{{i18n_t('bet.money_range')}} {{ref_data.min_money}}~{{format_money3(ref_data.max_money)}}</span>
-                <img class="del_btn_money" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/delete.svg`"  @click="del_btn_money()" alt=""/>
+                <img v-if="ref_data.money" class="del_btn_money" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/delete.svg`"  @click="del_btn_money()" alt=""/>
             </div>
         </div>
     </div>
