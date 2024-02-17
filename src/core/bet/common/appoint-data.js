@@ -255,6 +255,7 @@ const football_head_handle = (val) => {
 }
 
 const basktball_head_handle = (val) => {
+  clearTimeout(appoint_time_out)
   let min_ball_head = 0
   let max_ball_head = 0
   if(BASKETBALL_BY_APPOINTMENT_let.includes(BetData.current_bet_pre_obj.playId)){ // 让分
@@ -268,17 +269,24 @@ const basktball_head_handle = (val) => {
     max_ball_head = 400.5;
   }
 
-  let res = val
-  if (val*1 <= min_ball_head) {
-    res = min_ball_head
-    useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('pre_record.market_error_info')}`)
-  }
-  if (val*1 >= max_ball_head) {
-    res = max_ball_head
-    useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('pre_record.market_error_info_max')}`)
-  }
-  ref_pre_book.appoint_ball_value = res
-  ref_pre_book.appoint_ball_head = res
+  ref_pre_book.appoint_ball_value = val
+  ref_pre_book.appoint_ball_head = val
+
+  appoint_time_out = setTimeout(() => {
+
+    let res = val
+    if (val*1 <= min_ball_head) {
+      res = min_ball_head
+      useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('pre_record.market_error_info')}`)
+    }
+    if (val*1 >= max_ball_head) {
+      res = max_ball_head
+      useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('pre_record.market_error_info_max')}`)
+    }
+    ref_pre_book.appoint_ball_value = res
+    ref_pre_book.appoint_ball_head = res
+
+  }, 1500);
 }
 
 /**

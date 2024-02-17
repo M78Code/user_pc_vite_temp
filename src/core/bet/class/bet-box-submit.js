@@ -1007,12 +1007,11 @@ const set_error_message_config = (res ={},type,order_state) => {
     let playName = lodash_.get(res, 'data.orderDetailRespList[0].playName', '')
     // 是否需求清除投注信息
     let clear_time = true
-
     if(type == 'bet'){
         clearTimeout(time_out)
+        clear_time = false
         // 投注完成 不需要清除提示信息
         if(res.code == 200){
-            clear_time = false
             switch(order_state){
                 case 2:
                     obj = {
