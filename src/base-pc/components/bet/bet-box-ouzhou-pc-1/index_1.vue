@@ -95,7 +95,7 @@
         </template>
       </div>
       <!-- 是否接受更好赔率 常规金额 -->
-      <div class="bet-handle">
+      <div class="bet-handle" v-if="BetViewDataClass.bet_order_status == 1">
         <div class="f-e-c" @click.prevent="set_is_accept_amount()">
           <span v-if="BetData.bet_is_accept" class="icon-arrow icon-arrow-merge mr-4"></span>
           <span v-else class="merge-checkbox mr-4"></span>
