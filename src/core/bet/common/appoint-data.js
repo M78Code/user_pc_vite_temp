@@ -3,7 +3,7 @@ import math_js from "src/core/bet/common/mathjs.js"
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import { i18n_t } from "src/boot/i18n.js"
 import BetData from 'src/core/bet/class/bet-data-class.js'
-import { FOOTBALL_PLAY_LET_BALL, MARKET_BIG_SMALL_PLAY_LIST, MARKET_RANG_FLAG_LIST, MARKET_HOME_PLAY_LIST, MARKET_AWAY_PLAY_LIST, BASKETBALL_BY_APPOINTMENT_let, BASKETBALL_BY_APPOINTMENT_total } from "src/output/index.js";
+import { compute_value_by_cur_odd_type,FOOTBALL_PLAY_LET_BALL, MARKET_BIG_SMALL_PLAY_LIST, MARKET_RANG_FLAG_LIST, MARKET_HOME_PLAY_LIST, MARKET_AWAY_PLAY_LIST, BASKETBALL_BY_APPOINTMENT_let, BASKETBALL_BY_APPOINTMENT_total } from "src/output/index.js";
 import lodash_ from "lodash"
 import UserCtr from "src/core/user-config/user-ctr.js"
 
@@ -486,7 +486,7 @@ const set_bet_obj_config = (item) => {
 }
 
 const set_ref_data = (item) => {
-  // console.error('set_ref_dataset_ref_dataset_ref_data')
+  console.error('set_ref_dataset_ref_dataset_ref_data')
   let bet_list = []
   // 获取投注项 盘口信息
   if(BetData.is_bet_single){
@@ -509,11 +509,11 @@ const set_ref_data = (item) => {
   }
 
   // 赔率
-  ref_pre_book.appoint_odds_value = market_info.oddFinally
+  ref_pre_book.appoint_odds_value = compute_value_by_cur_odd_type(market_info.odds,market_info.playId,market_info.odds_hsw,market_info.sportId) 
   // 最小赔率是它本身
-  ref_pre_book.min_odds_value = market_info.oddFinally
+  ref_pre_book.min_odds_value = compute_value_by_cur_odd_type(market_info.odds,market_info.playId,market_info.odds_hsw,market_info.sportId) 
   // 球头 显示
-  ref_pre_book.appoint_ball_value = market_info.handicap_hv || market_info.marketValue
+  ref_pre_book.appoint_ball_value = market_info.handicap_hv 
   // 球头 计算
   ref_pre_book.appoint_ball_head = init_ball_head
   // 获取及时比分 格式: (主队比分-客队比分)

@@ -47,8 +47,8 @@
               <!-- <span class="badge"></span> -->
               <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/menu/top-menu/top_avatar.png`" alt="" />
             </span>
-            <span class="info_amount" v-if="UserCtr.show_balance">{{ format_money2(amount) }}</span>
-            <span class="info_amount" v-else>{{ format_money2(amount).replace(/[\d.,]/g, '*') }}</span>
+            <span class="info_amount" v-if="UserCtr.show_balance">{{ format_balance(amount) }}</span>
+            <span class="info_amount" v-else>{{ format_balance(amount).replace(/[\d.,]/g, '*') }}</span>
           </div>
         </template>
     </div>
@@ -65,7 +65,7 @@
 
 import { ref, reactive, computed, onMounted, onUnmounted, watch } from 'vue'
 import { useRouter, useRoute } from "vue-router";
-import { format_money2,UserCtr } from "src/output/index.js";
+import { format_balance,UserCtr } from "src/output/index.js";
 import vrTop from "./components/vr-top/vr-top.vue";
 import leftMenu from "./components/left-menu/left-menu.vue";
 import detailTopInfo from "./detail-top/detail-top.vue";

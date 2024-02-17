@@ -1,0 +1,276 @@
+.search-header {
+  //background: var(--q-gb-bg-c-4);
+    // color: var(--q-gb-t-c-18);
+    .wrap-select {
+      .label {
+        // color: var(--q-gb-t-c-18);
+      }
+      .e-select {
+        .select-value {
+          color: var(--q-gb-t-c-18);
+        //   background-color: var(--qq--yb-bg-color5);
+          border: 1px solid var(--q-match-result-boreder-1);
+          border-radius: 2px;
+          &:hover {
+            border: 1px solid var(--q-gb-bd-c-13);
+            .q-icon {
+              color: var(--q-gb-t-c-18);
+            }
+          }
+        }
+        .opitons-wrap {
+          border-color: var(--q-gb-bd-c-11);
+          background: var(--q-gb-bg-c-11);
+          .rule-scroll-area {
+            .item {
+              color: var(--q-match-result-text-color-4);
+              border-color: var(--q-gb-bd-c-11);
+              &:hover {
+                background: var(--q-match-result-bg-color-1);
+                
+              }
+            }
+            .active {
+              background: var(--q-match-result-bg-color-1);
+            }
+          }
+        }
+      }
+    }
+    .wrap-handel {
+      // 联赛选择框
+      .y-select {
+        .y-field-control {
+          color: var(--q-gb-t-c-18);
+          border: 1px solid var(--q-match-result-boreder-1);
+        //   background-color: var(--qq--yb-bg-color5);
+          &:hover {
+            border: 1px solid var(--q-gb-bd-c-11);
+            color: var(--q-match-result-text-color-5);
+            .q-icon {
+              color: var(--q-gb-t-c-18) !important;
+            }
+          }
+        }
+        .select-content {
+          background: var(--q-gb-bg-c-11);
+          color: var(--q-gb-t-c-5);
+          .top-btn {
+            color: var(--q-gb-t-c-5);
+            border-color: var(--q-match-result-boreder-1);
+            border-bottom: 1 solid var(--q-match-result-boreder-1);
+            position: relative;
+            .checkbox span {
+                color: var(--q-gb-t-c-5);
+            }
+            &:after {
+              content: '';
+              display: inline-block;
+              width: 100%;
+              height: 1px;
+              background: var(--q-match-result-bg-color-1);
+              position: absolute;
+              bottom: 0;
+              left: 0;
+            }
+            .btn-item  {
+              .radio-checked {
+                // background-image: none;
+                //border: var(--q-match-result-boreder-2);
+                border: 1px solid #383C44;;
+                border-radius: 50%;
+              }
+            }
+          }
+          .y-checkbox {
+            // background-image: none;
+            -border: var(--q-match-result-boreder-2);
+            border-radius: 2px;
+          }
+          .q-scrollarea {
+            -border-left: var(--q-match-result-boreder-2);
+            -border-right: var(--q-match-result-boreder-2);
+          }
+          .wrap-item {
+            // border: none;
+            &:hover {
+              background: rgba(86,159,253, 0.3);
+            }
+            .select-item {
+              color: var(--q-match-result-text-color-1);
+            }
+          }
+          .btn-confrim {
+            border: 1px solid var(--q-match-result-boreder-1);
+            border-top: 1px solid var( --q-match-result-boreder-1-confrim);
+            background: var(--q-gb-bg-c-11);
+            color: var(--q-gb-t-c-4);
+            .cancel {
+              border-color: var(--q-match-result-boreder-3);
+            }
+          }
+        }
+      }
+      // 赛事搜索框
+      .search {
+        .ipt {
+          // border-color: var(--q-match-result-boreder-1) !important;
+          border-color:#d0d8de;
+          // background-color: var(--q-gb-bg-c-11) !important;
+          &:hover,
+          &:focus {
+            // border-color: var(--q-gb-bd-c-13) !important;
+            // border-color:#ff7000;
+            border-color:var(--q-gb-bd-c-1);
+          }
+        }
+      }
+      // 滚球
+      .checkbox {
+        span {
+          color: #999;
+        }
+        .check-wrap {
+          // background:var(--q-gb-bg-c-1) ; // var(--qq--bg-check-wrap)
+          border: 1px solid  #d1d5d8  !important; //var(--qq--bd-check-wrap)
+          &:hover {
+            // border-color: var(--q-gb-bd-c-13) !important;
+            // border-color:#ff7000;
+          }
+          &.active {
+            // background-color: var(--q-gb-bg-c-11);
+            background-color:#179CFF;
+            border: none;
+            &:before {
+              // border-color: #ff7000;
+              border-color: #fff;
+            }
+          }
+        }
+      }
+      // 搜索按钮
+      // .search-btn {
+      //   background: var(--q-gb-bg-lg-12);
+      //   color: var(--q-gb-t-c-18);
+      //   &:hover {
+      //     background: var(--q-gb-bg-c-18);
+      //   }
+      // }
+    }
+    // 日期选择框
+    .search-date-wrapper {
+      .date-picker-wrap {
+        .q-date {
+          background: var(--q-gb-bg-c-11);
+        //   color: var(--qq--yb-text-color2);
+          border: 1px solid var(--q-gb-bd-c-11);
+          .q-btn--unelevated {
+            background: var(--q-gb-bg-c-18) !important;
+          }
+          .q-date__range-from,
+          .q-date__range,
+          .q-date__range-to {
+            &::before {
+              background-color: var(--q-gb-bg-c-18);
+              opacity: 0.15;
+            }
+            .q-date__range {
+              button.text-white {
+                color: var(--q-gb-t-c-1) !important;
+              }
+            }
+          }
+          .q-date__edit-range-from,
+          .q-date__edit-range-to,
+          .q-date__edit-range,
+          .q-date__edit-range-from-to {
+            color: var(--q-gb-t-c-18) !important;
+            button {
+              color: var(--q-gb-t-c-18) !important;
+            }
+          }
+          .q-date__edit-range,
+          .q-date__edit-range-to {
+            button.text-white {
+              color: var(--q-match-result-text-color-1) !important;
+            }
+          }
+        }
+        .q-date__calendar-days {
+          color: #fff;
+        }
+      }
+      .date-wrap {
+        border: 1px solid var(--q-match-result-boreder-1); 
+        // &:hover {
+        //   border: 1px solid var(--q-gb-bd-c-11);
+        //   color: var(--q-gb-t-c-18);
+        //   .icon-calendar {
+        //     &:before {
+        //       color: var(--q-gb-t-c-18)
+        //     }
+        //   }
+        // }
+        .icon-calendar {
+          &:before {
+            //color: var(--q-gb-t-c-18);
+            color:#c1c1c1
+          }
+        }
+      }
+    }
+      /* ************** 备注说明 *************** -S */
+  // .match-resultstips-wrap {
+  //   min-width: 122px;
+  // }
+
+  .match-resultstips-icon {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 14px;
+
+    & > span {
+      display: block;
+      width: 16px;
+      height: 16px;
+      //background-image: var(--qq--results-bg-image-url45);//todo `url(${preffix}/image/yabo/theme01/img/svg/result_info.svg)`,
+      background-image: url($SCSSPROJECTPATH+"/image/png/secondary_tips.png");
+      //&:hover {
+       // background-image: var(--qq--results-bg-image-url45-hover);//todo `url(${preffix}/image/yabo/theme01/img/svg/result_info_hover.svg)`,
+      //}
+    }
+
+    .results-tips {
+      position: absolute;
+      // width: 100vw;
+      text-align: right;
+      top: -38px;
+      left: -100px;
+
+      div {
+        background: #666666;
+        border-radius: 6px;
+        white-space: nowrap;
+        color: var(--q-gb-t-c-1);
+        padding: 4px 6px;
+        transition: all 0.3s linear;
+      }
+    }
+
+    .match-resultstip-box {
+      position: relative;
+    }
+
+    .results-arrow {
+      position: absolute;
+      bottom: 16px;
+      left: 2px;
+      width: 14px;
+      height: 14px;
+      border: 7px solid transparent;
+      z-index: 100;
+      transform: rotate(180deg);
+      border-bottom: 7px solid #666666;
+    }
+  }
+  }

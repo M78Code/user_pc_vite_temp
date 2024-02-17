@@ -198,11 +198,12 @@
               </div>
               <!-- 联赛 -->
               <div class="table-col">
-                <img v-img="[lodash.get(item,'iconUrl')]" class="playback-logo" alt="" v-if="item.playBack">
+                <!-- <img v-img="[lodash.get(item,'iconUrl')]" class="playback-logo" alt="" v-if="item.playBack"> -->
                 <!-- 如果返回精彩回放就显示这个icon -->
-                <div class="playback-logo" v-if="item.playBack&&show_play_back"></div>
+                <!-- <div class="playback-logo" v-if="item.playBack&&show_play_back"></div> -->
                 <img v-img="[lodash.get(item, 'iconUrl')]" class="tournament-logo" alt=""/>
                 <span class="ellipsis-line-2">{{ item.tournamentName }}</span>
+                <span v-if="item.playBack && show_play_back" class="wonderful-replay-icon-box"></span>
               </div>
               <!-- 赛事 -->
               <div class="table-col">
@@ -538,16 +539,16 @@ import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
 import { IconWapper } from 'src/components/icon'
 import { format_second_ms } from "src/output/index.js";
 // import Tabs from "../components/playback_tabs.vue";
-// import SliderX from "../components/playback_slider.vue";
-// import no_data from "src/components/no_data/no_data";
+import SliderX from "../select/components/playback_slider.vue";
+import no_data from "src/components/no_data/no_data";
 export default {
   mixins: [results],
   components: {
     loadData,
     IconWapper,
     // Tabs,
-    // SliderX,
-    // "no-data": no_data
+    SliderX,
+    "no-data": no_data
   },
   computed:{
     show_play_back(){
@@ -794,4 +795,21 @@ export default {
 }
 
 /* ************** 赛果详情 *************** -E */
+
+
+.wonderful-replay-icon-box{
+  width: 18px;
+  height: 18px;
+  margin: 0px 4px;
+  display: block;
+  flex-shrink: 0;
+  img{
+    width: 16px;
+    height: 16px;
+  }
+  background: var(--qq--match-results-wonderful-replay-icon);
+  background-size: 90% 90%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
 </style>
