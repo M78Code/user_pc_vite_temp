@@ -123,17 +123,16 @@ function match_list_all_params() {
     // 当前 pid 和 orpt
     let lv2_mi_info = BaseData.mi_info_map[`mi_${menu_current_mi}`] || {};
     delete lv2_mi_info.h5_euid
-    
     if (MenuData.is_esports() || is_scroll_ball_esports) {
         // 电子竞技
         lv2_mi_info = {
-            "category": 1,
+            "category": md==100?2:1,
             "csid": filter_tab && !is_collect ? (filter_tab - 2000) :is_collect?current_ball_type: csid,
             "collect": 1,
             "selectionHour": null,
             "tid": "",
             "isLive":is_scroll_ball_esports?1:"",
-            md,
+            md:md==100?"":md,
         }
     } else if (MenuData.is_kemp()||MenuData.is_common_kemp()) {
         // 冠军
