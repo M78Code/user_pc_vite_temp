@@ -434,6 +434,8 @@ export default defineComponent({
      * @description 全部联赛折叠
      */
     handle_all_ball_seed_fold () {
+      // 重置赛事位置
+      useMittEmit(MITT_TYPES.EMIT_RESET_POSITION)
       MatchFold.handler_fold_all_matchs_csid()
       // app-h5 简版 先试运行看效果
       if (project_name === 'app-h5') return MatchMeta.compute_current_matchs()
@@ -444,8 +446,10 @@ export default defineComponent({
      * @description 球种折叠
      */
     handle_ball_seed_fold () {
-      const { csid, is_virtual = false, start_flag = '', warehouse_type = '' } = this.match_of_list 
+      const { csid = '', is_virtual = false, start_flag = '', warehouse_type = '' } = this.match_of_list 
       const is_fold_all = MenuData.is_collect() && project_name === 'app-h5'
+      // 重置赛事位置
+      useMittEmit(MITT_TYPES.EMIT_RESET_POSITION)
       MatchFold.set_ball_seed_match_fold(this.match_of_list, start_flag, is_fold_all)
       // 不需要虚拟计算，欧洲版五大联赛
       if (is_virtual || ['five_league'].includes(warehouse_type)) return
