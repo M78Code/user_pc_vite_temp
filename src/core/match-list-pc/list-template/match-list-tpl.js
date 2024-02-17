@@ -85,12 +85,14 @@ function get_match_template_id({ csid }) {
         "yazhou-pc": 0,
         "new-pc": 0,
     }
+    //是否冠军
+    const is_kemp = MenuData.is_kemp() || MenuData.is_common_kemp() || MenuData.is_collect_kemp()|| MenuData.is_esports_champion();
     let tpl_id;
     //搜索13列玩法
     if (LayOutMain_pc.is_unfold_multi_column&&MenuData.is_multi_column) {
         return 13
     }
-    if (MenuData.is_kemp() || MenuData.is_common_kemp() || MenuData.is_collect_kemp()) {
+    if (is_kemp) {
         tpl_id = 18
     } else {
         tpl_id = get_match_tpl_number()
@@ -101,7 +103,7 @@ function get_match_template_id({ csid }) {
     tpl_id = Number(tpl_id) + Number(different_version_config[project_name])
     if ('ouzhou-pc' == project_name) {
         // 欧洲版冠军
-        if (MenuData.is_kemp() || MenuData.is_common_kemp() || MenuData.is_collect_kemp()) {
+        if (is_kemp) {
             return tpl_id
         }
         return get_ouzhou_data_tpl_id(csid)
