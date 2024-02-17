@@ -212,6 +212,11 @@ const esportsClick = ()=>{
   if (['league','details','search','virtual_sports_details'].includes(route.name)) {
     router.push('/home')
   }
+
+  BetData.is_bet_merge = false
+  BetData.set_clear_bet_info()
+  // BetData.set_is_bet_merge('no')
+
   let obj = {
     lv1_mi : 2000,
     has_mid_menu: true, // 有中间菜单
@@ -231,9 +236,8 @@ const esportsClick = ()=>{
     filter_tab: 2100
   }
   MenuData.set_mid_menu_result(mid_config)
-
-  BetData.set_clear_bet_info()
-  BetData.set_is_bet_merge('no_merge')
+  // BetData.set_clear_bet_info()
+  // BetData.set_is_bet_merge('no')
 
   nextTick(()=>{
     useMittEmit(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE, 2100)
@@ -247,6 +251,10 @@ const esportsClick = ()=>{
   if (['league','details','search','virtual_sports_details'].includes(route.name)) {
     router.push('/home')
   }
+
+  BetData.is_bet_merge = false
+  BetData.set_clear_bet_info()
+
   let obj = {
     lv1_mi : 300,
     has_mid_menu: true, // 有中间菜单
@@ -265,11 +273,8 @@ const esportsClick = ()=>{
     md: '',
     filter_tab: 31001
   }
+  
   MenuData.set_mid_menu_result(mid_config)
-
-  BetData.set_clear_bet_info()
-  BetData.set_is_bet_merge('no_merge')
-
   nextTick(()=>{
     useMittEmit(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE, 31001)
   })
