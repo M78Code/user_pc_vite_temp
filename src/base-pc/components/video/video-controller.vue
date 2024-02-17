@@ -119,7 +119,7 @@ const send_video_type_click = (type) => {
     position: absolute;
     bottom: 0;
     left: 0;
-    z-index: 9;
+    // z-index: 9;
     justify-content: space-between;
     .refresh {
         margin-left: 20px;
