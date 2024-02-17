@@ -12,7 +12,7 @@
     <div class="text-confirm" v-if="is_show">
       <div class="confirm-box">
         <!-- <img :src="compute_local_project_file_path('/image/svg/warn.svg')" alt="" /> -->
-        <div class="title">{{i18n_t('bet.bet_merge')}}</div>
+        <div class="title">{{i18n_t('bet.bet_auto_msg_1')}}</div>
         <div class="content" v-html="text">
         </div>
         <div class="btn" @click="is_show = false">{{i18n_t('bet.understand')}}</div>

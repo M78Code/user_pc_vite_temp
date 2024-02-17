@@ -6,18 +6,19 @@
       <!--此处为盘口区域，-->
       <div class="input-number">
         <!-- 盘口减- -->
-        <div class="sub-number" :class="{ 'disabled': head_sub_style }"
-        v-touch-repeat:0:300.mouse.enter.space="() => {
+        <div class="sub-number disabled" v-if="ref_pre_book.appoint_ball_head <= check_ball_min(item)">-</div>
+        <div class="sub-number " v-else v-touch-repeat:0:300.mouse.enter.space="() => {
           sub_handle(item)
           }">-</div>
-        <input class="pre-input" v-model="ref_pre_book.appoint_ball_value" v-if="item.sportId == 1"   @mousedown.stop="">
+        <input class="pre-input" v-model="ref_pre_book.appoint_ball_value" @blur="appoint_odds_head_handle" v-if="item.sportId == 1"   @mousedown.stop="">
         <input class="pre-input" ref="ball-head-input" v-model="ref_pre_book.appoint_ball_value"  @mousedown.stop=""
           @blur="appoint_odds_head_handle" v-if="item.sportId == 2">
         <!-- 盘口加+-->
-        <div class="add-number" :class="{ 'disabled': head_add_style }"
-        v-touch-repeat:0:300.mouse.enter.space="() => {
-          add_handle(item)
-          }">+</div>
+        <div class="add-number disabled" v-if="ref_pre_book.appoint_ball_head >= check_ball_max(item)">+</div>
+        <div class="add-number" v-else v-touch-repeat:0:300.mouse.enter.space="() => {
+            add_handle(item)
+            }">+</div>
+
       </div>
     </div>
     <div class="row yb-flex-center book-content">
@@ -49,7 +50,8 @@
 </template>
 
 <script setup>
-import { btn_reduce, btn_add, ref_pre_book,add_handle,sub_handle,set_ref_data } from "src/core/bet/common/appoint-data.js"
+import { btn_reduce, btn_add, ref_pre_book,add_handle,sub_handle,computed_keyboard_odds } from "src/core/bet/common/appoint-data.js"
+import { BASKETBALL_BY_APPOINTMENT_let,MARKET_RANG_FLAG_LIST,BASKETBALL_BY_APPOINTMENT_total } from "src/output/index.js";
 import { IconWapper } from 'src/components/icon'
 
 const emit = defineEmits(["cancel_operate"]);
@@ -66,6 +68,57 @@ const props = defineProps({
 const cancel_operate = () => {
   emit("cancel_operate");
 }
+
+const check_ball_max = (_item) =>{
+  if( _item.sportId == 1){
+    if(MARKET_RANG_FLAG_LIST.includes(_item.playId)){
+      return 10
+    }else{
+      return 30
+    }
+  }else{
+    if(BASKETBALL_BY_APPOINTMENT_let.includes(_item.playId)){
+      return 99.5
+    }
+    if(BASKETBALL_BY_APPOINTMENT_total.includes(_item.playId)){
+      return 400.5
+    }
+  }
+}
+
+
+const check_ball_min = (_item) =>{
+    if( _item.sportId == 1){
+      if(MARKET_RANG_FLAG_LIST.includes(_item.playId)){
+        return -10
+      }else{
+        if(_item.playOptions == 1){
+          return _item.score_home*1 + 0.5
+        }else{
+          return _item.score_away*1 + 0.5
+        }
+      }
+    }else{
+      if(BASKETBALL_BY_APPOINTMENT_let.includes(_item.playId)){
+        return -99.5
+      }
+      if(BASKETBALL_BY_APPOINTMENT_total.includes(_item.playId)){
+        return 50.5
+      }
+    }
+  }
+const pre_input_handle = ()=>{
+  computed_keyboard_odds(ref_pre_book.appoint_odds_value)
+}
+
+const appoint_odds_head_handle = ()=>{
+  ref_pre_book.appoint_ball_value = check_ball_max(props.item)
+  ref_pre_book.appoint_ball_head = ref_pre_book.appoint_ball_value 
+  
+}
+
+
+
 
 
 </script>

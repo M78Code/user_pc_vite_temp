@@ -4,7 +4,7 @@ import { fileds_map_common } from "src/output/module/constant-utils.js";
 import { useMittEmit, MITT_TYPES  } from "src/core/mitt/index.js"
 import LayOutMain_pc from "src/core/layout/index.js";
 import BetViewDataClass from "./bet-view-data-class.js"
-import { get_score_config,get_query_bet_amount_esports_or_vr,get_query_bet_amount_common,get_lastest_market_info,set_market_id_to_ws } from "./bet-box-submit.js"
+import { get_score_config,get_score,get_query_bet_amount_esports_or_vr,get_query_bet_amount_common,get_lastest_market_info,set_market_id_to_ws } from "./bet-box-submit.js"
 import { compute_value_by_cur_odd_type } from "src/core/format/project/module/format-odds-conversion-mixin.js"
 import { getSeriesCountJointNumber } from "src/core/bet/common-helper/module/bet-single-config.js"
 import { nextTick, ref } from "vue"
@@ -1630,11 +1630,13 @@ this.bet_appoint_ball_head= null */
 
     // 判断赛事级别盘口状态 中是否包含 投注项中的赛事
     if(mid_list.includes(mid)){
+      console.log(mid)
       array_list.filter(item => {
         // 在赛事盘口状态下的 投注项 设置 对应的赛事级别 用于 更新比分
         if(item.matchId == mid){
           // 更新 基准分
           item.mark_score = get_score_config(item)
+          item.score_home_away = get_score(item,'home')+':'+get_score(item,'away')
         }
       })
       this[single_name] = array_list
@@ -1760,7 +1762,8 @@ this.bet_appoint_ball_head= null */
     if(scid_list.includes(csid)){
       if(mid_list.includes(mid)){
         if(hpid_list.includes(hpid)){
-          get_lastest_market_info()
+          // 303 推送不会推送105 106
+          get_lastest_market_info('set_bet')
         }
       }
     }
