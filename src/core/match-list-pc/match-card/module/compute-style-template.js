@@ -441,5 +441,22 @@ export const compute_style_template_by_matchinfo = (match) => {
 			}
 		}
 	}
+	else if(UserCtr.standard_edition==1){
+// // 设置卡片总高度 等于主盘口高度 + 当前局盘扣高度 + 附加盘高度 + 角球区域高度 + 赛事间距和边框20px + 与下一个卡片的间距
+//     // 假如为专业版则高度不变，为新手版高度统一为80  + 6 间隙,冠军赛事高度没变化
+//     if (template_id == 18) {
+		// if (template_id == 18) {
+// 		  style_obj.total_height = style_obj.main_handicap_height + style_obj.cur_handicap_height + style_obj.add_handicap_height + style_obj.tab_play_total_height + 4
+		// } 
+// else {
+// 		  style_obj.total_height = style_obj.main_handicap_height + style_obj.cur_handicap_height + style_obj.add_handicap_height + style_obj.tab_play_total_height + style_obj.play_title_height + 1
+// 		}
+		// else if (template_id == 'esports') {
+		//   style_obj.total_height += style_obj.main_play_competition_height + 8
+		// }
+// 	  } else {
+		style_obj.total_height = 80 + 6
+	  }
+// 	}
 	return style_obj;
 };
