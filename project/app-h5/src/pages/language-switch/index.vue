@@ -163,7 +163,7 @@ const setting_language_handle = (key) => {
 .lang-icon {
   width: 0.21rem;
   height: 0.15rem;
-  --per: -0.226rem;
+  --per: -0.222rem;
   // transform: translateY(-1px);
   background-image: url($SCSSPROJECTPATH + "/image/png/h5_lang_icon.png");
 }

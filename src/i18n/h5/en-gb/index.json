@@ -694,7 +694,10 @@
     "bet_book_failed": "Book failed",
     "bet_booking": "Booking",
     "bet_process": "Processing",
-    "bet_book_valid": "Expired"
+    "bet_book_valid": "Expired",
+    "combine_bets_msg1": "When betting, if the odds increase, the system will default to your acceptance of the odds, will not interrupt your betting behavior, improve the success rate of betting.",
+    "combine_bets_msg2": "When betting, if the odds are reduced, the system will default that you do not accept the odds, and interrupt your betting behavior, you need to confirm the odds and bet again.",
+    "combine_bets_msg3": "If this feature is not checked, the system will consider you 'automatically accept any odds'. That is, no matter how the odds change at the time of betting, the system will default to your acceptance and will not interrupt your betting behavior"
   },
   "bet_message":{
     "success": "Successful Betting",

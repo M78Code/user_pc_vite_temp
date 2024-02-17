@@ -52,6 +52,10 @@ const set_bet_single_change = () => {
   if(MenuData.is_kemp() || MenuData.get_mm_is_champion()){
     return
   }
+  // 有O01赛事 则不能切换串关
+  if(lodash.get(BetData.bet_single_list,'[0].is_serial') && lodash.get(BetData.bet_single_list,'[0].dataSource') == 'O01') {
+    return
+  }
   BetData.set_is_bet_single()
 
   // 判断获取限额接口类型

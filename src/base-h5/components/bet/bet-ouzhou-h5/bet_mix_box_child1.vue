@@ -7,6 +7,7 @@
   <div v-show="false">{{ BetData.bet_data_class_version }}-{{items.red_green}}-{{UserCtr.user_version}} </div>
   <div v-show="(BetData.is_bet_pre && BetData.bet_pre_appoint_id != items.playOptionsId )" class="cathectic-appoint"></div>  
   <div class="bet-mix-show">
+    <!-- {{ items.playOptionsId }}--- -->
       <div class="nonebox4-content">
           <div class="nonebox4-content-left">
               <div class="nonebox4-content-left-content">
@@ -60,14 +61,15 @@
                       <div class="nonebox4-content-left-content-text-three" v-if="items.home">{{items.home}} v {{items.away}} {{items.matchType == 2? items.mark_score : ''}}</div>
 
                       <div v-if="ref_data.show_appoint" class="bet-odds">
-                        <div class="bet-appoint-box" v-if="items.marketValue">
+                        <div class="bet-appoint-box" v-if="items.handicap_hv">
                           <!-- 盘口 -->
                           <div class="bet-odds-name">{{i18n_t('pre_record.handicap')}}</div>
                           <div class="bet-odds-edit">
-                            <span class="bet-odds-reduce" :class="{begray:ref_pre_book.appoint_ball_value <= -10}" v-touch-repeat:0:300.mouse.enter.space="() => {sub_handle(items)}">-</span>
+                            <span class="bet-odds-reduce" :class="{begray:ref_pre_book.appoint_ball_head <= check_ball_min(items) }" v-touch-repeat:0:300.mouse.enter.space="() => {sub_handle(items)}">-</span>
                             <bet-input-info3 :items="items" :readonly="items.sportId == 1" :valueModel="ref_pre_book.appoint_ball_value" :index="'pre_handicap' + index"></bet-input-info3>
-                            <span class="bet-odds-add" :class="{begray:ref_pre_book.appoint_ball_value >= check_ball_maxmin(items)}" v-touch-repeat:0:300.mouse.enter.space="() => {add_handle(items)}">+</span> 
+                            <span class="bet-odds-add" :class="{begray:ref_pre_book.appoint_ball_head >= check_ball_max(items)}" v-touch-repeat:0:300.mouse.enter.space="() => {add_handle(items)}">+</span> 
                           </div>
+                          <!-- {{ ref_pre_book.appoint_ball_head }}-{{ check_ball_max(items) }}-{{ check_ball_min(items) }} -->
                         </div>                    
                         <div class="bet-appoint-box">
                           <!-- 赔率 -->
@@ -96,7 +98,7 @@
   <script setup>
   import BetData from "src/core/bet/class/bet-data-class.js";
   import { btn_reduce, btn_add, ref_pre_book,add_handle,sub_handle,set_ref_data } from "src/core/bet/common/appoint-data.js"
-  import { LOCAL_PROJECT_FILE_PREFIX,i18n_t ,MARKET_RANG_FLAG_LIST,UserCtr,compute_value_by_cur_odd_type,MITT_TYPES,useMittOn } from "src/output/index.js";
+  import { LOCAL_PROJECT_FILE_PREFIX,i18n_t ,BASKETBALL_BY_APPOINTMENT_let,MARKET_RANG_FLAG_LIST,BASKETBALL_BY_APPOINTMENT_total,UserCtr,compute_value_by_cur_odd_type,MITT_TYPES,useMittOn } from "src/output/index.js";
   import { get_query_bet_amount_pre } from "src/core/bet/class/bet-box-submit.js"
   import betInputInfo3 from "./bet_input_info3.vue";
   import { reactive, watch, onMounted, onUnmounted} from "vue";
@@ -123,13 +125,44 @@
   }
 
   //
-  const check_ball_maxmin = (_item) =>{
-    if(MARKET_RANG_FLAG_LIST.includes(_item.playId)){
-      return 10
+  const check_ball_min = (_item) =>{
+    if( _item.sportId == 1){
+      if(MARKET_RANG_FLAG_LIST.includes(_item.playId)){
+        return -10
+      }else{
+        if(_item.playOptions == 1){
+          return _item.score_home*1 + 0.5
+        }else{
+          return _item.score_away*1 + 0.5
+        }
+      }
     }else{
-      return 30
+      if(BASKETBALL_BY_APPOINTMENT_let.includes(_item.playId)){
+        return -99.5
+      }
+      if(BASKETBALL_BY_APPOINTMENT_total.includes(_item.playId)){
+        return 50.5
+      }
     }
   }
+
+  const check_ball_max = (_item) =>{
+    if( _item.sportId == 1){
+      if(MARKET_RANG_FLAG_LIST.includes(_item.playId)){
+        return 10
+      }else{
+        return 30
+      }
+    }else{
+      if(BASKETBALL_BY_APPOINTMENT_let.includes(_item.playId)){
+        return 99.5
+      }
+      if(BASKETBALL_BY_APPOINTMENT_total.includes(_item.playId)){
+        return 400.5
+      }
+    }
+  }
+
   const scrollAreaPo_ = () => {
   
   }

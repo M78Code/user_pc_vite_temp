@@ -14,7 +14,7 @@
                     <div class="nonebox4-content-left-content-xian" v-if="BetViewDataClass.bet_order_status == 2">
                       <img class="icon_loading" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/gif/icon_loading.gif`" alt="" />
                     </div>
-                    <div class="nonebox4-content-left-content-xian" v-if="BetViewDataClass.bet_order_status == 3">
+                    <div class="nonebox4-content-left-content-xian" v-if="BetViewDataClass.bet_order_status == 7">
                       <span class="icon-success"></span>
                     </div>
                     <div class="nonebox4-content-left-content-xian" v-if="BetViewDataClass.bet_order_status == 4">
@@ -23,10 +23,13 @@
                   </div>
                   <div class="nonebox4-content-left-info">
                     <div class="nonebox4-content-left-content-text">
-                      <div class="nonebox4-content-left-content-text-one">{{item.playOptionName}} <span class="text-one-span">【{{ i18n_t(`odds.${item.marketType}`) }}】</span></div>
+                      <div class="nonebox4-content-left-content-text-one">{{item.playOptionName}}
+                         <!-- <span class="text-one-span">【{{ i18n_t(`odds.${item.marketType}`) }}】</span> -->
+                      </div>
                       <div class="nonebox4-content-left-content-text-two">
                         <span class="nonebox4-content-left-content-text-three">{{item.sportName}}:</span>
-                         [{{ i18n_t('bet.bet_book_confirm') }}]
+                        <span v-show="item.matchType==2"> [{{ i18n_t('bet.bet_inplay') }}]</span>
+                        
                          <span class="text-two-span">{{item.playName}} 
                           <span class="nonebox4-content-left-content-text-two">[{{ i18n_t(`odds.${item.marketType}`) }}]</span>
                           <span v-if="[4,19,143,113].includes(item.playId*1)">{{item.matchType == 2? item.mark_score : ''}}</span>
@@ -63,14 +66,10 @@
   </template>
   <script setup>
   
-    import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
-    import { compute_value_by_cur_odd_type,LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
-    import { i18n_t, format_currency } from "src/output/index.js"
-    import { onMounted, onUpdated } from "vue"
-    onMounted(()=>{
-      // BetViewDataClass.set_bet_order_status()
-      // console.log(1111111111111111,BetViewDataClass.orderNo_bet_obj)
-    })
+  import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
+  import { compute_value_by_cur_odd_type,LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
+  import { i18n_t, format_currency } from "src/output/index.js"
+  import { onMounted, onUpdated } from "vue"
 
   const props = defineProps({
     items:{}

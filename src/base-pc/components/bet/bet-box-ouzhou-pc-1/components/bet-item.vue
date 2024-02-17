@@ -28,7 +28,9 @@
                 </div>
                 <div class="w-100 fon12 font400 text-8a8">{{ items.tid_name }}</div>
                 <div class="w-100 fon12 font400 text-8a8" v-if="items.home">{{ items.home }} <span class="mx-4">v</span> {{ items.away }} {{ items.matchType == 2? items.mark_score : ''}}
+                    <span class="mx-4" v-show="items.bet_type != 'vr_bet'">({{ items.score_home_away }})</span>
                 </div>
+            
             </div>
             <div class="fw-c-e-e bet-right" v-if="[1,4].includes(items.ol_os*1) && [0,11].includes(items.hl_hs*1) && [0,11].includes(items.mid_mhs*1)">
                 <div class="f-c-c bet-money">
@@ -87,7 +89,7 @@
 
 <script setup>
 
-import { reactive, computed } from "vue"
+import { reactive, computed, watch } from "vue"
 import {LOCAL_PROJECT_FILE_PREFIX,compute_value_by_cur_odd_type,UserCtr } from "src/output/index.js"
 import BetData from 'src/core/bet/class/bet-data-class.js'
 import BetViewDataClass from 'src/core/bet/class/bet-view-data-class.js'
@@ -131,8 +133,9 @@ const set_show_appoint = () =>{
 
 }
 
+
 const cancel_operate = () =>{
-  ref_data.show_appoint = !ref_data.show_appoint
+  ref_data.show_appoint = false
   BetData.set_is_bet_pre(false)
 }
 
@@ -144,6 +147,11 @@ const is_bet_appoint_disable = computed(() => state => {
     if(!BetData.is_bet_pre) {
         return true
     }
+})
+
+
+watch(()=>UserCtr.odds.cur_odds,()=>{
+    cancel_operate()
 })
 
 </script>

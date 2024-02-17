@@ -301,7 +301,7 @@ const set_order_status_info = (orderNo) => {
                 UserCtr.get_balance()
                 set_error_message_config({code:200,message:''},'bet',3)
                 // 1-投注状态,2-投注中状态,3-投注成功状态(主要控制完成按钮),4-投注失败状态,5-投注项失效
-                BetViewDataClass.set_bet_order_status(3)
+                BetViewDataClass.set_bet_order_status(3);
             }
         }
     }).catch(()=>{
@@ -401,8 +401,8 @@ const get_lastest_market_info = (type) => {
                             bet_item.hl_hs = market.status
 
                             // ws断连后 需要对比数据 进行投注
-                            
-                            if( type == 'submit_bet' ){
+                            // submit_bet 用于投注  set_bet 用于数据更新
+                            if( ['submit_bet','set_bet'].includes(type) ){
                                 // 坑位变更 赔率也变 进行锁盘处理
                                 // 盘口状态，玩法级别 0：开 1：封 2：关 11：锁
                                 if( ( bet_item.odds != odds.oddsValue ) || ( bet_item.ot != odds.oddsType ) ){
@@ -415,7 +415,7 @@ const get_lastest_market_info = (type) => {
                                 }else{
                                     BetData.set_bet_is_accept(false)
                                 }
-                                console.error('sssssss',BetData.bet_is_accept)
+                                // console.error('sssssss',BetData.bet_is_accept)
                                 // 投注项id
                                 bet_item.playOptionsId = odds.id
                                 // 盘口id
@@ -430,15 +430,26 @@ const get_lastest_market_info = (type) => {
                                     BetData.set_bet_is_accept(false)
                                 },5000)
                             }
+
+                            if(BetData.is_bet_pre){
                            
-                            // 预约投注编辑中 盘口赔率发生变化
-                            if( BetData.bet_pre_appoint_id == bet_item.playOptionsId ){
-                                BetData.set_bet_appoint_obj_playOptionId(odds.id)
-                                let pre_id = lodash_.get(BetData.bet_pre_obj,'custom_id','')
-                                if(pre_id == bet_item.playOptionsId){
-                                    BetData.bet_pre_obj.custom_id = odds.id
+                                // 哎 303 推送后 不推送 105 106 导致预约中的数据不会更新 一种植物
+                                // 获取当前预约中的投注项id 在 投注项中的数据
+                                let pre_obj = bet_list.find(item => item.playOptionsId == BetData.bet_pre_appoint_id) || {}
+
+                                // 预约投注编辑中 盘口赔率发生变化
+                                // 接上面的 哎 ws那边没有进行数据赋值替换 这里需要用或 
+                                if( BetData.bet_pre_appoint_id == bet_item.playOptionsId || (BetData.bet_pre_appoint_id == pre_obj.playOptionsId && BetData.bet_pre_appoint_id ) ){
+                                    BetData.set_bet_appoint_obj_playOptionId(odds.id)
+                                    let pre_id = lodash_.get(BetData.bet_pre_obj,'custom_id','')
+                                    if(pre_id == bet_item.playOptionsId){
+                                        BetData.bet_pre_obj.custom_id = odds.id
+                                    }
                                 }
+
+                                set_bet_pre_list(list)
                             }
+
                             // 红绿升降
                             // bet_item.red_green = ''
                             // if(bet_item.odds == odds.oddsValue ){
@@ -1027,7 +1038,7 @@ const set_error_message_config = (res ={},type,order_state) => {
                         message: "bet.bet_booked"
                     }
                     // matchInfo + playName + i18
-                    useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${matchInfo} ${playName} ${i18n_t('bet.bet_booked')}`);
+                    // useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${matchInfo} ${playName} ${i18n_t('bet.bet_booked')}`);
                     break;
                 case 8: 
                     // 预约失败
@@ -1084,7 +1095,7 @@ const set_error_message_config = (res ={},type,order_state) => {
  * @returns 
  */
 const set_bet_obj_config = (params = {}, other = {}) => {
-    // console.error('投注项需要数据', params, 'other', other);
+    console.error('投注项需要数据', params, 'other', other);
     // 切换投注状态
     const { oid, _hid, _hn, _mid } = params
 
@@ -1260,8 +1271,16 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         device_type: BetData.deviceType, // 设备号
         odds_hsw: ol_obj._hsw, // 投注项支持的赔率
         ispo: ol_obj._ispo || 0, // 电竞赛事 不支持串关的赛事
+       
         // oid, _hid, _hn, _mid, // 存起来 获取最新的数据 判断是否已失效
     }
+
+    // 主队进球数
+    bet_obj.score_home = get_score(bet_obj,'home')
+    // 客队进球数
+    bet_obj.score_away = get_score(bet_obj,'away')
+
+    bet_obj.score_home_away = bet_obj.score_home +':'+bet_obj.score_away
 
     // 获取当前的盘口赔率
     let cur_odds = lodash_.get(odds_table,`${UserCtr.odds.cur_odds}`, '1' )
@@ -1527,8 +1546,11 @@ const set_orderNo_bet_obj = order_no_list => {
         // 玩法id
         let playId = lodash_.get( refer_obj, `playId`)
         let matchInfo = lodash_.get( refer_obj, `tid_name`)
+        // 球类
+        let sportName = lodash_.get( refer_obj, `sportName`)
         // 基准分
         let score_benchmark = lodash_.get( item, `scoreBenchmark`, '')
+
         if(score_benchmark){
             score_benchmark = `(${ score_benchmark.replace(':','-') })`
         }
@@ -1541,6 +1563,7 @@ const set_orderNo_bet_obj = order_no_list => {
             match_time,
             playId,
             score_benchmark,
+            sportName,
         }
     })
     BetViewDataClass.set_orderNo_bet_obj(order_list)
@@ -1738,6 +1761,22 @@ const get_score_config = (obj={}) => {
     return calc_bifen(mid_obj.msc,mid_obj.csid,mid_obj.ms,ol_obj._hpid)
 }
 
+// 获取投注项全局比分
+const get_score = (obj,type,mmp = 'S1') => {
+    let query = null;
+    if(obj.device_type == 1){
+        // h5 数据仓库
+        query = h5_match_data_switch(obj.match_ctr)
+    }else{
+        // pc 数据仓库
+        query = pc_match_data_switch(obj.match_ctr)
+    }
+    const mid_obj = lodash_.get(query.list_to_obj, `mid_obj.${obj.matchId}_`, {})
+    // 获取阶段比分 主客队分开 获取 home/away
+    const score = lodash_.get(mid_obj,`msc_obj[${mmp}]`,{}) || {}
+    return score[type]
+}
+
 // 查询当前盘口是否健在
 const get_market_is_show = (obj={}) =>{
     let query = null;
@@ -1796,4 +1835,5 @@ export {
     bet_special_series_change,
     go_to_bet,
     get_lastest_market_info,
+    get_score,
 }

@@ -39,13 +39,28 @@
         <div v-if="current_match.csid">
           <div class="team-title"  v-if="current_match.csid == 1001 || current_match.csid == 1004">
             <div class="info">
+                <div v-if="current_match.match_status == 0" class="time">
+                  <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/countdown.png`" />
+                  {{ match_list_all_batches[0] && match_list_all_batches[0].timer_format }}
+                </div>  
+                <div v-else class="live">
+                  <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/live.png`" />
+                </div> 
             </div>
             <div class="title">
                 {{ lengue_name }} {{ current_match.no }}
             </div>
           </div>
           <div class="team-title horse-title" v-else>
-              <div class="info"></div>
+              <div class="info">
+                <div v-if="current_match.match_status == 0" class="time">
+                  <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/countdown.png`" />
+                  {{ match_list_all_batches[0] && match_list_all_batches[0].timer_format }}
+                </div>  
+                <div v-else class="live">
+                  <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/live.png`" />
+                </div> 
+              </div>
               <div class="title">
                   {{ lengue_name }} {{ current_match.no }}
               </div>
@@ -137,6 +152,7 @@ import result_page from "src/base-pc/vr/pages/result/result-page.vue"
 import virtual_skeleton from "src/base-pc/vr/components/skeleton/virtual-sports/virtual.vue"
 import virtual_sports_right from "src/base-pc/vr/pages/virtual/virtual-sports-part/virtual-sports-right.vue"
 import { IconWapper } from 'src/components/icon'
+import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
 
 export default {
   mixins:[virtual_sports_mixin],
@@ -184,11 +200,11 @@ export default {
   background-color: var(--q-gb-bg-c-27);
 
   .tab-item {
-    height: 0.26rem;
-    line-height: 0.26rem;
-    border-radius: 0.04rem;
-    margin-right: 0.06rem;
-    padding: 0 0.1rem;
+    height: 26px;
+    line-height: 26px;
+    border-radius: 4px;
+    margin-right: 6px;
+    padding: 0 10px;
     flex-shrink: 0;
     color: #777777;
     position: relative;
@@ -327,9 +343,26 @@ export default {
   color: #fff;
   background: linear-gradient(to right, #3B3B3B 0%, #9C9C9C);
   .info {
-    width: 30px;
+    width: auto;
     height: 34px;
     background-color: var(--q-gb-bg-c-1);
+    div {
+      height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    div.time {
+      width: 68px;
+      img {
+        width: 14px;
+        margin-right: 5px;
+        margin-top: -2px;
+      }
+    }
+    div.live {
+      width: 30px;
+    }
   }
   .title {
     padding-left: 10px;

@@ -74,9 +74,9 @@ export const get_compute_other_play_data = (match) => {
     handicap_list = get_5minutes_template(match);
   }
   // // 组合玩法 特殊处理
-  // if(play_key =='hpsCompose') {
-  //   handicap_list = clone_arr(match_tpl_info[template_name][cur_other_play])
-  // }
+  if(play_key =='hpsCompose') {
+    handicap_list = clone_arr(match_tpl_info[play_key])
+  }
   if (!play_key) {
     handicap_list = clone_arr(match_tpl_info.hpsCorner)
   }

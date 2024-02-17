@@ -166,23 +166,20 @@ const ref_data = reactive({
 const scrollAreaPo = () => {
     setTimeout(() => {
       if(BetData.is_bet_single){
-
-        scrollAreaRef_mar.value.setScrollPosition('vertical', position.value)
-        console.log(321)
-        
+        if(scrollAreaRef_mar.value){
+          scrollAreaRef_mar.value.setScrollPosition('vertical', position.value)
+        }
       }else{
-        scrollAreaRef.value.setScrollPosition('vertical', position.value)
-        console.log(3233331)
+        if(scrollAreaRef.value){
+          scrollAreaRef.value.setScrollPosition('vertical', position.value)
+        }
       }
     }, 20);
   
 }
 
 const set_W_H = () => {
-
   ref_min_height_max.value = document.body.clientHeight > 700 ? '2.3' : '1.8'
-
-
 }
 
 
