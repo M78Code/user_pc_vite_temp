@@ -1,6 +1,6 @@
 <template>
   <div class="bet-pre-appoint">
-    <div v-if="item.marketValue != ''" class="row yb-flex-center book-content">
+    <div v-if="item.handicap_hv" class="row yb-flex-center book-content">
       <!--预-->
       <div class="col-2 center yb-fontsize12">{{ i18n_t('bet.bet_dish') }}</div>
       <!--此处为盘口区域，-->

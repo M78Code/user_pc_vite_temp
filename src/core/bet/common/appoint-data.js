@@ -513,7 +513,7 @@ const set_ref_data = (item) => {
   // 最小赔率是它本身
   ref_pre_book.min_odds_value = compute_value_by_cur_odd_type(market_info.odds,market_info.playId,market_info.odds_hsw,market_info.sportId) 
   // 球头 显示
-  ref_pre_book.appoint_ball_value = market_info.handicap_hv || market_info.marketValue
+  ref_pre_book.appoint_ball_value = market_info.handicap_hv 
   // 球头 计算
   ref_pre_book.appoint_ball_head = init_ball_head
   // 获取及时比分 格式: (主队比分-客队比分)
