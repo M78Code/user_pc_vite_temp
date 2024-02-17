@@ -42,7 +42,8 @@
               <p>
                 {{BetRecordClass.selected === 2 ? item.playOptionName: item.marketValue}}
               </p>
-              <span>{{formatTime(+item.closingTime, 'mm/DD HH:MM')}}</span>
+              <span v-if="seriesType==3">{{formatTime(+item.closingTime, 'mm/DD HH:MM')}}</span>
+              <span v-else>{{formatTime(+item.beginTime, 'mm/DD HH:MM')}}</span>
             </div>
           </div>
           <div :class="{'main-warp': true, 
@@ -129,7 +130,7 @@ let props = defineProps({
   }
 })
 
-
+console.log("props.data_b------>", props.data_b)
 //虚拟赛马计算标识数量
 const calc_num = computed(() => {
   if (/[0-9]/.test(props.data_b.playOptions)) {
@@ -189,6 +190,11 @@ const cancelPre = (data_b) => {
   matchInfo = lodash.get(data_b, 'detailList[0].matchInfo', '')
   show_pop.value = true
 }
+
+const seriesType = computed(() => {
+  return props.data_b.seriesType
+})
+
 </script>
 
 <style lang="scss" scoped>
