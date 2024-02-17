@@ -38,18 +38,18 @@
         class="match-new-handicap match-left"
         @click="onMatchNewHandicapClick('betItemLeft')"
         :class="{
-          active: BetData.bet_oid_list.includes(handicap_list[0].oid),
+          active: BetData.bet_oid_list.includes(handicap_list[0]?.oid),
           lift_up:
-            lift_obj.oid == handicap_list[0].oid && lift_obj.odds_lift == 'up',
+            lift_obj.oid == handicap_list[0]?.oid && lift_obj.odds_lift == 'up',
           lift_down:
-            lift_obj.oid == handicap_list[0].oid &&
+            lift_obj.oid == handicap_list[0]?.oid &&
             lift_obj.odds_lift == 'down',
           'is_iframe': is_iframe
         }"
       >
         <div>
           <bet-item
-            v-if="is_mounted"
+            v-if="is_mounted && handicap_list[0]"
             :ol_data="handicap_list[0]"
             @oddsChange="
               (odds_lift_obj) => {
@@ -92,12 +92,12 @@
       <!-- 平局 -->
       <div :class="{
           'odd-detail': true,
-          active: BetData.bet_oid_list.includes(handicap_list[2].oid),
+          active: BetData.bet_oid_list.includes(handicap_list[2]?.oid),
           lift_up:
-            lift_obj1.oid == handicap_list[2].oid &&
+            lift_obj1.oid == handicap_list[2]?.oid &&
             lift_obj1.odds_lift == 'up',
           lift_down:
-            lift_obj1.oid == handicap_list[2].oid &&
+            lift_obj1.oid == handicap_list[2]?.oid &&
             lift_obj1.odds_lift == 'down',
         }"
         @click="onMatchNewHandicapClick('betItemDetail')"
@@ -105,7 +105,7 @@
         <!-- <span class="common-text mr-8">{{ i18n_t("analysis.draw") }}</span> -->
         <span class="match-odd">
           <bet-item
-            v-if="is_mounted"
+            v-if="is_mounted && handicap_list[2]"
             @oddsChange="
               (odds_lift_obj) => {
                 lift_obj1 = odds_lift_obj;
@@ -129,12 +129,12 @@
         class="match-new-handicap match-right"
         @click="onMatchNewHandicapClick('betItemRight')"
         :class="{
-          active: BetData.bet_oid_list.includes(handicap_list[1].oid),
+          active: BetData.bet_oid_list.includes(handicap_list[1]?.oid),
           lift_up:
-            lift_obj2.oid == handicap_list[1].oid &&
+            lift_obj2.oid == handicap_list[1]?.oid &&
             lift_obj2.odds_lift == 'up',
           lift_down:
-            lift_obj2.oid == handicap_list[1].oid &&
+            lift_obj2.oid == handicap_list[1]?.oid &&
             lift_obj2.odds_lift == 'down',
           'is_iframe': is_iframe
         }"
@@ -162,7 +162,7 @@
         <div>
           <span class="match-odd">
             <bet-item
-              v-if="is_mounted"
+              v-if="is_mounted && handicap_list[1]"
               @oddsChange="
                 (odds_lift_obj) => {
                   lift_obj2 = odds_lift_obj;

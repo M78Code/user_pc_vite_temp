@@ -11,7 +11,7 @@
           :video_fullscreen_disabled="false" :match_info="match_info" :is_esports="false"></video_type_ctr> -->
       </div>
     </load-data>
-    <video_controller :params="params" @handle-type="handle_type"/>
+    <video_controller :params="params" @handle-type="handle_type" :macth_info="match_info"/>
     <!-- <video_type_ctr
           v-show="is_video_hover"
           :ctr_data={video_type:1}
@@ -49,7 +49,7 @@ import {
   MatchDataWarehouse_PC_Detail_Common as MatchDataWarehouseInstance, UserCtr,
 } from "src/output/index.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
-import { api_match_list } from "src/api/index";
+import { api_match_list, api_details } from "src/api/index";
 import url_add_param from "src/core/enter-params/util";
 import video_type_ctr from "src/core/video/video_type_ctr.vue";
 import video_controller from "src/base-pc/components/video/video-controller.vue"
@@ -79,7 +79,7 @@ const get_video_url = () => {
     match_info.value,
     { params: { play_type: 1 } },
     (show_type, url_src) => {
-      console.log(url_src, show_type, "url_src");
+      console.log(url_src, show_type, match_info.value.varl,"url_src");
       // 未登录
       if (url_src === true && show_type === "no-login") {
         // this.is_limited = true
@@ -87,18 +87,28 @@ const get_video_url = () => {
         load_data_state.value = "empty";
         return;
       }
-
       // let live_type = this.$get_media_icon_index(media_type)
+      
       let live_type = 1;
-      if (!url_add_param(url_src, "video_type", 1)) {
+      if (!url_src) {
         // TODO: 视频结束，播放错误返回上一页
-        router.back();
+        // router.back();
         return;
       }
+     
       // 此处为最终处理后的视频url
-      media_src.value =
+      if (match_info.value.varl) {
+        media_src.value = match_info.value.varl;
+        // https://pro.ruizhangdanshop.com/?https://uatrtmptx.sq5595.com/2024-02-17/130906467213408972.flv
+        // "https://pro.ruizhangdanshop.com/?https://uatrtmptx.sq5595.com/2024-02-17/130906467213408972.flv"
+        // url_add_param(match_info.varl, "video_type", 1) +
+        // `&live_type=${live_type}&csid=${match_info.value.csid}&icons_right=163&pip_right=80`;
+      }else {
+        media_src.value =
         url_add_param(url_src, "video_type", 1) +
         `&live_type=${live_type}&csid=${match_info.value.csid}&icons_right=163&pip_right=80`;
+      }
+      
       iframe_loading.value = false;
       load_data_state.value = "data";
       nextTick(() => {
@@ -133,6 +143,7 @@ const handle_type = (type, value) => {
       break;
     case "animation":
       // 切换动画
+      get_ani_url();
       break;
     case "exit_full_screen":
       // 退出全屏
@@ -159,6 +170,13 @@ const handle_type = (type, value) => {
 }
 
 /**
+ * 获取动画视频链接
+ */
+const get_ani_url = () => {
+
+}
+
+/**
  * @Description 浏览器全屏
  * @param {undefined} undefined
  */
@@ -178,10 +196,12 @@ const init = async () => {
     browser_full_screen();
   }
   try {
-    const res = await api_match_list.get_detail_data({
+    // mid=129397476946490420&cuid=331188967994322944&t=1708159090268
+    const res = await api_details.get_match_detail_ESMatchInfo({
       mid: params.value.mid,
       cuid
     });
+    
     console.log(res, "详情");
     match_info.value = res.data;
     get_video_url();
@@ -194,9 +214,16 @@ const init = async () => {
 function handle_message(e) {
   // 视频加载错误
   if(e.data.cmd == 'load_error'){
+    router.back();
   }
 }
 
+
+function visibility_listener() {
+  if (document.visibilityState == "visible") {
+    init();
+  }
+}
 
 onMounted(() => {
   // csid: "1"
@@ -206,7 +233,7 @@ onMounted(() => {
   // video_size: "0"
   init();
   window.addEventListener("message", handle_message);
-
+  document.addEventListener("visibilitychange", visibility_listener)
   console.log(params.value, "route.params.video_size");
 })
 
@@ -243,6 +270,7 @@ function exit_full_screen(type) {
 
 onUnmounted(() => {
   exit_full_screen();
+  document.removeEventListener("visibilitychange", visibility_listener)
 })
 
 </script>

@@ -2,15 +2,15 @@
   <div v-show="false">{{ BetData.bet_data_class_version }}{{ UserCtr.user_version }}</div>
   <div v-if="is_mounted && odds_state != 'close'" class="c-bet-item yb-flex-center relative-position yb-family-odds"
     :class="[
-      ol_data.class,
+      ol_data?.class,
       odds_state,
-      BetData.bet_oid_list.includes(ol_data.oid) ? 'active' : '',
-      `csid${ol_data.csid}`,
+      BetData.bet_oid_list.includes(ol_data?.oid) ? 'active' : '',
+      `csid${ol_data?.csid}`,
       odds_lift,
       { 'show-odds-icon': odds_state != 'seal' },
       { 'oddsup': odds_lift == 'up' },
       { 'oddsdown': odds_lift == 'down' }
-    ]" @click.stop="bet_click_ol" :id="`list-${ol_data.oid}`">
+    ]" @click.stop="bet_click_ol" :id="`list-${ol_data?.oid}`">
     <!-- 盘口 -->
     <div :class="[
       'handicap-value',

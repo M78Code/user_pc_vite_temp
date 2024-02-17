@@ -1,7 +1,7 @@
 <template>
     <div class="video-controller">
         <div class="refresh">
-            <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/virtual-ref.svg`" alt="" class="refresh-icon" @click="handleEmit('refresh')"/>
+            <img v-if="!props.macth_info.varl" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/virtual-ref.svg`" alt="" class="refresh-icon" @click="handleEmit('refresh')"/>
         </div>
         <div class="right-actions">
             <!-- 清晰度 -->
@@ -119,7 +119,7 @@ const send_video_type_click = (type) => {
     position: absolute;
     bottom: 0;
     left: 0;
-    z-index: 9999;
+    // z-index: 9;
     justify-content: space-between;
     .refresh {
         margin-left: 20px;
@@ -134,6 +134,8 @@ const send_video_type_click = (type) => {
         align-items: center;
         white-space: nowrap;
         padding-right: 20px;
+        position: relative;
+        z-index: 9999;
         .clarity{
             cursor: pointer;
             font-size: 12px;

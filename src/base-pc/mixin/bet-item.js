@@ -43,13 +43,13 @@ export function use_bet_item(props, emit) {
     // 监听玩法ID变化 取消赔率升降 
     // 监听oid 取消赔率升降
     // 监听玩法ID变化 取消赔率升降 
-    watch(() => [props.ol_data._hpid, props.ol_data.oid], (v, o) => {
+    watch(() => [props.ol_data?._hpid, props.ol_data?.oid], (v, o) => {
         if (v[0] != o[0] || v[1] != o[1]) { //地址可能会变  但是oid不一定
             clear_odds_lift()
         }
     })
     // 监听投注项赔率变化
-    watch(() => props.ol_data.ov, (cur, old) => {
+    watch(() => props.ol_data?.ov, (cur, old) => {
         if (cur == old) return
         // 红升绿降变化
         set_odds_lift(cur, old, props.ol_data);
