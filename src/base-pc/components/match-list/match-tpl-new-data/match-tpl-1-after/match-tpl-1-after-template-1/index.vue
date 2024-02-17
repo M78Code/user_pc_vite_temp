@@ -171,7 +171,7 @@
 <script setup>
 import { ref, computed, watch, onMounted, inject } from 'vue';
 import lodash from 'lodash'
-import { get_match_status, MenuData, UserCtr, compute_local_project_file_path } from "src/output/index.js";
+import { get_match_status, GlobalSwitchClass, UserCtr, compute_local_project_file_path } from "src/output/index.js";
 import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card-class.js'
 // useRegistPropsHelper(component_symbol, need_register_props)
 import { utils_info } from 'src/core/utils/common/module/match-list-utils.js';
@@ -196,6 +196,7 @@ const props = defineProps({
   }
 })
 const match = inject("match")
+const get_lang = ref(UserCtr.lang)
 
 const special_bet_col = computed(() => {
   let multi_column = match.value.tpl_id == 13;
@@ -471,41 +472,40 @@ const showMode = computed(() => {
       other_handicap_list,
     } = match.value;
     // 特色组合
-  //   if (["hpsCompose"].includes(play_current_key)) {
-  //     if (this.show_more_other_list&&this.show_more_other_list[this.mid]&&this.show_more_other_list[this.mid][play_current_index]) {
-  //       return (
-  //       has_other_play &&
-  //       this.get_additional_plays_list_num == 3 &&
-  //       !this.show_more_other_list[this.mid][play_current_index] &&
-  //       !this.match_style_obj.is_fold_tab_play
-  //     );
-  //     }else{
-  //       return (
-  //       has_other_play &&
-  //       this.get_additional_plays_list_num == 3 &&
-  //       !this.match_style_obj.is_fold_tab_play
-  //     );
-  //     }
-  //   } else {
-  //     // 其他
-  //     if (this.show_more_other_list&&this.show_more_other_list[this.mid]&&this.show_more_other_list[this.mid][play_current_index]) {
-  //       return (
-  //       has_other_play &&
-  //       this.get_additional_plays_list_num == 3 &&
-  //       !this.show_more_other_list[this.mid][play_current_index] &&
-  //       other_handicap_list[0].ols.length > 3 &&
-  //       !this.match_style_obj.is_fold_tab_play
-  //     );
-  //     }else{
-  //     return (
-  //       has_other_play &&
-  //       this.get_additional_plays_list_num == 3 &&
-  //       other_handicap_list[0].ols.length > 3 &&
-  //       !this.match_style_obj.is_fold_tab_play
-  //     );
-  //   }
-  // }
-  return false;
+    if (["hpsCompose"].includes(play_current_key)) {
+      if (GlobalSwitchClass.show_more_other_list&&GlobalSwitchClass.show_more_other_list[match.value.mid]&&GlobalSwitchClass.show_more_other_list[match.value.mid][play_current_index]) {
+        return (
+        has_other_play &&
+        GlobalSwitchClass.get_additional_plays_list_num == 3 &&
+        !GlobalSwitchClass.show_more_other_list[this.mid][play_current_index] &&
+        !GlobalSwitchClass.match_style_obj.is_fold_tab_play
+      );
+      }else{
+        return (
+        has_other_play &&
+        GlobalSwitchClass.get_additional_plays_list_num == 3 &&
+        !GlobalSwitchClass.match_style_obj.is_fold_tab_play
+      );
+      }
+    } else {
+      // 其他
+      if (GlobalSwitchClass.show_more_other_list&&GlobalSwitchClass.show_more_other_list[match.value.mid]&&GlobalSwitchClass.show_more_other_list[match.value.mid][play_current_index]) {
+        return (
+        has_other_play &&
+        GlobalSwitchClass.get_additional_plays_list_num == 3 &&
+        !GlobalSwitchClass.show_more_other_list[match.value.mid][play_current_index] &&
+        other_handicap_list[0].ols.length > 3 &&
+        !GlobalSwitchClass.match_style_obj.is_fold_tab_play
+      );
+      }else{
+      return (
+        has_other_play &&
+        GlobalSwitchClass.get_additional_plays_list_num == 3 &&
+        other_handicap_list[0].ols.length > 3 &&
+        !GlobalSwitchClass.match_style_obj.is_fold_tab_play
+      );
+    }
+  }
 })
 
 /**
@@ -614,6 +614,7 @@ onMounted(() => {
 
   .bet-item-wrap:last-child {
     border-right: none !important;
+    border-top: 0.5px solid var(--q-gb-bd-c-8);
   }
 }
 </style>
