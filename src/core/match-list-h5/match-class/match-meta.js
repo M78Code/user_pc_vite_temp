@@ -1903,6 +1903,18 @@ class MatchMeta {
     this.is_ws_trigger = false
     this.get_match_base_hps_by_mids({ })
   }
+  // 销毁
+  destroy () {
+    clearTimeout(this.debounce_timer)
+    clearTimeout(this.axios_debounce_timer)
+    clearTimeout(this.axios_get_hps_timer)
+    this.debounce_timer = null
+    this.axios_debounce_timer = null
+    this.axios_get_hps_timer = null
+    this.debounce_add_match.cancel()
+    this.debounce_remove_match.cancel()
+    this.debounce_get_hps.cancel()
+  }
 }
 
 export default ref(new MatchMeta()).value
