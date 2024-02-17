@@ -101,7 +101,7 @@
           <span v-else class="merge-checkbox mr-4"></span>
           {{ i18n_t('bet.bet_auto_msg_1') }}
         </div>
-        <div class="f-e-c" @click.prevent="set_is_regular_amount()">
+        <div v-if="BetData.bet_single_list.length == 1" class="f-e-c" @click.prevent="set_is_regular_amount()">
           <span v-if="BetData.is_regular_amount" class="icon-arrow icon-arrow-merge mr-4"></span>
           <span v-else class="merge-checkbox mr-4"></span> 
           {{ i18n_t('bet.common_amount') }}

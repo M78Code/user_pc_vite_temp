@@ -575,11 +575,11 @@ get_quick_mid_obj_ref(mid){
    * @param {Object} match 赛事信息
    * @return {Object} {has_add1:false,has_add2:false}
    */
-  _get_has_add_n(match){
+  _get_has_add_n(match, hps_key='hpsData[0].hpsAdd'){
     let res = {has_add1:false,has_add2:false};
     try {
       // 获取附加盘数据 
-      let hps_add_n_data = lodash.get(match,'hpsData[0].hpsAdd');
+      let hps_add_n_data = lodash.get(match,hps_key);
       // 获取玩法的最大坑位
       let main_fun = function(item){
         // 坑位
@@ -930,7 +930,7 @@ get_quick_mid_obj_ref(mid){
       // 快速查询对象mid_obj增加数据
       many_obj.mid_obj[this.get_list_to_obj_key(item.mid,item.mid,'mid')] = item;
       // 需要解析的投注项赛事基础数据的路径
-      const hps_key_arr = ['hps','hpsAdd','hpsData[0].hps','hpsData[0].hpsAdd',"hpsBold","hpsOvertime","hps15Minutes","hps5Minutes","hpsCorner","hpsPunish","hpsPenalty","hpsPromotion","hpsOutright","odds_info","hpsCompose"];
+      const hps_key_arr = ['hps','hpsAdd','hpsData[0].hps','hpsData[0].hpsAdd','hpsData[1].hps','hpsData[1].hpsAdd',"hpsBold","hpsOvertime","hps15Minutes","hps5Minutes","hpsCorner","hpsPunish","hpsPenalty","hpsPromotion","hpsOutright","odds_info","hpsCompose"];
       // 角球开关----------------------hpsCorner
       // 罚牌开关----------------------hpsPunish
       // 冠军开关----------------------hpsOutright
@@ -953,6 +953,7 @@ get_quick_mid_obj_ref(mid){
         switch (hps_key_str) {
           // 主玩副盘口数据时
           case 'hpsData[0].hpsAdd':
+          case 'hpsData[1].hpsAdd':
           case 'hps':
           case 'hpsCompose':
           case 'hpsAdd':
@@ -1145,7 +1146,7 @@ get_quick_mid_obj_ref(mid){
       try {
         // 需要解析的投注项赛事基础数据的路径
         const hps_key_arr =key_arr?key_arr:
-        ['hps','hpsAdd','hpsData[0].hps','hpsData[0].hpsAdd',"hpsBold","hpsOvertime","hps15Minutes","hps5Minutes","hpsCorner","hpsPunish","hpsPenalty","hpsPromotion","hpsOutright","odds_info","hpsCompose"];
+        ['hps','hpsAdd','hpsData[0].hps','hpsData[0].hpsAdd','hpsData[1].hps','hpsData[1].hpsAdd',"hpsBold","hpsOvertime","hps15Minutes","hps5Minutes","hpsCorner","hpsPunish","hpsPenalty","hpsPromotion","hpsOutright","odds_info","hpsCompose"];
         // 角球开关----------------------hpsCorner
         // 罚牌开关----------------------hpsPunish
         // 冠军开关----------------------hpsOutright
@@ -1168,6 +1169,7 @@ get_quick_mid_obj_ref(mid){
           switch (hps_key_str) {
             // 主玩副盘口数据时
             case 'hpsData[0].hpsAdd':
+            case 'hpsData[1].hpsAdd':
             case 'hps':
             case 'hpsCompose':
             case 'hpsAdd':
