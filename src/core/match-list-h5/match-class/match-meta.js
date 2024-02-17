@@ -753,7 +753,7 @@ class MatchMeta {
       ...params,
       ...other_params
     }
-    if (params_tid) this.set_show_skeleton_state(true)
+    if (params_tid && !this.is_ws_trigger) this.set_show_skeleton_state(true)
     // 取消上一次的  限频重新请求逻辑
     this.axios_cancel['match'] && this.axios_cancel['match']()
     const res = await this.handler_axios_loop_func({ http: api_common.post_match_full_list, params: target_params, key: 'post_match_full_list', axios_key: "match"  })
