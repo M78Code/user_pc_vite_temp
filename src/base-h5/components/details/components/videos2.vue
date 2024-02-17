@@ -241,7 +241,7 @@
           </template>
           <template v-else>
             <!-- v-if="orientation" -->
-            <div class="row justify-between full-height mx-15"  @click.stop="click_mask" >
+            <div class="row justify-between full-height mx-15"  v-if="orientation" @click.stop="click_mask" >
                <!-- 缩放按钮 -->
               <img v-if="get_is_full_screen && show_exit_btn && ProjectName != 'ouzhou-h5'" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/pack_up.svg`" alt="exit" class="exit-img" @click="set_full_screen"/>
             

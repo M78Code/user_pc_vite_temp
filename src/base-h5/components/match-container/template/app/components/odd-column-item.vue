@@ -168,7 +168,7 @@ const odds_class_object = () => {
     'first-radius': props.odd_item_i === 0,
     'last-radius': props.odd_item_i > 1,
     'is-jiaoqiu': footer_sub_menu_id == 114, 
-    'active': BetData.bet_oid_list.includes(odd_item.value?.oid),
+    'active': odd_item.value?.oid && BetData.bet_oid_list.includes(odd_item.value?.oid),
     'item-lock': is_lock()
   };
   if(standard_edition.value == 2){

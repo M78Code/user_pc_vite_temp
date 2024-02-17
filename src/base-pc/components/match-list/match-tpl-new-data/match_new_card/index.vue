@@ -5,6 +5,7 @@
 -->
 <template>
   <div class="match-new-card" :class="MenuData.is_virtual_sport && 'virtual_sport'">
+    <div v-show="false">{{ BetData.bet_data_class_version }}</div>
     <div class="match-part" v-if="!MenuData.is_virtual_sport">
       <!-- 比赛进程 -->
       <match-process v-if="is_mounted && match" :match="match" source='match_list' show_page="match-list" :rows="2" />
@@ -37,7 +38,7 @@
         class="match-new-handicap match-left"
         @click="onMatchNewHandicapClick('betItemLeft')"
         :class="{
-          active: betItemActive.left,
+          active: BetData.bet_oid_list.includes(handicap_list[0].oid),
           lift_up:
             lift_obj.oid == handicap_list[0].oid && lift_obj.odds_lift == 'up',
           lift_down:
@@ -56,7 +57,6 @@
               }
             "
             ref="betItemLeft"
-            @stateChage="onBetItemStateChange('left', $event)"
           />
         </div>
         <div
@@ -92,7 +92,7 @@
       <!-- 平局 -->
       <div :class="{
           'odd-detail': true,
-          active: betItemActive.detail,
+          active: BetData.bet_oid_list.includes(handicap_list[2].oid),
           lift_up:
             lift_obj1.oid == handicap_list[2].oid &&
             lift_obj1.odds_lift == 'up',
@@ -112,7 +112,6 @@
               }
             "
             ref="betItemDetail"
-            @stateChage="onBetItemStateChange('detail', $event)"
             :ol_data="handicap_list[2]"
         /></span>
       </div>
@@ -130,7 +129,7 @@
         class="match-new-handicap match-right"
         @click="onMatchNewHandicapClick('betItemRight')"
         :class="{
-          active: betItemActive.right,
+          active: BetData.bet_oid_list.includes(handicap_list[1].oid),
           lift_up:
             lift_obj2.oid == handicap_list[1].oid &&
             lift_obj2.odds_lift == 'up',
@@ -170,7 +169,6 @@
                 }
               "
               ref="betItemRight"
-              @stateChage="onBetItemStateChange('right', $event)"
               :ol_data="handicap_list[1]"
           /></span>
         </div>
@@ -316,15 +314,11 @@ import lodash from 'lodash'
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import details  from "src/core/match-list-pc/details-class/details.js"
 import { BaseInfo } from "src/base-pc/mixin/base-info"
+import BetData from "src/core/bet/class/bet-data-class.js";
 
 const route = useRoute();
 const router = useRouter()
 const match = inject("match")
-const betItemActive = reactive({
-  left: false,
-  detail: false,
-  right: false,
-})
 const popup_class = ref("")
 const lift_obj = ref({})
 const lift_obj1 = ref({})
@@ -471,14 +465,6 @@ const click_handle = () => {
     return;
   }
   details.sr_click_handle(match.value);
-}
-
-const onBetItemStateChange = (activeKey, state) => {
-  if (state == "active") {
-    betItemActive[activeKey] = true;
-  } else {
-    betItemActive[activeKey] = false;
-  }
 }
 
 /**

@@ -50,6 +50,10 @@
             <div class="title">
                 {{ lengue_name }} {{ current_match.no }}
             </div>
+            <div class="leaderboard">
+              <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/leader_board.png`"/>
+              <span> {{ i18n_t("vsport.rank") }} </span>
+            </div>
           </div>
           <div class="team-title horse-title" v-else>
               <div class="info">
@@ -362,6 +366,25 @@ export default {
     }
     div.live {
       width: 30px;
+    }
+  }
+
+  .title {
+    flex-grow: 1;
+  }
+
+  .leaderboard {
+    width: 99px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    background: rgba($color: #fff, $alpha: 0.2);
+    img {
+      width: 14px;
+      height: 14px;
+      margin-right: 3px;
     }
   }
   .title {

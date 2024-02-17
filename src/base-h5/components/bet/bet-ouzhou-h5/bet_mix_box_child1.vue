@@ -25,7 +25,7 @@
                           </div>
                           <div class="text-flow-none" v-else>{{items.handicap}} <em v-if="items.handicap_hv" class="ty-span">{{items.handicap_hv}}</em></div> 
 
-                          <span v-if="UserCtr.is_cur_odds(items.odds_hsw)">
+                          <span v-if="UserCtr.is_cur_odds(items.odds_hsw)" class="odds-type">
                             [{{ i18n_t(`odds.${UserCtr.odds.cur_odds}`) }}]
                           </span>
                           <span v-else>[{{ i18n_t(`odds.EU`) }}]</span>
@@ -480,6 +480,9 @@
 
   .text-flow-none {
     margin-right: 0.1rem;
+  }
+  .odds-type {
+    color: var(--q-gb-t-c-15);
   }
   </style>
  

@@ -812,7 +812,7 @@
     "odds": "Odds",
     "book_bet_amount": "Booked bet amt",
     "confirm_cancle": "Confirm CXL",
-    "confirm_matchinfo": "cancel {0} booking?",
+    "confirm_matchinfo": "Cancel {0} booking?",
     "cancle_fail_tips": "You are trying too often, pls try again later",
     "cancle_fail_tips2": "Abnormal match status, can't cancel booking",
     "market_error_info": "It is already the min booking market value, pls adjust。",
