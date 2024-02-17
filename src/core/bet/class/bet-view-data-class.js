@@ -573,5 +573,9 @@ class BetViewData {
     }
     this.set_bet_view_version()
   }
+
+  set_bet_play_options_amount(){
+    this.bet_special_series.filter(item=> item.bet_amount = '')
+  }
 }
 export default new BetViewData();
