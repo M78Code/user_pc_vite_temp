@@ -390,10 +390,8 @@ const formatTotalScore = (match, num) => {
 watch(
   () => s1_score.value,
   (new_, old_) => {
-  // 两场赛事不一样，直接返回，不需要监听显示
-   if (new_.mid!=old_.mid) {
-    return
-   }
+    // 两场赛事不一样，直接返回，不需要监听显示
+    if (new_.mid!=old_.mid) return
     if (props.detail_data.csid != 1) return
     // 当前赛事，若比分未变化，则提前退出，不展示进球动画
     if (new_.home === old_.home && new_.away === old_.away && !change_match.value) return
@@ -405,7 +403,7 @@ watch(
     // 若主(客)队比分数值变化，则更新对应时间
     if (new_.home > 0 || new_.away > 0) scoreTime.S1 = Date.now()
     // 主队比分数值
-    if (new_.home > 0 && new_.home >= new_.away) {
+    if (new_.home > 0 && new_.home >= old_.home) {
       show_someone.is_show_home_goal = scoreTime.S1 > scoreTime.S11
       /**
        * ?迷之debounce操作 ???
@@ -417,7 +415,7 @@ watch(
       show_someone.is_show_home_goal = false
     }
     // 客队比分数值
-    if (new_.away > 0 && new_.away >= new_.home) {
+    if (new_.away > 0 && new_.away >= old_.away) {
       show_someone.is_show_away_goal = scoreTime.S1 > scoreTime.S11
       /**
       * ?迷之debounce操作 ???
