@@ -224,10 +224,12 @@ const computed_keyboard_odds = (val) => {
     let res = val
     if (val <= min_odds) {
       res = format_money(min_odds)
+      //console.error('sssss',i18n_t('bet.bet_min_booked_odds'))
       useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t('bet.bet_min_booked_odds'));
     }
     if (val >= max_odds) {
       res = format_money(max_odds)
+      //console.error('aaaaa',i18n_t('bet.bet_max_booked_odds'))
       useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t('bet.bet_max_booked_odds'));
     }
     ref_pre_book.appoint_odds_value = res

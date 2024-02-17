@@ -234,6 +234,7 @@ const _handmaxKey = () => {
 }
 // 删除键
 const _handleDeleteKey = () => {
+  // console.error('asdas')
   // 此处为预约盘口 赔率相关输入
   if (typeof BetData.active_index === 'string') {
 
@@ -245,15 +246,18 @@ const _handleDeleteKey = () => {
         let odds = ref_pre_book.appoint_odds_value.toString()
         odds = odds ? odds.substring(0, odds.length - 1) : ""
         ref_pre_book.appoint_odds_value = odds ? odds*1 : ""
+        computed_keyboard_odds(odds)
       } else {
         let ball = ref_pre_book.appoint_ball_value.toString()
         ball = ball ? ball.substring(0, ball.length - 1) : ""
         // 判断是否有正负号 如有有保留
         if (ball == '-' || ball == '+') {
           ref_pre_book.appoint_ball_value = ball
+          computed_keyboard_handicap(ball)
           return
         }
         ref_pre_book.appoint_ball_value = ball ? ball : 0
+        computed_keyboard_handicap(ball)
       }
       return
     }
