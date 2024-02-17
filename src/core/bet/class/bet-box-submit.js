@@ -401,8 +401,8 @@ const get_lastest_market_info = (type) => {
                             bet_item.hl_hs = market.status
 
                             // ws断连后 需要对比数据 进行投注
-                            
-                            if( type == 'submit_bet' ){
+                            // submit_bet 用于投注  set_bet 用于数据更新
+                            if( ['submit_bet','set_bet'].includes(type) ){
                                 // 坑位变更 赔率也变 进行锁盘处理
                                 // 盘口状态，玩法级别 0：开 1：封 2：关 11：锁
                                 if( ( bet_item.odds != odds.oddsValue ) || ( bet_item.ot != odds.oddsType ) ){

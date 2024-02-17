@@ -1763,7 +1763,7 @@ this.bet_appoint_ball_head= null */
       if(mid_list.includes(mid)){
         if(hpid_list.includes(hpid)){
           // 303 推送不会推送105 106
-          get_lastest_market_info('submit_bet')
+          get_lastest_market_info('set_bet')
         }
       }
     }
