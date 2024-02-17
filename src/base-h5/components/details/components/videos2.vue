@@ -90,7 +90,7 @@
             allow="autoplay"
             :src="`${iframe_src}&rdm=${iframe_rdm}`"
           ></iframe> -->
-        <BetScreen :type="video" :is_full_screen="!orientation" 
+        <BetScreen v-if="!show_full_screen_bet" :type="video" :is_full_screen="!orientation" 
                     @switch_type="switch_video_url"
                    :team_score_detail="title" 
                    @exit="exit_callback"
@@ -100,7 +100,7 @@
                       'position':  !orientation? 'fixed': ''
         }">
           <iframe 
-            v-if=" iframe_src" 
+            v-if=" iframe_src || live_src" 
             v-show="!is_playing_replay" 
             ref="iframe" id="video-iframe" 
             style="width:100%;height:100%;" 
@@ -112,7 +112,7 @@
             scrolling="no"
             allowfullscreen="true"
             allow="autoplay"
-            :src="`${iframe_src}&rdm=${iframe_rdm}`"
+            :src=" live_src? live_src : `${iframe_src}&rdm=${iframe_rdm}`"
           ></iframe>
           <template v-slot:live>
            <details-dialog
@@ -122,6 +122,26 @@
           </template>
 
         </BetScreen>
+
+        <template v-else>
+          <iframe 
+            v-if=" iframe_src || live_src" 
+            v-show="!is_playing_replay" 
+            ref="iframe" id="video-iframe" 
+            style="width:100%;height:100%;" 
+            frameborder="0"
+            marginwidth="0"
+            marginheight="0"
+            hspace="0"
+            vspace="0"
+            scrolling="no"
+            allowfullscreen="true"
+            allow="autoplay"
+            :src=" live_src? live_src : `${iframe_src}&rdm=${iframe_rdm}`"
+          ></iframe>
+        </template>
+
+       
         <!-- 直播赛事 -->
        
         <!-- 视频单页项目精彩回放页面-->
@@ -614,7 +634,10 @@ export default {
     show_animation_and_video_status() {
       return this.show_icon_status != undefined ||this.show_icon_status != null ? this.show_icon_status : true
     },
-
+    // 是否展示全屏投注
+    show_full_screen_bet() {
+      return this.show_bet_full_screen == false && this.show_bet_full_screen != undefined;
+    }
   },
   props:[
     //视频说明是否展示
@@ -628,6 +651,8 @@ export default {
     'fix_status', // 是否显示固钉
     'show_exit_btn', // 欧洲版显示旧的退出全屏
     'math_list_data', // 赛事数据列表
+    'live_src',
+    'show_bet_full_screen'
   ],
   watch: {
     get_is_full_screen(value) {
@@ -1413,6 +1438,7 @@ export default {
         mid: this.match_id,
         type:   'Video'
       };
+      console.log(2222222, "22222222");
       this.is_show_no_handle = false
       api_common.getMatchUserIsLogin().then(res => { 
         if(res && res.code == 200 && res.data.isLogin){
@@ -1935,6 +1961,11 @@ export default {
     }
   },
   mounted() {
+    console.log(MenuData.is_esports(), "MenuData.is_esports()");
+    if (MenuData.is_esports()) {
+      // TODO: 直播全屏会有问题，问题未知，先不处理
+      // this.show_icons = true;
+    }
     OrientationSubscrbe.instance.change_status(true);
     OrientationSubscrbe.instance.add_notify(this.listener);
     // document.addEventListener('')

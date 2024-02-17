@@ -166,7 +166,7 @@ const reduce_change_val = (val) => {
  */
 const add_handle = (item, index = 1) => {
   //球头加
-  let step = item.sportId == '1' ? 0.25 : 0.5;
+  let step = item.sportId == '1' ? 0.25 : 1;
   ref_pre_book.appoint_ball_head = math_js.add(ref_pre_book.appoint_ball_head, step);
   // console.error('球头加', ref_pre_book.appoint_ball_head);
   const max_rang = 10;
@@ -288,7 +288,7 @@ const basktball_head_handle = (val) => {
  * @return {undefined} undefined
  */
 const sub_handle = (item, index = 1) => {
-  let step = item.sportId == 1 ? 0.25 : 0.5;
+  let step = item.sportId == 1 ? 0.25 : 1;
   ref_pre_book.appoint_ball_head = math_js.subtract(ref_pre_book.appoint_ball_head, step);
   // console.error('market_type===', this.market_type);
   // console.error('basic_score===', ref_pre_book.basic_score);

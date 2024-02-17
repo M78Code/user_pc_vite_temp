@@ -1543,9 +1543,10 @@ this.bet_appoint_ball_head= null */
   set_options_state() {
     // 需要筛选出 某些状态不需要再去做投注项状态的改版
     // 目前 7 8 为预约投注后
-    if ([7, 8].includes(betViewDataClass.bet_order_status)) {
+    if (BetViewDataClass.bet_order_status != 1 ) {
       return
     }
+
     let single_name = ''
     if(this.is_bet_single){
       single_name = 'bet_single_list'
