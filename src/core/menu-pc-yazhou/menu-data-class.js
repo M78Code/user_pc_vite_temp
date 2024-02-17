@@ -905,7 +905,19 @@ class MenuData {
         name:"彩票",
       })
     }
-
+    //滚球增加电竞列表
+    if(BaseData.is_mi_2000_open&&esports_list.length){
+      const in_play_esports_list = esports_list.map((item)=>{
+        //取电竞下滚球的数量
+        item.ct = item.sl?.filter(n=>{return n.mi == `${item.mi}1`;})?.[0]?.ct;
+        return item;
+      })
+      in_play_list = [...in_play_list,...in_play_esports_list]
+    }
+    //滚球增加VR列表
+    if(BaseData.is_mi_300_open&&vr_list_?.sl?.length){
+      in_play_list = [...in_play_list,...vr_list_?.sl]
+    }
     this.kemp_list = kemp_list
     this.hot_list = hot_list
     this.to_day_list = to_day_list

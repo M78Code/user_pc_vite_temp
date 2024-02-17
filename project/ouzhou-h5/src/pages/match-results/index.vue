@@ -1,5 +1,5 @@
 <template>
-    <scroll-list menu_type="28" :is_show_badge="false" :current_mi="state.current_mi" :menuList="state.slideMenu_sport" @changeMenu="changeMenu"/>
+    <scroll-list ref="scrollListRef" menu_type="28" :is_show_badge="false" :current_mi="state.current_mi" :menuList="state.slideMenu_sport" @changeMenu="changeMenu"/>
     <div class="match-result">
         <date-tab v-if="state.slideMenu" :defaultVal="state.currentSlideValue"  :dateList="state.slideMenu" @changeDate="changeDate"/>
         <MatchContainer />
@@ -10,8 +10,8 @@
 import lodash_ from 'lodash'
 import { watch,onMounted, onBeforeMount, reactive,ref,nextTick, onUnmounted, computed } from "vue";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
-import setectLeague from 'src/base-h5/components/setect-league/index.vue'
-import { scrollMenuEvent } from "src/base-h5/components/menu/app-h5-menu/utils.js"
+// import setectLeague from 'src/base-h5/components/setect-league/index.vue'
+// import { scrollMenuEvent } from "src/base-h5/components/menu/app-h5-menu/utils.js"
 import MatchContainer from "src/base-h5/components/match-list/index.vue";
 import { i18n_t, compute_css_obj, MenuData } from "src/output/index.js";
 import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'
@@ -22,7 +22,7 @@ import { useMittEmit, MITT_TYPES } from "src/core/mitt";
 import BUILDIN_CONFIG from "app/job/output/env/index.js";;
 const { IS_FOR_NEIBU_TEST } = BUILDIN_CONFIG ;
 const matchs_data = ref([])
-const inner_height = window.innerHeight;  // 视口高度
+// const inner_height = window.innerHeight;  // 视口高度
 const props = defineProps({})
 const state = reactive({
     select_dialog:false,
@@ -30,10 +30,12 @@ const state = reactive({
     slideMenu:[],
     slideMenu_sport: [], // 赛种
 })
-const selectFinishHandle = (val) => {
-    console.log('选择完成')
-    state.select_dialog = false
-}
+//滚动初始化
+const scrollListRef = ref(null);
+// const selectFinishHandle = (val) => {
+//     console.log('选择完成')
+//     state.select_dialog = false
+// }
 /**
  * 时间点击
  * @param {*} item 
@@ -65,9 +67,11 @@ const changeMenu = (item) =>{
 const init_data = (scroll_data) =>{
     state.slideMenu_sport = scroll_data;
     const index = scroll_data.findIndex(n=>{return n.mi == MenuData.menu_mi.value});
-    state.current_mi = scroll_data[index!= -1?index:0].mi
-    state.slideMenu = scroll_data[index!= -1?index:0].subList
-    state.currentSlideValue = lodash_.get(scroll_data[index!= -1?index:0].subList,`[${MenuData.result_menu}].field1`, '')
+    state.current_mi = scroll_data[index!= -1?index:0].mi;
+    state.slideMenu = scroll_data[index!= -1?index:0].subList;
+    state.currentSlideValue = lodash_.get(scroll_data[index!= -1?index:0].subList,`[${MenuData.result_menu}].field1`, '');
+    //初始化滚动
+    scrollListRef.value?.reset(state.current_mi);
     getData( scroll_data[index!= -1?index:0],state.currentSlideValue)
 }
 /**

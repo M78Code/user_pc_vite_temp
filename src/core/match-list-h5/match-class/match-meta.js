@@ -761,7 +761,7 @@ class MatchMeta {
       ...params,
       ...other_params
     }
-    if (params_tid) this.set_show_skeleton_state(true)
+    if (params_tid && !this.is_ws_trigger) this.set_show_skeleton_state(true)
     // 取消上一次的  限频重新请求逻辑
     this.axios_cancel['match'] && this.axios_cancel['match']()
     const res = await this.handler_axios_loop_func({ http: api_common.post_match_full_list, params: target_params, key: 'post_match_full_list', axios_key: "match"  })
@@ -1902,6 +1902,18 @@ class MatchMeta {
     warehouse.set_list(result)
     this.is_ws_trigger = false
     this.get_match_base_hps_by_mids({ })
+  }
+  // 销毁
+  destroy () {
+    clearTimeout(this.debounce_timer)
+    clearTimeout(this.axios_debounce_timer)
+    clearTimeout(this.axios_get_hps_timer)
+    this.debounce_timer = null
+    this.axios_debounce_timer = null
+    this.axios_get_hps_timer = null
+    this.debounce_add_match.cancel()
+    this.debounce_remove_match.cancel()
+    this.debounce_get_hps.cancel()
   }
 }
 

@@ -28,7 +28,7 @@
                 </div>
                 <div class="w-100 fon12 font400 text-8a8">{{ items.tid_name }}</div>
                 <div class="w-100 fon12 font400 text-8a8" v-if="items.home">{{ items.home }} <span class="mx-4">v</span> {{ items.away }} {{ items.matchType == 2? items.mark_score : ''}}
-                    <span class="mx-4" v-show="items.bet_type != 'vr_bet'">({{ items.score_home_away }})</span>
+                    <span class="mx-4" v-show="items.bet_type != 'vr_bet' && items.score_home_away != 'undefined:undefined'">({{ items.score_home_away }})</span>
                 </div>
             
             </div>
