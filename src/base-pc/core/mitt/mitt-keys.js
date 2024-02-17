@@ -511,3 +511,8 @@ export const EMIT_C201_HANDLE_BET_RECORD = "EMIT_C201_HANDLE_BET_RECORD";
 
 //移除玩法缓存remove_session_storage
 export const EMIT_SET_REMOVE_SESSION_STORAGE= "EMIT_SET_REMOVE_SESSION_STORAGE"
+
+// 获取到视频进程数据 , 初始化视频数据准备播放视频
+export const EMIT_VIDEO_PROCESS_DATA_GOT = "EMIT_VIDEO_PROCESS_DATA_GOT";
+// 所有赛事结束通知获取下一轮赛事数据
+export const EMIT_IS_ALL_END_NOTICE = "EMIT_IS_ALL_END_NOTICE";
