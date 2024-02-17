@@ -586,6 +586,27 @@
     "m_DJ004": "存在不支持串关赛事",
     "m_DJ005": "存在不支持串关盘口"
   },
+  "pre_record": {
+    "book_one": "预",
+    "book": "预约",
+    "booked": "预约成功",
+    "booked_fail": "预约失败",
+    "booking": "预约中",
+    "processing": "进行中",
+    "expired": "已失效",
+    "ConfirmedBooking": "已确认预约",
+    "canceled": "已取消",
+    "handicap": "盘口",
+    "odds": "赔率",
+    "book_bet_amount": "预约投注额",
+    "confirm_cancle": "确认取消",
+    "confirm_matchinfo": "确认取消 {0} 的预约吗？",
+    "cancle_fail_tips": "当前操作频繁，请稍后再试",
+    "cancle_fail_tips2": "赛事状态异常，不能取消预约",
+    "market_error_info": "已为最低预约盘口值，请重新调整。",
+    "market_error_info_max": "已为最高预约盘口值，请重新调整。",
+    "market_error_info_low": "不能低于最小预约盘口值。"
+  },
   "bet_record": {
     "pagination": {
       "np": "条/页",
