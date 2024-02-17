@@ -273,14 +273,14 @@ onUnmounted(() => {
   pointer-events: none;
 }
 .money-number {
-  margin-top: .01rem;
+  // margin-top: .01rem;
   color:var(--q-gb-t-c-18);
   font-weight: 700;
 }
 .money-span {
   width: 0.02rem;
-  height: 0.16rem;
-  margin: 0 .01rem;
+  height: 0.15rem;
+  margin: 0.02rem 0.03rem 0;
   background: var(--q-gb-t-c-1);
   &.money-span3{
     background: transparent;
