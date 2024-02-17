@@ -88,6 +88,20 @@ const emit_value = (value) => {
     Object.assign(BetRecordHistory.params, {
       preOrderStatusList: value.split(',')
     })
+    // 预约中状态   0 预约中  1 已取消    2 预约失败
+    let preStatus = 0
+    switch (value) {
+      case '0':
+        preStatus = 0
+        break;
+      case '4':
+        preStatus = 1
+        break;
+      case '2,3':
+        preStatus = 2
+        break;
+    }
+    BetRecordHistory.set_pre_status(preStatus)
   }
   BetRecordHistory.handle_fetch_order_list()
 }
@@ -131,7 +145,7 @@ const selectInput = (v) => {
   Object.assign(BetRecordHistory.params, {
     orderBy: v.id
   })
-  select_value1.value = v.value
+  select_value1.value = v.label
   BetRecordHistory.handle_fetch_order_list()
 }
 
@@ -188,7 +202,7 @@ let timer = null
 let wsObj = null
 onMounted(() => {
   select_value1.value = select_value.value
-  console.log(1111112,select_value1.value)
+  
   // 初始化日期时间
   const data = formatTime(new Date().getTime(), 'yyyy/mm/dd')
   date_value.value = data + '-' + data
