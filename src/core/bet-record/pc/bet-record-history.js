@@ -12,6 +12,8 @@ class BetRecord {
   init_core() {
     // 0 未结算 1 已结算  2 预约
     this.selected = 0
+    // 预约中状态   0 预约中  1 已取消    2 预约失败
+    this.preStatus = 0 
     // PC 投注记录提示
     this.tipMsg = 'bet_record.msg_1'
     // 列表
@@ -49,6 +51,12 @@ class BetRecord {
   set_table_data(value) {
     this.table_data = value
     this.set_bet_record_version()
+  }
+
+  // 预约中状态
+  set_pre_status(value) {
+    this.preStatus = value
+    // this.set_bet_record_version()
   }
 
   // 更改api
@@ -161,6 +169,7 @@ class BetRecord {
       size: 50,
       userId: UserCtr.user_info.userId
     }
+    this.preStatus = 0
     this.table_data = []
     this.records = {}
     this.loading = true

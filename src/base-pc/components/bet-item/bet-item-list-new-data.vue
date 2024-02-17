@@ -85,7 +85,7 @@ const props = defineProps({
   }
 });
 const match = inject('match', null)
-const emit = defineEmits(['oddsChange', 'stateChage'])
+const emit = defineEmits(['oddsChange'])
 const {
   bet_click_ol, score, odds_state, odds_lift, is_mounted
 } = use_bet_item(props, emit)
@@ -96,10 +96,6 @@ defineExpose({
 
 onMounted(() => {
   // 异步设置组件是否挂载完成
-  setTimeout(()=>{
-    // 冒泡初始化时的选中状态
-    emit('stateChage', odds_state)
-  })
 })
 
 </script>
