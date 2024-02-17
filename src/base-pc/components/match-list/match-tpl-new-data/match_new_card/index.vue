@@ -49,7 +49,7 @@
       >
         <div>
           <bet-item
-            v-if="is_mounted"
+            v-if="is_mounted && handicap_list[0]"
             :ol_data="handicap_list[0]"
             @oddsChange="
               (odds_lift_obj) => {
@@ -105,7 +105,7 @@
         <!-- <span class="common-text mr-8">{{ i18n_t("analysis.draw") }}</span> -->
         <span class="match-odd">
           <bet-item
-            v-if="is_mounted"
+            v-if="is_mounted && handicap_list[2]"
             @oddsChange="
               (odds_lift_obj) => {
                 lift_obj1 = odds_lift_obj;
@@ -162,7 +162,7 @@
         <div>
           <span class="match-odd">
             <bet-item
-              v-if="is_mounted"
+              v-if="is_mounted && handicap_list[1]"
               @oddsChange="
                 (odds_lift_obj) => {
                   lift_obj2 = odds_lift_obj;
