@@ -264,7 +264,7 @@ const cur_menu_type = ref({});
 // // 附加玩法
 // const get_show_additional_plays = ref(GlobalSwitchClass.get_show_additional_plays);
 // // 附加玩法配置
-// const get_additional_plays_list_num = ref(GlobalSwitchClass.get_additional_plays_list_num);
+const get_additional_plays_list_num = ref(GlobalSwitchClass.get_additional_plays_list_num);
 // // 附加玩法配置展示更多行数
 // const show_more_other_list_obj = ref(GlobalSwitchClass.show_more_other_list_obj);
 // // 近期开赛选择时间

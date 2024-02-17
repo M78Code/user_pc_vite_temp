@@ -37,6 +37,9 @@ class BetRecord {
     this.reset()
     // 切换提示语
     this.set_tip_msg(number)
+    if(number == 1){
+      this.set_date_tip_msg(number)
+    }
     // 更改api
     this.set_api_url(number)
     // 通知 重新获取数据 

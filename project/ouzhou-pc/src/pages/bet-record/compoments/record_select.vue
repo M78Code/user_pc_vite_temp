@@ -43,7 +43,7 @@
         </div>
         <div class="tips">
           <span class="dot"></span>
-          {{i18n_t("bet_record.msg_2")}}
+            <span style="font-size: 12px;color:#8A8986;">{{i18n_t(BetRecordHistory.tipMsg)}}</span>
         </div>
         <div class="record-query" @click="search">
           {{i18n_t("bet_record.query")}}
@@ -145,7 +145,7 @@ const selectInput = (v) => {
   Object.assign(BetRecordHistory.params, {
     orderBy: v.id
   })
-  select_value1.value = v.value
+  select_value1.value = v.label
   BetRecordHistory.handle_fetch_order_list()
 }
 
@@ -201,9 +201,8 @@ let useMitt = null
 let timer = null
 let wsObj = null
 onMounted(() => {
-  console.log(11111111)
   select_value1.value = select_value.value
-  console.log(1111112,select_value1.value)
+  
   // 初始化日期时间
   const data = formatTime(new Date().getTime(), 'yyyy/mm/dd')
   date_value.value = data + '-' + data
@@ -321,7 +320,7 @@ div.q-menu {
       height: 6px;
       border-radius: 50%;
       background-color: #ff7000;
-      margin-right: 4px;
+      margin-right: 6px;
     }
     font-size: 12px;
     margin-right: 12px;
