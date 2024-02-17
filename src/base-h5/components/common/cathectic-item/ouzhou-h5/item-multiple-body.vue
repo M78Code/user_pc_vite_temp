@@ -42,7 +42,7 @@
               <p>
                 {{BetRecordClass.selected === 2 ? item.playOptionName: item.marketValue}}
               </p>
-              <span>{{formatTime(+item.beginTime, 'mm/DD HH:MM')}}</span>
+              <span>{{formatTime(+item.closingTime, 'mm/DD HH:MM')}}</span>
             </div>
           </div>
           <div :class="{'main-warp': true, 

@@ -28,7 +28,8 @@
                       </div>
                       <div class="nonebox4-content-left-content-text-two">
                         <span class="nonebox4-content-left-content-text-three">{{item.sportName}}:</span>
-                         [{{ i18n_t('bet.bet_inplay') }}]
+                        <span v-show="item.matchType==2"> [{{ i18n_t('bet.bet_inplay') }}]</span>
+                        
                          <span class="text-two-span">{{item.playName}} 
                           <span class="nonebox4-content-left-content-text-two">[{{ i18n_t(`odds.${item.marketType}`) }}]</span>
                           <span v-if="[4,19,143,113].includes(item.playId*1)">{{item.matchType == 2? item.mark_score : ''}}</span>
