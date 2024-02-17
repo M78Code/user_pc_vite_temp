@@ -4,13 +4,13 @@
     :class="[
       ol_data.class,
       odds_state,
-      BetData.bet_oid_list.includes(ol_data.oid) ? 'active' : '',
+      BetData.bet_oid_list.includes(ol_data?.oid) ? 'active' : '',
       `csid${ol_data.csid}`,
       odds_lift,
       { 'show-odds-icon': odds_state != 'seal' },
       { 'oddsup': odds_lift == 'up' },
       { 'oddsdown': odds_lift == 'down' }
-    ]" @click.stop="bet_click_ol" :id="`list-${ol_data.oid}`">
+    ]" @click.stop="bet_click_ol" :id="`list-${ol_data?.oid}`">
     <!-- 盘口 -->
     <div :class="[
       'handicap-value',
