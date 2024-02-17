@@ -14,8 +14,10 @@
    <div class="content-box" :class="BetData.bet_state_show?'bet_state_show':''">
         <!-- 头部 -->
         <bet-bar></bet-bar>
-        
         <div v-show="BetData.bet_state_show">
+          <div class="lock_mask" v-if="BetViewDataClass.lock_mask">
+          </div>
+
           <!-- 删除全部和选择type -->
           <bet-all-detele :is_dropdown="is_dropdown" v-if="BetViewDataClass.bet_order_status == 1"></bet-all-detele>
           <!-- --------{{BetViewDataClass.bet_order_status}} - {{BetData.is_bet_single}} -->
@@ -143,7 +145,6 @@ let ref_min_height_max = ref('3.6') // rem 高长屏幕
 const scrollAreaRef = ref(null)
 const scrollAreaRef_mar = ref(null)
 const position = ref(2300)
-
 //串关的按钮
 const scroll_box = ref()
 const award_total = ref()
@@ -314,6 +315,15 @@ background: var(--q-gb-t-c-3) !important;
   width: 100%;
   -webkit-overflow-scrolling: touch;
   background-color: var(--q-gb-t-c-2);
+
+  .lock_mask{
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0);
+    position: absolute;
+    z-index: 1;
+  }
+
 
   .height-short{
     height: 1.8rem !important;
