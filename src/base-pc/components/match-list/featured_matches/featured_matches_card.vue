@@ -194,6 +194,8 @@ get_featurd_list()
         line-height: 14px;
         letter-spacing: 0px;
         color: var(--q-gb-t-c-8);
+        text-overflow: ellipsis; 
+        overflow: hidden;
       }
 
       .matches_time {

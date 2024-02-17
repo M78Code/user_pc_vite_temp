@@ -37,6 +37,7 @@ const pack_up = (val) => {
   BetData.set_bet_box_h5_show(false)
   BetData.set_clear_bet_info()
   BetViewDataClass.set_clear_bet_view_config()
+  BetData.set_is_bet_pre(false)
 }
 // 保留投注项
 const set_retain_selection = () => {
@@ -44,7 +45,7 @@ const set_retain_selection = () => {
     BetData.set_bet_amount(0)
     BetViewDataClass.set_bet_order_status(1)
     BetViewDataClass.set_bet_before_message({})
-
+    BetData.set_is_bet_pre(false)
     if(!BetData.is_bet_single){
       // 清空串关类型 的投注金额
       return BetViewDataClass.set_clear_bet_special()
