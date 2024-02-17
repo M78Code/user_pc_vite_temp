@@ -28,7 +28,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed, nextTick,toRef, inject } from 'vue';
+import { ref, onMounted, computed, inject } from 'vue';
 import lodash from 'lodash';
 
 import { utils_info } from 'src/core/utils/common/module/match-list-utils.js';
@@ -82,30 +82,10 @@ onMounted(() => {
 })
 
 //坑位对象
-// const hn_obj = toRef(MatchListData.list_to_obj,'hn_obj')
-// const col_ols_data = computed(() => {
-//   try {
-//     let { mid, csid } =match.value
-//     let handicap_type = props.add_type
-//     return lodash.cloneDeep(props.handicap_list || []).map(col => {
-//       col.ols = col.ols.map(item => {
-//         if (item.empty) { return }
-//         // 投注项数据拼接
-//         let hn_obj_config = MatchListData.get_list_to_obj_key(mid, `${mid}_${item._hpid}_${handicap_type}_${item.ot}`, 'hn')
-//         return Object.assign({other_class:item.other_class},lodash.get(hn_obj.value, hn_obj_config) || not_hn_obj_map.value[hn_obj_config] || {}) 
-//       })
-//       col.csid = csid;
-//       return col
-//     })
-//   } catch (e) {
-//     console.error('deal_width_handicap_ols', e)
-//     return []
-//   }
-// })
 const col_ols_data = computed(() => {
   try {
     let { hn, mid, csid } = match.value
-    let handicap_type = hn || 1
+    let handicap_type = props.add_type
     const hn_obj = lodash.get(MatchListData, "list_to_obj.hn_obj", {})
     return lodash.cloneDeep(props.handicap_list || []).map(col => {
       col.ols = col.ols.map(item => {
