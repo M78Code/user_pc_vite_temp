@@ -393,7 +393,7 @@ function checked_current_tab(payload,type) {
 	width: 100%;
 	box-sizing: border-box;
 	border-bottom: 2px solid var(--q-gb-bd-c-1);
-	background: var(--q-gb-bg-lg-8);
+	background: linear-gradient(270.05deg, #aaa9a9 9.04%, #3B3B3B 90.96%);
 	position: relative;
 
 	.header_banner {
