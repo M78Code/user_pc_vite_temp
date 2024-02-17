@@ -577,6 +577,27 @@
     "m_DJ004": "Some games don't support parlay",
     "m_DJ005": "Some markets don't support parlay"
   },
+  "pre_record": {
+    "book_one": "Book",
+    "book": "Book",
+    "booked": "Booked",
+    "booked_fail": "Book failed",
+    "booking": "Booking",
+    "processing": "Processing",
+    "expired": "Invalid",
+    "ConfirmedBooking": "Confirmed booking",
+    "canceled": "Canceled",
+    "handicap": "Dish",
+    "odds": "Odds",
+    "book_bet_amount": "Booked bet amt",
+    "confirm_cancle": "Confirm CXL",
+    "confirm_matchinfo": "cancel {0} booking?",
+    "cancle_fail_tips": "You are trying too often, pls try again later",
+    "cancle_fail_tips2": "Abnormal match status, can't cancel booking",
+    "market_error_info": "It is already the min booking market value, pls adjust。",
+    "market_error_info_max": "It is already the min booking market value, pls adjust。",
+    "market_error_info_low": "Can't be lower than min booked market value。"
+  },
   "bet_record": {
     "pagination": {
       "np": "N/P",

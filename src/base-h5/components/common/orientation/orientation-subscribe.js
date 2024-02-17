@@ -11,6 +11,7 @@ class OrientationSubscribe {
         // 视频点击是否全屏 
         this.status = false;
         this.notifyList = [];
+        this.callback = null;
     }
 
     /**
@@ -21,7 +22,7 @@ class OrientationSubscribe {
         console.log(status, "status");
         this.status = status;
         // console.log(this.callback);
-        this.callback(status);
+        this.callback?.(status);
         // this.notify()
     }
 
