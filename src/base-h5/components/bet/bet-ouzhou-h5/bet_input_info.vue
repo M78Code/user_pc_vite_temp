@@ -28,7 +28,7 @@
 
 <script setup>
 import lodash_ from "lodash"
-import { onMounted, onUnmounted, reactive,ref } from "vue"
+import { onMounted, onUnmounted, reactive,ref,computed } from "vue"
 import {MITT_TYPES,useMittOn,formatMoney,UserCtr,LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js"
