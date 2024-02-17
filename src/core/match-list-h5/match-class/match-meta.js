@@ -840,8 +840,8 @@ class MatchMeta {
  * @returns 
  */
   get_default_ouzhou_home_hots() {
-    const http_key = `ouzhou_h5_hots`
-    this.set_current_http_key(http_key)
+    // const http_key = `ouzhou_h5_hots`
+    // this.set_current_http_key(http_key)
     const res = localStorage.getItem('ouzhou_home_hots') && JSON.parse(localStorage.getItem('ouzhou_home_hots'))
     return this.get_ouzhou_home_hots_data(res)
   }
@@ -850,8 +850,8 @@ class MatchMeta {
    * @description 获取欧洲版首页热门赛事
    */
   async get_ouzhou_home_hots() {
-    const http_key = `ouzhou_h5_hots`
-    this.set_current_http_key(http_key)
+    // const http_key = `ouzhou_h5_hots`
+    // this.set_current_http_key(http_key)
     const params = {
       euid: "30199",
       sort: 1,
@@ -859,7 +859,8 @@ class MatchMeta {
       orpt: -1,
       cuid: UserCtr.get_uid(),
     }
-    const res = await api_match.post_fetch_match_list(params)
+    // const res = await api_match.post_fetch_match_list(params)
+    const res = await this.handler_axios_loop_func({ http: api_match.post_fetch_match_list, params, key: 'post_fetch_match_list' })
     return this.get_ouzhou_home_hots_data(res)
   }
 
@@ -867,7 +868,7 @@ class MatchMeta {
    * @description 获取欧洲版首页热门赛事
    */
   get_ouzhou_home_hots_data(res) {
-    if (!this.is_current_http_key(`ouzhou_h5_hots`)) return []
+    // if (!this.is_current_http_key(`ouzhou_h5_hots`)) return []
     if (!res || +res.code !== 200 || res.data.length < 1) return []
     localStorage.removeItem('ouzhou_home_hots')
     localStorage.setItem('ouzhou_home_hots', JSON.stringify(res))
@@ -902,7 +903,8 @@ class MatchMeta {
   async get_ouzhou_home_data() {
     const http_key = `ouzhou_h5`
     this.set_current_http_key(http_key)
-    const res = await api_match_list.get_home_matches({ type: 1, sort: 2 })
+    // const res = await api_match_list.get_home_matches({ type: 1, sort: 2 })
+    const res = await this.handler_axios_loop_func({ http: api_match_list.get_home_matches, params: { type: 1, sort: 2 }, key: 'get_home_matches' })
     return this.handle_ouzhou_home_data(res)
   }
 

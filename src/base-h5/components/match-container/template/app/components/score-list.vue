@@ -192,7 +192,8 @@ const get_total_scores = computed(() => {
   // let { home, away } = get_match_total_score();
 
   let { home_score: home, away_score: away } = props.match
-
+ 
+  // let { home_score = 0, away_score = 0 } = props.match;
   if (msc_format && msc_format.length) {
     let t = home + away;
     let total_sum = t ? `(${t})` : '';
