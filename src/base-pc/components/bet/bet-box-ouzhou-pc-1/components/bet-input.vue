@@ -8,11 +8,8 @@
                     <div class="font14">{{i18n_t('bet.bet_one_')}}</div>
                     <div class="font12 h12">
                         <span class="font400 mr-10 text-8A8986-i"> {{ i18n_t('common.maxn_amount_val') }}</span>
-                        <span class="text-8A8986-i font500"  v-if="BetData.is_bet_pre && BetData.bet_pre_appoint_id == items.playOptionsId"> 
-                            {{ formatMoney(mathJs.subtract(mathJs.multiply(items.bet_amount,ref_pre_book.appoint_odds_value || items.oddFinally), items.bet_amount)) }}
-                        </span>
-                        <span class="text-8A8986-i font500"   v-else>
-                            {{ formatMoney(mathJs.subtract(mathJs.multiply(items.bet_amount,items.oddFinally), items.bet_amount)) }}
+                        <span class="text-8A8986-i font500" >
+                            {{ bet_win_money() }}
                         </span>
                     </div>
                 </div>
@@ -42,10 +39,11 @@ import { reactive,onMounted,onUnmounted,computed } from "vue"
 import lodash_ from 'lodash'
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
-import { useMittEmit,useMittOn,MITT_TYPES,UserCtr,formatMoney, format_money3 ,LOCAL_PROJECT_FILE_PREFIX} from "src/output/index.js"
+import { compute_value_by_cur_odd_type,useMittOn,MITT_TYPES,UserCtr,formatMoney, format_money3 ,format_money2,LOCAL_PROJECT_FILE_PREFIX} from "src/output/index.js"
 import { submit_handle } from "src/core/bet/class/bet-box-submit.js"
 import mathJs from 'src/core/bet/common/mathjs.js'
 import { ref_pre_book } from "src/core/bet/common/appoint-data.js"
+import { odds_table } from "src/core/constant/common/module/csid.js"
 
 const props = defineProps({
     items:{},
@@ -241,6 +239,25 @@ const placeholder = computed(() => {
         return `${i18n_t('bet.money_range')} ${ref_data.min_money ? format_money3(ref_data.min_money):''}~${ref_data.max_money ? format_money3(ref_data.max_money) : ''}`
    
 })
+
+
+const bet_win_money = computed(()=> status => {
+  // 获取单关投注的数据
+  let { bet_amount ='', oddFinally = '', odds_hsw = '',odds,playId,sportId } = lodash_.get(props,'items',{})
+  let bet_win = bet_amount
+  oddFinally = compute_value_by_cur_odd_type(odds,playId,odds_hsw,sportId)
+  // 香港赔 不用减去投注金额
+  if(odds_hsw.includes(odds_table[UserCtr.odds.cur_odds]) && UserCtr.odds.cur_odds == 'HK' ){
+    bet_win = 0
+  }
+  // 预约投注 赔率
+  if(BetData.is_bet_pre){
+    oddFinally = ref_pre_book.appoint_odds_value
+  }
+  // 计算出可赢金额
+  return format_money2(mathJs.subtract(mathJs.multiply(bet_amount,oddFinally), bet_win)) 
+})
+
 
 </script>
 

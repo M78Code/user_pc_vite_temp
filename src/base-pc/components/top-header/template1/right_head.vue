@@ -292,16 +292,15 @@ export default defineComponent({
 
     // 切换语言
     const on_change_lang = (key) => {
-      lang.value = key
-      // 设置国际化语言
-      loadLanguageAsync(key).then().finally(() => {
-        UserCtr.set_lang(key)
-        BaseData.set_base_data_menu_i18n()
-      })
       api_account.set_user_lang({ languageName: key }).then(res => {
         let code = lodash.get(res, 'code');
         if (code == 200) {
-
+          lang.value = key
+          // 设置国际化语言
+          loadLanguageAsync(key).then().finally(() => {
+            UserCtr.set_lang(key)
+            BaseData.set_base_data_menu_i18n()
+          })
         } else if (code == '0401038') {
           useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t("common.code_empty"))
         }
