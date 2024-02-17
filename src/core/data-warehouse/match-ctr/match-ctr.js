@@ -950,12 +950,16 @@ get_quick_mid_obj_ref(mid){
       hps_key_arr.forEach(hps_key_str => {
         // 设置投注项赛事列表数据
         hps_data_arr = lodash.get(item, hps_key_str)
+        //特色玩法数据h5做特殊处理
+        if(hps_key_str = 'hpsCompose' && !BUILDIN_CONFIG.IS_PC){
+          hps_key_str = 'hpsCompose_h5';
+        }
         switch (hps_key_str) {
           // 主玩副盘口数据时
           case 'hpsData[0].hpsAdd':
           case 'hpsData[1].hpsAdd':
           case 'hps':
-          case 'hpsCompose':
+          case 'hpsCompose_h5': // h5玩法的hpsCompose
           case 'hpsAdd':
           // 赛事详情所有玩法数据时
           case 'odds_info':
@@ -1166,12 +1170,16 @@ get_quick_mid_obj_ref(mid){
         hps_key_arr.forEach(hps_key_str => {
           // 设置投注项赛事列表数据
           hps_data_arr = lodash.get(item, hps_key_str)
+          //特色玩法数据h5做特殊处理
+          if(hps_key_str = 'hpsCompose' && !BUILDIN_CONFIG.IS_PC){
+            hps_key_str = 'hpsCompose_h5';
+          }
           switch (hps_key_str) {
             // 主玩副盘口数据时
             case 'hpsData[0].hpsAdd':
             case 'hpsData[1].hpsAdd':
             case 'hps':
-            case 'hpsCompose':
+            case 'hpsCompose_h5': // h5玩法的hpsCompose
             case 'hpsAdd':
             // 赛事详情所有玩法数据时
             case 'odds_info':

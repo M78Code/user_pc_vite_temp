@@ -99,7 +99,8 @@ const get_data_menu_result = async () => {
       data.map((x) => {
         arr.push({
           count: x.count,
-          md: x.menuType == 100 ? '' : x.field1,  // 冠军的md为空
+          // md: x.menuType == 100 ? '' : x.field1,  // 冠军的md为空
+          md: x.menuType == 100 ? '100' : x.field1,  // 冠军的md为100
           menuName: x.menuName,
         });
       });

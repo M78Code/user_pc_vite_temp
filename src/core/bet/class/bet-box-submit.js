@@ -389,7 +389,7 @@ const get_lastest_market_info = (type) => {
                         console.error('ws那边做了替换为最新的:', item.playOptionsId)
                         // playOptionsId 已经在 ws那边做了替换为最新的
                         let odds = market_odds_list.find(page=> page.oddsType == item.ot) || {}
-
+                        
                         if( odds.id ) {
                             // 替换新id
                             BetData.set_bet_oid_obj(item.playOptionsId,odds.id)
@@ -409,12 +409,12 @@ const get_lastest_market_info = (type) => {
                                 if( ( bet_item.odds != odds.oddsValue ) || ( bet_item.ot != odds.oddsType ) ){
                                     // bet_item.ol_os = 4
                                     // bet_item.hl_hs = 11
-                                    BetData.set_bet_is_accept(true)
+                                    // BetData.set_bet_is_accept(true)
                                     // 投注滑块重置到初始状态
                                     useMittEmit(MITT_TYPES.EMIT_INIT_SLIDER_CONFIG)
 
                                 }else{
-                                    BetData.set_bet_is_accept(false)
+                                    // BetData.set_bet_is_accept(false)
                                 }
                                 // console.error('sssssss',BetData.bet_is_accept)
                                 // 投注项id
@@ -426,10 +426,10 @@ const get_lastest_market_info = (type) => {
                                 // 最终赔率
                                 bet_item.oddFinally = compute_value_by_cur_odd_type(odds.oddsValue,obj.playId, item.odds_hsw, item.csisportIdd)
                                 
-                                clearTimeout(time_accept_out)
-                                time_accept_out = setTimeout(()=>{
-                                    BetData.set_bet_is_accept(false)
-                                },5000)
+                                // clearTimeout(time_accept_out)
+                                // time_accept_out = setTimeout(()=>{
+                                //     BetData.set_bet_is_accept(false)
+                                // },5000)
                             }
 
                             if(BetData.is_bet_pre){
@@ -871,6 +871,7 @@ const submit_handle_lastest_market = () => {
     // 测试投注失败
     // BetViewDataClass.set_bet_order_status(5)
     //return
+    BetViewDataClass.set_lock_mask(true)
     api_betting.post_submit_bet_list(params).then(res => {
         // BetViewDataClass.set_tip_message(res)
         // BetData.tipmsg=res.msg  // 不能这样处理 查看 BetViewDataClass.set_bet_before_message 方法
@@ -986,6 +987,7 @@ const set_submit_btn = () => {
     if(PROJECT_NAME.includes('new-pc')){
         useMittEmit( MITT_TYPES.EMIT_BET_LOADING,false)
     }
+    BetViewDataClass.set_lock_mask(false)
     setTimeout(()=>{
         submit_btn = false
     },500)

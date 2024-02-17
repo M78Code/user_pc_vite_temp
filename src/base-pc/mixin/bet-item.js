@@ -49,7 +49,7 @@ export function use_bet_item(props, emit) {
         }
     })
     // 监听投注项赔率变化
-    watch(() => props.ol_data.ov, (cur, old) => {
+    watch(() => props.ol_data?.ov, (cur, old) => {
         if (cur == old) return
         // 红升绿降变化
         set_odds_lift(cur, old, props.ol_data);
