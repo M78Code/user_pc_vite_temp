@@ -6,9 +6,10 @@
   <div class="tip component bet-btn-item" v-if="BetViewDataClass.error_message">
     <div :class="{'bet-success':BetViewDataClass.error_code == 200, 'bet-loading':BetViewDataClass.error_code == '0000000', 'bet-error': ![200,'0000000'].includes(BetViewDataClass.error_code)}">
       <div class="displayflex">
-        <img class="icon_success" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/bet/success.svg`" alt=""  v-if="BetViewDataClass.bet_order_status == 7"/>
+        <img class="icon_loading" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/gif/icon_loading.gif`" alt="" v-if="BetViewDataClass.bet_order_status == 2"/>
+        <img class="icon_success" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/bet/success.svg`" alt=""  v-if="BetViewDataClass.bet_order_status == 3"/>
+        <img class="icon_component" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/bet/component.png`" alt=""  v-if="BetViewDataClass.bet_order_status == 4"/>
         {{ BetViewDataClass.error_code_list.includes(BetViewDataClass.error_code) ? i18n_t(BetViewDataClass.error_message) : BetViewDataClass.error_message }}
-        <img class="icon_loading" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/gif/icon_loading.gif`" alt=""  v-if="BetViewDataClass.bet_order_status == 2"/>
       </div>
     </div>
   </div> 
@@ -72,6 +73,11 @@ const set_retain_selection = () => {
 }
 .icon_success{
   margin-right: .05rem;
+}
+.icon_component{
+  width: 18px;
+  height:16px;
+  margin: 10px 5px 0 0;
 }
 .displayflex{
   display: flex;
