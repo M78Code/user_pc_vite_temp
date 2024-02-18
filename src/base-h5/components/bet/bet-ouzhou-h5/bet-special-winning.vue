@@ -5,17 +5,17 @@
   <!-- 最高可赢 -->
   <div class="highest_win row items-center justify-between">
     <div class="left_text">
-      <p>最高可赢</p>
+      <p>{{i18n_t('bet.total_win2')}}</p>
       <p class="money">{{ ref_data.win_money }}</p>
     </div>
     <div class="right_text">
-      <p>投注金额</p>
+      <p>{{i18n_t('bet.bet_val')}}</p>
       <p class="multiple">{{ ref_data.total_money }}</p>
     </div>
   </div>
   <!-- 展开串关类型 -->
   <div class="open-crosstalk" v-if="BetViewDataClass.bet_order_status == 1" :class="{ 'active': BetData.special_type }" @click="set_special_type()" >
-    <span>展开串关类型</span>
+    <span>{{i18n_t('bet.expand_the_string_type')}}</span>
     <img class='icon' :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/odds_down.png`" alt=""/>
   </div>
 </template>
