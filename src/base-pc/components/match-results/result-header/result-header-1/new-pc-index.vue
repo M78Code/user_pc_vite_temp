@@ -28,10 +28,12 @@
           <Select-Wrapper
           :value="sport"
           :sportType="sport"
+          :sport="sport"
           :options="sport_type"
           :isChampion="0"
           :showInput="true"
           use_component_key="Select_n"
+          class="e-select-wrapper"
         ></Select-Wrapper>
           </div>
       <!-- 冠军球种才展示这个下拉选择框 -->
@@ -695,69 +697,10 @@ background: #ffffff;
     line-height: 12px !important;
   }
 }
-.e-select {
-  width: 100px;
-  height: 28px;
-  color: var(--qq--yb-text-color3);
-  border-radius: 2px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  font-size: 12px;
-  position: relative;
-  .select-value {
-    width: 100%;
-    height: 28px;
-    line-height: 28px;
-    padding: 0 6px;
-    position: relative;
-    border: 1px solid var(--q-match-result-boreder-1);
-    background: #ffffff;
-    cursor: pointer;
-    &:hover {
-      border: 1px solid var(--qq--y0-text-color1);
+  :deep(.e-select){
+    .opitons-wrap {
+      background: #ffffff !important;
     }
   }
-  .select-input {
-    cursor: text;
-    outline: none;
-    // background-color: rgba(16,16,16,0.95);
-  }
-  .opitons-wrap {
-    width: 100%;
-    height: 420px;
-    max-height: 65vh;
-    position: absolute;
-    left: 0;
-    z-index: 1;
-    background: transparent;
-    border-bottom: 1px solid #d0d8de;
-    .item {
-      width: 100%;
-      height: 30px;
-      line-height: 30px;
-      margin: 0;
-      padding-left: 15px;
-      cursor: pointer;
-      color: #1d1d1d;
-      border-left: 1px solid #d0d8de;
-      border-right: 1px solid #d0d8de;
-      &:first-child {
-        border-top: 1px solid #d0d8de;
-      }
-      &:hover {
-        background: #e3e9ee;
-      }
-    }
-    .active {
-      background: #e3e9ee;
-    }
-    .rule-scroll-area {
-      &:deep(.q-scrollarea__content){
-        width: 100%;
-        background: #fff;
-  }
-     
-    }
-  }
-}
+
 </style>
