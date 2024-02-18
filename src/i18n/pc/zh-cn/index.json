@@ -553,7 +553,10 @@
     "bet_max_booked_odds": "已为最高预约赔率值，请重新调整",
     "bet_min_booked_odds": "预约赔率不能低于所对应的盘口赔率",
     "bet_betting": "投注中",
-    "bet_single_merge":"合并单关"
+    "bet_single_merge":"合并单关",
+    "expand_the_string_type": "展开串关类型"
+    
+
    
   },
   "bet_message":{
