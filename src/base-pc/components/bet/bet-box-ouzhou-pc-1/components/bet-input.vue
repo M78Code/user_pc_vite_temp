@@ -113,7 +113,8 @@ const bet_money_btn_class = (obj, index) => {
     let className = '';
     if(ref_data.max_money > 0) {
         // if(index === 'max') obj = UserCtr.balance
-        if(index != 'max' && (ref_data.max_money < obj || ref_data.max_money < props.items.bet_amount || UserCtr.balance < obj)) {
+        const lastAmount = mathJs.subtract(UserCtr.balance, props.items.bet_amount)
+        if(index != 'max' && (ref_data.max_money < obj || ref_data.max_money < props.items.bet_amount || UserCtr.balance < obj) || obj > lastAmount) {
             className = 'disabled'
         }
         

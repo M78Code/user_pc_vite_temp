@@ -9,7 +9,7 @@
                     <div>{{i18n_t('bet.bet_multiple')}}</div>
                     <div class="bet-count">
                         <span>{{ BetData.bet_single_list.length}}</span>
-                        <span>x</span>123
+                        <span>x</span>
                     </div>
                 </div>
                 <div class="row text-color-max-win mt2">
