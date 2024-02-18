@@ -1,0 +1,49 @@
+{
+  "leftmenu": {
+    "level": 1,
+    "menuName": "客户端PC",
+    "sonName": "utils-工具方法"
+  },
+  "props": {
+    "category": "utils",
+    "directory-name": "utils",
+    "descriptions": [
+      "页面通用js",
+      "数据转换 格式转换 url检验 赛事比分转换",
+      "赔率转换 日期转换 赛事类别校验",
+      "存储方法 http优化"
+    ],
+    "type": "js",
+    "remark": "",
+    "item": [
+      {
+        "filename": "global-filters",
+        "type": "js",
+        "descriptions": ["日期转换 金额转换", "赛事比分阶段性差异"]
+      },
+      {
+        "filename": "match-list-utils",
+        "type": "js",
+        "descriptions": [
+          "赛事列表通用逻辑方法",
+          "球种校验 赛事比分格式转换 赛事列表数据格式转换",
+          "赛事状态 红猫赛事限制"
+        ]
+      },
+      {
+        "filename": "web-storage",
+        "type": "js",
+        "descriptions": [
+          "共有的 web storage 操作方法",
+          "导出 LocalStorage | LocalStorage, SessionStorage | SessionStorage  ",
+          "提供 get(key)  set(key,value,过期时间秒) remove(key) clear 方法"
+        ]
+      },
+      {
+        "filename": "dom-hook",
+        "type": "js",
+        "descriptions": ["针对原始dom元素进行操作"]
+      }
+    ]
+  }
+}

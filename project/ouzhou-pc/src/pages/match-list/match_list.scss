@@ -1,0 +1,474 @@
+/*
+ * @Author: Amor
+ * @Date: 2020-09-09 12:31
+ * @Description: 赛事主列表相关 样式
+ */
+.yb-match-list {
+  display: flex;
+  flex-direction: column;
+  .c-match-item {
+    display: flex;
+    &.tpl-9,
+    .timer-layout2 {
+      top: -3px;
+    }
+    .match-handicap-item-wrap {
+      flex: 1;
+    }
+
+    /* 小节足球让球 球队名位置  */
+  }
+  .match-handicap-item-wrap {
+    .other-play-tab {
+      .tab-wrap {
+        margin-left: 10px;
+      }
+    }
+    .match-handicap-item:nth-of-type(n + 2) {
+      .basic-col {
+        padding-left: 20px;
+        /* 小节发球方 */
+        .serve-ball {
+          left: -24px;
+        }
+      }
+    }
+  }
+
+  /*  主盘、附加盘、当前局盘 */
+  .match-handicap-item {
+    display: flex;
+    flex: 1;
+  }
+
+  /*  赛事阶段列 */
+  .process-col {
+    width: 77px;
+    line-height: 1.8;
+    text-align: center;
+    position: relative;
+    .c-match-process {
+      position: absolute;
+      /**棒球阶段宽度不够增加paddin给使其换行*/
+      .process-name{
+        padding: 0 2px;
+      }
+    }
+  }
+
+  /* 对阵队伍容器 */
+  .basic-col {
+    padding: 0 10px;
+    .basic-wrap {
+      .bold {
+        font-weight: 600;
+      }
+      .match_pre{
+        width: 26px;
+        height: auto;
+      }
+    }
+  }
+  .tpl-esports-bg {
+    .basic-col {
+      .basic-wrap {
+        .home {
+          font-weight: normal;
+        }
+      }
+    }
+  }
+  .row-item {
+    /* 队伍logo */
+    .neutral-wrap {
+      margin-right: 10px;
+      /* 收藏 */
+    }
+    .m-star-wrap-match {
+      margin-right: 10px;
+      cursor: pointer;
+      /* 可投注选项数量 */
+    }
+    .play-count-wrap {
+      cursor: pointer;
+      transform: translateY(1px);
+      .play-count {
+        margin-right: 5px;
+        /* 比分 */
+      }
+    }
+    .score,
+    .score-game {
+      text-align: right;
+      margin: 0 1px 0 10px;
+    }
+  }
+  /*  视频区域 */
+  .media-col {
+    flex: 1;
+  }
+
+  /*  赛事底部比分容器 (网球/乒乓球/斯诺克等) */
+  .score-more {
+    padding: 0 15px;
+    /* 单局比分间隙 */
+    /*  .item */
+    /*    margin-right 15px  */
+  }
+  /*  滚动条样式 */
+  // &:after {
+  //   content: "";
+  //   position: absolute;
+  //   width: 14px;
+  //   height: 100%;
+  //   right: 0;
+  //   top: 0;
+  // }
+
+	/*  文字闪烁 */
+  @keyframes text-flash {
+    0% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 1;
+    }
+    60% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+
+  /*  吸顶样式 */
+  .sticky-wrap {
+    position: sticky;
+    left: 0;
+    z-index: 200;
+    height: 34px;
+    &.tpl-118 {
+      .basic-width {
+        width: 100%;
+        max-width: 100%;
+        .match-date {
+          margin-right: 0;
+        }
+      }
+      .media-col {
+        display: none;
+      }
+    }
+    &.virtual-tpl1{
+      &.m_top{
+        margin-top: 5px;
+      }
+    }
+  }
+
+  /*  公共样式 */
+  .absolute-full {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+  }
+  .ellipsis-wrap {
+    flex: 1;
+    position: relative;
+    height: 100%;
+  }
+
+  /*  收藏图标 样式 */
+  .icon-star:before {
+    font-size: 14px;
+  }
+
+  /*  统计分析  */
+  .sr-link-icon-w {
+    width: 14px;
+    height: 13px;
+    margin-right: 10px;
+    cursor: pointer;
+
+    i.icon-signal {
+      width: 100%;
+      height: 100%;
+      display: block;
+      &.focus-icon {
+        display: none;
+      }
+    }
+  }
+
+  /*  loading遮罩 */
+  .refresh-mask {
+    top: 36px;
+    right: 14px;
+    z-index: 9999;
+    .img-loading {
+      width: 50px;
+      height: 50px;
+      background-size: 100%;
+    }
+  }
+  .tpl-22 .c-bet-item{
+    .handicap-value{
+      flex: .6;
+    }
+  }
+  // 1550px以下  小屏样式
+  @media (max-width: 1550px) {
+    // 22模板样式
+    .tpl-22 .c-bet-item{
+      .odds{
+        margin-left: 4px;
+        font-size: 12px;
+      }
+      .odds-icon{
+        left: -3px;
+      }
+    } 
+    // 电竞模板样式
+    .tpl-esports-bg .c-bet-item{
+      .odds{
+        margin-left: 3px;
+        font-size: 12px !important;
+      }
+      .odds-icon{
+        left: -3px;
+      }
+    } 
+  }
+
+}
+
+/*  透明闪烁 */
+/*  @keyframes flash */
+/*    0% */
+/*      opacity 1 */
+
+/*    100% */
+/*      opacity 0 */
+
+/*  列表和详情公共投注项样式  */
+.c-bet-item {
+  font-size: 13px;
+  &.seal.csid1 .handicap-wrap {
+    display: none;
+  }
+  .handicap-value {
+    font-size: 12px;
+    display: flex;
+    justify-content: flex-end;
+  }
+  .odds {
+    display: flex;
+    position: relative;
+    align-items: center;
+    font-size: 14px;
+    &.up {
+      .q-icon {
+        position: absolute;
+        top: 10px;
+      }
+    }
+    &.down {
+      .q-icon {
+        position: absolute;
+        top: 8px;
+      }
+    }
+    .icon-lock {
+      margin-left: 10px;
+    }
+  }
+  &.normal,
+  &.active,
+  &.lock {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+/* *** 列表底部 ************ -S */
+.footer-wrap {
+  padding: 0 20px;
+  .no-more-wrap {
+    padding: 20px 0;
+    .msg {
+      margin-left: 5px;
+    }
+  }
+  .go-top-btn {
+    margin-left: 25px;
+    padding: 0 24px;
+    height: 24px;
+    line-height: 24px;
+    border-radius: 4px;
+  }
+}
+
+/* *** 列表底部 ************ -E */
+/***虚拟体育 ***/
+.yb-match-list.virtual-list {
+  .sticky-wrap {
+      .match-type {
+        .basic-width {
+          padding: 0 15px;
+        }
+        .match-no-wrap {
+          display: flex;
+          align-items: center;
+          height: 100%;
+        }
+        .col-left {
+          width: 65px;
+          font-size: 14px;
+          .icon-stage-fold {
+            margin-right: 10px;
+            width: 12px;
+            height: auto;
+          }
+        }
+        .match_no {
+          margin-left: 15px;
+        }
+        .timer-wrap {
+          flex-wrap: nowrap;
+          .timer-layout {
+            width: auto;
+            margin-left: 8px;
+            .timer-layout2 {
+              white-space: nowrap;
+            }
+          }
+        }
+      }
+    }
+    .virtual-match-tpl2 {
+      .more-row {
+        padding-right: 20px;
+        width: 100%;
+        height: 40px;
+        .icon-triangle3:before {
+          margin-left: 15px;
+          font-size: 17px;
+        }
+      }
+    }
+  .c-match-item {
+    margin-top: 4px;
+    &.virtual-match-tpl2 {
+      display: block;
+      margin: 4px 0;
+    }
+  } 
+}
+/*  模板18相关样式 */
+.tpl-118 {
+  border-bottom: 1px solid var(--q-gb-bd-c-1);
+  .play-wrap {
+    /*  玩法基本信息 */
+    .play-info {
+      background: var(--q-gb-bg-c-15);
+      // border-color: rgba(0, 0, 0, 0.15);
+      color: var(--q-gb-t-c-5);
+    }
+  }
+
+  .bet-col {
+    border-bottom: 1px solid var(--q-gb-bd-c-2);
+    border-right: 1px solid var(--q-gb-bd-c-2);
+
+    &:nth-of-type(even) {
+      border-right: none;
+    }
+
+    .handicap-value {
+      &.color-highlight {
+        color: var(--q-gb-bd-c-3) !important;
+      }
+    }
+  }
+
+  //一个联赛多个小组赛
+  .play-wrap {
+
+    .bet-list-wrap {
+      background: var(--q-gb-bg-c-4);
+      box-sizing: border-box;
+    }
+  }
+}
+.tr-match-head-ouzhou {
+  background: var(--q-gb-bg-c-4);
+
+  // color: var(--q-gb-bg-c-8)FFF;
+  .leagues-wrap {
+    color: var(--q-gb-bg-c-2);
+    font-weight: 550;
+  }
+
+  .icon-arrow {
+    &::before {
+      color: var(--q-gb-bd-c-11);
+    }
+  }
+
+  .play-name {
+    .col {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--q-gb-bg-c-2);
+      font-family: "PingFangSC-Medium";
+      border-left: .5px solid transparent;
+
+      &.bet-col3,
+      &.bet-col4,
+      &.bet-col5 {
+        background: var(--q-gb-bg-c-22);
+        // font-weight: 400;
+        &.no-bg {
+          background: none;
+        }
+
+        &.y0-col4 {
+          border-right: 1px solid var(--q-gb-bd-c-8);
+          border-left: 1px solid var(--q-gb-bd-c-8);
+        }
+      }
+
+      &.bet-col2,
+      &.bet-col5 {
+        border-right: .5px solid var(--q-gb-bd-c-8);
+      }
+    }
+
+    /*  投注项列 名称 */
+  }
+}
+
+/*  足球进球 动图 */
+.yb-goal-gif {
+  margin-left: 5px;
+  min-width: 12px;
+  height: 12px;
+  background-repeat: no-repeat;
+  background-position: 0% 0;
+  background-size: auto 100%;
+  animation: 1s goal-gif infinite steps(29, end);
+}
+
+@keyframes goal-gif {
+  from {
+    background-position: 0%, 0;
+  }
+  to {
+    background-position: 100%, 0;
+  }
+}

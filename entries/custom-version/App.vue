@@ -1,15 +1,31 @@
 <template>
   <div>
 
-     <h1>客户端模块化+SDK版本</h1>
+     <h4>客户端模块化+SDK版本---------full-version </h4>
+     <h5>   custom-version   </h5>
+     <div>
+      <TestComponentFullVersionWapper @test-emit="handle_test_emit"  :tableClass="'bg-teal'"  :title="'xasxsaxa111'" />
+     </div>
+ 
+  
 
+    
   </div>
 </template>
 
 <script setup>
+import {TestComponentFullVersionWapper} from "src/components/test-component/index.js"
 
+
+
+
+const handle_test_emit=(params)=>{
+      console.log("emit 事件收到 ");
+      console.log("组件包装器  实际使用者 收到 emit 事件  ，携带  数据 ： ", params);
+    }
 </script>
 
 <style lang="scss" scoped>
+
 
 </style>

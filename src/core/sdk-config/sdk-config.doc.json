@@ -1,0 +1,17 @@
+{
+  "leftmenu": {
+    "level": 2,
+    "menuName": "客户端PC",
+    "sonName": "sdk模块化配置"
+  },
+  "props": {
+    "category": "sdk-config",
+    "directory-name": "sdk-config",
+    "descriptions": [
+      "sdk模块化配置"
+    ],
+    "type": "js",
+    "remark": "sdk模块化配置",
+    "items": []
+  }
+}

@@ -1,0 +1,213 @@
+/*
+ * @Author: Cable
+ * @Date: 2020-11-11 20:30:55
+ * @Description: 所有项目、所有版本的公共样式
+ */
+ .fullscreen {
+    z-index: 10010 !important;
+  }
+.q-notification,.q-notifications__list{
+  z-index: 10011 !important;
+}
+  .q-tooltip {
+    z-index: 10003 !important;
+  }
+  p {
+    margin: 0 0 0;
+  }
+  .text-center {
+    text-align: center;
+  }
+  .relative-position {
+    position: relative;
+  }
+
+  .sport-img {
+    background-image: var(--qq--menu-bg-image1);
+    // &.img36 {
+    //   background-image: var(--qq--menu-bg-image1);
+    // }
+    &.check {
+      background-image: var(--qq--bg-image-url3);
+    }
+  }
+  
+  .sport-img-new {
+    background-image: var(--qq--bg-image-url51) !important;
+  }
+  /* 进球特效背景 */
+  .theme01_y0,
+  .theme02_y0 {
+    .q-virtual-scroll__content {
+        /* 分页跳转条 */
+      .select-item {
+        &:hover {
+          background-color: #569ffd;
+          color: #fff;
+        }
+      }
+    }
+  }
+  //内嵌版 样式
+  .within-iframe {
+    .menu_toggle-btn {
+      left: 230px;
+      cursor: pointer;
+      &.mini {
+        left: 64px;
+      }
+    }
+    .yb-match-list{
+      &:after {
+        width: 10px;
+      }
+      &::before{
+        right: 10px !important;
+      }
+      /*  赛事阶段列 */
+      .process-col {
+        width: 56px;
+        min-width: 56px;
+      }
+    }
+    .v-scroll-area {
+      &::after{
+        width: 10px;
+      }
+      .q-scrollarea__thumb {
+        width:6px;
+      }
+    }
+    .page-center,.page-right {
+      .v-scroll-area {
+        .content-wrap {
+          .scroll-header {
+              // padding-right: 10px !important;
+          }
+        }
+  
+      }
+    }
+    .c-main-menu {
+      .content-wrap {
+        .scroll-header{
+          right:11px !important;
+        }
+      }
+    }
+    .scroll-fixed-header{
+      right: 10px;
+    }
+    .v-scroll-list{
+      .list-scrollbar{
+        right:2px;
+        padding-right:0;
+        &::-webkit-scrollbar {
+          width: 6px;
+        }
+        &::-webkit-scrollbar-thumb {
+          width: 6px;
+        }
+      }
+    }
+  }
+  @-moz-document url-prefix() {
+    .within-iframe{
+      .v-scroll-list{
+        .list-scrollbar{
+          right:1px;
+          padding-right:0;
+        }
+      }
+    }
+  }
+  
+  .v-scroll-area:after {
+    pointer-events: none;
+    // border-left: 1px solid transparent;
+  }
+  
+  /*  悬浮提示 */
+  @keyframes tooltip {
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  .c-tooltip {
+    position: absolute;
+    left: 50%;
+    top: -24px;
+    transform: translateX(-50%);
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 0 5px;
+    height: 22px;
+    line-height: 22px;
+    font-size: 12px;
+    opacity: 0;
+    white-space: nowrap;
+    pointer-events: none;
+  }
+  .c-tooltip-wrap:hover {
+    .c-tooltip {
+      animation: tooltip 300000s linear 1s;
+    }
+  }
+  .c-tooltip-0s:hover {
+    .c-tooltip {
+      opacity: 1;
+    }
+  }
+  /*  无视频背景 */
+  .dplayer-controller,
+  .dplayer-menu,
+  .dplayer-setting,
+  .dplayer-bar-time,
+  .dplayer-notice,
+  .dplayer-live-badge,
+  .dplayer-mobile-play,
+  .dplayer-mask,
+  .dplayer-controller-mask,
+  .dplayer-info-panel {
+    display: none;
+  }
+  .custom-format-web-icon-05 {
+    background-image: url("/activity/image/common/svg/novideo@2x.png") !important;
+  }
+  .custom-format-web-icon-06 {
+    background-image: url($SCSSPROJECTPATH+"/image/common/png/novideo.png") !important;
+  }
+  .match-hot {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 20px;
+  }
+ 
+  
+  /* 自定义滚动条 */
+  [class*=theme0] {
+    *::-webkit-scrollbar {
+      width: 7px;
+      background-color: var(--qq--match-bg-color11);
+    }
+    *::-webkit-scrollbar-thumb {
+      background-color: var(--qq--match-bg-color13);
+      border-radius: 4px;
+    }
+    .dialog-scroll{
+      &::-webkit-scrollbar {
+        background-color: #fff;
+      }
+      &::-webkit-scrollbar-thumb {
+        background-color: rgba(0, 0, 0, .1);
+      }
+    }
+  }
+  .check-wrap.active::before{
+    border-color: var(--qq--check-wrap-active-color) 
+  }
+  

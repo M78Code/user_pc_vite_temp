@@ -1,0 +1,30 @@
+ /* 
+ 参考文档
+ https://developer.mozilla.org/zh-CN/docs/Web/CSS/::-webkit-scrollbar 
+ */
+
+.scroll-bar-display-none {
+  &::-webkit-scrollbare{
+    display: none;
+    width: 0px;
+    height: 0px;
+  }
+  &::--webkit-scrollbar-button{
+    display: none;
+  }
+  &::-webkit-scrollbar-thumb{
+    display: none;
+  }
+  &::-webkit-scrollbar-track{
+    display: none;
+  }
+  &::-webkit-scrollbar-track-piece{
+    display: none;
+  }
+  &::-webkit-scrollbar-corner{
+    display: none;
+  }
+  &::-webkit-resizer{
+    display: none;
+  }
+}

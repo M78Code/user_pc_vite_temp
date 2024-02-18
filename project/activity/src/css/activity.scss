@@ -1,0 +1,455 @@
+/*
+ * @Author: ledron
+ * @Date: 2021-08-27 14:35:35
+ * @Description: 活动公用样式
+ */
+//  $h5-max-width: 3.78rem;
+.activity-rules {
+  width: 3.42rem;
+  margin: auto;
+  margin-top: 0.45rem;
+  background: #ffffff;
+  border: 1px solid #fec59e;
+  box-shadow: 0 2px 40px 0 rgba(0, 0, 0, 0.1);
+  border-radius: 0.2rem;
+  padding-bottom: 0.18rem;
+  font-family: PingFangSC-Regular;
+  font-size: 12px;
+  color: #666666;
+  text-align: justify;
+  .title {
+    width: 1.98rem;
+    height: 0.36rem;
+    margin: auto;
+    background-image: var(--qq--com-img-bg-119);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: PingFangSC-Medium;
+    font-size: 0.17rem;
+    font-weight: bold;
+    color: #333333;
+    line-height: 0.3rem;
+    position: relative;
+    top: -0.12rem;
+  }
+  .rules-object {
+    margin: 0.15rem 0.14rem 0 0.11rem;
+    font-size: 0.12rem;
+    > div {
+      display: flex;
+      line-height: 0.24rem;
+      margin-bottom: 0.1rem;
+      > img {
+        width: 0.12rem;
+        height: 0.12rem;
+        margin-right: 0.05rem;
+        margin-top: 0.05rem;
+      }
+      > div {
+        span {
+          &.blue {
+            color: #007dff;
+          }
+        }
+      }
+    }
+  }
+  .go-to-lottery {
+    margin: 0 auto;
+    width: 3.2rem;
+
+    background: #fff0e5;
+    border-radius: 0.04rem;
+    font-family: PingFangSC-Regular;
+    font-size: 0.12rem;
+    color: #666666;
+    text-align: left;
+    line-height: 0.2rem;
+    padding: 0.1rem;
+    > div {
+      &:nth-child(2) {
+        margin-top: 0.1rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        > span {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 1rem;
+          height: 0.32rem;
+          background: #f5f6fa;
+          background-image: linear-gradient(179deg, #ffb001 0%, #ff7000 100%);
+          border: 1px solid #ffffff;
+          border-radius: 0.2rem;
+          font-family: PingFangSC-Medium;
+          font-size: 0.14rem;
+          color: #ffffff;
+          text-align: center;
+          line-height: 0.12rem;
+          &:nth-child(2) {
+            background-image: linear-gradient(180deg, #ffeddc 0%, #febf95 99%);
+            color: #ff7000;
+            margin-left: 0.1rem;
+          }
+        }
+      }
+    }
+  }
+}
+.blind-table {
+  width: 3.05rem;
+  border-radius: 0.1rem;
+  overflow: hidden;
+  border: 1px solid #d8d8d8;
+  p {
+    min-height: 0.6rem;
+    display: flex;
+    &:not(:last-child) {
+      border-bottom: 1px solid #d8d8d8;
+      background: #fff;
+    }
+    &:first-child {
+      height: 0.44rem;
+      background: #e7eaee;
+      border-radius: 10px 10px 0 0;
+      font-family: PingFangSC-Medium;
+      font-size: 0.14rem;
+      color: #333333 !important;
+      text-align: left;
+    }
+    span {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-right: 1px solid #d8d8d8;
+      text-align: center;
+      &:last-child {
+        border-right: 1px solid transparent;
+      }
+      &:nth-child(2) {
+        width: 1.1rem;
+      }
+    }
+  }
+}
+.active-object {
+  width: 3.48rem;
+  margin: 0.3rem 0 0.3rem 0.17rem;
+  > div {
+    display: flex;
+    line-height: 0.24rem;
+    margin-bottom: 0.1rem;
+    > img {
+      width: 0.12rem;
+      height: 0.12rem;
+      margin-right: 0.05rem;
+      margin-top: 0.05rem;
+    }
+    > div {
+      display: flex;
+      width: 100%;
+      > span {
+        &:nth-child(1) {
+          flex: 1;
+        }
+        &:nth-child(2) {
+          flex: 4.2;
+          color: #ff7000;
+        }
+      }
+    }
+    .count_down_css {
+      display: flex;
+      flex-wrap: wrap;
+      > span {
+        &:nth-child(1) {
+          margin-right: 0.05rem;
+        }
+      }
+      > div {
+        color: #ff0602 !important;
+      }
+    }
+  }
+}
+.history-dialog {
+  padding-top: 0.3rem;
+  max-height: unset !important;
+  max-width:3.78rem !important;
+  box-shadow: unset !important;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  &.isIphoneX {
+    align-items: center;
+  }
+  .history-record {
+    background: #ffffff;
+    height: 4.8rem;
+    border: 0.02rem solid #f3c482;
+    box-shadow: 0 0.02rem 0.1rem 0 #c2d0e1;
+    border-radius: 0.16rem;
+    position: relative;
+    padding: 0 0.1rem 0.15rem 0.1rem;
+    .choice-title {
+      width: 1.98rem;
+      height: 0.36rem;
+      margin: auto;
+      background: var(--qq--com-img-bg-119) no-repeat;
+      background-size: 100% 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: dinMedium;
+      font-size: 0.16rem;
+      font-weight: bold;
+      color: #333333;
+      line-height: 0.3rem;
+      position: relative;
+      top: -0.12rem;
+    }
+    .history-content {
+      .blind-table {
+        .text-white {
+          height: 0.34rem;
+
+          span {
+            border-right: none;
+            border-left: none !important;
+          }
+        }
+      }
+      .Member-Ranking {
+        width: 3.2rem;
+        margin: 0.1rem auto 0.19rem;
+
+        p {
+          span {
+            font-size: 0.12rem;
+            font-family: SourceHanSansSC-Regular;
+            &.ellipsis-2-lines {
+              width: 0.785rem;
+              flex: unset;
+              display: flex;
+              align-items: center;
+              line-height: 20px;
+              border-right: unset;
+              > div {
+                -webkit-line-clamp: 2;
+                overflow: hidden;
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+              }
+            }
+            &:last-child {
+              border-left: 1px solid #d8d8d8;
+            }
+          }
+          &:not(:first-child) {
+            min-height: 0.6rem;
+            font-family: PingFangSC-Regular;
+            color: #666666;
+
+            span {
+              min-height: 0.6rem;
+              &:first-child {
+                text-align: left;
+              }
+              &:nth-child(3) {
+                border-right: none;
+              }
+            }
+          }
+        }
+      }
+    }
+    :deep(.pager-wrap) {
+      height: unset;
+    }
+    .close {
+      width: 0.3rem;
+      position: absolute;
+      bottom: -0.4rem;
+      left: 50%;
+      transform: translate(-50%);
+    }
+  }
+}
+
+// y0 样式对应
+.theme01_y0,.theme02_y0{
+  .game_history{
+    background: linear-gradient(180deg, #DFECFF 0%, #FCFEFF 39.69%, #EDF6FF 72.86%, #FFFFFF 100%) !important;
+    box-shadow: 0px 2px 4px rgba(86, 159, 253, 0.188755);
+    border-radius: 30px;
+  }
+  .collection-record {
+    background-image: linear-gradient(180deg, #DFECFF 0%, #FCFEFF 39.69%, #EDF6FF 72.86%, #FFFFFF 100%);
+    box-shadow: 0px 2px 4px rgba(86, 159, 253, 0.188755);
+  }
+  .to-be-completed-stata{
+    color: #4987FB !important;
+  }
+  .task_success .title{
+    color: #4987FB !important;
+  }
+  .task_success .Go-to-lottery {
+    background-image: linear-gradient(180deg, #62B6FF 0%, #3D72FA 99%) !important;
+  }
+
+  .activity-rules {
+    border: 1px solid #A4BEFE;
+    .title {
+      background-image: var(--qq--com-img-bg-125);
+      color: #fff;
+    }
+    .go-to-lottery {
+      background: #F0F6FF;
+      > div {
+        &:nth-child(2) {
+          > span {
+            background-image: linear-gradient(179deg,  #62B6FF 0%, #3D72FA 100%);
+            &:nth-child(2) {
+              background-image: linear-gradient(180deg, #ffeddc 0%, #febf95 99%);
+            }
+          }
+        }
+      }
+    }
+    .rules-object {
+      div {
+        span {
+          font {
+            color: #4987FB;
+          }
+        }
+      }
+    }
+  }
+
+  .active-object {
+    > div {
+      > div {
+        > span {
+          &:nth-child(2) {
+            color: #4987FB;
+          }
+        }
+      }
+    }
+  }
+  .cumulative-bet-amount {
+    background-image: linear-gradient(180deg, #FFFFFF 22%, #EDEFFE 72%, #FFFFFF 100%);
+    border: 0.5px solid #DDDDDD;
+    div {
+      &:not(:last-child) {
+        border-right: 1px solid #C3D5FF;
+      }
+      .align_items {
+        span:first-child {
+          color: #4987FB;
+        }
+      }
+    }
+  }
+  .history-dialog {
+    .history-record {
+      border: 0.02rem solid #A4BEFE !important;
+      box-shadow: 0 0.02rem 0.1rem 0 rgb(0 0 0 / 10%) !important;
+      .choice-title {
+        background: var(--qq--com-img-bg-124) no-repeat;
+        background-size: 100%;
+        color: #fff;
+      }
+      :deep(.pagination-wrapper) {
+        ul {
+          .active {
+            background: #4276FB !important;
+          }
+        }
+      }
+    }
+  }
+  .slot_machine_content {
+    .switch_slots {
+      p {
+        .active {
+          span {
+            color: #4987FB!important;
+          }
+        }
+      }
+    }
+  }
+  .slot_machine_scroll {
+    :deep(.synthSlider) {
+      .action {
+        .synthButtons {
+          span {
+            background: #3D72FA;
+          }
+        }
+      }
+    }
+    :deep(.confirm) {
+      .confirmTips {
+        span {
+          color: #fff;
+        }
+      }
+      .confirmBtns {
+        span:nth-child(1) {
+          background-color: #3D72FA;
+        }
+      }
+    }
+    :deep(.upgrade) {
+      span:nth-child(3) {
+        color: #3D72FA;
+      }
+    }
+    :deep(.synthSucc) {
+      p {
+        .msg {
+          color: #3D72FA;
+        }
+      }
+      .synthSuccBtns {
+        span:first-child {
+          background-color: #3D72FA;
+        }
+      }
+    }
+  }
+
+  .q-dialog--modal {
+    .q-dialog__backdrop {
+      backdrop-filter: var(--q-color-backdrop-filter-bg-1);
+      background-color: var(--q-color-page-bg-color-78) !important;
+    }
+  }
+  .q-dialog__backdrop {
+    backdrop-filter: var(--q-color-backdrop-filter-bg-1);
+    background-color: var(--q-color-page-bg-color-78);
+  }
+
+}
+
+
+  
+
+
+
+
+

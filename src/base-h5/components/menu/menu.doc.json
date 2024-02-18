@@ -1,0 +1,17 @@
+{
+  "bet_record": {
+    "level": 2,
+    "menuName": "客户端PC",
+    "sonName": "PC-菜单组件"
+  },
+  "category": "Menu",
+  "component-name": "Menu",
+  "support-customization": "1",
+  "descriptions": ["菜单组件"],
+  "optional-component": [
+    {
+      "component-name": "Menu_1",
+      "descriptions": ["菜单组件-版本1"]
+    }
+  ]
+}

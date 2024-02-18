@@ -1,0 +1,391 @@
+
+.correct_style{
+  .correct_style_title{
+   display: flex;
+    //width: 100%;
+    //overflow: hidden;
+    position: relative;
+    left: -.03rem;
+    >div{
+      width: 1.75rem;
+      display: flex;
+      padding-left: .1rem;
+      >span{
+        flex: 1;
+        font-size: 10px;
+        color: var(--q-gb-t-c-4);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-align: center;
+        //height: .24rem;
+        //line-height: .24rem;
+      }
+      &:nth-child(1){
+        >span{
+          &:nth-child(2){
+            flex: 1.2;
+            position: relative;
+            left: -.02rem;
+          }
+        }
+      }
+      &:nth-child(2){
+        >span{
+          color: var(--q-match-fs-color-135);
+        }
+      }
+    }
+  }
+  //  波胆 容器
+  .hps-bold-main-container{
+    display: flex;
+    .hps-bold-container {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-wrap: nowrap;
+      &:last-child{
+        margin-left: 0.05rem;
+      }
+      //padding-left: .05rem;
+      .hps-bold-other-left{
+        margin-right: .02rem;
+        position: relative;
+        &:last-child{
+          margin-right: unset;
+          .odd-wrap-hps-bold-other {
+            &.hold_other{
+              left: unset;
+              right: 0;
+            }
+          }
+        }
+        .odd-wrap-hps-bold-other {
+          width: 0.56rem;
+          height: 0.3rem;
+          overflow: hidden;
+          border-radius: 0.02rem;
+          margin-bottom: .02rem;
+          background-color: var(--q-color-page-bg-color-9);
+          &.hold_other{
+            width: 1.72rem;
+            position: absolute;
+            bottom: -.33rem;
+          }
+          :deep(.odd-column-item){
+            flex: unset!important;
+            width: 100%;
+            &.mred{
+              background: var(--q-color-page-bg-color-97);
+              border: 1px solid var(--q-color-com-border-color-14);
+              border-radius: 2px;
+            }
+            &.mgreen{
+              background: var(--q-color-page-bg-color-98);
+              border: 1px solid var(--q-color-com-border-color-15);
+              border-radius: 2px;
+            }
+            .odd-title{
+              font-size: .1rem;
+              margin-bottom: unset;
+              color:var(--q-gb-t-c-13);
+            }
+            .odd-value{
+              color: var(--q-gb-t-c-4);
+              &.red{
+                color: var(--q-color-com-fs-color-17) !important;
+              }
+              &.green{
+                color: var(--q-color-com-fs-color-10) !important;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+.five-minutes-to-play{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  .team-t-title-w {
+    width: 1.1rem;
+    height: 0.3rem;
+    margin-bottom: 0.02rem;
+    font-size: 0.12rem;
+    display: flex;
+    align-items: center;
+    position: absolute;
+    bottom: 0;
+    color: var(--q-gb-t-c-13)!important;
+    img {
+      display: block;
+      margin-bottom: 0.02rem;
+      margin-right: .05rem;
+    }
+    .team-title {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 1.07rem;
+    }
+  }
+    .odd-wrap-hps-bold-other {
+      width: 0.56rem;
+      height: 0.3rem;
+      overflow: hidden;
+      border-radius: 0.02rem;
+      margin-bottom: .02rem;
+      margin-right: .02rem;
+      background-color: var(--q-color-page-bg-color-9);
+      &.hold_other{
+        width: 1.72rem;
+        position: absolute;
+        bottom: -.33rem;
+      }
+      &:nth-child(6n){
+        margin-right: unset;
+      }
+      &.lastBestTwoOddWraps{
+        position: absolute;
+        right: 1.165rem;
+        bottom: 0;
+        width: 1.14rem;
+        margin-right: 0;
+      }
+      &.lastFiveOddWraps{
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        width: 1.14rem;
+        margin-right: 0;
+      }
+      &.second_half, &.kill_shot {
+        :deep(.odd-title) {
+          display: inline-block;
+          white-space: nowrap;
+          transform: scale(0.9);
+        }
+      }
+      &.ClutchGoal-os-3 {
+        :deep(.item-inner) {
+          display: none;
+        }
+      }
+      :deep(.odd-column-item){
+        flex: unset!important;
+        width: 100%;
+        &.mred{
+          background: var(--q-color-page-bg-color-97);
+          border: 1px solid var(--q-color-com-border-color-14);
+          border-radius: 2px;
+        }
+        &.mgreen{
+          background: var(--q-color-page-bg-color-98);
+          border: 1px solid var(--q-color-com-border-color-15);
+          border-radius: 2px;
+        }
+        .odd-title{
+          font-size: .1rem;
+          margin-bottom: unset;
+          color:var(--q-gb-t-c-13);
+        }
+        .odd-value{
+          color: var(--q-gb-t-c-4);
+          &.red{
+            color: var(--q-color-com-fs-color-17) !important;
+          }
+          &.green{
+            color: var(--q-color-com-fs-color-10) !important;
+          }
+        }
+      }
+    }
+}
+
+@keyframes dir_remind_animate {
+  0% {
+    transform: translateX(0);
+    opacity: 0;
+  }
+  60% {
+    transform: translateX(-0.06rem);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-0.09rem);
+    opacity: 0;
+  }
+}
+
+@keyframes dir_right_remind_animate {
+  0% {
+    transform: translateX(-0.09rem) rotate(180deg);
+    opacity: 0;
+  }
+  60% {
+    transform: translateX(-0.06rem) rotate(180deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(0) rotate(180deg);
+    opacity: 0;
+  }
+}
+
+.odd-list-wrap {
+  position: relative;
+  flex-shrink: 0;
+
+  &.standard {
+    width: 1.84rem;
+    height: 1.07rem;
+    flex-wrap: nowrap;
+    overflow: hidden;
+  }
+  &.special_play{
+    width: unset;
+    height: unset;
+    overflow: unset;
+    //padding-bottom: .31rem;
+  }
+  &.five_special_play{
+    width: 100%;
+    height: unset;
+    padding-bottom: .32rem;
+  }
+  &.five_no_data{
+    padding-bottom: unset;
+  }
+
+  .slide_icon {
+    width: 0.12rem;
+    height: 0.12rem;
+    position: absolute;
+    top: 0.43rem;
+    right: -0.03rem;
+
+    &.animate-effect {
+      animation: dir_remind_animate cubic-bezier(0.49, 0.49, 0.61, 0.59) 1.4s infinite;
+    }
+
+    &.animate-effect-r {
+      animation: dir_right_remind_animate cubic-bezier(0.49, 0.49, 0.61, 0.59) 1.4s infinite;
+    }
+  }
+
+  .odd-list-container {
+    width: 1.7rem;
+    height: 0.56rem;
+    border-radius: 0.06rem;
+    position: relative;
+    overflow: hidden;
+
+    .icon-jiaoqiu {
+      width: 0.255rem;
+      height: 0.255rem;
+      display: none;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translateX(-50%) translateY(-50%);
+      z-index: 1;
+
+      &.selected {
+        z-index: 2;
+        display: block;
+      }
+    }
+  }
+
+  .standard-odd-l-w {
+    height: 1.01rem;
+    touch-action: pan-y !important;
+    width: 3.68rem;
+    flex-shrink: 0;
+    position: relative;
+    left: 0;
+    display: flex;
+    transition: transform 0.2s;
+    -webkit-transition: transform 0.2s;
+    overflow: hidden;
+
+    &.status2 {
+      -webkit-transform: translateX(-1.7rem);
+      transform: translateX(-1.7rem);
+    }
+  }
+
+  .dir-standard {
+    width: 1.8rem;
+    position: absolute;
+    bottom: 1px;
+
+    .block {
+      width:4px;
+      height: 0.02rem;
+      background: #E4E6ED !important;
+      border-radius: 0.01rem;
+      &.selected {
+        width: 8px;
+        background: #C9CDDB !important;
+      }
+
+      &:last-child {
+        margin-left: 0.04rem;
+      }
+    }
+  }
+
+  .standard-odd-list {
+    width: 1.84rem;
+    flex-shrink: 0;
+    position: absolute;
+    height: 100%;
+
+    &.f-child {
+      left: 0;
+    }
+
+    &.r-child {
+      right: 0.14rem;
+    }
+
+    .odd-wrap-min {
+      width: 0.6rem;
+      height: 0.32rem;
+      overflow: hidden;
+      border-radius: 0.02rem;
+      margin-bottom: 0.02rem;
+
+      &.hp-2, &.hp-0 {
+        height: 0.49rem;
+      }
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      &.column2 {
+        height: 0.46rem;
+      }
+    }
+
+    .odd-column-w {
+      margin-left: 0.02rem;
+      height: 100%;
+
+      &:first-child {
+        margin-left: 0;
+      }
+
+      &.boxing {
+        .odd-wrap-min {
+          width: 0.91rem;
+        }
+      }
+    }
+  }
+}

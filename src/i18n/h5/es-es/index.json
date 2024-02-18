@@ -1,0 +1,2815 @@
+{
+  "ouzhou": {
+    "record": {
+      "my_bet": "My Bets",
+      "unsettled": "Unsettled",
+      "settled": "settled",
+      "unpaid_bets": "This record will show all unpaid bets",
+      "settled_time": "Settled time",
+      "bet_time": "Bet time",
+      "match_time": "Match time",
+      "today": "Today",
+      "yesterday": "Yesterday",
+      "7_days": "Last 7 Days",
+      "30_days": "In 30 Days",
+      "datails": "Datails"
+    },
+    "detail": {
+      "which_team": "Which team will",
+      "keno_lottery": "keno lottery",
+      "exciting_different": "Exciting and different",
+      "close_handicap": "Close the Handicap",
+      "betting":"Betting",
+      "assault": "Assault",
+      "possession_ball": "Ball Right",
+      "shot_wide_goal": "Shot Wide Goal",
+      "shots_on_goal": "Shot On Goal",
+      "event_analysis":"Event Analysis",
+      "foul": "Foul",
+      "point": "Point",
+      "penalty": "Free Throw",
+      "pause": "Time Out",
+      "read": "read",
+      "flv": "HD1",
+      "m3u8": "HD2",
+      "clarity1": "HD",
+      "clarity2": "SD"
+    },
+    "bet": {
+      "place_bet": "Place Bet"
+    },
+    "menu": {
+      "collect": "Favourites",
+      "popular": "POPULAR",
+      "all_sports": "ALL SPORTS",
+      "my_bets": "MyBets"
+    },
+    "match": {
+      "favorites": "Favorites",
+      "matches": "Matches",
+      "featured": "Featured",
+      "featured_events": "Featured Matches",
+      "top_events": "Top Events",
+      "top_leagues": "Top Leagues",
+      "league": "League",
+      "outrights": "Outrights",
+      "15_mins": "15 mins",
+      "inplay": "InPlay",
+      "home": "Home",
+      "today": "Today",
+      "tomorrow": "Tomorrow",
+      "all_matches": "All Matches",
+      "bet_col_Over": "Over",
+      "bet_col_Under": "Under",
+      "home_handicap": "1",
+      "away_handicap": "2",
+      "select_time": {
+        "3h": "Within 3 hrs",
+        "6h": "Within 6 hrs",
+        "9h": "Within 9 hrs",
+        "12h": "Next 12 Hours",
+        "24h": "Next 24 Hours",
+        "72h": "3 Days",
+        "168h": "7 Days"
+      },
+      
+      "play_map": {
+        "1": "1 X 2",
+        "2": "O / U",
+        "4": "HDP",
+        "17": "1st Half - 1x2",
+        "18": "1st Half - O/U",
+        "19": "1st Half - O/U",
+        "37": "Money Line",
+        "38": "Total Points",
+        "39": "Handicap",
+        "153": "Winner",
+        "154": "Set Handicap",
+        "155": "Game Handicap",
+        "172": "HDP", 
+        "173": "Total Points", 
+        "181": "HDP", 
+        "182": "Total Frames", 
+        "202": "Total Frames",
+        "242": "Winner",
+        "243": "HDP",
+        "244": "Total Goals",
+        "30001": "Match Winner",
+        "30002": "Map Handicap",
+        "30003": "Total Maps",
+        "12_2": "Total Rounds"
+      }
+    },
+    "setting_menu": {
+      "personal": "Personal",
+      "back": "Back",
+      "money": "Money",
+      "language": "Language",
+      "odds_setting": "Odds Settings",
+      "odds_display": "Odds Display",
+      "dec": "DEC",
+      "hk": "HK",
+      "any": "ANY",
+      "hig": "HIG",
+      "version": "Version",
+      "euro": "EURO",
+      "asia": "ASIA"
+    },
+    "no_data": {
+      "coming_soon": "Coming Soon"
+    },
+    "bet_col": {
+      "bet_col_1": {
+        "bet_col_1": "Home",
+        "bet_col_X": "Draw",
+        "bet_col_2": "Away"
+      },
+      "bet_col_2": {
+        "bet_col_Over": "Over",
+        "bet_col_Under": "Under"
+      },
+      "bet_col_4": {
+        "bet_col_1": "HDP",
+        "bet_col_2": "HDP"
+      },
+      "bet_col_37": {
+        "bet_col_1": "Home",
+        "bet_col_2": "Away"
+      },
+      "bet_col_38": {
+        "bet_col_1": "Total",
+        "bet_col_2": "Total"
+      },
+      "bet_col_39": {
+        "bet_col_1": "HDP",
+        "bet_col_2": "HDP"
+      },
+      "bet_col_153": {
+        "bet_col_1": "Home",
+        "bet_col_2": "Away"
+      },
+      "bet_col_154": {
+        "bet_col_1": "1",
+        "bet_col_2": "2"
+      },
+      "bet_col_155": {
+        "bet_col_1": "1",
+        "bet_col_2": "2"
+      },
+      "bet_col_172": {
+        "bet_col_1": "HDP",
+        "bet_col_2": "HDP"
+      },
+      "bet_col_173": {
+        "bet_col_1": "Total",
+        "bet_col_2": "Total"
+      },
+      "bet_col_181": {
+        "bet_col_1": "1",
+        "bet_col_2": "2"
+      },
+      "bet_col_182": {
+        "bet_col_1": "Over",
+        "bet_col_2": "Under"
+      },
+      "bet_col_242": {
+        "bet_col_1": "1",
+        "bet_col_2": "2"
+      },
+      "bet_col_243": {
+        "bet_col_1": "HDP",
+        "bet_col_2": "HDP"
+      },
+      "bet_col_244": {
+        "bet_col_1": "Over",
+        "bet_col_2": "Under"
+      },
+      "bet_col_30001": {
+        "bet_col_1": "1",
+        "bet_col_2": "2"
+      },
+      "bet_col_30002": {
+        "bet_col_1": "HDP",
+        "bet_col_2": "HDP"
+      },
+      "bet_col_30003": {
+        "bet_col_1": "Over",
+        "bet_col_2": "Under"
+      }
+    },
+    "search": {
+      "change": "Change",
+      "clear_search_history": "Clear search history",
+      "league": "League",
+      "null1": "Search results are empty",
+      "null2": "Try a different term search",
+      "other": "Other search",
+      "search_hot": "Hot search",
+      "search_play": "Search mode",
+      "search_record": "Search history",
+      "search_sports": "Ball searching",
+      "team": "Team",
+      "placeholder": "Please enter the league name or team name",
+      "close": "Close",
+      "view_all_match": "View all matches",
+      "underway": "Underway",
+      "no_search_rezult": "No results found. Please try another search term.",
+      "dogfall": "Draw",
+      "search_history": "Search history",
+      "No results": "No results"
+    },
+    "15minutes_bet_col": [
+      "Start~14:59",
+      "15:00~29:59",
+      "30:00~1H",
+      "2H Start~59:59",
+      "2H 60:00~74:59",
+      "2H 75:00~FT"
+    ]
+  },
+  "app_h5": {
+    "cathectic": {
+        "handicap_tutorial": "Tutorial de Handicap",
+        "open_bets": "Apuestas no liquidadas",
+        "closed_bets": "Apuestas liquidadas",
+        "no_data_pre": "No hay datos disponibles",
+        "no_data_unsettle": "No hay datos disponibles",
+        "no_data_settle": "No hay datos disponibles",
+        "no_data_invalid": "No hay datos no válidos disponibles",
+        "data_loading": "Cargando datos...",
+        "kind_tips": "Recordatorio amistoso",
+        "adjustment_amount": "Ajustar importe",
+        "winnable": "Importe potencial ganador",
+        "bet_number": "ID de la apuesta",
+        "bets": "Apuesta",
+        "settle": "Liquidación",
+        "bet_status": "Estado de la apuesta",
+        "cash_failed": "Retiro de dinero anticipado fallido",
+        "sub_wait": "Solicitud enviada, por favor sea paciente",
+        "all_cash_sess": "Todos los retiros de dinero realizados con éxito",
+        "cash_details": "Detalles de retirada de dinero anticipada",
+        "cash_rules": "Declaración de Reglas de Retiro de Dinero",
+        "explain1": "El retiro de dinero sólo es aplicable a eventos y hándicaps específicos. En caso de cancelación de un partido o hándicap, las apuestas de cobro anticipado se retirarán para su reevaluación. Nos reservamos el derecho a interpretar los resultados finales.",
+        "explain2": "Para conocer las reglas específicas de cobro, consulte el [Centro de ayuda] - [Reglas de cobro anticipado de OpenCloud KY Deportes].",
+        "confirm_cancel_reservation": "¿Confirmar la cancelación de la reserva para este partido?"
+    },
+    "handicap_tutorial": {
+        "answer_question": "Entrenamiento de Simulación Superior / Inferior",
+        "football_master": "Enhorabuena, has ascendido a maestro del fútbol",
+        "training_camp": "Campo de entrenamiento",
+        "actual_combat": "Realiza una apuesta real",
+        "practise": "Entrenamiento simulado",
+        "again": "Aprender de nuevo",
+        "single": "Opción única",
+        "return_home": "Volver a la página de inicio",
+        "next": "Siguiente pregunta",
+        "introdution": "Estrategia",
+        "results_appear": "Cuando se produce un resultado así",
+        "red_list": "Enhorabuena por haber ganado",
+        "not_master": "Por desgracia, no dominas del todo",
+        "big_small_ball": "Superior/Inferior",
+        "big_small_ball_tip": "Número total de goles marcados por ambos equipos en los 90 minutos (incluido el tiempo añadido)",
+        "handicapData_condition": "Handicap de 0",
+        "handicapData_condition_1": "Suma de goles",
+        "all_win": "Ganar todos",
+        "home_team": "Equipo local",
+        "bet_home_team": "Apuesta por el equipo local",
+        "bet_away_team": "Apuesta por el equipo visitante",
+        "away_team": "Equipo visitante",
+        "all_lose": "Todos pierden",
+        "win_half": "Gana la mitad",
+        "lose_half": "Pierde la mitad",
+        "tie_handicap": "Empate",
+        "tie_half_plate": "Empate Hándicap Media Balón",
+        "big_bet": "Apuesta Superior %s",
+        "small_bet": "Apuesta Inferior %s",
+        "enter_ball": "Suma de Goles",
+        "vice_versa": "Viceversa",
+        "return_principal_discount": "Retorno Apuesta (Empate)",
+        "return_principal": "Retorno de la apuesta",
+        "home_team_handicap": "El equipo en casa marca %s goles",
+        "ball_plate_1": "2/1 Balón Cuota",
+        "ball_plate_2": "2/1 Balón/1 Balón Cuota",
+        "ball_plate_3": "1 Balón Cuota",
+        "ball_plate_4": "1 Balón/ 1 2/1 Balón Cuota",
+        "ball_plate_5": "1 & 2/1 Balón Cuota",
+        "ball_plate_6": "1 & 2/1 / 2 Balón Cuota",
+        "note_1": "Apuesta a que el equipo local gana todo, apuesta a que el equipo visitante pierde todo",
+        "note_2": "Empate, devolución de la apuesta (nula)",
+        "note_3": "Apuesta a que el equipo local gana todo, apuesta a que el equipo visitante pierde todo",
+        "note_4": "Empate, apuesta a que el equipo local pierde todo, apuesta a que el equipo visitante gana todo",
+        "note_5": "Apuesta a que el equipo local lo pierde todo, apuesta a que el equipo visitante lo gana todo",
+        "note_6": "Apuesta a que el equipo local gana la mitad, apuesta a que el equipo visitante pierde la mitad",
+        "note_7": "Apuesta a que el equipo local gana todo, apuesta a que el equipo visitante pierde todo",
+        "note_8": "Apuesta tanto al equipo local como al visitante, devolución de la apuesta (nula)",
+        "note_9": "Apuesta a que el equipo local pierde la mitad, apuesta a que el equipo visitante gana la mitad",
+        "note_10": "Apuesta a que el equipo local pierde todo, apuesta a que el equipo visitante gana todo",
+        "note_11": "Apuesta a que el equipo local pierde todo, apuesta a que el equipo visitante gana todo",
+        "note_12": "Apuesta a que el equipo de casa gana la mitad, apuesta a que el equipo visitante pierde la mitad",
+        "note_13": "Apuesta a que el equipo local gana todo, apuesta a que el equipo visitante pierde todo",
+        "note_14": "Apuesta Superior a 2.5 todos ganan, Apuesta Inferior a 2.5 todos pierden",
+        "note_15": "Apuesta Superior a 2,5/3 a ganar la mitad, Apuesta Inferior a 2,5/3 a perder la mitad",
+        "note_16": "Apuesta Superior a 3/3.5 pierde la mitad, Apuesta Inferior a 3/3.5 gana la mitad",
+        "note_17": "Apuesta Superior a 3 devuelve lo apostado (nulo), Apuesta Inferior a 3 devuelve lo apostado (nulo)",
+        "questionsData": {
+            "1": {
+                "note_1": "Goles 2, menos de 2,5",
+                "note_2": "Apuesta en <span>Inferior 2.5</span> ganar todo, apostando por <span>Superior2.5</span> pierde todo"
+            },
+            "2": {
+                "note_1": "Si el número de Goles 2, inferior a 2/2,5",
+                "note_2": "Principio básico de división, apostar a <span>Inferior a 2/2,5</span> gana la mitad"
+            }
+        },
+        "ball": "%s goels",
+        "big": "Superior a %s",
+        "small": "Inferior a %s",
+        "which_win": "¿Qué opción puede ganar todo?",
+        "which_win_half": "Qué opción puede ganar la mitad?",
+        "real_madrid": "Real Madrid",
+        "m_chesester_city": "Manchester City",
+        "m_chesester_untied": "Manchester United",
+        "chelsea": "Chelsea",
+        "barcelona": "Barcelona"
+    },
+    "bet": {
+        "bet_win": "Ganancias potenciales: {total}",
+        "delete": "Eliminar",
+        "confirm": "Confirmar",
+        "parlay": "Parlay",
+        "odd": "Único",
+        "limit": "Límite",
+        "cancel_appoint": "Cancelar Reserva",
+        "pm_sport": "Deportes PM",
+        "bet_confirm": "Apuesta Confirmada",
+        "bet_error": "Apuesta Fallida",
+        "reserve_win": "Cantidad Reservada",
+        "win_amount": "Ganancias potenciales",
+        "toltip1": "Qué es",
+        "toltipc": "Parlay",
+        "toltips": {
+            "2001": {
+                "title": "\"2 parlay 1 = ",
+                "content": "Cuando seleccione 2 eventos para 2 parlay 1, el sistema combinará los 2 eventos elegidos en una sola apuesta. Ambos eventos deben ganar para que la apuesta sea rentable."
+            },
+            "3001": {
+                "title": "3 parlay 1 = Apuesta compuesta por 3 eventos.",
+                "content": "Cuando seleccione 3 eventos para 3 parlay 1, el sistema combinará los 3 eventos elegidos en una sola apuesta. Los 3 eventos deben ganar para que la apuesta sea rentable."
+            },
+            "3004": {
+                "title": "3 parlay 4 = Cuatro apuestas separadas, cada una de las cuales consta de 3 eventos.",
+                "content": "\" Cuando elija apostar a un 3 parlay 4, el sistema creará cuatro apuestas separadas a partir de los 3 eventos seleccionados. Generará tres 2 parlay 1 y una 3 parlay 1. Cada combinación de eventos en el parlay se trata como una única apuesta, lo que da como resultado un total de cuatro apuestas separadas."
+            },
+            "4001": {
+                "title": "4 parlay 1 = Una apuesta que consta de 4 eventos.",
+                "content": "\""
+            },
+            "5001": {
+                "title": "5 parlay 1 = Apuesta formada por 5 eventos.",
+                "content": "Cuando se seleccionan 5 eventos para la apuesta 5 parlay 1, el sistema combinará los 5 eventos elegidos en una sola apuesta. Los 5 eventos deben ganar para que la apuesta sea rentable."
+            },
+            "6001": {
+                "title": "6 parlay 1 = Apuesta compuesta por 6 eventos.",
+                "content": "Cuando seleccione 6 eventos para la apuesta 6 parlay 1, el sistema combinará los 6 eventos elegidos en una sola apuesta. Los 6 eventos deben ganar para que la apuesta sea rentable."
+            },
+            "7001": {
+                "title": "7 parlay 1 = Apuesta compuesta por 7 eventos.",
+                "content": "Cuando se seleccionan 7 eventos para un 7 parlay 1, el sistema combinará los 7 eventos elegidos en una sola apuesta. Los 7 eventos deben ganar para que la apuesta sea rentable."
+            },
+            "8001": {
+                "title": "8 parlay 1 = Apuesta compuesta por 8 eventos.",
+                "content": "Cuando se seleccionan 8 eventos para un 8 parlay 1, el sistema combinará los 8 eventos elegidos en una sola apuesta. Los 8 eventos deben ganar para que la apuesta sea rentable."
+            },
+            "9001": {
+                "title": "9 parlay 1 = Apuesta compuesta por 9 eventos.",
+                "content": "Cuando se seleccionan 9 eventos para un 9 parlay 1, el sistema combinará los 9 eventos elegidos en una sola apuesta. Los 9 eventos deben ganar para que la apuesta sea rentable."
+            },
+            "10001": {
+                "title": "10 parlay 1 = Apuesta compuesta por 10 eventos.",
+                "content": "Cuando se seleccionan 10 eventos para un 10 parlay 1, el sistema combinará los 10 eventos elegidos en una sola apuesta. Los 10 eventos deben ganar para que la apuesta sea rentable."
+            },
+            "40011": {
+                "title": "\" 4 parlay 11 = 11 apuestas distintas a partir de la selección de 4 eventos.",
+                "content": "Cuando elija 4 partidos para apostar al sistema 4 parlay 11. El sistema dividirá los 4 partidos seleccionados en 6 x 2 parlay 1, 4 x 3 parlay 1 y 1 x 4 parlay 1. Cada combinación forma una apuesta distinta, lo que da como resultado un total de 11 apuestas."
+            },
+            "50026": {
+                "title": "5 parlay26 = 26 apuestas distintas a partir de la selección de 5 eventos.",
+                "content": "Cuando elija 5 partidos para apostar en el sistema 5 parlay 26. El sistema dividirá los 5 partidos seleccionados en 10 x 2 parlay 1 , 10 x 3 parlay 1 , 5 x 4 parlay 1 y 1 x 5 parlay 1 . Cada combinación forma una apuesta distinta, lo que da como resultado un total de 26 apuestas."
+            },
+            "60057": {
+                "title": "6 parlay 57 = 57 apuestas distintas a partir de la selección de 6 eventos.",
+                "content": "Cuando elija 6 partidos para apostar en el sistema 6 parlay 57. El sistema dividirá los 6 partidos seleccionados en 15 x 2 parlay 1, 20 x 3 parlay 1 , 15 x 4 parlay 1 ,6 x 5 parlay 1 y 1 x 6 parlay 1. Cada combinación forma una apuesta distinta, lo que da como resultado un total de 26 apuestas. Cada combinación forma una apuesta distinta, lo que da un total de 57 apuestas."
+            },
+            "700120": {
+                "title": "7 parlay 120 = 120 apuestas distintas a partir de la selección de 7 eventos.",
+                "content": "Cuando elija 7 partidos para apostar al sistema 7 parlay 120. El sistema dividirá los 7 partidos seleccionados en 21 x 2 parlay 1, 35 x 3 parlay 1 , 35 x 4 parlay 1 ,21 x 5 parlay 1 , 7 x 6 parlay 1 y 1 x 7 parlay 1. Cada combinación forma una apuesta distinta, lo que da un total de 120 apuestas."
+            },
+            "800247": {
+                "title": "8 parlay 247 = 247 apuestas distintas a partir de la selección de 8 eventos.",
+                "content": "Cuando elija 8 partidos para apostar en el sistema 8 parlay 247. El sistema dividirá los 8 partidos seleccionados en 28 x 2 parlay 1, 56 x 3 parlay 1 , 70 x 4 parlay 1 ,56 x 5 parlay 1 , 28 x 6 parlay 1 , 8 x 7 parlay 1 y 1 x 8 parlay 1. Cada combinación forma una apuesta distinta, lo que da un total de 247 apuestas."
+            },
+            "900502": {
+                "title": "9 parlay 502 = 502 apuestas distintas a partir de la selección de 9 eventos.",
+                "content": "Cuando elija 9 partidos para apostar en el sistema 9 parlay 502. El sistema dividirá los 9 partidos seleccionados en 36 x 2 parlay 1, 84 x 3 parlay 1 , 126 x 4 parlay 1 ,126 x 5 parlay 1 , 84 x 6 parlay 1 , 36 x 7 parlay 1 , 9 x 8 parlay 1 y 1 x 9 parlay 1 .Cada combinación forma una apuesta distinta, resultando un total de 502 apuestas."
+            },
+            "10001013": {
+                "title": "10 parlay 1013 = 1013 apuestas distintas a partir de la selección de 10 eventos.",
+                "content": "Al elegir 10 partidos para apostar en el sistema 10 parlay 1013. El sistema dividirá los 10 partidos seleccionados en 45 x 2 parlay 1, 120 x 3 parlay 1 , 210 x 4 parlay 1 ,252 x 5 parlay 1 , 210 x 6 parlay 1 , 120 x 7 parlay 1 , 45 x 8 parlay 1 , 10 x 9 parlay 1 y 1 x 10 parlay 1. Cada combinación forma una apuesta separada, resultando en un total de 1013 apuestas."
+            }
+        }
+    },
+    "match": {
+        "all": "Todos",
+        "champions": "Liga de Campeones de la UEFA",
+        "premier": "Premier League Inglesa",
+        "serie": "Serie A italiana",
+        "laliga": "La Liga Española",
+        "ligue": "Ligue 1 Francesa",
+        "china_super": "Superliga China",
+        "bundesliga": "Bundesliga",
+        "normal_results": "Resultados Regulares",
+        "game_results": "Resultados de Deportes Electrónicos",
+        "vr_results": "Resultados VR",
+        "championship_results": "Resultados del Campeonato"
+    },
+    "filter": {
+        "more": "Más >",
+        "enlarge": "Ampliar",
+        "font_size": "Tamaño de fuente",
+        "default": "Por defecto",
+        "turn_on": "Abierto",
+        "daily_activities": "Actividades diarias",
+        "go_old_version": "Ir a la versión antigua",
+        "go_web_version": "Ir a la versión web"
+    },
+    "v_sports": {
+        "event_status": "Estado del partido"
+    },
+    "detail": {
+        "half": "Primera parte",
+        "not_data_Injury": "No hay lista de lesionados",
+        "not_data_substitute": "No hay lista de suplentes",
+        "not_data_starter": "No hay alineación inicial disponible",
+        "acronym_half": "Mitad",
+        "highlights": "Destacados",
+        "events": "Acontecimientos del partido",
+        "technical_statistics": "Estadísticas Técnicas"
+    }
+},
+  "ac_rules": {
+    "auto": "Aceptar automáticamente cuotas más altas",
+    "rules": {
+      "rule2": "2. 2. Si las cuotas disminuyen al colocar, el sistema asumirá que usted no acepta las cuotas e interrumpirá su apuesta. Deberá confirmar las cuotas y apostar de nuevo.",
+      "rule3": "3. Si esta función no está marcada, el sistema considerará que usted \"acepta automáticamente cualquier cuota\".",
+      "rule1": "1. Si las cuotas aumentan al colocar, el sistema le propondrá por defecto que acepte las cuotas sin interrumpir su comportamiento de apuesta y aumentando la tasa de éxito de las apuestas.",
+      "rule4": "(Es decir, no importa cómo cambien las cuotas al realizar una apuesta, el sistema asumirá que usted puede aceptarlas y no interrumpirá su comportamiento de apuesta)"
+    },
+    "understand": "Se"
+  },
+  "accept_rules": {
+    "automatically_odds": "Aceptar automáticamente cualquier cuota\r\nNo aceptar\r\nEsta función no está marcada\r\nSi\r\nAl colocar\r\nSubiendo\r\nLe interrumpe para que tenga que confirmar las cuotas y apostar de nuevo.\r\nReduciendo\r\n(Es decir, no importa cómo cambien las cuotas al realizar una apuesta, el sistema asumirá que puede aceptarlo y no interrumpirá su comportamiento de apuesta)\r\nEl sistema le dará por defecto\r\nEl sistema considerará que usted\r\nNo te interrumpe por lo que el porcentaje de acierto mejorará.\r\n\r\nAlineación del banquillo\r\nO\r\nPuntos de Copa\r\nFecha\r\nX\r\n+/-\r\nP\r\nCara a cara\r\nPts\r\nLiga\r\nPuntos Liga\r\nAlineación\r\nL\r\nPartido\r\nNombre\r\nL\r\nL\r\nGD\r\nSin datos\r\nNúmero\r\nPosición\r\nClasificación\r\nClasificación\r\nRécord reciente\r\nÚltimos 5 partidos de H2H\r\nÚltimos 10 partidos de H2H\r\nÚltimos 15 partidos de H2H\r\nResultados\r\nLiga\r\nH&A\r\nPuntuación\r\nCerrar\r\nTamaño\r\nU\r\nRécord\r\nInteligencia\r\nCuotas\r\nDatos\r\nAlineación inicial\r\nEquipo\r\nVuelta\r\nW\r\nW\r\nDía Gap\r\nD\r\nTendencia de giro\r\nFundamentos\r\nDisco\r\nLado técnico\r\nMarca\r\nInicio\r\nTarifa casa\r\nLínea\r\nTarifa fuera de casa\r\nDevolución\r\nOferta inicial\r\ninmediata\r\nHorario futuro\r\nSituación de lesión\r\nInformación neutral\r\nInformación favorable\r\nInformación desfavorable\r\ncampo\r\nNo.\r\nGana\r\nEmpate\r\nPerder\r\nW%\r\nMás de\r\nO%\r\nPor debajo de\r\nU%\r\nDatos del entrenador\r\nTotal\r\nedad\r\nDivisión táctica\r\nPuntos por partido\r\nIr a la guerra\r\n\r\nFuera de casa\r\nEn casa\r\nEn casa\r\nFuera de casa\r\nJugador\r\nMotivo\r\nSaldo\r\nAceptar cambios\r\nAceptar cambio y apostar\r\nFuera\r\nApuesta simple\r\nApuesta 10\r\nBloque (10)\r\nDoble\r\nTriple\r\nTrixie\r\n4 pliegues\r\nYankee\r\n5 pliegues\r\nSuper Yankee\r\n6 pliegues\r\nHeinz\r\n7 pliegues\r\nSuper Heinz\r\n8 pliegues\r\nGoliat\r\n9 pliegues\r\nBloque (9)\r\nApuesta fallida\r\nApuesta fallida\r\nInformación de la apuesta\r\nProcesando\r\nEl talón de apuestas ha sido aceptado, por favor compruebe el resultado en el registro\r\n{x}y{y}\r\nConfirmar apuesta\r\nApuesta\r\nApuesta realizada\r\nApuesta simple\r\nApuesta\r\nLímite de apuesta\r\nImporte Ganable\r\nApuesta\r\n\r\nBorrar\r\nEliminar todo\r\nNo válido\r\nLas cuotas se están actualizando~\r\nLa red es anormal, por favor inténtelo de nuevo\r\nApuesta fallida, por favor inténtelo de nuevo\r\nPor favor, introduzca la apuesta",
+    "feature_not_checked": "Esta función no está marcada", 
+    "if_bet_when": "Al colocar",
+    "if": "Si",
+    "do_not_accept_odds": "No aceptar",
+    "accept_odds": "Aceptar a cuotas",
+    "increased_odds": "Subiendo",
+    "interrupt_your_betting": "Le interrumpe para que tenga que confirmar las cuotas y apostar de nuevo.",
+    "lower_odds": "Reduciendo",
+    "matter_placing_content": "(Es decir, no importa cómo cambien las cuotas al realizar una apuesta, el sistema asumirá que puede aceptarlo y no interrumpirá su comportamiento de apuesta)",
+    "system_default": "El sistema le dará por defecto",
+    "will_interrupt_behavior": "No te interrumpe por lo que el porcentaje de acierto mejorará.",
+    "chat_msg": "",
+    "system_will_think": "El sistema considerará que usted"
+  },
+  "analysis_football_matches": {
+    "analysis_data": "Datos",
+    "away_win": "Fuera de casa",
+    "big": "O",
+    "age": "edad",
+    "big_ball": "Más de",
+    "Big_ball_rate": "O%",
+    "Coach_data": "Datos del entrenador",
+    "cup_points": "Puntos en la Copa",
+    "company": "Marca",
+    "Customer_win_rate": "Tarifa fuera de casa",
+    "customer": "Fuera",
+    "Favorable_information": "Información favorable",
+    "Disk": "Disco",
+    "European_Finger": "Eur Finger",
+    "date": "Fecha",
+    "flat": "X",
+    "field": "campo",
+    "Future_schedule": "Horario futuro",
+    "gain_loss": "+/-",
+    "Fundamentals": "Fundamentos",
+    "game": "P",
+    "Go_to_war": "Ir a la batalla",
+    "handicap": "Línea",
+    "immediate": "inmediata",
+    "historical_war": "Cara a cara",
+    "home_win1": "En casa",
+    "Initial_offer": "Oferta inicial",
+    "bench_lineup": "Lista de banco",
+    "Injury_situation": "Lista de lesiones",
+    "intelligence": "Inteligencia",
+    "league": "Liga",
+    "integral": "Pts",
+    "league_points": "Puntos Liga",
+    "Interval_days": "Día Gap",
+    "level": "D",
+    "line_up": "Alineación",
+    "lose": "L",
+    "Lose_plate": "Perder",
+    "Main_win": "Casa",
+    "main": "En casa",
+    "match": "Partido",
+    "Main_win_rate": "Tarifa casa",
+    "Move_plate": "Empate",
+    "near": "L",
+    "name": "Nombre",
+    "negative": "L",
+    "no_data": "Sin datos",
+    "Neutral_Information": "Información neutral",
+    "net_win": "GD",
+    "Odds": "Probabilidades",
+    "number": "Número",
+    "player": "Jugador",
+    "Points_per_game": "Puntos por partido",
+    "rank": "Categoría",
+    "position": "Posición",
+    "reason": "Motivo",
+    "record_clashes": {
+      "5": "Últimos 5 partidos de H2H",
+      "10": "Últimos 10 partidos de H2H",
+      "15": "Últimos 15 partidos de H2H"
+    },
+    "ranking": "Categoría",
+    "recent_record": "Récord reciente",
+    "results": "Resultados",
+    "Return_rate": "Devolución",
+    "same_game": "Liga",
+    "same_host_guest": "H&A",
+    "score": "Puntuación",
+    "shut_down": "Cerrar",
+    "size": "Tamaño",
+    "small_ball": "Por debajo de",
+    "small_ball_rate": "U%",
+    "standings": "Récord",
+    "small": "U",
+    "Tactical_division": "División táctica",
+    "starting_lineup": "Alineación inicial",
+    "team": "Equipo",
+    "Technical_side": "Aspecto técnico",
+    "total_all": "Total",
+    "Turning_trend": "Cambio de tendencia",
+    "Total": "No.",
+    "turn_around": "Vuelta",
+    "Unfavorable_information": "Información desfavorable",
+    "victory": "W",
+    "win": "W",
+    "win_plate": "Gana",
+    "Win_rate": "W%",
+    "analysis_information": "noticias"
+  },
+  "basketball_playing_way": {
+    "first_half": "Primer Mitad",
+    "quarter": "Cuarto"
+  },
+  "bet": {
+    "edit_success": "Cambio de cuotas efectivo !",
+    "edit_fail": "Cambio de cuota fallido!",
+    "account_balance": "Saldo",
+    "agree_change2": "Aceptar cambios y apostar",
+    "agree_change": "Aceptar cambios",
+    "away_win": "Fuera de casa",
+    "bet": "Apuesta simple",
+    "bet_10001": "Apuesta 10",
+    "bet_10001013": "Bloque (10)",
+    "bet_3001": "Triple",
+    "bet_2001": "Doble",
+    "bet_4001": "4 pliegues",
+    "bet_3004": "Trixie",
+    "bet_50026": "Super Yankee",
+    "bet_6001": "6 pliegues",
+    "bet_40011": "Yankee",
+    "bet_60057": "Heinz",
+    "bet_5001": "5 pliegues",
+    "bet_700120": "Super Heinz",
+    "bet_7001": "7 pliegues",
+    "bet_8001": "8 pliegues",
+    "bet_800247": "Goliat",
+    "bet_900502": "Bloque (9)",
+    "bet_9001": "9 pliegues",
+    "bet_err": "Apuesta fallida",
+    "bet_look_result": "El talón de apuestas ha sido aceptado, por favor compruebe el resultado en el récord",
+    "bet_err2": "Apuesta fallida",
+    "bet_information": "Información de la apuesta",
+    "bet_loading": "Procesando",
+    "bet_msg": "{x}y{y}",
+    "bet_suc": "Apuesta realizada",
+    "bet_val": "Apuesta",
+    "bet_type_1": "Apuesta simple",
+    "betting": "Apuesta",
+    "bet_win": "Monto que se puede ganar",
+    "bet_record": "Apuesta",
+    "bet_val2": "Límite de apuesta",
+    "bet_ok": "Confirmar apuesta",
+    "clear": "Borrar",
+    "chatroom": "",
+    "err_msg01": "Las cuotas se están actualizando~",
+    "disabled": "No válido",
+    "delete_all": "Eliminar todo",
+    "err_msg02": "La red es anormal, por favor inténtelo de nuevo",
+    "err_msg03": "Apuesta fallida, por favor inténtelo de nuevo",
+    "err_msg05": "El saldo es insuficiente, por favor recargue primero",
+    "err_msg04": "Por favor, introduzca la apuesta",
+    "err_msg06": "Límite conseguido, por favor espere",
+    "err_msg09": "Saldo insuficiente, convertido a importe máximo apostable",
+    "err_msg10": "El importe mínimo de apuesta es {0}",
+    "err_msg08": "El sistema está ocupado, inténtelo de nuevo",
+    "err_msg07": "La orden necesita ser revisada. Por favor, compruebe el último estado en el historial de notas",
+    "err_msg12": "Parlay no soportado",
+    "err_msg11": "El importe de su apuesta supera el límite",
+    "home_win": "Inicio",
+    "input_v": "Por favor, introduzca la apuesta",
+    "err_msg13": "Red anormal, por favor compruebe la apuesta",
+    "invalidation": "No válido",
+    "invalidation2": "Parlay UNS",
+    "kushikatsu": "Multi",
+    "input_v2": "Por favor, introduzca el importe",
+    "loading2": "Procesamiento de apuestas",
+    "loading": "Procesando---",
+    "match_max": "Seleccionar hasta %s partidos",
+    "match_add": "Añadir",
+    "match_max2": "El número de apuestas ha alcanzado",
+    "match_min": "Seleccionar {0} partidos como mínimo",
+    "millions": "Millón",
+    "max": "Máximo",
+    "money_limit": "Límite %s~%s",
+    "millions_10": "Diez millones",
+    "money_limit2": "Límite %s~%s",
+    "msg01": "Todas las cuotas están en euros",
+    "msg03": "La línea, la cuota o la disponibilidad de las selecciones ha cambiado.",
+    "msg02": "La red es anormal, por favor compruebe el resultado de la apuesta en el talón de apuestas",
+    "msg05": "Más múltiples",
+    "msg04": "Menos múltiples",
+    "msg06": "Reglas de cruce",
+    "msg08": "La línea, la cuota o la disponibilidad de las selecciones ha cambiado.",
+    "msg09": "Hay apuestas para el mismo partido, no se pueden colocar juntas",
+    "msg07": "La red es anormal, por favor compruebe el resultado de la apuesta en el \"Talón de apuestas\".",
+    "msg10": "Las selecciones indicadas en rojo no pueden combinarse para apuestas múltiples.",
+    "msg11": "Borrar apuesta anulada",
+    "number_transactions": "Número",
+    "odd_upd_2": "La cuota y el hándicap han cambiado",
+    "odd_upd": "Las cuotas están siendo actualizadas~",
+    "odd_upded": "Las cuotas han cambiado",
+    "odd_upd_": "El valor del hándicap ha cambiado",
+    "order_no": "Número de apuesta",
+    "pack_up": "Doblar",
+    "pack_up2": "Hecho",
+    "save": "Guardar",
+    "single_more": "Multi Solteros",
+    "sum": "Total",
+    "submitted_successfully": "Enviado",
+    "total": "Apuesta",
+    "total_win2": "Ganancia máxima",
+    "understand": "ACEPTAR",
+    "sum2": "Subtotal",
+    "total_win": "Ganancia máxima total",
+    "used_money2": "Importe común",
+    "wanwan": "Mil millones",
+    "wan": "Diez mil",
+    "wanyi": "Trillones",
+    "msg12": "The disc mouth has failed",
+    "msg13": "Go to Betting History",
+    "bet_booked": "Booking betting successful",
+    "bet_book_failed": "Book failed",
+    "bet_booking": "Booking",
+    "bet_process": "Processing",
+    "bet_book_valid": "Expired",
+    "bet_book_confirm": "Book",
+    "bet_book_canceled": "Cancelled",
+    "bet_max_booked_odds": "已为最高预约赔率值，请重新调整",
+    "bet_min_booked_odds": "预约赔率不能低于所对应的盘口赔率"
+  },
+  "bet_record": {
+    "30day": "30 días",
+    "7day": "7 días",
+    "account": "Liquidados",
+    "bet_amount_betting_limit2": "El importe de su apuesta supera el límite",
+    "bet_amount_betting_limit": "Convertido a importe máximo apostable",
+    "before": "Pre",
+    "bet_date_list": [
+      "Hoy",
+      "Ayer",
+      "Dentro de 7 días",
+      "Dentro de un mes"
+    ],
+    "bet_enble_list": "Cupones válidos",
+    "bet_fail": "Perder",
+    "bet_match_tishi": "No hay partidos en la liga actual",
+    "bet_max_win": "Mayor número de victorias",
+    "bet_no_status00": "Sin resolver",
+    "bet_no": "Número de orden",
+    "bet_no_status02": "Empate",
+    "bet_no_status04": "Gana",
+    "bet_no_status03": "Pierde",
+    "bet_no_status06": "Perder la mitad",
+    "bet_no_status05": "Ganar la mitad",
+    "bet_no_status08": "Partido aplazado",
+    "bet_no_status11": "Partido aplazado",
+    "bet_no_status07": "Partido cancelado",
+    "bet_no_status15": "Partido abandonado",
+    "bet_sum_count": "Total Singular",
+    "bet_no_status12": "Partido Interrumpido",
+    "bet_refund": "Importe del reembolso",
+    "bet_suopan_info": "Las cuotas se están actualizando, ¡por favor espere un segundo!",
+    "bet_sum_val": "Apuesta",
+    "bet_time": "Hora de la apuesta",
+    "bet_win": "Ganar",
+    "betted_title": "Apuesta",
+    "cancel_type_1": "Partido anulado",
+    "bet_val": "Colocar Apuesta",
+    "bet_val2": "Importe de la apuesta",
+    "cancel_type_17": "Partido Aplazado",
+    "cancel_type_2": "Partido Aplazado",
+    "cancel_type_3": "Partido interrumpido",
+    "cancel_type_20": "Partido Retrasado",
+    "cancel_type_5": "Cancelación",
+    "cancel_type_4": "Revancha",
+    "cancel_type_6": "Partido abandonado",
+    "confirming": "Procesando",
+    "go_back": "Devolución",
+    "invalid": "Anulado",
+    "ing": "En juego",
+    "invalid_bet": "Apuesta anulada",
+    "no_account": "No liquidada",
+    "pack_down": "Desplegar",
+    "copy_suc": "Copiar número de pedido correctamente",
+    "pack_up": "Pliegue",
+    "sort0": "Tiempo establecido",
+    "sort1": "Tiempo de apuesta",
+    "sort3": "Ordenar por hora",
+    "sort4": "Ordenar por tiempo de apuesta",
+    "sort5": "Ordenar por hora del partido",
+    "sort2": "Hora del partido",
+    "successful_betting": "Apuesta realizada",
+    "total_bet_amount": "Apuesta total",
+    "submitting_bet": "Procesar apuesta",
+    "total_winable_amount": "Devolver",
+    "result_score": "Results",
+    "pack_up2": "Done"
+  },
+  "chatroom": {
+    "ban_post_bet": "",
+    "betting": "",
+    "clear": "",
+    "block_msg_info1": "",
+    "block_msg_info2": "",
+    "follow_bet": "",
+    "input_field_ph1": "",
+    "mute_hint2": "",
+    "mute_hint1": "",
+    "pop_content1": "",
+    "pop_send_hint3": "",
+    "mute_hint3": "",
+    "pop_send_hint2": "",
+    "pop_send_hint1": "",
+    "post_bet2": "",
+    "post_bet": "",
+    "post_bet_info1": "",
+    "send_err_hint1": "",
+    "send_err_hint2": "",
+    "post_bet_info2": "",
+    "read_more": "",
+    "pop_send_hint4": "",
+    "mute_hint4": "",
+    "pop_send_hint5": "",
+    "mute_hint": {
+      "time": [
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "type": [
+        "",
+        "",
+        ""
+      ]
+    },
+    "close": "",
+    "bulletin": ""
+  },
+  "collect": {
+    "betted_title": "Favoritos",
+    "match_end": "Finalizado",
+    "historical_record": "Registrar",
+    "match_no": "Sin terminar"
+  },
+  "common": {
+    "edit": "modificar",
+    "in_box": "In the box......",
+    "all_notice": "Todos los anuncios",
+    "all_select": "Seleccionar todo",
+    "analysis": "Análisis estadístico",
+    "bet": "Colocado",
+    "auto_close": "Cierre automático después de %s s",
+    "cancel": "Cancelar",
+    "close": "Cerrar",
+    "finish": "Finalizar",
+    "hengping_tip": "Utiliza el teléfono en vertical para disfrutar de la mejor experiencia.",
+    "HD": "HD",
+    "loading_suc": "Cargado con éxito",
+    "maintenance_tips": "El sistema estará mantenido después de {0} minutos, ¡disculpe las molestias!",
+    "match_time": "Tiempo de partido",
+    "mix": "Parlays",
+    "no_data": "Sin Datos",
+    "no_network": "Sin Red",
+    "money": "Saldo",
+    "on": "1H",
+    "ok": "ACEPTAR",
+    "notice": "Anuncio",
+    "please_refresh": "Por favor, actualice la página e inténtelo de nuevo",
+    "rule_description": "Descripción de la regla",
+    "show_more2": "Plegar",
+    "show_more": "mostrar más",
+    "temporarily_unavailable": "Esta función no está disponible temporalmente",
+    "single": "Apuesta simple",
+    "SD": "SD",
+    "title_188": "Vista asiática",
+    "title_panda": "Vista Europea",
+    "under": "2H",
+    "unit": "PS",
+    "virtual_sports": "Deportes virtuales"
+  },
+  "detail": {
+    "less": "<",
+    "odd_all_closed": "Los mercados están cerrados",
+    "odd_closed": "Mercados cerrados",
+    "no_way_bet": "Betting is currently unavailable",
+    "mins": "minutos",
+    "popular_recommendation": "Popular",
+    "non":"not"
+  },
+  "early": {
+    "btn2": "Cobro inmediato",
+    "btn1": "No disponible",
+    "btn3": "Confirmar",
+    "btn4": "Procesando",
+    "btn5": "Cobro confirmado",
+    "info1": "Importe del reintegro incluida la apuesta",
+    "info2": "Por favor, inténtelo de nuevo",
+    "info4": "Apuesta de cobro",
+    "info5": "¡La apuesta restante no se admite para Cashout de nuevo!",
+    "info3": "Sólo para cobro total",
+    "info8": "Capital restante del Betslip",
+    "info9": "Número de cobros disponibles",
+    "list1": "Detalles del cobro",
+    "info7": "Ajustar cobro. Vuelva a intentarlo",
+    "info6": "Vuelva a intentarlo más tarde",
+    "list2": "Apuesta retirada",
+    "list4": "Rentabilidad",
+    "list3": "Apuesta restante",
+    "list5": "L / W",
+    "list6": "Participación restante",
+    "list7": "Cobro parcial",
+    "list8": "Cobro total",
+    "list9": "Nulo"
+  },
+  "error_msg_info": {
+    "1002": {
+      "client_msg": "compruebe su saldo"
+    },
+    "249203": {
+      "client_msg": "Compruebe su saldo"
+    },
+    "249207": {
+      "client_msg": "Se ha activado la cuota de control de riesgo, póngase en contacto con el agente"
+    },
+    "0000000": {
+      "client_msg": "Apuesta realizada"
+    },
+    "0400451": {
+      "tost_msg": "Apuesta fallida, inténtelo de nuevo.",
+      "client_msg": "La línea, las cuotas o la disponibilidad de las selecciones han cambiado."
+    },
+    "0400452": {
+      "client_msg": "La línea, cuota o disponibilidad de las selecciones ha cambiado.",
+      "tost_msg": "Apuesta fallida, inténtelo de nuevo."
+    },
+    "0400450": {
+      "client_msg": "Apuesta fallida, por favor inténtelo de nuevo"
+    },
+    "0400453": {
+      "client_msg": "La cuenta es anormal, por favor contacte con el servicio de atención al cliente"
+    },
+    "0400454": {
+      "client_msg": "Lo sentimos, su saldo es insuficiente. Por favor, recargue"
+    },
+    "0400455": {
+      "client_msg": "Saldo insuficiente, por favor recargue primero"
+    },
+    "0400456": {
+      "client_msg": "Apuesta fallida, por favor inténtelo de nuevo"
+    },
+    "0400457": {
+      "client_msg": "Apuesta fallida, por favor inténtelo de nuevo"
+    },
+    "0400458": {
+      "client_msg": "Apuesta fallida, por favor inténtelo de nuevo"
+    },
+    "0400459": {
+      "client_msg": "Confirmando, por favor espere"
+    },
+    "0400460": {
+      "client_msg": "Rechazar apuesta"
+    },
+    "0400461": {
+      "client_msg": "La línea, las cuotas o la disponibilidad de las selecciones han cambiado.",
+      "tost_msg": "Apuesta fallida, ¡por favor, inténtelo de nuevo!"
+    },
+    "0400463": {
+      "client_msg": "Apuesta fallida, ¡por favor, inténtelo de nuevo!"
+    },
+    "0400462": {
+      "client_msg": "Apuesta fallida, por favor inténtelo de nuevo"
+    },
+    "0400467": {
+      "client_msg": "La línea,cuota o disponibilidad de selecciones ha cambiado."
+    },
+    "0400464": {
+      "client_msg": "La cuota ha sido modificada, por favor inténtelo de nuevo~"
+    },
+    "0400469": {
+      "client_msg": "Su apuesta no puede Parlay",
+      "tost_msg": "La apuesta ha fallado, por favor inténtelo de nuevo"
+    },
+    "0400468": {
+      "client_msg": "El marcador ha cambiado, inténtelo de nuevo"
+    },
+    "0400476": {
+      "client_msg": "Las apuestas se están ajustando. Por favor, inténtelo de nuevo más tarde"
+    },
+    "0400475": {
+      "client_msg": "La cuota ha sido modificada, por favor inténtelo de nuevo~"
+    },
+    "0400477": {
+      "client_msg": "Las selecciones indicadas en rojo no pueden combinarse para apuestas múltiples."
+    },
+    "0400480": {
+      "client_msg": "La línea, las cuotas o la disponibilidad de las selecciones han cambiado.",
+      "tost_msg": "Apuesta fallida, inténtelo de nuevo"
+    },
+    "0400479": {
+      "client_msg": "Confirmando, por favor espere"
+    },
+    "0400478": {
+      "client_msg": "Las selecciones indicadas en rojo no pueden combinarse para apuestas múltiples."
+    },
+    "0400481": {
+      "client_msg": "La línea, las cuotas o la disponibilidad de las selecciones han cambiado.",
+      "tost_msg": "Apuesta fallida, inténtelo de nuevo."
+    },
+    "0400483": {
+      "client_msg": "El sistema está ocupado, inténtelo de nuevo"
+    },
+    "0400484": {
+      "client_msg": "La línea, la cuota o la disponibilidad de las selecciones ha cambiado.",
+      "tost_msg": "Apuesta fallida, inténtelo de nuevo."
+    },
+    "0400486": {
+      "client_msg": "El sistema está ocupado, inténtelo de nuevo"
+    },
+    "0400488": {
+      "client_msg": "La línea, la cuota o la disponibilidad de las selecciones ha cambiado.",
+      "tost_msg": "Apuesta fallida, inténtelo de nuevo."
+    },
+    "0400485": {
+      "tost_msg": "Ha fallado la apuesta, inténtelo de nuevo.",
+      "client_msg": "La línea, las cuotas o la disponibilidad de las selecciones han cambiado."
+    },
+    "0400517": {
+      "client_msg": "La cuota ha sido modificada, por favor inténtelo de nuevo~"
+    },
+    "0400519": {
+      "client_msg": "Apuesta fallida, inténtelo de nuevo."
+    },
+    "0400532": {
+      "client_msg": "Ajustar cuotas"
+    },
+    "0400540": {
+      "client_msg": "La cuota reservada no puede ser inferior a la cuota de mercado correspondiente"
+    },
+    "0400542": {
+      "client_msg": "Su límite de pago diario se ha agotado"
+    },
+    "0400543": {
+      "client_msg": "El número de órdenes reservadas en la partida actual supera el límite."
+    },
+    "0401999": {
+      "client_msg": "Apuesta fallida, por favor, inténtelo de nuevo"
+    },
+    "0400544": {
+      "client_msg": "Se ha agotado el límite de reservas del partido/juego actual"
+    },
+    "0402001": {
+      "client_msg": "La línea, las cuotas o la disponibilidad de las selecciones han cambiado.",
+      "tost_msg": "La apuesta ha fallado, inténtelo de nuevo."
+    },
+    "0400545": {
+      "client_msg": "Reserva fallida, inténtelo de nuevo"
+    },
+    "0402002": {
+      "tost_msg": "Apuesta fallida, ¡vuelva a intentarlo!",
+      "client_msg": "La línea, las cuotas o la disponibilidad de las selecciones han cambiado."
+    },
+    "0402003": {
+      "client_msg": "La línea, las cuotas o la disponibilidad de las selecciones ha cambiado.",
+      "tost_msg": "Apuesta fallida, ¡vuelva a intentarlo!"
+    },
+    "0402004": {
+      "client_msg": "La línea, las cuotas o la disponibilidad de las selecciones ha cambiado.",
+      "tost_msg": "Apuesta fallida, ¡vuelva a intentarlo!"
+    },
+    "0402006": {
+      "tost_msg": "Apuesta fallida, ¡vuelva a intentarlo!",
+      "client_msg": "La línea, las cuotas o la disponibilidad de las selecciones ha cambiado."
+    },
+    "0402005": {
+      "client_msg": "La línea, las cuotas o la disponibilidad de las selecciones ha cambiado.",
+      "tost_msg": "Apuesta fallida, ¡vuelva a intentarlo!"
+    },
+    "0402007": {
+      "client_msg": "La línea, las cuotas o la disponibilidad de las selecciones ha cambiado.",
+      "tost_msg": "Apuesta fallida, ¡vuelva a intentarlo!"
+    },
+    "0402008": {
+      "tost_msg": "Apuesta fallida, ¡vuelva a intentarlo!",
+      "client_msg": "La línea, las cuotas o la disponibilidad de las selecciones ha cambiado."
+    },
+    "0402009": {
+      "tost_msg": "Apuesta fallida, ¡vuelva a intentarlo!",
+      "client_msg": "La línea, las cuotas o la disponibilidad de las selecciones ha cambiado."
+    },
+    "0402010": {
+      "client_msg": "La línea, las cuotas o la disponibilidad de las selecciones ha cambiado.",
+      "tost_msg": "Apuesta fallida, ¡vuelva a intentarlo!"
+    },
+    "0402012": {
+      "client_msg": "La línea, las cuotas o la disponibilidad de las selecciones ha cambiado.",
+      "tost_msg": "Apuesta fallida, ¡vuelva a intentarlo!"
+    },
+    "0402015": {
+      "client_msg": "La apuesta ha fallado~ inténtelo de nuevo"
+    },
+    "0402016": {
+      "client_msg": "La línea, cuota o disponibilidad de las selecciones ha cambiado.",
+      "tost_msg": "Apuesta fallida, por favor inténtelo de nuevo"
+    },
+    "0402017": {
+      "client_msg": "Apuesta fallida, por favor, inténtelo de nuevo."
+    },
+    "0402018": {
+      "client_msg": "Apuesta fallida, ¡por favor, inténtelo de nuevo!"
+    },
+    "0402020": {
+      "client_msg": "Apuesta fallida, ¡por favor, inténtelo de nuevo!"
+    },
+    "0402022": {
+      "tost_msg": "Apuesta fallida, ¡por favor, inténtelo de nuevo!",
+      "client_msg": "La línea, las cuotas o la disponibilidad de las selecciones han cambiado."
+    },
+    "0402021": {
+      "client_msg": "Apuesta fallida, ¡por favor, inténtelo de nuevo!"
+    },
+    "0402023": {
+      "client_msg": "La línea, las cuotas o la disponibilidad de las selecciones han cambiado.",
+      "tost_msg": "Apuesta fallida, ¡vuelva a intentarlo!"
+    },
+    "0402024": {
+      "client_msg": "La línea, las cuotas o la disponibilidad de las selecciones ha cambiado.",
+      "tost_msg": "Apuesta fallida, ¡vuelva a intentarlo!"
+    },
+    "0402025": {
+      "tost_msg": "Apuesta fallida, ¡vuelva a intentarlo!",
+      "client_msg": "La línea, las cuotas o la disponibilidad de las selecciones ha cambiado."
+    },
+    "0402026": {
+      "tost_msg": "Apuesta fallida, ¡vuelva a intentarlo!",
+      "client_msg": "La línea, las cuotas o la disponibilidad de las selecciones ha cambiado."
+    },
+    "0402027": {
+      "tost_msg": "Apuesta fallida, ¡vuelva a intentarlo!",
+      "client_msg": "La línea, las cuotas o la disponibilidad de las selecciones ha cambiado."
+    },
+    "0402035": {
+      "client_msg": "Lo sentimos, su saldo es insuficiente. Recargar"
+    },
+    "0402038": {
+      "client_msg": "Apuesta fallida, por favor inténtelo de nuevo~"
+    },
+    "0402039": {
+      "client_msg": "Apuesta fallida, por favor inténtelo de nuevo"
+    },
+    "0402040": {
+      "client_msg": "Apuesta fallida, por favor inténtelo de nuevo"
+    },
+    "0402042": {
+      "client_msg": "La red es anormal, por favor, póngase en contacto con el servicio al cliente",
+      "tost_msg": "Apuesta fallida, ¡por favor, inténtelo de nuevo!"
+    },
+    "0402041": {
+      "client_msg": "¡Apuesta fallida, por favor inténtelo de nuevo!"
+    },
+    "0402043": {
+      "tost_msg": "Apuesta fallida, ¡por favor, inténtelo de nuevo!",
+      "client_msg": "La línea, las cuotas o la disponibilidad de las selecciones han cambiado."
+    },
+    "0402044": {
+      "client_msg": "La línea, las cuotas o la disponibilidad de las selecciones ha cambiado.",
+      "tost_msg": "Apuesta fallida, ¡vuelva a intentarlo!"
+    },
+    "0402045": {
+      "tost_msg": "Apuesta fallida, ¡vuelva a intentarlo!",
+      "client_msg": "La línea, las cuotas o la disponibilidad de las selecciones ha cambiado."
+    },
+    "0402046": {
+      "client_msg": "La línea, las cuotas o la disponibilidad de las selecciones ha cambiado.",
+      "tost_msg": "Apuesta fallida, ¡vuelva a intentarlo!"
+    },
+    "0402047": {
+      "client_msg": "La línea, las cuotas o la disponibilidad de las selecciones ha cambiado.",
+      "tost_msg": "Apuesta fallida, ¡vuelva a intentarlo!"
+    },
+    "0402048": {
+      "client_msg": "La línea, las cuotas o la disponibilidad de las selecciones ha cambiado.",
+      "tost_msg": "Apuesta fallida, ¡vuelva a intentarlo!"
+    },
+    "04021001": {
+      "client_msg": "Mantenimiento de e-Sports"
+    },
+    "04021002": {
+      "client_msg": "No puede apostar en eSports"
+    },
+    "0402049": {
+      "client_msg": "La línea, las cuotas o la disponibilidad de las selecciones ha cambiado.",
+      "tost_msg": "Apuesta fallida, ¡vuelva a intentarlo!"
+    },
+    "04021003": {
+      "client_msg": "Apuesta mínima insuficiente"
+    },
+    "04021005": {
+      "client_msg": "Algunos juegos no admiten parlay"
+    },
+    "04021004": {
+      "client_msg": "El importe sólo puede ser un número entero"
+    },
+    "04021006": {
+      "client_msg": "Algunos mercados no admiten parlay"
+    },
+    "04021007": {
+      "client_msg": "Mercado expirado"
+    },
+    "04021008": {
+      "client_msg": "Mercado expirado"
+    },
+    "04021011": {
+      "client_msg": "Mercado expirado"
+    },
+    "04021012": {
+      "client_msg": "Mercado expirado"
+    },
+    "04021013": {
+      "client_msg": "Mercado caducado"
+    },
+    "04021010": {
+      "client_msg": "Mercado expirado"
+    },
+    "04021009": {
+      "client_msg": "Mercado caducado"
+    },
+    "DJ001": {
+      "client_msg": "No se puede apostar en eSports"
+    },
+    "DJ004": {
+      "client_msg": "Algunos juegos no admiten parlay"
+    },
+    "DJ005": {
+      "client_msg": "Algunos mercados no admiten parlay"
+    },
+    "DJ003": {
+      "client_msg": "El importe sólo puede ser un número entero"
+    },
+    "DJ002": {
+      "client_msg": "Por favor, apueste al menos{0}"
+    },
+    "DJ006": {
+      "client_msg": "No válido"
+    }
+  },
+  "filter": {
+    "all_leagues": "Todas las ligas",
+    "match_select_title": "Seleccionar liga",
+    "match_key": "Introduzca el nombre de la liga",
+    "please_select_league": "Por favor, seleccione la liga",
+    "reverse_election": "Inverso"
+  },
+  "football_playing_way": {
+    "champion": "Directamente",
+    "hps15_title": [
+      "Inicio~14:59",
+      "15:00~29:59",
+      "30 mins-1H",
+      "2H Inicio-59 mins 59s",
+      "60 mins-74 mins 59s",
+      "75 mins-FT"
+    ],
+    "corner": "Córners",
+    "hps15Minutes": "15 min",
+    "hps5Minutes": "Inicio~14:59",
+    "hps_fifteen_minutes_details": [
+      {
+        "content": "Inicio-14 min 59s",
+        "title": "15 mins-Fase 1"
+      },
+      {
+        "content": "15 min-29 min 59s",
+        "title": "15 min-Fase 2"
+      },
+      {
+        "content": "30 min-1H",
+        "title": "15 min-Fase 3"
+      },
+      {
+        "content": "2H Inicio-59 min 59s",
+        "title": "15 min-Fase 4"
+      },
+      {
+        "content": "60 min-74 min 59s",
+        "title": "15 min-Fase 5"
+      },
+      {
+        "content": "75 mins-FT",
+        "title": "15 min-Fase 6"
+      }
+    ],
+    "hps_next_goal": "Next goal",
+    "penalty_cards": "Reservas",
+    "overtime": "OT",
+    "penalty_shootout": "PEN",
+    "hpsBold": "Puntuación correcta",
+    "promotion": "Clasificatorios",
+    "full_time_draw": "Empate",
+    "minutes_of_the_Xth_goal": "Minutos X gol",
+    "half_time_draw": "Empate HT",
+    "any_goal": "cualquier gol"
+  },
+  "footer_menu": {
+    "adviser": "Asesor",
+    "all": "Todos",
+    "analysis": "Análisis",
+    "bet_model": "Modo Apuestas",
+    "bet_record": "Apuestas",
+    "bet_order": "Mis apuestas",
+    "change_simple01": "Cambiar",
+    "change_simple02": "Lite",
+    "collect": "Favoritos",
+    "corner_kick": "Corner",
+    "daxiao": "Total Goles",
+    "corner": "Total Esquinas",
+    "Day_mode": "Modo Día",
+    "daytime": "Día",
+    "follow": "Favoritos",
+    "hot": "Hot",
+    "full_time": "tiempo completo",
+    "hot2": "Por Hot",
+    "filter": "Filtrar",
+    "league_filter": "Proyección de la Liga",
+    "mode": "Modo",
+    "more": "Más",
+    "new_v": "Versión para principiantes",
+    "night": "Nocturno",
+    "odds_set": "Ajustes de Handicap",
+    "play_way_f": "",
+    "night_mode": "Modo Noche",
+    "popular_Sort": "Clasificación popular",
+    "rangfen": "Hándicap",
+    "pro_v": "Versión profesional",
+    "rangqiu": "Hándicap",
+    "search": "buscar en",
+    "selected": "Seleccionado",
+    "refresh": "Actualizar",
+    "set_menu": "Menú",
+    "settings": "ajustes",
+    "theme": "Estilo del tema",
+    "sort_title": "Reglas de ordenación",
+    "time2": "Por hora",
+    "time": "Hora",
+    "daily_activities": "Actividades diarias",
+    "turn_on": "Abierto",
+    "time_order": "Orden de tiempo",
+    "win_alone": "1X2",
+    "open_bets":"Apuestas no liquidadas",
+    "closed_bets":"Apuestas liquidadas"
+  },
+  "home": {
+    "can_bet": "Artículo de apuesta",
+    "hot": "Popular",
+    "home": "Inicio",
+    "lang_en": "INGLÉS",
+    "invalid_credentials": "La información no es válida, inicie sesión de nuevo！",
+    "live_video": "En Vivo",
+    "login_invalid": "Inicio de sesión no válido",
+    "lang_zj": "Chino",
+    "login_success": "Inicio de sesión correcto",
+    "match_no_hot": "Sin eventos populares",
+    "match_no_has": "Sin eventos",
+    "my": "Mío",
+    "no_favorite_events": "Sin eventos favoritos",
+    "record": "Récord de apuestas"
+  },
+  "home_popular": {
+    "featured": "Destacados",
+    "featured_events": "partido destacado",
+    "average": "PPG",
+    "player": "jugador",
+    "assist": "asistir",
+    "quiz": "prueba",
+    "ranking": "categoría",
+    "win_rate": "ganar",
+    "you_may_also_like": "Para ti"
+  },
+  "info_rules": {
+    "i_know": "Entendido",
+    "rules": {
+      "rule1": "<div class=\"reglas-wet\">1</div>&nbsp;&nbsp;Todo el contenido en vivo que se muestra en esta página es solo para referencia. Los miembros también pueden usar este contenido como guía. Haremos todo lo posible para garantizar que el contenido mostrado sea correcto y la empresa no asumirá ninguna responsabilidad. por cualquier error.",
+      "rule2": "<div class=\"reglas-wet\">2</div>&nbsp;&nbsp;Para una puntuación en vivo, como un hándicap, prevalecerá la puntuación correcta que se muestra en el boleto de apuestas en el momento de realizar la apuesta."
+    },
+    "auto": "Instrucciones para eventos en vivo"
+  },
+  "isoName": "en",
+  "limit": {
+    "msg1": "Vaya. Página no encontrada",
+    "msg2": "Mantén la calma. \"Actualizar\" para restaurar~"
+  },
+  "list": {
+    "win1": "1",
+    "win2": "2",
+    "dogfall": "X",
+    "play": "Market",
+    "play1": "1x2",
+    "play2": "Handicap",
+    "play3": "Total Goals",
+    "home_hdp": "1",
+    "away_hdp": "2",
+    "over": "Over",
+    "under": "Under",
+    "after_time_start2": "Empezar en {0} minutos",
+    "match_end": "Finalizado",
+    "go_to_details": "detalles",
+    "after_time_start": "Empezar en {0} minutos",
+    "match_no_start": "No iniciado",
+    "match_no": "Sin terminar",
+    "match_start": "Iniciado",
+    "total_play_count": "Total Juegos",
+    "total_pp_score_count": "Total",
+    "score-disparity": "Dif.",
+    "water_polo_countdown": "<S% minutos",
+    "match_doing": "Procesando",
+    "other": "其他"
+  },
+  "list_title": {
+    "1": {
+      "title": [
+        "1X2",
+        "hándicap",
+        "O/U",
+        "1er tiempo - 1x2",
+        "1er tiempo - Hándicap",
+        "1er tiempo - O/U"
+      ]
+    },
+    "2": {
+      "title": [
+        "Línea de dinero",
+        "Hándicap",
+        "Puntos totales"
+      ]
+    },
+    "3": {
+      "title": [
+        "Línea de dinero",
+        "Handicap",
+        "Puntos totales"
+      ]
+    },
+    "4": {
+      "title": [
+        "1X2",
+        "Handicap",
+        "Goles totales"
+      ]
+    },
+    "5": {
+      "title": [
+        "Ganador",
+        "Set Handicap",
+        "Hándicap de Juego"
+      ]
+    },
+    "6": {
+      "title": [
+        "1X2",
+        "Handicap",
+        "Total Goles"
+      ]
+    },
+    "7": {
+      "title": [
+        "Ganador",
+        "Cuadro Handicap",
+        "Total Marcos"
+      ]
+    },
+    "8": {
+      "title": [
+        "Ganador",
+        "Handicap por puntos",
+        "Total Puntos"
+      ]
+    },
+    "9": {
+      "title": [
+        "Ganador",
+        "Punto Handicap",
+        "Puntos totales"
+      ]
+    },
+    "10": {
+      "title": [
+        "Ganador",
+        "Punto Handicap",
+        "Puntos totales"
+      ]
+    },
+    "11": {
+      "title": [
+        "1X2",
+        "Hándicap",
+        "Total Rondas",
+        "1ª mitad - 1x2",
+        "1er tiempo - Handicap",
+        "1er tiempo - Total Goles"
+      ]
+    },
+    "12": {
+      "title": [
+        "1X2",
+        "Total Rondas"
+      ]
+    },
+    "13": {
+      "title": [
+        "Ganador",
+        "Punto Handicap",
+        "Total Puntos"
+      ]
+    },
+    "14": {
+      "title": [
+        "1x2",
+        "Handicap",
+        "Total Goles",
+        "1er tiempo - 1x2",
+        "1er tiempo - hándicap",
+        "1er tiempo - total"
+      ]
+    },
+    "15": {
+      "title": [
+        "1X2",
+        "Hándicap",
+        "Total",
+        "1er tiempo - 1x2",
+        "1er tiempo - hándicap",
+        "1er tiempo - total"
+      ]
+    },
+    "16": {
+      "title": [
+        "1x2",
+        "Hándicap",
+        "Total Goles",
+        "1er tiempo - 1x2",
+        "1er tiempo - hándicap"
+      ]
+    },
+    "100": {
+      "title": [
+        "Ganador del partido",
+        "Mapa Handicap",
+        "Total Mapas"
+      ]
+    },
+    "101": {
+      "title": [
+        "Ganador del partido",
+        "Mapa Handicap",
+        "Mapas totales"
+      ]
+    },
+    "102": {
+      "title": [
+        "Ganador del partido",
+        "Mapa Handicap",
+        "Mapas totales"
+      ]
+    },
+    "103": {
+      "title": [
+        "Ganador del partido",
+        "Mapa Handicap",
+        "Mapas totales"
+      ]
+    },
+    "1001": {
+      "title": [
+        "1X2",
+        "Hándicap",
+        "Total Goles"
+      ]
+    },
+    "1004": {
+      "title": [
+        "Ganador",
+        "Handicap",
+        "Puntos totales",
+        "Carrera a 21"
+      ]
+    }
+  },
+  "login": {
+    "err_msg01": "El nombre de usuario no puede estar vacío",
+    "login": "Entrar",
+    "name": "Nombre de usuario",
+    "err_msg02": "La contraseña no puede estar vacía",
+    "no_login": "Cerrar sesión",
+    "remember_pwd": "Recordar contraseña",
+    "password": "Contraseña",
+    "shop_code": "Código de comerciante"
+  },
+  "lost": {
+    "msg1": "Falta",
+    "msg2": "Tómatelo con calma",
+    "msg3": "Actualizar",
+    "msg4": "Actualizar",
+    "msg5": "Volver"
+  },
+  "main_menu": {
+    "my_bet": "Mi apuesta"
+  },
+  "match_info": {
+    "all_result": "Todos",
+    "add": "Más",
+    "abandon": "Abandonada",
+    "animation": "Animación",
+    "animation_info": "Animación Info",
+    "ball": "Bola",
+    "delay": "Retrasado",
+    "cancel": "Cancelado",
+    "full": "Todos",
+    "drawn": "X",
+    "greater": ">",
+    "half": "Medio",
+    "ice_add": "Más",
+    "interrupt": "Interrumpido",
+    "less": "<",
+    "lvs": "En vivo",
+    "m_video_not_start": "El vídeo en directo no ha comenzado todavía, por favor espere un segundo",
+    "m_anima_not_start": "La animación en vivo no ha comenzado todavía, por favor espere un segundo",
+    "match_colse": "Cerrar",
+    "match_not_start": "El juego aún no ha comenzado",
+    "match_end": "Fin",
+    "match_over": "Fin del Tiempo Completo",
+    "no": "No",
+    "my_bets": "Mis apuestas",
+    "odds_type_additional": "Adicional",
+    "pause": "Parada",
+    "pack_up": "Retirarse",
+    "postpone": "Aplazado",
+    "select_event": "Partidos en caliente",
+    "strike": "Huelga",
+    "shoot_out": "Punto",
+    "strike_out": "Fuera",
+    "show_more": "Mostrar más",
+    "yes": "Sí",
+    "total_score": "Total actual",
+    "match_parlay": "Parlay",
+    "unknown": "Desconocido",
+    "video": "Video",
+    "video_info": "Video Info",
+    "Topic": "",
+    "topic": "",
+    "video_live": "Video Live",
+    "animation_live": "Animation Live"
+  },
+  "match_main": {
+    "cut_off": "Libro Cerrado",
+    "Handicap": "Handicap",
+    "Rostov_U20": "Rostov Sub20",
+    "royal_house_Madrid": "Real Madrid"
+  },
+  "match_result": {
+    "attack": "Ataca",
+    "ball_possession": "% de posesión",
+    "corner": "córner",
+    "dangerous_offense": "Ataques peligrosos",
+    "end_of_regular_season": "Tiempo completo",
+    "Field_goal_percentage": "Gol de campo",
+    "corner_kick": "Córner",
+    "finish": "Final",
+    "event": "evento",
+    "Fouls": "Faltas",
+    "Free_throw": "Tiro libre",
+    "goal": "Gol",
+    "Free_throw_percentage": "Tiros libres",
+    "midfield": "Medio Tiempo",
+    "overtime_is_over": "Tiempo suplementario",
+    "match": "Partido",
+    "own_goals": "Gol en propia meta",
+    "match_analysis": "Análisis de eventos",
+    "penalty_kick": "Penalti",
+    "penalty_kick_ended": "Tiro penal",
+    "red_card": "RC",
+    "penalty_missed": "Penalti fallado",
+    "Remaining_pause": "Pausa restante",
+    "shoot_right": "Disparos a puerta",
+    "shot_off": "Disparos desviados",
+    "statistics": "estadísticas",
+    "shot": "Total de disparos",
+    "start": "Tiros fuera",
+    "substitution": "Sub",
+    "three_point_shooting": "tiro de tres puntos",
+    "Three_pointer": "Tres puntos",
+    "Two_pointer": "Dos puntos",
+    "which_number": "número",
+    "yellow_card": "YC"
+  },
+  "matchtype": {
+    "1": "Pre",
+    "2": "En directo",
+    "3": "",
+    "4": ""
+  },
+  "mmp": {
+    "1": {
+      "0": "1H",
+      "6": "1H",
+      "7": "2H",
+      "31": "HT",
+      "32": "Esperar OT",
+      "33": "OT HT",
+      "34": "Esperar PEN",
+      "41": "OT 1H",
+      "42": "OT 2H",
+      "50": "PEN",
+      "80": "Interrumpido",
+      "90": "Abandonado",
+      "100": "2H Terminado",
+      "110": "OT Terminado",
+      "120": "PEN Finalizado",
+      "999": "FT Finalizado"
+    },
+    "2": {
+      "0": "No Iniciado",
+      "1": "1H",
+      "2": "2H",
+      "13": "Q1",
+      "14": "Q2",
+      "15": "Q3",
+      "16": "Q4",
+      "21": "Tratamiento",
+      "31": "HT",
+      "32": "Esperar OT",
+      "40": "OT",
+      "61": "Retraso",
+      "80": "Interrumpido",
+      "90": "Abandonado",
+      "100": "FT",
+      "110": "OT Finalizado",
+      "301": "Q2",
+      "302": "Q3",
+      "303": "Q4",
+      "999": "Fin",
+      "1001": "Q4",
+      "1002": "2H",
+      "99999": "Full Time"
+    },
+    "3": {
+      "0": "No Iniciado",
+      "80": "Interrumpido",
+      "90": "Abandonado",
+      "100": "Finalizado",
+      "401": "1a entrada arriba",
+      "402": "1a entrada abajo",
+      "403": "2ª entrada arriba",
+      "404": "2ª entrada abajo",
+      "405": "3ª entrada superior",
+      "406": "3ª entrada fondo",
+      "407": "4ª entrada parte superior",
+      "408": "4ª entrada fondo",
+      "409": "5ª entrada parte superior",
+      "410": "5ª entrada, parte inferior",
+      "411": "6ª entrada parte superior",
+      "412": "6ª entrada Fondo",
+      "413": "7ª entrada",
+      "414": "7ª entrada, parte inferior",
+      "415": "8ª entrada parte superior",
+      "416": "8ª entrada fondo",
+      "417": "9ª entrada parte superior",
+      "418": "9ª entrada fondo",
+      "421": "1ª entrada fondo",
+      "422": "2ª entrada parte superior",
+      "423": "2ª entrada fondo",
+      "424": "3ª entrada parte superior",
+      "425": "3ª entrada fondo",
+      "426": "4ª entrada parte superior",
+      "427": "4ª entrada fondo",
+      "428": "5ª entrada parte superior",
+      "429": "5ª entrada, parte inferior",
+      "430": "6ª entrada parte superior",
+      "431": "6ª entrada Fondo",
+      "432": "7ª entrada",
+      "433": "7ª entrada, parte inferior",
+      "434": "8ª entrada parte superior",
+      "435": "8ª entrada fondo",
+      "436": "9ª entrada parte superior",
+      "437": "9ª entrada fondo",
+      "438": "A la espera de la prórroga",
+      "999": "Finalizado",
+      "999_app_h5": "Finalizado",
+      "41910": "10ª entrada, arriba",
+      "41911": "Parte superior de la 11ª entrada",
+      "41912": "12ª entrada parte superior",
+      "41913": "13ª entrada",
+      "41914": "14ª entrada",
+      "41915": "15ª entrada",
+      "41916": "16ª entrada",
+      "41917": "17ª entrada",
+      "41918": "18ª entrada",
+      "41919": "19ª entrada",
+      "41920": "20ª entrada parte superior",
+      "42010": "10ª entrada, parte inferior",
+      "42011": "11ª entrada, parte inferior",
+      "42012": "12ª entrada, parte inferior",
+      "42013": "13ª entrada, parte inferior",
+      "42014": "14ª entrada, parte inferior",
+      "42015": "15ª entrada, fondo",
+      "42016": "16ª entrada, fondo",
+      "42017": "17ª entrada, fondo",
+      "42018": "18ª entrada, fondo",
+      "42019": "19ª entrada, fondo",
+      "42020": "20ª entrada, parte inferior",
+      "43810": "11ª entrada, parte superior",
+      "43811": "12ª entrada, parte superior",
+      "43812": "13ª entrada, parte superior",
+      "43813": "14ª entrada, parte superior",
+      "43814": "15ª entrada, parte superior",
+      "43815": "16ª entrada",
+      "43816": "17ª entrada",
+      "43817": "18ª entrada",
+      "43818": "19ª entrada",
+      "43819": "20ª entrada parte superior",
+      "43910": "10ª entrada, parte inferior",
+      "43911": "11ª entrada, parte inferior",
+      "43912": "12ª entrada, parte inferior",
+      "43913": "13ª entrada, parte inferior",
+      "43914": "14ª entrada, parte inferior",
+      "43915": "15ª entrada, fondo",
+      "43916": "16ª entrada, fondo",
+      "43917": "17ª entrada, fondo",
+      "43918": "18ª entrada, fondo",
+      "43919": "19ª entrada, fondo",
+      "43920": "20ª entrada fondo"
+    },
+    "4": {
+      "0": "P1",
+      "1": "P1",
+      "2": "P2",
+      "3": "P3",
+      "32": "Esperar OT",
+      "34": "PEN",
+      "40": "OT",
+      "50": "PEN",
+      "80": "Interrumpido",
+      "90": "Abandonado",
+      "100": "Finalizado",
+      "110": "OT Terminado",
+      "120": "PEN Finalizado",
+      "301": "P2",
+      "302": "P3",
+      "999": "Terminado"
+    },
+    "5": {
+      "0": "Conjunto 1",
+      "8": "Conjunto 1",
+      "9": "Conjunto 2",
+      "10": "Grupo 3",
+      "11": "Serie 4",
+      "12": "Serie 5",
+      "61": "Retrasado",
+      "80": "Interrumpido",
+      "90": "Cancelado",
+      "93": "Predeterminado1",
+      "94": "Predeterminado2",
+      "95": "Retirado1",
+      "96": "Retirado2",
+      "97": "Ausente1",
+      "98": "Ausente2",
+      "100": "Finalizado",
+      "301": "Conjunto 2",
+      "302": "Serie 3",
+      "303": "Serie 4",
+      "304": "Serie 5",
+      "305": "Finalizado",
+      "800": "Serie 1",
+      "900": "Serie 2",
+      "999": "Finalizado",
+      "1000": "Conjunto 3",
+      "1100": "Serie 4",
+      "1200": "Serie 5"
+    },
+    "6": {
+      "0": "No Iniciado",
+      "13": "Q1",
+      "14": "Q2",
+      "15": "Q3",
+      "16": "Q4",
+      "32": "Esperar OT",
+      "40": "OT",
+      "80": "Interrumpido",
+      "90": "Abandonado",
+      "100": "Finalizado",
+      "110": "OT Finalizado",
+      "301": "Q2",
+      "302": "Q3",
+      "303": "Q4",
+      "999": "Finalizado"
+    },
+    "7": {
+      "0": "No iniciado",
+      "21": "Procesando",
+      "30": "Suspendido",
+      "61": "Retrasado",
+      "80": "Interrumpido",
+      "90": "Cancelado",
+      "93": "Por defecto1",
+      "94": "Retirado2",
+      "95": "Retirado1",
+      "96": "Retirado2",
+      "97": "Abandono1",
+      "98": "Abandono2",
+      "100": "Finalizado",
+      "419": "1H",
+      "420": "2H",
+      "439": "2H",
+      "445": "Pausa",
+      "999": "Finalizado",
+      "x": "Cuadro %s"
+    },
+    "8": {
+      "0": "Juego 1",
+      "8": "Juego 1",
+      "9": "Juego 2",
+      "10": "Juego 3",
+      "11": "Juego 4",
+      "12": "Juego 5",
+      "61": "Retrasado",
+      "80": "Interrumpido",
+      "90": "Cancelado",
+      "93": "Por defecto1",
+      "94": "Retirado2",
+      "95": "Retirado1",
+      "96": "Retirado2",
+      "97": "Ausente1",
+      "98": "Ausente2",
+      "100": "Finalizado",
+      "301": "Juego 2",
+      "302": "Juego 3",
+      "303": "Juego 4",
+      "304": "Juego 5",
+      "305": "Juego 6",
+      "306": "Juego 7",
+      "441": "Juego 6",
+      "442": "Juego 7",
+      "999": "Finalizado"
+    },
+    "9": {
+      "0": "No Comenzó",
+      "8": "Juego 1",
+      "9": "Juego 2",
+      "10": "Juego 3",
+      "11": "Serie 4",
+      "12": "Serie 5",
+      "17": "Conjunto 5",
+      "37": "Serie 5",
+      "61": "Retrasado",
+      "80": "Interrumpido",
+      "90": "Cancelado",
+      "93": "Predeterminado2",
+      "94": "Predeterminado1",
+      "95": "Retirado1",
+      "96": "Retirado2",
+      "100": "Finalizado",
+      "130": "Finalizado",
+      "301": "Conjunto 2",
+      "302": "Conjunto 3",
+      "303": "Serie 4",
+      "304": "Serie 5",
+      "305": "Serie 6",
+      "306": "Grupo 7",
+      "441": "Grupo 6",
+      "442": "Set 7",
+      "999": "Finalizado"
+    },
+    "10": {
+      "0": "Juego 1",
+      "8": "Juego 1",
+      "9": "Juego 2",
+      "10": "Juego 3",
+      "11": "Juego 4",
+      "12": "Juego 5",
+      "61": "Retrasado",
+      "80": "Interrumpido",
+      "90": "Cancelado",
+      "93": "Por defecto2",
+      "94": "Retirado1",
+      "95": "Retirado1",
+      "96": "Retirado2",
+      "97": "Ausente1",
+      "98": "Ausente2",
+      "100": "Finalizado",
+      "301": "Juego 2",
+      "302": "Juego 3",
+      "303": "Juego 4",
+      "304": "Juego 5",
+      "999": "Finalizado"
+    },
+    "11": {
+      "0": "1H",
+      "6": "1H",
+      "7": "2H",
+      "31": "HT",
+      "32": "Esperar OT",
+      "33": "OT HT",
+      "34": "Esperar PEN",
+      "41": "OT 1H",
+      "42": "OT 2H",
+      "50": "PEN",
+      "80": "Interrumpido",
+      "90": "Abandonado",
+      "100": "2H Terminado",
+      "110": "OT Terminado",
+      "120": "PEN Finalizado",
+      "999": "FT Finalizado"
+    },
+    "13": {
+      "0": "No Iniciado",
+      "8": "Juego 1",
+      "9": "Set 2",
+      "10": "Serie 3",
+      "11": "Serie 4",
+      "12": "Serie 5",
+      "17": "Conjunto 5",
+      "37": "Serie 5",
+      "61": "Retrasado",
+      "80": "Interrumpido",
+      "90": "Cancelado",
+      "93": "Predeterminado2",
+      "94": "Predeterminado1",
+      "95": "Retirado1",
+      "96": "Retirado2",
+      "100": "Finalizado",
+      "130": "Finalizado",
+      "301": "Conjunto 2",
+      "302": "Conjunto 3",
+      "303": "Conjunto 4",
+      "304": "Serie 5",
+      "305": "Grupo 6",
+      "306": "Grupo 7",
+      "441": "Grupo 6",
+      "442": "Set 7",
+      "999": "Finalizado"
+    },
+    "14": {
+      "0": "No Iniciado",
+      "6": "1H",
+      "7": "2H",
+      "31": "HT",
+      "32": "Esperando ET",
+      "33": "ET HT",
+      "34": "A la espera de PEN",
+      "41": "ET 1H",
+      "42": "ET 2H",
+      "50": "PEN",
+      "60": "Partido suspendido",
+      "80": "Interrumpido",
+      "90": "Abandonado",
+      "100": "2H Finalizado",
+      "110": "ET Finalizado",
+      "120": "PEN Finalizado",
+      "440": "CT",
+      "443": "Esperando el inicio de OT",
+      "444": "ET Finalizado",
+      "999": "FT"
+    },
+    "15": {
+      "0": "No comenzado",
+      "6": "1H",
+      "7": "2H",
+      "13": "Q1",
+      "14": "Q2",
+      "15": "Q3",
+      "16": "Q4",
+      "21": "Tratamiento",
+      "31": "HT",
+      "32": "Esperar CT",
+      "34": "Esperar PEN",
+      "40": "TC",
+      "50": "PEN",
+      "61": "Aplazado",
+      "80": "Interrumpido",
+      "90": "Abandonado",
+      "100": "Q4",
+      "110": "OT Finalizado",
+      "120": "PEN Finalizado",
+      "301": "Q2",
+      "302": "Q3",
+      "303": "Q4",
+      "440": "TC",
+      "443": "A la espera del inicio de OT",
+      "444": "OT Terminado",
+      "999": "FT"
+    },
+    "16": {
+      "0": "No iniciado",
+      "13": "Q1",
+      "14": "Q2",
+      "15": "Q3",
+      "16": "Q4",
+      "34": "Esperar PEN",
+      "50": "PEN",
+      "80": "Interrumpido",
+      "90": "Abandonado",
+      "100": "Finalizado",
+      "120": "PEN Finalizado",
+      "301": "Q2",
+      "302": "Q3",
+      "303": "Q4",
+      "999": "Finalizado"
+    },
+    "100": [
+      "No Iniciado",
+      "Juego 1",
+      "Juego 2",
+      "Juego 3",
+      "Juego 4",
+      "Juego 5",
+      "Juego 6",
+      "Juego 7",
+      "Juego 8",
+      "Juego 9",
+      "Juego 10",
+      "Juego 11"
+    ],
+    "101": [
+      "Sin empezar",
+      "Juego 1",
+      "Juego 2",
+      "Juego 3",
+      "Juego 4",
+      "Juego 5",
+      "Juego 6",
+      "Juego 7",
+      "Juego 8",
+      "Juego 9",
+      "Juego 10",
+      "Juego 11"
+    ],
+    "102": [
+      "Sin empezar",
+      "Juego 1",
+      "Juego 2",
+      "Juego 3",
+      "Juego 4",
+      "Juego 5",
+      "Juego 6",
+      "Juego 7",
+      "Juego 8",
+      "Juego 9",
+      "Juego 10",
+      "Juego 11"
+    ],
+    "103": [
+      "Sin empezar",
+      "Juego 1",
+      "Juego 2",
+      "Juego 3",
+      "Juego 4",
+      "Juego 5",
+      "Juego 6",
+      "Juego 7",
+      "Juego 8",
+      "Juego 9",
+      "Juego 10",
+      "Juego 11"
+    ],
+    "eports_scoring": "Scoring"
+  },
+  "ms": {
+    "0": "No Iniciado",
+    "1": "Procesando",
+    "2": "Suspendido",
+    "3": "Fin",
+    "4": "Cerrado",
+    "5": "Cancelado",
+    "6": "Abandonado",
+    "7": "Retrasado",
+    "8": "Desconocido",
+    "9": "Aplazado",
+    "10": "Interrumpido",
+    "110": "Pronto"
+  },
+  "msc": {
+    "S1": "Marcador de tiempo completo",
+    "S100": "Set 5- Game 13 Score",
+    "S10": "Puntuación de penalti",
+    "S101": "Set 5- Juego 14 Puntuación",
+    "S102": "Set 5- Juego 15 Puntuación",
+    "S104": "Recuento de ataque",
+    "S10602": "Faltas en el segundo cuarto",
+    "S10601": "Recuento de faltas del cuarto 1",
+    "S103": "Puntuación del juego",
+    "S10603": "Falta en el tercer cuarto",
+    "S10604": "Faltas en el cuarto 4",
+    "S10605": "Recuento de faltas en tiempo extra",
+    "S10606": "Faltas 1H.",
+    "S10901": "Tiempo muerto en el primer cuarto",
+    "S10902": "Tiempo muerto en el segundo cuarto",
+    "S10607": "Faltas 2H.",
+    "S10903": "Tiempo muerto en el tercer cuarto",
+    "S10904": "Tiempo muerto cuarto 4",
+    "S10906": "Tiempo extra",
+    "S11": "Tarjeta roja",
+    "S1111": "Marcador de tiempo completo",
+    "S113": "Recuento de faltas de servicio",
+    "S114": "Porcentaje de acierto en el descanso",
+    "S117": "Tasa de servicios ganados",
+    "S118": "Recuento de faltas",
+    "S116": "Recuento de puntuación recibida",
+    "S119": "Break más alto",
+    "S115": "Recuento de puntos",
+    "S12": "Tarjeta amarilla",
+    "S120": "Puntuación del Juego 1",
+    "S121": "Juego 2 Puntuación",
+    "S124": "Puntuación del juego 5",
+    "S125": "Puntuación Juego 6",
+    "S123": "Puntuación de la 4ª partida",
+    "S122": "Puntuación del partido 3",
+    "S127": "Puntuación Juego 8",
+    "S126": "Puntuación Juego 7",
+    "S128": "Puntuación Juego 9",
+    "S130": "Juego 11 Puntuación",
+    "S131": "Juego 12 Puntuación",
+    "S13": "1H. puntuación tarjeta roja",
+    "S132": "Juego 13 Puntuación",
+    "S129": "Puntuación Juego 10",
+    "S133": "Juego 14 Puntuación",
+    "S134": "Juego 15 Puntuación",
+    "S136": "Puntuación Juego 17",
+    "S135": "Juego 16 Puntuación",
+    "S137": "Puntuación Juego 18",
+    "S138": "Puntuación Juego 19",
+    "S139": "Juego 20 Puntuación",
+    "S140": "Juego 21 Puntuación",
+    "S142": "Juego 23 Puntuación",
+    "S141": "Juego 22 Puntuación",
+    "S14": "2H. puntuación tarjeta amarilla",
+    "S143": "Juego 24 Puntuación",
+    "S144": "Juego 25 Puntuación",
+    "S145": "Juego 26 Puntuación",
+    "S146": "Juego 27 Puntuación",
+    "S147": "Juego 28 Puntuación",
+    "S148": "Juego 29 Puntuación",
+    "S149": "Juego 30 Puntuación",
+    "S151": "Juego 32 Puntuación",
+    "S152": "Juego 33 Puntuación",
+    "S153": "Juego 34 Puntuación",
+    "S150": "Juego 31 Puntuación",
+    "S15": "Puntuación de la esquina 1H.",
+    "S154": "Juego 35 Puntuación",
+    "S155": "Juego 36 Puntuación",
+    "S156": "Juego 37 Puntuación",
+    "S158": "Juego 39 Puntuación",
+    "S157": "Juego 38 Puntuación",
+    "S17": "Tiro desviado",
+    "S159": "Juego 40 Puntuación",
+    "S170": "Tiro de penalti",
+    "S18": "Tiro a puerta",
+    "S16": "Tiro de esquina 2H.",
+    "S19": "Quarter 1 score",
+    "S2": "1H. Marcador",
+    "S20": "Quarter 2 score",
+    "S191": "Recuento de penaltis no pitados",
+    "S200": "Recuento de saques Puntuación",
+    "S190": "Recuento de penaltis",
+    "S202": "Doble falta",
+    "S21": "Resultado del tercer cuarto",
+    "S201": "Recuento de breaks",
+    "S22": "Cuarto 4",
+    "S23": "Puntuación del set 1",
+    "S24": "Set 1- Juego 1 Puntuación",
+    "S26": "Set 1- Juego 3 Puntuación",
+    "S27": "Set 1- Juego 4 Puntuación",
+    "S28": "Set 1- Juego 5 Puntuación",
+    "S25": "Set 1- Juego 2 Puntuación",
+    "S29": "Set 1- Juego 6 Puntuación",
+    "S3": "2H. Puntuación",
+    "S30": "Set 1- Juego 7 Puntuación",
+    "S3012": "Bola",
+    "S3013": "Base score",
+    "S3014": "Puntuación Out",
+    "S3011": "Puntuación de Strike",
+    "S31": "Set 1- Juego 8 Puntuación",
+    "S3015": "Golpe",
+    "S32": "Set 1- Juego 9 Puntuación",
+    "S33": "Set 1- Juego 10 Puntuación",
+    "S34": "Set 1- Juego 11 Puntuación",
+    "S35": "Set 1- Juego 12 Puntuación",
+    "S38": "Set 1- Juego 15 Puntuación",
+    "S36": "Set 1- Juego 13 Puntuación",
+    "S39": "Puntuación Set 2",
+    "S4": "Saque Puntuación",
+    "S37": "Set 1- Juego 14 Puntuación",
+    "S40": "Set 2- Juego 1 Puntuación",
+    "S4012": "Puntuación de penalización menor",
+    "S4013": "Gol de campo",
+    "S4011": "Puntuación de penalización mayor",
+    "S41": "Set 2- Juego 2 Puntuación",
+    "S43": "Set 2- Juego 4 Puntuación",
+    "S42": "Set 2- Juego 3 Puntuación",
+    "S44": "Set 2- Juego 5 Puntuación",
+    "S45": "Set 2- Juego 6 Puntuación",
+    "S48": "Set 2- Juego 9 Puntuación",
+    "S47": "Set 2- Juego 8 Puntuación",
+    "S49": "Set 2- Juego 10 Puntuación",
+    "S46": "Set 2- Juego 7 Puntuación",
+    "S50": "Set 2- Juego 11 Puntuación",
+    "S5": "Puntuación de esquina",
+    "S502": "Tiempo extra 2H.",
+    "S500": "Resultado de córner en prórroga",
+    "S501": "Tiempo extra 1H.",
+    "S51": "Set 2- Juego 12 Puntuación",
+    "S53": "Set 2- Juego 14 Puntuación",
+    "S52": "Set 2- Juego 13 Puntuación",
+    "S56": "Set 3- Juego 1 Puntuación",
+    "S54": "Set 2- Juego 15 Puntuación",
+    "S58": "Set 3- Juego 3 Puntuación",
+    "S555": "Puntuación de esquina",
+    "S55": "Puntuación Set 3",
+    "S57": "Set 3- Juego 2 Puntuación",
+    "S59": "Set 3- Juego 4 Puntuación",
+    "S60": "Set 3- Juego 5 Puntuación",
+    "S6012": "Gol de campo",
+    "S6014": "Anotación de touchdown",
+    "S6": "Gol de tiro libre",
+    "S6011": "Puntuación de Rush",
+    "S61": "Set 3- Juego 6 Puntuación",
+    "S62": "Set 3- Juego 7 Puntuación",
+    "S63": "Set 3- Juego 8 Puntuación",
+    "S65": "Set 3- Juego 10 Puntuación",
+    "S64": "Set 3- Juego 9 Puntuación",
+    "S67": "Set 3- Juego 12 Puntuación",
+    "S66": "Set 3- Juego 11 Puntuación",
+    "S68": "Set 3- Juego 13 Puntuación",
+    "S69": "Set 3- Juego 14 Puntuación",
+    "S7": "Puntuación en la prórroga",
+    "S701": "Overtime 1H. score",
+    "S70": "Set 3- Juego 15 Puntuación",
+    "S72": "Set 4- Marcador Juego 1",
+    "S71": "Set 4- Puntuación",
+    "S702": "Overtime 2H. score",
+    "S73": "Set 4- Juego 2 Puntuación",
+    "S74": "Set 4- Marcador 3",
+    "S75": "Set 4- Juego 4 Puntuación",
+    "S77": "Set 4- Juego 6 Puntuación",
+    "S76": "Set 4- Juego 5 Puntuación",
+    "S78": "Set 4- Juego 7 Puntuación",
+    "S79": "Set 4- Juego 8 Puntuación",
+    "S80": "Set 4- Juego 9 Puntuación",
+    "S8": "Ataque Peligroso Puntuación",
+    "S82": "Set 4- Juego 11 Puntuación",
+    "S83": "Set 4- Juego 12 Puntuación",
+    "S81": "Set 4- Juego 10 Puntuación",
+    "S84": "Set 4- Juego 13 Puntuación",
+    "S86": "Set 4- Juego 15 Puntuación",
+    "S85": "Set 4- Juego 14 Puntuación",
+    "S87": "Set 5 Puntuación",
+    "S88": "Set 5- Juego 1 Puntuación",
+    "S9": "Doble falta Puntuación",
+    "S91": "Set 5- Juego 4 Puntuación",
+    "S89": "Set 5- Juego 2 Puntuación",
+    "S90": "Set 5- Juego 3 Puntuación",
+    "S92": "Set 5- Juego 5 Score",
+    "S94": "Set 5- Juego 7 Puntuación",
+    "S93": "Set 5- Juego 6 Puntuación",
+    "S95": "Set 5- Game 8 Score",
+    "S97": "Set 5- Game 10 Score",
+    "S96": "Set 5- Game 9 Score",
+    "S99": "Set 5- Juego 12 Puntuación",
+    "S98": "Set 5- Partido 11 Puntuación",
+    "S106": "",
+    "S105": "",
+    "S108": "",
+    "S107": "",
+    "S109": "",
+    "S110": "",
+    "S111": ""
+  },
+  "msg": {
+    "msg_nodata_02": "No hay datos",
+    "msg_nodata_03": "Inesperadamente, la red se ha desconectado. Compruebe la configuración de la red.",
+    "msg_nodata_01": "No se encontró ninguna coincidencia",
+    "msg_nodata_04": "No se ha encontrado ninguna búsqueda relevante",
+    "msg_nodata_06": "Actualizar",
+    "msg_nodata_05": "Colocado",
+    "msg_nodata_08": "Aún no hay ningún evento que desee recopilar",
+    "msg_nodata_07": "No te preocupes, intenta actualizar de nuevo",
+    "msg_nodata_10": "No hay registro de apuesta",
+    "msg_nodata_09": "No hay red",
+    "msg_nodata_11": "No se han encontrado eventos",
+    "msg_nodata_12": "No hay notas no liquidadas",
+    "msg_nodata_13": "No hay notas liquidadas",
+    "msg_nodata_14": "No hay eventos en directo",
+    "msg_nodata_15": "No hay apuestas Cashout no confirmadas",
+    "msg_nodata_16": "No hay apuestas Cashout confirmadas",
+    "msg_nodata_18": "No hay apuesta reservada",
+    "msg_nodata_19": "Reservar",
+    "msg_nodata_17": "Registro no encontrado",
+    "msg_nodata_22": "Demasiado tráfico, por favor inténtelo más tarde",
+    "msg_nodata_21": "No se preocupe, haga clic en \"Actualizar\" para recuperar~",
+    "msg_nodata_20": "Hola, desafortunadamente, la página se ha perdido",
+    "msg_nodata_23": "Tenondeve"
+
+  },
+  "myScroll": {
+    "msg1": "Tire para actualizar",
+    "msg2": "Actualizando",
+    "msg3": "Soltar para actualizar",
+    "msg4": "Actualizar completado",
+    "msg6": "Carga completada",
+    "msg5": "Cargando",
+    "msg7": "No More"
+  },
+  "nativeName": "Inglés (US)",
+  "odds": {
+    "EU": "Decimal",
+    "HK": "Hongkong",
+    "GB": "Probabilidades británicas",
+    "MY": "Probabilidades malayas",
+    "US": "Probabilidades americanas",
+    "ID": "Probabilidades indo"
+  },
+  "play_way_info": {
+    "1": "",
+    "2": "1X2 y Goles totales basados únicamente en los goles de las 5 primeras rondas en la tanda de penaltis. No se incluye la fase de muerte súbita (de la sexta ronda en adelante).",
+    "3": "",
+    "4": "",
+    "5": "Los mercados de reservas se determinan por un sistema de puntos. Las tarjetas rojas equivalen a 2 puntos, mientras que las amarillas equivalen a 1 punto. El máximo de puntos que puede acumular un jugador es 3.",
+    "6": "El mercado consiste en el total de saques de esquina locales o visitantes.",
+    "17": [
+      {
+        "content": "Inicio-14 mins 59s",
+        "title": "15 mins-Fase 1"
+      },
+      {
+        "title": "15 mins-Fase 2",
+        "content": "15 mins-29 mins 59s"
+      },
+      {
+        "content": "30 min-1H",
+        "title": "15 min-Fase 3"
+      },
+      {
+        "content": "2H Inicio-59 min 59s",
+        "title": "15 min-Fase 4"
+      },
+      {
+        "content": "60 min-74 min 59s",
+        "title": "15 min-Fase 5"
+      },
+      {
+        "title": "15 min-Fase 6",
+        "content": "75 mins-FT"
+      }
+    ],
+    "19": [
+      {
+        "content": "Inicio~04 mins 59s",
+        "title": "5 mins~P1"
+      },
+      {
+        "title": "5 mins~P2",
+        "content": "05 mins~09 mins 59s"
+      },
+      {
+        "title": "5min-icono",
+        "content": "Más Regla Deportiva"
+      },
+      {
+        "content": "85 mins~90 mins 00s",
+        "title": "5 mins~P18"
+      },
+      {
+        "title": "No Goles",
+        "Xth_title": "No X Goal",
+        "content": "90 mins"
+      },
+      {
+        "content": "45:01+ o 90:01+",
+        "title": "Goles en tiempo de descuento"
+      }
+    ]
+  },
+  "pre_record": {
+    "book": "Reservar",
+    "book_bet_amount": "Importe de la apuesta reservada",
+    "book_one": "Reservar",
+    "booked_fail": "Reserva fallida",
+    "booking": "Reserva",
+    "canceled": "Cancelado",
+    "cancle_fail_tips": "Lo está intentando demasiado a menudo, por favor inténtelo de nuevo más tarde",
+    "booked": "Reservado",
+    "confirm_cancle": "Confirmar CXL",
+    "confirm_matchinfo": "¿Cancelar {0} reserva?",
+    "cancle_fail_tips2": "Estado anormal del partido, no se puede cancelar la reserva",
+    "ConfirmedBooking": "Reserva confirmada",
+    "expired": "No válido",
+    "handicap": "Hándicap",
+    "market_error_info_max": "Ya es el valor mínimo de reserva, por favor, ajústelo。",
+    "market_error_info": "Ya es el valor mínimo de reserva, por favor, ajústelo。",
+    "odds": "Apuesta",
+    "market_error_info_low": "No puede ser inferior al valor de mercado mínimo reservado。",
+    "processing": "Procesando"
+  },
+  "rule_description": {
+    "american_football": "Fútbol americano",
+    "badminton": "Bádminton",
+    "baseball": "Béisbol",
+    "basketball": "Baloncesto",
+    "champion": "Directamente",
+    "football": "Fútbol",
+    "pingpong": "Tenis de mesa",
+    "general_rules": "Reglas generales",
+    "puck": "Hockey sobre hielo",
+    "Snooker": "Billar",
+    "volleyball": "Voleibol",
+    "tennis": "Tenis"
+  },
+  "scroll_wrapper": {
+    "is_footer": "FIN",
+    "loding_more": "Más"
+  },
+  "search": {
+    "clear_search_history": "Borrar historial de búsqueda",
+    "hot": "Calor",
+    "keyword_is_empty": "Introduzca palabras clave",
+    "hot_league": "Ligas populares",
+    "search_history": "Historial de búsqueda",
+    "search_qihao": "Introduce el número de evento virtual",
+    "search_hot": "HOT",
+    "search_title": "Buscar en",
+    "search_title_bw3": "Introduce el nombre de la liga o del equipo"
+  },
+  "setting_menu": {
+    "chan_lan": "Cambiar",
+    "concise": "Inicio",
+    "footer_t_odds": "Apuesta",
+    "footer_t_handicap": "y thinsp",
+    "footer_t_sort": "Ordenar",
+    "lang": "Español",
+    "handicap": "Formato de las cuotas",
+    "league": "Caliente",
+    "lottery": "Bonus",
+    "odd_any": "Cualquier",
+    "newer": "Inicio",
+    "odd_any2": "Cualquiera Probabilidades",
+    "newer_s_edt": "Edición",
+    "odd_europe": "Decimal",
+    "odd_europe2": "Decimal",
+    "odd_hong_kong2": "Hong Kong",
+    "odd_optimal2": "Mayores Probabilidades",
+    "odd_optimal": "Mayor",
+    "odd_hong_kong": "Hong Kong",
+    "rule_description": "Reglas",
+    "prize": "Historia",
+    "time": "Tiempo",
+    "standard": "Norma",
+    "tutorials": "Tutorial",
+    "version": "Edición",
+    "skin": "Piel"
+  },
+  "sport": {
+    "badminton": "Bádminton",
+    "football": "Fútbol",
+    "pingpong": "Tenis de mesa",
+    "tennis": "Tenis",
+    "snooker": "Snooker",
+    "basketball": "Baloncesto"
+  },
+  "sport2": {
+    "1": "Fútbol",
+    "2": "Baloncesto",
+    "3": "Béisbol",
+    "4": "Hockey sobre hielo",
+    "5": "Tenis",
+    "6": "Fútbol americano",
+    "7": "billar",
+    "8": "Tenis de mesa",
+    "9": "Voleibol",
+    "10": "Bádminton",
+    "11": "Balonmano",
+    "12": "Boxeo",
+    "13": "Voleibol de playa",
+    "14": "Rugby",
+    "15": "Hockey",
+    "16": "Polo acuático",
+    "17": "Atletismo",
+    "19": "Natación",
+    "20": "Gimnasia",
+    "21": "Buceo",
+    "22": "Tiro",
+    "23": "Halterofilia",
+    "24": "Tiro con arco",
+    "25": "Esgrima",
+    "26": "Curling",
+    "27": "Taekwondo",
+    "28": "Golf",
+    "29": "Ciclismo",
+    "30": "Carreras de caballos",
+    "31": "Vela",
+    "32": "Remo",
+    "33": "Automovilismo",
+    "34": "Judo",
+    "35": "kárate",
+    "36": "Lucha",
+    "37": "Cricket",
+    "38": "Dardos",
+    "39": "Fútbol playa",
+    "50": "Diversión",
+    "100": "LOL",
+    "101": "Dota2",
+    "102": "CSGO",
+    "103": "KOG",
+    "1001": "Fútbol virtual",
+    "1002": "Carreras de perros virtuales",
+    "1004": "Baloncesto virtual",
+    "1009": "Virtual Speedway",
+    "1010": "Moto virtual",
+    "1011": "Carreras de caballos virtuales"
+  },
+  "sport_head_play_category": {
+    "1": [
+      "1x2",
+      "Handicap",
+      "Más de/Menos de",
+      "1x2 - HT",
+      "Hándicap - HT",
+      "Más de/Menos de - HT"
+    ],
+    "2": [
+      "1x2",
+      "Hándicap de juego",
+      "Hándicap de juego"
+    ],
+    "3": [
+      "1x2",
+      "Hándicap",
+      "Puntos totales"
+    ],
+    "4": [
+      "1x2",
+      "Hándicap",
+      "Más de/Menos de"
+    ],
+    "5": [
+      "1x2",
+      "Hándicap",
+      "Puntos totales"
+    ],
+    "6": [
+      "1x2",
+      "Hándicap",
+      "Más de/Menos de"
+    ],
+    "7": [
+      "1x2",
+      "Total rondas"
+    ],
+    "8": [
+      "1x2",
+      "Hándicap",
+      "Total de cuadros"
+    ],
+    "9": [
+      "Victoria",
+      "Hándicap del mapa",
+      "Puntuación total del mapa"
+    ],
+    "10": [
+      "Victoria",
+      "Hándicap del mapa",
+      "Total mapa"
+    ],
+    "11": [
+      "1X2",
+      "Handicap",
+      "Goles totales",
+      "1er Tiempo 1X2",
+      "1er Tiempo Handicap",
+      "Total Goles 1er Tiempo"
+    ],
+    "12": [
+      "1x2",
+      "Handicap",
+      "Más/Menos",
+      "1x2 - HT",
+      "Hándicap - HT",
+      "Más de/Menos de - HT"
+    ]
+  },
+  "time": {
+    "monthes": [
+      "January",
+      "Enero",
+      "Febrero",
+      "Marzo",
+      "Abril",
+      "Mayo",
+      "Junio",
+      "Julio",
+      "Agosto",
+      "Septiembre",
+      "Octubre",
+      "Noviembre"
+    ],
+    "month_1": "January",
+    "month_10": "October",
+    "month_11": "November",
+    "month_12": "December",
+    "month_2": "February",
+    "month_3": "March",
+    "month_4": "April",
+    "month_5": "May",
+    "month_6": "June",
+    "month_7": "July",
+    "month_8": "August",
+    "month_9": "September",
+    "time_date_1": "Diciembre",
+    "time_date_2": "%mes mes %fecha día",
+    "time_date_week": [
+      "%s mes %s día %s:%s",
+      "Sol",
+      "Lun",
+      "Martes",
+      "Mier",
+      "Jue",
+      "Vie"
+    ],
+    "time_date_3": "%s mes %s día (%s)"
+  },
+  "time3": "dd/MM",
+  "time2": "Sáb",
+  "time6": "dd/MM/aa",
+  "time7": "dd/MM/aaaa hh:mm",
+  "time5": "dd/MM hh:mm",
+  "time8": "dd/MM/aaaa hh:mm",
+  "time4": "dd/MM",
+  "tips": {
+    "msg1": "hh:mm",
+    "msg2": "Apuesta combinada"
+  },
+  "time9": "dd/MM/aaaa hh:mm:ss",
+  "token_inv": {
+    "confrim": "Espero que se divierta",
+    "dear_user": "hoy",
+    "msg": "ACEPTAR",
+    "play_happily": "Vuelva a iniciar sesión",
+    "token_dis": "Estimado usuario",
+    "reaccess": "Información no válida，Por favor cierre la página"
+  },
+  "today": "Hoy.",
+  "tomorrow": "La información del usuario ha caducado, por favor inicie sesión de nuevo.",
+  "video": {
+    "after": "mañana",
+    "change_video": "Por favor, vuelva a entrar",
+    "click_on": "Un clic",
+    "close": "Cambiar a animación",
+    "close_2": "La línea de animación en directo está cerrada",
+    "close_1": "Cerrar",
+    "double_click": "Doble clic",
+    "full_screen_play": "Pantalla completa",
+    "lost": "La línea de vídeo en directo está cerrada",
+    "msg": "Todo el contenido de las retransmisiones en directo que se muestra en esta página es sólo de referencia, y los afiliados también pueden utilizarlo como guía. Haremos todo lo posible para garantizar que el contenido mostrado sea correcto. Si hubiera errores, la empresa no asumirá ninguna responsabilidad. En el caso de los resultados en directo, como el hándicap en directo, prevalecerá el resultado correcto mostrado en el talón de apuestas en el momento de la apuesta.",
+    "nohandle": "Lleva demasiado tiempo inactivo, el vídeo está en pausa, haga clic en reproducir para continuar.",
+    "sorry": "Lo sentimos, no se puede cargar ahora.",
+    "show_hide": "Mostrar/Ocultar",
+    "video_line": "Línea de vídeo"
+  },
+  "new_menu": {
+    "1": "En Juego",
+    "2": "Hoy",
+    "3": "Temprano",
+    "4": "Outrights",
+    "5": "Próximamente",
+    "6": "Mix Parlay",
+    "7": "Esports",
+    "8": "VR",
+    "30": "Lottery",
+    "28": "Resultados",
+    "400": "Outrights"
+  },
+  "virtual_sports": {
+    "comprehensive_rating": "Calificación global",
+    "advance": "GF",
+    "champion": "No.1",
+    "date_number_title": "th",
+    "FINAL": "Final",
+    "finals": "Finales",
+    "goal_difference": "+/-",
+    "game": "P",
+    "group_matches": "grupo",
+    "group": "Grupo",
+    "GROUPS": "Fase de grupos",
+    "INGAME": "Procesando",
+    "integral": "Pts",
+    "legOrder": "% partido",
+    "lose": "GA",
+    "match_status": {
+      "0": "Iniciar",
+      "1": "Última hora",
+      "2": "Fin",
+      "ended": "Finalizado",
+      "x_to_ended": "Fin de distancia %s",
+      "playing": "Procesamiento"
+    },
+    "leaderboard": "Clasificación",
+    "knockout": "Eliminatoria",
+    "matchDay": "Ronda %s",
+    "no_data": "no",
+    "next_date_no": "%s",
+    "PREGAME": "Antes del partido",
+    "next_batch_no": "Ronda %s",
+    "Q16": "Ronda de 32",
+    "Q4": "Cuartos de final",
+    "Q8": "Ronda de 16",
+    "quarter_finals": "1/4 Finales",
+    "result": [
+      "Vacío",
+      "Nulo",
+      "Empate",
+      "Perder",
+      "Ganar",
+      "Ganar la mitad",
+      "Perder la mitad"
+    ],
+    "results_previous": "Resultados anteriores",
+    "results_last_games": "resultados últimos 5 partidos",
+    "runner_up": "Nº2",
+    "SEMIFINAL": "Semifinales",
+    "semifinals": "Semifinales",
+    "show_more": "Más",
+    "third_place": "No.3",
+    "team": "Equipo",
+    "top_16": "Top 16",
+    "top_32": "Top 32",
+    "top_64": "Top 64",
+    "win_tie_loss": "W/D/L",
+    "vitality_performance": "Rendimiento Vitalidad",
+    "balance": "Balance",
+    "matching": "En el juego",
+    "show_all_markets":"Mostrar todos los mercados",
+    "match_detail": {
+      "leaderboard": "lista de clasificación",
+      "historical_results": "Resultados históricos",
+      "bet": "apuesta"
+    }
+  },
+  "key_name_chinese": "西班牙语",
+  "key_name_english": "Spanish",
+  "section_play": "",
+  "pan_paly": ""
+}

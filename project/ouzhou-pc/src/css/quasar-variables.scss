@@ -1,0 +1,40 @@
+// @import url(./global/activity.scss);
+// @import url(./global/analysis.scss);
+// @import url(./global/animate.scss);
+// @import url(./global/background.scss);
+// @import url(./global/border.scss);
+// @import url(./global/chatroom.scss);
+// @import url(./global/form.scss);
+// @import url(./global/index.scss);
+// @import url(./global/match.scss);
+// @import url(./global/media.scss);
+// @import url(./global/text-color.scss);
+
+
+$layout_max_width: 1920px; //内容最大宽度
+$layout_min_width: 1440px; //内容最大宽度
+
+$layout_menu_width: 234px; //左侧菜单宽度
+$layout_menu_width_mini: 64px; //左侧菜单mini宽度
+$layout_right_width: 441px; //右侧宽度
+
+$layout_nav_height: 60px; //导航高度
+$layout_notice_height: 36px; //公告高度
+body,
+html {
+  // max-width: $layout_max_width;
+  min-width: $layout_min_width;
+  margin: 0 auto;
+}
+
+$primary: #1976d2;
+$secondary: #26a69a;
+$accent: #9c27b0;
+
+$dark: #1d1d1d;
+$dark-page: #121212;
+
+$positive: #21ba45;
+$negative: #c10015;
+$info: #31ccec;
+$warning: #f2c037;

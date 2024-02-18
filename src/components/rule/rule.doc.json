@@ -1,0 +1,27 @@
+{
+    "bet_record": {
+        "level": 2,
+        "menuName": "客户端",
+        "sonName": "体育竞猜规则"
+    },
+    "category": "rule",
+    "component-name": "Rule",
+    "support-customization": "1",
+    "descriptions": [
+        "体育竞猜规则组件"
+    ],
+    "optional-component": [
+        {
+            "component-name": "Rule_1",
+            "descriptions": [
+                "PC-体育竞猜规则组件-版本1"
+            ]
+        },
+        {
+            "component-name": "Rule_h5",
+            "descriptions": [
+                "H5-体育竞猜规则组件-版本1"
+            ]
+        }
+    ]
+}

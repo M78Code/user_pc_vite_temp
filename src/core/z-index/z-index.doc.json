@@ -1,0 +1,73 @@
+{
+  "leftmenu": {
+    "level": 2,
+    "menuName": "客户端PC",
+    "sonName": "z-index"
+  },
+  "props": {
+    "category": "z-index",
+    "scope": "global",
+    "descriptions": [
+      "-1到-10为隐藏层",
+      "1501-2000为显示层级"
+    ],
+    "child": [
+      {
+        "scope": "global",
+        "className": "tip-message",
+        "descriptions": [
+          "全局提示信息设置最高层级2000"
+        ]
+      },
+      {
+        "scope": "global",
+        "className": "loading",
+        "descriptions": [
+          "全局loading的层级1999"
+        ]
+      },
+      {
+        "scope": "global",
+        "script": "global-popup",
+        "descriptions": [
+          "全局弹窗层级1998"
+        ]
+      },
+      {
+        "scope": "global",
+        "script": "global-mask",
+        "descriptions": [
+          "全局弹窗或者loading遮罩层级1997"
+        ]
+      },
+      {
+        "category": "z-index",
+        "scope": "home-page",
+        "descriptions": [
+          "1401-1500为显示层级"
+        ]
+      },
+      {
+        "category": "z-index",
+        "scope": "result-page",
+        "descriptions": [
+          "1301-1400为显示层级"
+        ]
+      },
+      {
+        "category": "z-index",
+        "scope": "details-page",
+        "descriptions": [
+          "1201-1300为显示层级"
+        ]
+      },
+      {
+        "category": "z-index",
+        "scope": "(bet-page",
+        "descriptions": [
+          "1101-1200为显示层级"
+        ]
+      }
+    ]
+  }
+}

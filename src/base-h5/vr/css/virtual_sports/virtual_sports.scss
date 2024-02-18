@@ -1,0 +1,189 @@
+/*
+ * @Author: Cable
+ * @Description: 虚拟体育样式
+ */
+[class*=theme0] {
+  /*  头部 */
+  .virtual-head {
+    color: var(--q-gb-t-c-18);
+    background-color: var(--q-gb-bg-c-27) !important;
+    .bg1001 {
+      background-image: var(--q-color-img-bg-47);
+    }
+    .bg1011 {
+      background-image:  var(--q-color-img-bg-48);
+    }
+    .bg1002 {
+      background-image: var(--q-color-img-bg-49);
+    }
+    .bg1010 {
+      background-image: var(--q-color-img-bg-50);
+    }
+    .bg1004 {
+      background-image: var(--q-color-img-bg-51);
+    }
+    .bg1009 {
+      background-image: var(--q-color-img-bg-52);
+    }
+    .back-wrap {
+      color:  var(--q-color-fs-color-54);
+      // .detail-back {
+      //   background: url($SCSSPROJECTPATH+"/image/png/back.png") center no-repeat;
+      //   background-size: 100% 100%;
+      // }
+      .no-single {
+        background: var(--q-color-img-bg-53)  center no-repeat;
+      }
+      .set-menu {
+        .filter-icon-wrapper {
+          .img {
+            background-image: var(--q-color-img-bg-54);
+          }
+        }
+      }
+    }
+    .tabs-bar-nav {
+      .tabs-tab.tabs-active {
+        .icon {
+          background-image: url($SCSSPROJECTPATH+"/image/png/sport_menu_active.png") !important;
+        }
+      }
+    }
+  }
+  .detail-header-bg {
+    &::after {
+      background-color: var(--q-color-page-bg-color-35);
+    }
+  }
+  .timer-format {
+    color: var(--q-color-fs-color-50);
+  }
+  .virtual-main {
+    /*  虚拟体育菜单 */
+    .virtual-menu-list {
+      color: var(--q-color-com-fs-color-4);
+      .item {
+        &.active {
+          color: var(--q-color-fs-color-6);
+          .bg {
+            background: var(--q-color-img-bg-56) no-repeat;
+          }
+        }
+      }
+      .item-inner {
+        background-image: var(--q-color-linear-gradient-bg-15);
+      }
+      .tabs-tab {
+        color: var(--q-color-fs-color-138);
+        &.tabs-active {
+          color: var(--q-color-com-fs-color-8);
+        }
+      }
+    }
+  }
+  .live-icon-pre {
+    background-color: var(--q-color-page-bg-color-50) !important;
+  }
+  .circle-time-wrapper {
+    svg {
+      path {
+        stroke: var(--q-color-fs-color-50);
+      }
+    }
+  }
+  .virtual-sports {
+    position: relative;
+    /*  联赛菜单 */
+    .tab-wrapper {
+       background-color:var(--q-color-page-bg-color-2);
+      .tab-item {
+        color:  var(--q-color-fs-color-13);
+        background-color: var(--q-color-page-bg-color-95);
+        border: 1px solid var(--q-color-border-color-53);
+        &.active {
+          color:  var(--q-color-fs-color-51);
+          border: 1px solid var(--q-color-fs-color-51);
+          background-color: var(--q-color-page-bg-color-85);
+        }
+      }
+    }
+
+    .banner {
+      .current-score {
+        .c-s-timer-w.basketball {
+          background-color: var(--q-color-page-bg-color-50) !important;
+        }
+      }
+    }
+
+    .match-single-end {
+      .i-c-title {
+        .i-c-w {
+          background-color: var(--q-color-page-bg-color-50) !important;
+        }
+      }
+      .virtual-title-ended {
+        background:  var(--q-color-img-bg-57) no-repeat  center / cover !important;
+      }
+    }
+
+    .data-wrapper-list {
+      .stage-wrapper {
+        .s-w-title {
+          &.focus {
+            color: var(--q-color-fs-color-50) !important;
+          }
+        }
+      }
+    }
+
+    .line-wrap {
+      .inner-line {
+        background-color: var(--q-color-page-bg-color-50) !important;
+      }
+      .round {
+        &.active {
+          background-color: var(--q-color-page-bg-color-50) !important;
+        }
+      }
+    }
+
+    .final-circle {
+      svg {
+        path {
+          stroke: var(--q-color-com-fs-color-9);
+        }
+      }
+    }
+    .timer-format {
+      color:var(--q-color-fs-color-50) !important;
+      &.last {
+        color: var(--q-color-com-fs-color-48) !important;
+      }
+    }
+  }
+  .virtual-sports-stage {
+     background-color:var(--q-color-page-bg-color-2);
+    .c-s-timer-w {
+      background-color: var(--q-color-page-bg-color-19);
+    }
+  }
+  .virtual {
+    background: var(--q-color-page-bg-color-1);
+    .tab {
+      background:var(--q-color-page-bg-color-2);
+    }
+    .center {
+      .first {
+        &:last-child {
+           background-color:var(--q-color-page-bg-color-2);
+        }
+      }
+    }
+    .version_biaozhun {
+      .item {
+         background-color:var(--q-color-page-bg-color-2);
+      }
+    }
+  }
+}

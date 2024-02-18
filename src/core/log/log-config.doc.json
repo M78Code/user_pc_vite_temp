@@ -1,0 +1,14 @@
+{
+  "leftmenu": {
+    "level": 2,
+    "menuName": "客户端PC",
+    "sonName": "通信日志功能"
+  },
+  "props": {
+    "category": "log-config",
+    "directory-name": "log-config",
+    "descriptions": [
+      "通信日志功能"
+    ]
+  }
+}

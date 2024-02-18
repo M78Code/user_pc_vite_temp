@@ -1,0 +1,260 @@
+{
+  "leftmenu": {
+    "level": 1,
+    "menuName": "项目内脚本文件"
+  },
+  "jobdoc": [
+      {
+        "category": "job",
+        "directory-name": "job",
+        "descriptions": [
+          "项目内脚本文件"
+        ],
+        "type": "job",
+        "remark": " ",
+        "items": [
+          {
+            "filename": "build-in-oss.js",
+            "type": "job",
+            "descriptions": [
+              "当前 环境的OSS 文件写入 html 头部",
+              "防止 源站OSS 文件被攻击用户进不来"
+            ]
+          },
+          {
+            "filename": "copy-html.js",
+            "type": "job",
+            "descriptions": [
+              "复制打包后的 html 文件到外层目录"
+            ]
+          },
+          {
+            "filename": "copy-oss.js",
+            "type": "job",
+            "descriptions": [
+              "复制OSS 到本地指定目录"
+            ]
+          },
+          {
+            "filename": "export-build-version.js",
+            "type": "job",
+            "descriptions": [
+              "创建 本次构建打包的 客户端版本 号"
+            ]
+          },
+          {
+            "filename": "remove-dist.js",
+            "type": "job",
+            "descriptions": [
+              "删除 服务器上可能的历史版本构建输出的缓存，确保不出错"
+            ]
+          },
+          {
+            "filename": "export-build-in-config.js",
+            "type": "job",
+            "descriptions": [
+              "输出最终的各个环境的基础项目配置 ，用于验证,也用于初始化生成"
+            ]
+          },
+          {
+            "filename": "build-in-config.js",
+            "type": "function",
+            "descriptions": [
+              "根据环境 计算当前的 环境相关的项目配置，项目打包的外层植入层",
+              "需要留意目前不需要以前的一些冗余的项目信息，只需要环境"
+            ]
+          },
+          {
+            "filename": "export-full-doc.js",
+            "type": "job",
+            "descriptions": [
+              "提取代码内的 *.doc.json 文件生成 单一 全量 json",
+              "写入 job/output/doc/ 目录 以提供给其他地方使用，这里有版本概念 有新旧差分"
+            ]
+          },
+          {
+            "filename": "export-merchant-config.js",
+            "type": "job",
+            "descriptions": [
+              "合并输出商户配置",
+              "从对接后台获取 当前需要构建的版本号的详细配置，写入 job/output/merchant/ 目录 ",
+              "此文件输出的配置文件：主要在 商户打包 非全量 离线zip 或者  非全量 离线sdk 使用，此种情况商户维护 ",
+              "商户打包 非全量 离线zip ：参考 entries : custom-version ",
+              "商户打包 非全量 离线sdk ：参考 entries : custom-sdk ",
+              "此文件输出的配置文件：也会在生产全量版本打包，拉取商户配置到 版本资源外层目录内（类似OSS） 使用,此种情况我们维护",
+              "我们生产全量版本打包 全量在线项目 ：参考 entries : full-version",
+              "此文件输出的配置文件：也会用来模拟商户场景下的全量SDK 使用",
+              "模拟商户场景下的全量SDK 使用：参考 entries : full-sdk "
+            ]
+          },
+          {
+            "filename": "merge-merchant-config.js",
+            "type": "job",
+            "descriptions": [
+              "合并商户配置",
+              "这个插件 在代码内 一些节点会单独使用",
+              "合并 ，覆盖 输入进来的配置 ，以及本地配置"
+            ]
+          },
+          {
+            "filename": "export-full-version-config.js",
+            "type": "job",
+            "descriptions": [
+              "全量版本配置",
+              "全局开关，默认false"
+            ]
+          },
+          {
+            "filename": "html-variables.js",
+            "type": "job",
+            "descriptions": [
+              "HTML 植入的变量"
+            ]
+          },
+          {
+            "filename": "write-env-file.js",
+            "type": "job",
+            "descriptions": [
+              "写 env 文件脚本"
+            ]
+          },
+          {
+            "filename": "read-env-file.js",
+            "type": "job",
+            "descriptions": [
+              "读 env 文件脚本"
+            ]
+          },
+          {
+            "filename": "write-folder-file.js",
+            "type": "job",
+            "descriptions": [
+              "目录生成",
+              "其他脚本通用内部 脚本"
+            ]
+          }
+        ]
+      },
+      {
+        "category": "export-build-in-config",
+        "directory-name": "job/output/env",
+        "description": "环境配置文件",
+        "type": "env-config-output",
+        "remark": " ",
+        "items": [
+          {
+            "filename": "local_local.js",
+            "type": "env-config-output",
+            "descriptions": [
+              "个人   开发环境"
+            ]
+          },
+          {
+            "filename": "local_dev.js",
+            "type": "env-config-output",
+            "descriptions": [
+              "局域网  开发环境"
+            ]
+          },
+          {
+            "filename": "local_test.js",
+            "type": "env-config-output",
+            "descriptions": [
+              "局域网  测试环境"
+            ]
+          },
+          {
+            "filename": "idc_lspre.js",
+            "type": "env-config-output",
+            "descriptions": [
+              "IDC  隔离预发布"
+            ]
+          },
+          {
+            "filename": "idc_pre.js",
+            "type": "env-config-output",
+            "descriptions": [
+              "IDC  预发布/试玩"
+            ]
+          },
+          {
+            "filename": "idc_sandbox.js",
+            "type": "env-config-output",
+            "descriptions": [
+              "IDC  预发布/试玩"
+            ]
+          },
+          {
+            "filename": "idc_ylcs.js",
+            "type": "env-config-output",
+            "descriptions": [
+              "IDC 微型压力测试环境"
+            ]
+          },
+          {
+            "filename": "idc_online.js",
+            "type": "env-config-output",
+            "descriptions": [
+              "IDC  生产环境"
+            ]
+          }
+        ]
+      },
+      {
+        "category": "export-full-doc",
+        "directory-name": "job/output/doc",
+        "description": "内部文档相关集合文件",
+        "type": "doc-config-output",
+        "remark": " ",
+        "items": [
+          {
+            "filename": "arr.json",
+            "type": "export-full-doc",
+            "descriptions": [
+              "计算后的文档内容 数组版本"
+            ]
+          },
+          {
+            "filename": "obj.json",
+            "type": "export-full-doc",
+            "descriptions": [
+              "计算后的文档内容 对象版本"
+            ]
+          }
+        ]
+      },
+      {
+        "category": "export-merchant-config",
+        "directory-name": "job/output/merchant",
+        "description": "商户定制化配置集合文件",
+        "type": "merchant-config-output",
+        "remark": " ",
+        "items": [
+          {
+            "filename": "config-ouzhou.json",
+            "type": "export-merchant-config",
+            "descriptions": [
+              "计算后的商户配置欧洲版"
+            ]
+          }
+        ]
+      },
+      {
+        "category": "export-merchant-config",
+        "directory-name": "job/default-config",
+        "description": "商户定制化配置集合文件",
+        "type": "merchant-config-output",
+        "remark": " ",
+        "items": [
+          {
+            "filename": "merchant-config-ouzhou.json",
+            "type": "export-merchant-config",
+            "descriptions": [
+              "默认的商户配置欧洲版",
+              "欧洲版 商户 默认配置  用于 自用打包"
+            ]
+          }
+        ]
+      }
+    ]
+}

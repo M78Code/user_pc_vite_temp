@@ -1,0 +1,186 @@
+
+body {
+  .match_results {
+    background: var(--q-match-result-bg-main-color);
+    .main_wrap {
+   
+    }
+    .wrap-table {
+      .table-header {
+        background: var(--q-match-result-table-head-color) !important;
+        // color: var(--qq--yb-text-color3);
+        color: var(--q-match-result-text-color-1) !important;
+        border: 1px solid var(--q-gb-bd-c-7); //#dce0e5
+        .icon {
+          background-repeat: no-repeat;
+          background-image: url($SCSSPROJECTPATH+"/image/common/png/sports_play_icon.png");
+        }
+        .sort {
+          width: 12px;
+          height: 12px;
+          background-size: 100%;
+          background-repeat: no-repeat;
+          background-position: 0 var(--q-match-result-position-1);
+          &.up {
+            background-position: 0 var(--q-match-result-position-2);
+          }
+        }
+        // 足球比分 icon
+        .rs_jiao_shang {
+          background-position: 0 -224px;
+        }
+        .rs_jiao_xia {
+          background-position: 0 -240px;
+        }
+        .rs_jiao_quan {
+          background-position: 0 -256px;
+        }
+        .rs_dian {
+          background-position: 0 -378px;
+        }
+        .rs_add_time {
+          background-position: 0 -320px;
+        }
+        /*  进球 */
+        .rs_jin_up {
+          background-position: 0 -272px;
+        }
+        .rs_jin_down {
+          background-position: 0 -288px;
+        }
+        .rs_jin_quan {
+          background-position: 0 -304px;
+        }
+        /*  红牌 */
+        .red_card_up {
+          background-position: 0 -176px;
+        }
+        .red_card_down {
+          background-position: 0 -192px;
+        }
+        .red_card {
+          background-position: 0 -208px;
+        }
+        /*  黄牌 */
+        .yellow_card_up {
+          background-position: 0 -128px;
+        }
+        .yellow_card_down {
+          background-position: 0 -144px;
+        }
+        .yellow_card {
+          background-position: 0 -160px;
+        }
+      }
+      .tbale-body {
+        color: var(--q-match-result-text-color-1);
+        background: var(--q-gb-bg-c-11);
+        .color-highlight {
+          color: var(--q-gb-t-c-16);
+        }
+        .table-col {
+          .browser {
+            margin-right: 5px;
+            width: 12px;
+            height: 12px !important;
+            background-size: 100%;
+            background-repeat: no-repeat;
+            background-image: var(--qq--bg-image-url35); //todo `url(${preffix}/image/yabo/svg/theme01_plus.svg)`,
+            &.del {
+              background-image: var(--qq--bg-image-url36); //todo `url(${preffix}/image/yabo/svg/theme01_del.svg)`
+            }
+          }
+        }
+        .table-tr-td {
+          border-bottom: 1px solid var(--q-match-result-boreder-1);//#d0d8de
+          border-left: 1px solid var(--q-match-result-boreder-1);
+          &:hover {
+            // background-color: #2C2D34;
+            background: var(--q-gb-bg-c-110);
+          }
+          .table-col {
+            border-right: 1px solid var(--q-match-result-boreder-1);
+          }
+        }
+        .active {
+        //   background-color: #2C2D34;
+          background: var(--q-gb-bg-c-11);
+        }
+        .wrap-load {
+          background-color: var(--q-gb-bg-c-15);
+          border-bottom: 1px solid var(--q-match-result-boreder-1);
+        }
+        .table-tr-detail {
+          //background-color: var(--q-gb-bg-c-15);
+          border-left: 1px solid var(--q-match-result-boreder-1);
+          .tr-detail-item {
+            .item {
+              border-right: 1px solid var(--q-match-result-boreder-1);
+              border-bottom: 1px solid var(--q-match-result-boreder-1);
+            }
+          }
+          .tr-detail-title {
+            border-right: 1px solid var(--q-match-result-boreder-1);
+            border-bottom: 1px solid var(--q-match-result-boreder-1);
+            color: var(--q-match-result-text-color-2);
+          }
+        }
+      }
+    }
+    .table-footer {
+      //border-top: 1px solid var(--q-match-result-boreder-1);
+    //   background: var(--qq--y0-bg-color8);
+      .q-pagination > div {
+        color: var(--q-match-result-text-color-3);
+      }
+      .q-field--outlined {
+        .q-field__control {
+        //   background-color: var(--qq--y0-bg-color8);
+          &:before {
+            border-color: var(--q-match-result-boreder-1);
+            &:hover {
+              border-color: var(--q-gb-bd-c-11);
+            }
+          }
+          .q-field__native {
+            span {
+              color: var(--q-match-result-text-color-1);
+            }
+          }
+        }
+      }
+      // 分页组件
+      .pagination-wrap {
+        .q-pagination {
+          .row {
+            color: var(--q-match-result-text-color-3);
+          }
+        }
+        .q-btn--standard {
+          background-color: var(--q-gb-bg-c-18);//#ffb001
+          .row {
+            color: var(--q-gb-t-c-18);
+          }
+        }
+        .pagination-link {
+          span {
+            color: var(--q-match-result-text-color-3);
+          }
+          input {
+            background: var(--q-gb-bg-c-11);
+            border: 1px solid var(--q-match-result-boreder-1);
+            color: var(--q-match-result-text-color-1);
+            &:hover {
+              border: 1px solid var(--q-gb-bd-c-11);
+            }
+          }
+        }
+        .pagination-select {
+          span {
+            color: var(--q-match-result-text-color-3);
+          }
+        }
+      }
+    }
+  }
+}

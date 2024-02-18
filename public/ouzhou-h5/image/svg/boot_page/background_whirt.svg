@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="80px" height="40px" viewBox="0 0 80 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 61.2 (89653) - https://sketch.com -->
+    <title>矩形</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="50%" y1="95.4150765%" x2="50%" y2="5.40654432%" id="linearGradient-1">
+            <stop stop-color="#DBE0ED" offset="0%"></stop>
+            <stop stop-color="#EBEDF9" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="画板" transform="translate(-75.000000, -31.000000)">
+            <rect id="矩形" fill="url(#linearGradient-1)" x="75" y="31" width="80" height="40" rx="8"></rect>
+            <circle id="椭圆形" stroke="#FFFFFF" opacity="0.2" cx="115" cy="51" r="7.5"></circle>
+            <rect id="矩形" stroke="#FFFFFF" opacity="0.2" x="115.5" y="31.5" width="1" height="39"></rect>
+            <path d="M75.5,42.5 L75.5,59.5 L80,59.5 C83.0375661,59.5 85.5,57.0375661 85.5,54 L85.5,48 C85.5,44.9624339 83.0375661,42.5 80,42.5 L75.5,42.5 Z" id="矩形" stroke="#FFFFFF" opacity="0.2"></path>
+            <path d="M144.5,42.5 L144.5,59.5 L149,59.5 C152.037566,59.5 154.5,57.0375661 154.5,54 L154.5,48 C154.5,44.9624339 152.037566,42.5 149,42.5 L144.5,42.5 Z" id="矩形备份-4" stroke="#FFFFFF" opacity="0.2" transform="translate(149.500000, 51.000000) scale(-1, 1) translate(-149.500000, -51.000000) "></path>
+        </g>
+    </g>
+</svg>

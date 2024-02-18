@@ -1,0 +1,28 @@
+// 暂时自定义样式覆盖
+
+#ouzhou-h5 {
+  // .sport-menu-item{
+  //   width: 0.68rem;
+  // }
+  // 赛事列表 页
+  .match-list-page{
+    background-color: var(--q-gb-bg-c-2);
+    .hairline-border::after{
+      display: none;
+    }
+  }
+  .right-border{
+    position: relative;
+    overflow: hidden;
+    &::before{
+      content: "";
+      height: 20px;
+      width: 10px;
+      border-radius: 20px;
+      background: var(--q-gb-bg-c-13);
+      display: block;
+      position: absolute;
+      left: -7px;
+    }
+  }
+}

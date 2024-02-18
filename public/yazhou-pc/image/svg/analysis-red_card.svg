@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="10px" height="10px" viewBox="0 0 10 10" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>红牌</title>
+    <defs>
+        <path d="M2.84340532,0.0340062934 L6.7502854,1.05974864 C7.28971297,1.2013741 7.60983326,1.74466143 7.46529408,2.27321485 L5.89502604,8.01539866 C5.75048686,8.54395208 5.19602225,8.85761917 4.65659468,8.71599371 L0.749714598,7.69025136 C0.210287026,7.5486259 -0.109833263,7.00533857 0.0347059189,6.47678515 L1.60497396,0.734601342 C1.74951314,0.206047918 2.30397775,-0.10761917 2.84340532,0.0340062934 Z" id="path-1"></path>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-3">
+            <stop stop-color="#FFFFFF" offset="0%"></stop>
+            <stop stop-color="#FFFFFF" stop-opacity="0" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="赛况" transform="translate(-778.000000, -1561.000000)">
+            <g id="编组-8" transform="translate(720.000000, 1561.000000)">
+                <g id="红牌" transform="translate(58.000000, 0.000000)">
+                    <rect id="矩形备份-9" fill="#D8D8D8" opacity="0" x="0" y="0" width="10" height="10"></rect>
+                    <g id="编组-5备份-2" transform="translate(1.250000, 0.625000)">
+                        <mask id="mask-2" fill="white">
+                            <use xlink:href="#path-1"></use>
+                        </mask>
+                        <use id="蒙版" fill="#FA5858" xlink:href="#path-1"></use>
+                        <polygon id="矩形" fill="url(#linearGradient-3)" opacity="0.327264695" mask="url(#mask-2)" points="2.5 0 7.5 0 7.5 8.75 5 8.75"></polygon>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

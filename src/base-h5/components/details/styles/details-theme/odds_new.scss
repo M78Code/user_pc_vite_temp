@@ -1,0 +1,20 @@
+/*
+ * @Description: 详情页红升绿降的展示
+ */
+[class*=theme0] {
+  .odds_new {
+    color: var(--q-gb-t-c-4);
+  }
+  .red_text {
+    color:var(--q-color-com-fs-color-9) !important;
+  }
+  .green_text {
+    color: var(--q-color-com-fs-color-10) !important;
+  }
+  .white_text {
+    color:var(--q-gb-t-c-18) !important;
+  }
+  .odds-new2 {
+    color: var(--q-gb-t-c-3);
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "bet_record": {
+    "level": 2,
+    "menuName": "客户端PC",
+    "sonName": "PC-翻页组件"
+  },
+  "category": "Pagination",
+  "component-name": "Pagination",
+  "support-customization": "1",
+  "descriptions": ["翻页组件"],
+  "optional-component": [
+    {
+      "component-name": "Pagination_1",
+      "descriptions": ["翻页组件-版本1"]
+    }
+  ]
+}

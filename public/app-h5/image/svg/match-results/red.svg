@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="11px" height="14px" viewBox="0 0 11 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>编组 5复制 4@2x</title>
+    <defs>
+        <path d="M4.12423955,0.38141754 L9.79100439,1.9070877 C10.5734213,2.11773879 11.0377423,2.92581431 10.8280943,3.71197488 L8.55048674,12.2527927 C8.34083875,13.0389533 7.53661122,13.5054959 6.75419427,13.2948448 L1.08742942,11.7691747 C0.305012466,11.5585236 -0.159308518,10.750448 0.0503394722,9.96428747 L2.32794707,1.42346964 C2.53759506,0.637309065 3.3418226,0.170766449 4.12423955,0.38141754 Z" id="path-1"></path>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-3">
+            <stop stop-color="#FFFFFF" offset="0%"></stop>
+            <stop stop-color="#FFFFFF" stop-opacity="0" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="赛果" transform="translate(-182.000000, -1290.000000)">
+            <g id="编组-4备份" transform="translate(0.000000, 216.000000)">
+                <g id="编组-24" transform="translate(0.000000, 323.000000)">
+                    <g id="编组-5复制-4" transform="translate(182.000000, 751.000000)">
+                        <mask id="mask-2" fill="white">
+                            <use xlink:href="#path-1"></use>
+                        </mask>
+                        <use id="蒙版" fill="#FA5858" xlink:href="#path-1"></use>
+                        <polygon id="矩形" fill="url(#linearGradient-3)" opacity="0.327264695" mask="url(#mask-2)" points="3.66666667 0 11 0 11 13.3454251 7.33333333 13.3454251"></polygon>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

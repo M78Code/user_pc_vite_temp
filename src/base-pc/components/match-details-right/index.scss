@@ -1,0 +1,585 @@
+ // 全屏模式
+ .right_details_wrap.full-screen{
+    position: fixed;
+    width: 400px !important;
+    height: auto !important;
+    top: 71px;
+    right: 38px;
+    bottom: 71px;
+    z-index: 100;
+  
+    // 滚动组件
+    :deep(.v-scroll-area) {
+      &:after{
+        display: none;
+      }
+      .content-wrap{
+        border: none !important;
+        border-radius: 8px;
+        overflow: hidden;
+        .scroll-header{
+          padding-right: 0 !important;
+          position: relative;
+        }
+        .v-scrollarea{
+          height: calc(100% - 44px) !important;
+          .middle-content{
+            padding-top: 0 !important;
+          }
+        }
+      }
+    }
+    // 暂无数据
+    :deep(.details_data_load) {
+      height: calc(100% - 44px);
+      border-radius: 0 0 6px 6px;
+    }
+    // 全屏投注玩法集tab
+    .full-video-tab{
+      width: 100%;
+      height: 44px;
+      display: flex;
+  
+      :deep(.tab-wrap) {
+        width: 348px !important;
+        .btn{
+          display: none;
+        }
+      }
+      .tab-arraw{
+        width: 52px;
+        height: 100%;
+        box-shadow: -20px 0px 20px -16px #000;
+        cursor: pointer;
+        &:before{
+          content: '';
+          display: block;
+          height: 100%;
+          transition: transform 0.3s;
+        }
+        &.hide:before{
+          transform: rotate(180deg);
+        }
+      }
+    }
+    // 玩法模板
+    :deep(.wrap-template) {
+      margin-top: 0;
+      border-radius: 0;
+      border: 0 none!important;
+      border-radius: 0 !important;
+      // 玩法标题
+      .template-title {
+        height: 40px;
+        padding: 0 15px 0 0;
+        border: none;
+        border-radius: 0 !important;
+        margin-bottom: 10px;
+        &.is-fold{
+          margin-bottom: 0;
+        }
+        .play-name {
+          font-size: 12px;
+          font-weight: 500;
+          &::before {
+            width: 5px;
+            border-radius: 0;
+          }
+        }
+      }
+      .sub-title-1{
+        width: 360px;
+        height: 20px;
+        line-height: 20px;
+        border: none;
+        border-radius: 4px;
+        margin: 4px auto 8px auto;
+        span{
+          width: auto !important;
+          flex: 1;
+        }
+      }
+      .handicap {
+        width: 369px;
+        margin: 0 auto;
+        border-top: none;
+        // 单个投注项
+        .handicap-item {
+          flex: 1 !important;
+          width: auto;
+          margin: 0 4px 6px 4px;
+          border-radius: 4px;
+          overflow: hidden;
+          height: 44px;
+        }
+      }
+      // 投注项
+      .c-bet-item {
+        font-size: 12px;
+        height: 44px !important;
+        line-height: 44px !important;
+        padding: 0 15px;
+        .bet-item{
+          margin: 0;
+        }
+        .odds {
+          font-size: 16px;
+          margin: 0;
+          span:hover{
+            padding: 0;
+          }
+        }
+        .bet_handicap{
+          margin: 0;
+        }
+      }
+      .sub-title {
+        height: 20px;
+        line-height: 20px;
+        font-size: 12px;
+        border: none;
+        margin: 4px auto 8px auto;
+      }
+      .handicap-sub-title {
+        width: 369px;
+        margin: auto;
+        border-top: none;
+        .flex-1{
+          .sub-title{
+            margin-bottom: 8px;
+          }
+          &:first-child{
+            .sub-title {
+              border-radius: 4px 0 0 4px;
+              margin-left: 4px;
+            }
+          }
+          &:last-child {
+            .sub-title {
+              border-radius: 0 4px 4px 0;
+              margin-right: 4px;
+            }
+          }
+        }
+      }
+      &.template0 {
+        .handicap-item {
+          flex: unset !important;
+          width: 176px !important;
+        }
+      }
+      &.template1 {
+        .c-bet-item{
+          padding: 0;
+          text-align: center;
+          &.seal{
+            .handicap-wrap{
+              display: none;
+            }
+            .odds{
+              height: 100%;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+            }
+          }
+          .bet-item{
+            margin: 5px 0 0 0 !important;
+            display: block;
+          }
+          .bet-inner{
+            display: block;
+            line-height: 16px;
+          }
+          .odds{
+            display: block;
+            height: 14px;
+            span{
+              font-size: 12px;
+            }
+          }
+          .yb-family-odds{
+            line-height: 16px;
+          }
+        }
+      }
+      &.template2 {
+        .c-bet-item{
+          padding: 0 15px 0 15px;
+          .item-label{
+            display: none;
+          }
+          .bet-item{
+            margin: 0;
+          }
+          .bet_handicap{
+            margin: 0;
+          }
+          .odds{
+            margin: 0;
+          }
+        }
+      }
+      &.template4,&.template18 {
+        .handicap-item{
+          flex: unset !important;
+          width: 115px !important;
+        }
+        .other-item {
+          width: 369px;
+          margin: auto;
+          border: none;
+          height: 46px;
+          .placehold {
+            flex: 1 !important;
+            margin: 0 4px 6px 4px;
+            border-radius: 4px;
+            height: 44px;
+            .bet_handicap{
+              margin-left: 0 !important;
+            }
+            .empty{
+              border: none;
+            }
+          }
+        }
+        .handicap {
+          width: 100%;
+        }
+      }
+      &.template6 {
+        .sub-title{
+          width: 369px;
+          border-radius: 4px;
+        }
+        .group{
+          width: 369px;
+          margin: 0 auto;
+          .handicap{
+            width: 100%;
+            .handicap-item{
+              flex: unset !important;
+              width: 176px !important;
+            }
+          }
+        }
+      }
+      &.template10 {
+        .handicap-item {
+          flex: unset !important;
+          width: 115px !important;
+        }
+      }
+    }
+  }
+  
+  .details_data_load {
+    position: absolute;
+    z-index: 2;
+    width: 100%;
+    :deep(.yb-flex-center) {
+      justify-content: unset;
+    }
+  }
+  .details_loading {
+    height: 3000px;
+    width: 100%;
+    position: absolute;
+    z-index: 5;
+  }
+  .theme01 {
+    .details_loading {
+      background-color: rgba(255, 255, 255, 0.8);
+    }
+  }
+  .theme02 {
+    .details_loading {
+      background-color: rgba(39, 42, 51, 0.5);
+    }
+  }
+  .screen {
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+    color: #99a3b1;
+    font-size: 12px;
+    .detail_right_model {
+      position: relative;
+      z-index: 4;
+    }
+    .v-scroll-area:after {
+      border-left: none;
+    }
+    .wrap-total,
+    .wrap-hot,
+    .wrap-recents {
+      position: relative;
+      z-index: 10;
+      margin-top: 4px;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .right_details_wrap {
+      position: unset;
+    }
+    .right_header_wrap {
+      top: 0;
+      z-index: 1;
+      width: 100%;
+    }
+    .right_content_wrap {
+      overflow-y: scroll;
+    }
+    /* ************** 视频、动画区域 *************** -S */
+    .sports-guessing {
+      background-color: #ffffff;
+      display: flex;
+      align-items: center;
+      height: 36px;
+      font-size: 14px;
+      padding: 0 15px;
+      justify-content: space-between;
+      .home-vs-away {
+        margin-left: 10px;
+        .vs {
+          margin: 0 13px;
+        }
+      }
+    }
+    .right_details_header {
+      &.no-bottom-border{
+        border-bottom: none;
+      }
+      :deep(.match_time) {
+        .timer-layout2 {
+          width: 100%;
+          min-width: 42px;
+        }
+      }
+      .scroll-fixed-header {
+        border-left: none;
+        border-right: none;
+      }
+    }
+  
+    /* ************** 视频、动画区域 *************** -E */
+    /* ************** 统计、热门推荐、近期访问 *************** -S */
+    .item-title {
+      display: flex;
+      align-items: center;
+      padding-left: 15px;
+      height: 32px;
+      color: #d1d1d1;
+      font-size: 13px;
+      .panel-title {
+        &::before {
+          display: inline-block;
+          position: relative;
+          top: 2px;
+          margin-right: 10px;
+          width: 3px;
+          height: 14px;
+          border-radius: 1.5px;
+          content: "";
+          background: var(--q-gb-t-c-1);
+        }
+      }
+      .group-checkbox {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+      }
+      .round {
+        margin: 1px 6px 0 0;
+        width: 14px;
+        height: 14px;
+        border: 1px solid #a5a9b3;
+        border-radius: 14px;
+      }
+    }
+    .wrap-recents,
+    .wrap-hot {
+       /*  红升绿降样式 */
+      :deep(.c-bet-item) {
+        .odds-icon {
+          top: auto;
+          bottom: auto;
+          &:before {
+            display: none;
+          }
+        }
+      }
+      :deep(.c-bet-item.up) {
+        background: rgba(233, 61, 61, 0.05);
+        &.normal,
+        &.active {
+          .odds {
+            color: #e93d3d;
+            &:after {
+              display: block;
+              content: "";
+              width: 6px;
+              height: 10px;
+              position: absolute;
+              right: -10px;
+              background: url($SCSSPROJECTPATH+"/image/common/svg/red_up.svg") no-repeat center;
+            }
+          }
+        }
+      }
+      :deep(.c-bet-item.down) {
+        background: rgba(80, 192, 66, 0.05);
+        &.normal,
+        &.active {
+          .odds {
+            color: #50c042;
+            &:after {
+              display: block;
+              content: "";
+              width: 6px;
+              height: 10px;
+              position: absolute;
+              right: -10px;
+              background: url($SCSSPROJECTPATH+"/image/common/svg/green_down.svg") no-repeat center;
+            }
+          }
+        }
+      }
+    }
+  
+    /* ************** 统计、热门推荐、近期访问 *************** -E */
+  }
+  
+  /* ************** 视频块穿透 *************** -S */
+  .video-page {
+    :deep(.c-bet-item) {
+      height: 34px !important;
+      line-height: 34px !important;
+    }
+    :deep(.handicap .handicap-item) {
+      height: 34px;
+    }
+    :deep(.handicap-sub-title .handicap .handicap-item) {
+      height: 34px;
+    }
+    :deep(.other-item) {
+      height: 34px;
+    }
+  }
+  
+  
+  /* ************** 视频块穿透 *************** -E */
+  
+  
+  /**********************************大视频投注部分 start****************************************/
+  /** 蒙层部分 **/
+  .cathectic-handicap {
+    position: absolute;
+    width: 400px;
+    height: 100%;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    background: rgba(43, 48, 56, 0.7);
+  }
+  .big-cathectic-zone {
+    position: absolute;
+    bottom: 0;
+    z-index: 1001;
+    width: 100%;
+    .bet-scorll-header {
+      background: #474747;
+      height: 44px;
+      border-bottom: 1px solid #555555;
+      .bet-zone-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        div {
+          height: 44px;
+          line-height: 44px;
+          color: var(--q-gb-t-c-1);
+          &.left {
+            font-size: 14px;
+            margin-left: 20px;
+          }
+          &.right {
+            margin-right: 20px;
+          }
+        }
+      }
+    }
+    :deep(.q-card) {
+      border-radius: 0;
+      padding: 16px 20px;
+    }
+    /* *蒙层* */
+    .cathectic-shade {
+      position: absolute;
+      width: 400px;
+      height: 100%;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 1000;
+      background: rgba(43, 48, 56, 0.88);
+      .shade-fixed {
+        position: fixed;
+        margin-left: 170px;
+        height: 100%;
+        top: 70%;
+        .loading-wrap {
+          text-align: center;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          color: #99a3b1;
+          margin-top: 100%;
+          padding-top: 0px;
+          .img-loading {
+            position: relative;
+            margin-bottom: 10px;
+            width: 50px;
+            height: 50px;
+            background-size: 100%;
+            background-image: url($SCSSPROJECTPATH+'/image/gif/loading.gif');
+          }
+          .img-loading-y0 {
+            position: relative;
+            margin-bottom: 10px;
+            width: 50px;
+            height: 50px;
+            background-size: 100%;
+            background-image: url($SCSSPROJECTPATH+'/image/gif/loading_y0.gif');
+          }
+        }
+      }
+    }
+  }
+  
+  .right_details_wrap{
+    .refresh {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      padding: 0;
+      background-color: var(--qq--yb-bg-color7);
+      border: 1px solid var(--qq--go-top-btn-border);
+      :deep(.icon-wrap ) {
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .icon-balance_refresh {
+          span{
+            font-size: 18px;
+            &::before{
+              color: #999;
+            }
+          }
+        }
+      }
+    }
+  }

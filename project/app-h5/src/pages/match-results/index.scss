@@ -1,0 +1,115 @@
+.switch-box {
+    display: flex;
+    justify-content: space-between;
+
+    // border-bottom: .01rem solid var(--q-gb-bd-c-7);
+    .switch-item {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        color: var(--q-gb-t-c-24);
+        white-space: nowrap;
+
+        span {
+            padding: .06rem 0;
+            font-size: .14rem;
+            margin: 0 .1rem;
+        }
+    }
+
+    .switch-item-active {
+        span {
+            border-bottom: .02rem solid var(--q-gb-t-c-1);
+            font-weight: 600;
+            color: var(--q-gb-t-c-18);
+        }
+    }
+}
+
+.right-icon {
+    width: .18rem;
+    height: .18rem;
+    // background-color: var(--q-gb-t-c-1);
+    margin-right: .14rem;
+}
+
+.select-mask {
+    position: fixed;
+    width: 100vw;
+    background: rgba(0, 0, 0, 0.4);
+    top: 0;
+    z-index: 2000;
+    left: 0
+}
+
+.slide-box {
+    display: flex;
+    // justify-content: space-between;
+    padding: 0 .14rem;
+    // width: 100%;
+    overflow-x: scroll;
+
+    .slide-item {
+        flex: 0 0 .32rem;
+        margin-right: .1rem;
+        display: flex;
+        justify-content: center;
+        white-space: nowrap;
+        span {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: .32rem;
+            padding: 0 .05rem;
+            color: var(--q-gb-t-c-5);
+            letter-spacing: -.01rem;
+            font-size: .13rem;
+            font-weight: 300;
+        }
+    }
+
+    .slide-item-active {
+        span {
+            color: var(--q-gb-t-c-1);
+            border-bottom: .02rem solid var(--q-gb-t-c-1);
+        }
+    }
+}
+.match-result-contant {
+    background: var(--q-gb-bg-c-18) !important;
+}
+/*  联赛菜单 */
+.tab-wrapper {
+    height: 0.32rem;
+    display: flex;
+    flex-wrap: nowrap;
+    overflow: auto;
+    align-items: center;
+    padding: 0 0.08rem;
+    background-color: var(--q-gb-bg-c-27);
+  
+    .tab-item {
+      height: 0.26rem;
+      line-height: 0.26rem;
+      border-radius: 0.04rem;
+      margin-right: 0.06rem;
+      padding: 0 0.1rem;
+      flex-shrink: 0;
+      color:var(--q-gb-t-c-24);
+      position: relative;
+      &.active {
+        color: var(--q-gb-t-c-1);
+        &:after {
+          content: "";
+          display: block;
+          width: 0.32rem;
+          height: 0.02rem;
+          background: var(--q-gb-t-c-1);
+          position: absolute;
+          bottom: 0.01rem;
+          left: 50%;
+          margin-left: -0.16rem;
+        }
+      }
+    }
+  }

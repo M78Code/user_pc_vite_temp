@@ -1,0 +1,158 @@
+[class*=theme0] {
+  .may_also_like {
+    > .title {
+      color: var(--q-color-fs-color-40);
+      &:before {
+        background-image: var(--q-gb-bg-lg-7);
+      }
+    }
+    .q-carousel {
+      background: var(--q-color-page-bg-color-1);
+    }
+    .card {
+      .card-title {
+        color:var(--q-color-com-fs-color-8);
+        border-bottom: 1px solid var(--q-color-com-border-color-4);
+        .counting-down-wrap {
+          color:var(--q-color-com-fs-color-8);
+        }
+      }
+      .card-content {
+        .card-team-time {
+          color:var(--q-color-com-fs-color-8);
+          .Handicap2 {
+            background:var(--q-color-page-bg-color-50);
+            span {
+              color:var(--q-color-com-fs-color-8) !important;
+            }
+          }
+        }
+      }
+    }
+    .q-carousel__control {
+      .control {
+        .control-item {
+          background: var(--q-color-page-bg-color-42);
+        }
+        .active {
+          background:var(--q-color-page-bg-color-50);
+        }
+      }
+    }
+  }
+  .freatured_events {
+    > .title {
+      color: var(--q-color-fs-color-7);
+    }
+  }
+  .popular-hot-pages {
+    .hot-pages-tabs {
+      .tabs-bar {
+        .tabs-bar-nav {
+          &.change-background {
+            .tabs-tab {
+              > span {
+                color:  var(--q-color-fs-color-155);
+              }
+              &.tabs-active {
+                > span {
+                  color:  var(--q-color-fs-color-142);
+                }
+                &:after {
+                  background: var(--q-color-com-bg-color-9);
+                }
+              }
+            }
+          }
+          .tabs-tab {
+            > img {
+              // border: 1px solid var(--q-color-page-bg-color-42);
+              background-color:var(--q-color-page-bg-color-89);
+              filter: grayscale(100%);
+            }
+            > span {
+              color: var(--q-color-fs-color-7);
+            }
+            &.tabs-active {
+              > span {
+                color:  var(--q-color-fs-color-142);
+              }
+              &:after {
+                background: var(--q-color-page-bg-color-43);
+              }
+              > img {
+                // border: 2px solid var(--q-color-border-color-3);
+                filter: grayscale(0%);
+                transform: scale(1); // 使用 GPU 硬件加速渲染 兼容 iphone 8 filter 不渲染问题
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .sports_balls_tab {
+    /*  ͷ�� */
+    .header {
+      background: var(--q-color-page-bg-color-113);
+      .header-title {
+        .item {
+          color: var(--q-color-fs-color-13);
+          &.active {
+            color:var(--q-color-fs-color-127);
+            &:after {
+              background: var(--q-color-page-bg-color-50);
+            }
+          }
+        }
+      }
+    }
+    .header-icon {
+      background-image: var(--q-color-linear-gradient-bg-14);
+      border: 1px solid var(--q-color-border-color-43);
+      color:var(--q-color-fs-color-128);
+    }
+    .tab {
+      color: var(--q-color-fs-color-13);
+      //background:  var(--q-color-page-bg-color-15);
+      span {
+        background:var(--q-color-page-bg-color-94);
+        &.active {
+          color: var(--q-color-fs-color-3);
+          background:var(--q-color-page-bg-color-118);
+        }
+      }
+    }
+  }
+  .hot_public_form {
+    .table-score {
+       background-color:var(--q-color-page-bg-color-95);
+      &::after {
+        border-color: var(--q-color-border-color-5) !important;
+      }
+
+      /*  ͷ�� */
+      .header {
+        background-color:var(--q-color-page-bg-color-118);
+        color:  var(--q-color-fs-color-9);
+        // border-bottom: 1px solid  var(--q-color-border-color-5);
+        // border-top: 1px solid  var(--q-color-border-color-12);
+        > div {
+          color: var(--q-color-fs-color-13);
+        }
+      }
+      .team-item {
+        // border-bottom: 1px solid  var(--q-color-border-color-26);
+        color: var(--q-color-fs-color-4);
+        &.font-bold,
+        &.black-font {
+          color: var(--q-color-fs-color-7);
+        }
+        .number {
+          background: var(--q-color-page-bg-color-5);
+          color:  var(--q-color-fs-color-10);
+        }
+      }
+    }
+  }
+}

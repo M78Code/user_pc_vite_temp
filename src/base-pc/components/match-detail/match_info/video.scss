@@ -1,0 +1,198 @@
+/*
+ * @Author: Cable
+ * @Date: 2020-09-19 09:21:11
+ * @Description: 赛事详情  视频播放区域 主题样式
+ */
+
+
+body {
+  .page-right .screen .sports-guessing {
+    background-color: var(--q-gb-bg-c-11);
+    color: var(--q-gb-t-c-8);
+    border-bottom: 1px solid var(--q-gb-bd-c-8);
+    .img {
+      background-image: url($SCSSPROJECTPATH+"c/image/svg/bet.svg");
+    }
+  }
+  .c-video-ctrl {
+    .ctrl-wrap {
+      background: var(--q-gb-bg-c-14);
+
+      /*  视频icon  */
+      .q-icon {
+        &:before {
+          color: var(--q-gb-t-c-18) !important;
+        }
+      }
+      .wrap_source {
+        &.active .icon:before {
+          color: var(--q-gb-t-c-16) !important;
+        }
+        &:before {
+          content: "";
+          position: absolute;
+          width: 100%;
+          height: 2.5px;
+          background:  var(--q-gb-t-c-16);
+          border-radius: 100px 100px 0px 0px;
+          left: 0;
+          bottom: 0;
+          display: none;
+        }
+        &.active,
+        &:hover {
+          &:before {
+            display: block;
+          }
+        }
+      }
+      .col-right{
+        .fold-btn{
+          background-color: var(--q-gb-t-c-16);
+        }
+      }
+    }
+
+    /*  有视频的赛事列表  */
+    .vs-team-wrap {
+      color: var(--q-gb-t-c-6);
+      background: var(--q-gb-bg-c-11) !important;
+      .absolute-wrap {
+        .vs-team-container {
+          background: var(--q-gb-bg-c-11) !important;
+          &.team-wrap-bg {
+            background-color: var(--q-gb-bg-c-11) !important;
+          }
+        }
+        .item {
+          background-color: var(--q-gb-bg-c-11);
+          &.current {
+            border-bottom: 1px solid transparent;
+            color: var(--q-gb-t-c-3);
+            font-weight: 400;
+            .line {
+              border-left: 3px solid transparent !important;
+            }
+          }
+          &:last-child {
+            border-bottom: 1px solid transparent;
+          }
+          &:hover:not(.active) {
+            //background-color: var(--q-gb-bg-c-14) !important;
+            background-color: var(--q-gb-t-c-16) !important;
+            color: var(--q-gb-t-c-18) !important;
+            .line {
+              border-left: 3px solid transparent;
+            }
+          }
+          .line {
+            border-left: 3px solid transparent;
+          }
+          &.active {
+            background: var(--q-gb-bg-c-7);
+            color: var(--q-gb-t-c-18);
+            .line {
+              border-left: 3px solid var(--q-gb-t-c-16);
+            }
+          }
+        }
+      }
+    }
+
+    /*  提示内容  */
+    .tip-content {
+      .content-wrap {
+        background-color: var(--q-gb-bg-c-22);
+        .content {
+          color: var(--q-gb-t-c-1);
+        }
+        .yb-icon-triangle:before {
+          background-color: var(--q-gb-bg-c-22);
+        }
+      }
+    }
+  }
+  .video-not {
+    .pause-icon {
+      background-image: var(--qq--bg-image-url37); //svg/play_video.svg todo
+    }
+  }
+  .c-match-video {
+    background-color: var(--q-gb-bg-c-14);
+    .head-info {
+      color: var(--q-gb-t-c-1);
+      .info-time,
+      .info-both {
+        color: var(--q-gb-t-c-1);
+      }
+      .info-data {
+        span {
+          color: var(--q-gb-t-c-1) !important;
+        }
+      }
+    }
+    .more-info {
+      color: var(--q-gb-t-c-1);
+      .scroll-arrow {
+        &.active {
+          i {
+            color: var(--q-gb-t-c-16) !important;
+          }
+        }
+      }
+      .both-item {
+        .wrap-round {
+          .round {
+            background: var(--q-gb-t-c-16);
+          }
+        }
+      }
+      .stage-13 {
+        span:nth-child(1) {
+          color: var(--q-gb-t-c-16) !important;
+        }
+      }
+      .stage-14,
+      .stage-301 {
+        span:nth-child(2) {
+          color: var(--q-gb-t-c-16) !important;
+        }
+      }
+      .stage-15,
+      .stage-302 {
+        span:nth-child(3) {
+          color: var(--q-gb-t-c-16) !important;
+        }
+      }
+      .stage-16,
+      .stage-303 {
+        span:nth-child(4) {
+          color: var(--q-gb-t-c-16) !important;
+        }
+      }
+    }
+    .basketball-after {
+      .stage-15 {
+        span:nth-child(4) {
+          color: var(--q-gb-t-c-16) !important;
+        }
+      }
+      .stage-16,
+      .stage-303 {
+        span:nth-child(5) {
+          color: var(--q-gb-t-c-16) !important;
+        }
+      }
+      .score {
+        color: var(--q-gb-t-c-16) !important;
+      }
+    }
+  }
+  .type-list-bg {
+    .video-type-but {
+      &.video-type-but-action {
+        color: var(--q-gb-t-c-16) !important;
+      }
+    }
+  }
+}

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="15px" viewBox="0 0 16 15" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 61.1 (89650) - https://sketch.com -->
+    <title>编组备份 2</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M3.23435699,14.6163793 L3.23435699,5.70009862 L2.12224633,6.94106674 L0,4.85337719 C1.2647177,3.37503904 2.12854796,2.5201483 2.59149076,2.28870497 C3.05443356,2.05726164 3.91888189,1.60039446 5.18483576,0.918103448 C6.45817466,1.11864078 7.41317884,1.21890945 8.0498483,1.21890945 C8.66436295,1.21890945 9.58613493,1.11864078 10.8151642,0.918103448 C12.0811181,1.60039446 12.9455664,2.05726164 13.4085092,2.28870497 C13.871452,2.5201483 14.7352823,3.37503904 16,4.85337719 L13.9983246,6.94106674 L12.765643,5.70009862 L12.765643,14.6163793 L3.23435699,14.6163793 Z" id="path-1"></path>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity="0.8">
+        <g id="编组备份-2">
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="蒙版" fill="#00AEFF" xlink:href="#path-1"></use>
+            <ellipse id="椭圆形" fill="#E5A68D" mask="url(#mask-2)" cx="8.47058824" cy="0.42887931" rx="2.82352941" ry="2.44612069"></ellipse>
+            <polygon id="矩形备份" fill="#FFFFFF" mask="url(#mask-2)" transform="translate(1.679272, 5.492378) rotate(-315.000000) translate(-1.679272, -5.492378) " points="0.0827237763 5.14105872 3.28674439 5.06813906 3.27582103 5.84369803 0.0718004106 5.91661769"></polygon>
+            <polygon id="矩形备份-2" fill="#FFFFFF" mask="url(#mask-2)" transform="translate(14.341304, 5.428668) scale(-1, 1) rotate(-315.000000) translate(-14.341304, -5.428668) " points="12.6442292 5.03779799 16.0493014 5.04397923 16.038378 5.8195382 12.6333058 5.81335696"></polygon>
+            <rect id="矩形" fill="#FFFFFF" mask="url(#mask-2)" x="2.82352941" y="12.6594828" width="10.3529412" height="1"></rect>
+        </g>
+    </g>
+</svg>

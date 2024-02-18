@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="22px" height="20px" viewBox="0 0 22 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>大屏</title>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="00-大屏和小屏样式" transform="translate(-1051.000000, -679.000000)">
+            <g id="编组" transform="translate(43.000000, 53.000000)">
+                <g id="编组-60" transform="translate(0.000000, 611.000000)">
+                    <g id="大屏" transform="translate(1008.000000, 15.000000)">
+                        <rect id="矩形" x="0" y="0" width="22" height="20"></rect>
+                        <rect id="矩形" stroke="#FFFFFF" stroke-width="2" x="1" y="5" width="20" height="10" rx="3"></rect>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,50 @@
+{
+  "leftmenu": {
+    "level": 2,
+    "menuName": "客户端PC",
+    "sonName": "赛事列表"
+  },
+  "props": {
+    "category": "match-list",
+    "directory-name": "match-list",
+    "descriptions": [
+      "赛事列表通用逻辑",
+      "源数据、模板计算、高度计算、滚动逻辑、列表参数计算、冠军算法、全局热门赛事"
+    ],
+    "type": "js",
+    "remark": "",
+    "item": [
+      {
+        "filename": "match-list-card-class",
+        "type": "js",
+        "descriptions": [
+          "赛事主列表容器卡片逻辑",
+          "卡片高度计算 赛事折叠逻辑 赛事状态展示"
+        ]
+      },
+      {
+        "filename": "match-list-basic-data",
+        "type": "js",
+        "descriptions": [
+          "赛事接口拉取逻辑",
+          "只保存主客队信息和赛事logo基础数据  一天拉一次接口更新数据"
+        ]
+      },
+      {
+        "filename": "match-list-fetch",
+        "type": "js",
+        "descriptions": [
+          "赛事列表请求逻辑"
+        ]
+      },
+      {
+        "filename": "match-scroll",
+        "type": "js",
+        "descriptions": [
+          "赛事列表滚动逻辑",
+          "滚动拉取数据及限制"
+        ]
+      }
+    ]
+  }
+}

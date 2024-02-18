@@ -1,0 +1,123 @@
+.match_results {
+  display: flex;
+  flex-flow: column;
+  min-width: 960px;
+  height: calc(98vh - 60px);
+
+  .font_match_results {
+    font-family: "Material Icons";
+    position: absolute;
+    top: -200px;
+  }
+  :deep(.material-icons) {
+    font-family: "Material Icons";
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 2;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-feature-settings: "liga";
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .main_wrap {
+    display: flex;
+    flex: 1;
+    flex-flow: column;
+    /* ************** 筛选条件 *************** -S */
+  }
+
+  .ml-30 {
+    margin-left: 10px;
+  }
+
+
+
+  /* ************** 备注说明 *************** -E */
+
+  /* ************** 表格穿透样式 *************** -S */
+
+   :deep(.wrap-table) {
+      display: flex;
+      flex: 1;
+      flex-flow: column;
+      height: 100%;
+      .table-col:first-child {
+        span {
+          margin-right: 10px;
+        }
+      }
+      .table-col_date:first-child {
+        span {
+          margin-right: 10px;
+        }
+      }
+
+      .cursor {
+        cursor: pointer;
+      }
+    }
+
+    :deep(.table-header) {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 30px;
+      color: #000;
+    }
+  
+
+  /* ************** 表格穿透样式 *************** -E */
+
+  :deep(.e-select) {
+    .opitons-wrap {
+      z-index: 2;
+    }
+  }
+}
+
+/* ************** 分页 *************** -S */
+.table-footer {
+  height: 60px;
+  border-top: 1px solid #d0d8de;
+  overflow: hidden;
+
+ 
+    :deep(.q-pagination > div) {
+      color: #17191d;
+    }
+  
+}
+
+/* ************** 分页 *************** -E */
+.tips {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  padding: 10px 20px;
+  border-radius: 2px;
+  background: #C2C2C2;
+  color: var(--q-gb-t-c-1); 
+  text-align: center;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+}
+
+.select-item {
+  padding: 6px 15px;
+  min-height: 30px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #e3e9ee;
+  }
+
+  &[active] {
+    background-color: #e3e9ee;
+  }
+}

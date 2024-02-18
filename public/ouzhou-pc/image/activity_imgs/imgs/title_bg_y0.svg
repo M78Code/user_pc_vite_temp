@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="264px" height="48px" viewBox="0 0 264 48" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>标题</title>
+    <defs>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="98.8373443%" id="linearGradient-1">
+            <stop stop-color="#3D72FA" offset="0%"></stop>
+            <stop stop-color="#62B6FF" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-2">
+            <stop stop-color="#62B6FF" offset="0%"></stop>
+            <stop stop-color="#3D72FA" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="50%" y1="19.7610521%" x2="50%" y2="100%" id="linearGradient-3">
+            <stop stop-color="#FFFFFF" stop-opacity="0" offset="0%"></stop>
+            <stop stop-color="#FFFFFF" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-4">
+            <stop stop-color="#FFFFFF" stop-opacity="0" offset="0%"></stop>
+            <stop stop-color="#FFFFFF" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="PC-每日任务" transform="translate(-828.000000, -943.000000)">
+            <g id="编组-2" transform="translate(828.000000, 943.000000)">
+                <path d="M12.1059297,0 L251.89407,0 C252.725796,-2.41336029e-14 253.50306,0.413634928 253.967663,1.10349905 L264,16 L264,16 L0,16 L10.0323374,1.10349905 C10.4969397,0.413634928 11.2742039,1.52785558e-16 12.1059297,0 Z" id="矩形备份" fill="url(#linearGradient-1)"></path>
+                <path d="M36.3477331,48 C32.8260074,48 29.7175238,45.702014 28.6884102,42.3377483 L19.4450196,12.120264 L18.8680575,10.4879104 L18.3235298,8.98431516 L17.6479465,7.17981205 L17.179099,5.97665268 L16.742686,4.90225155 L16.3387074,3.95660868 L15.9671631,3.13972406 L15.7374861,2.66666667 C14.8476085,0.888888889 13.6017798,0 12,0 L252,0 C250.487208,0 249.291916,0.792866941 248.414123,2.37860082 L248.262514,2.66666667 L247.973165,3.26692995 L247.661293,3.95660868 L247.257314,4.90225155 L246.820901,5.97665268 L246.352054,7.17981205 L245.67647,8.98431516 L245.131942,10.4879104 L244.55498,12.120264 L235.31159,42.3377483 C234.314636,45.5968807 231.366242,47.8553346 227.981167,47.9933052 L227.652267,48 L36.3477331,48 Z" id="路径" fill="url(#linearGradient-2)"></path>
+                <path d="M240.020793,26.0408163 C217.925555,26.0408163 199.775895,17.3605442 185.571814,0 L243.571814,0 L243.571814,26.0408163 C263.299705,26.0408163 262.116031,26.0408163 240.020793,26.0408163 Z" id="路径-3" fill="url(#linearGradient-3)" opacity="0.200000003"></path>
+                <path d="M47.2244898,48 C36.1768707,48 27.1020408,43.6598639 20,34.9795918 L49,34.9795918 L49,48 C58.8639456,48 58.2721088,48 47.2244898,48 Z" id="路径-3备份" fill="url(#linearGradient-4)" opacity="0.200000003" transform="translate(37.989603, 41.489796) scale(-1, -1) translate(-37.989603, -41.489796) "></path>
+            </g>
+        </g>
+    </g>
+</svg>

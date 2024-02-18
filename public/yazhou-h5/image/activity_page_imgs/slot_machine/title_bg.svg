@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="264px" height="48px" viewBox="0 0 264 48" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>标题</title>
+    <defs>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="98.8373443%" id="linearGradient-1">
+            <stop stop-color="#FEBF95" offset="0%"></stop>
+            <stop stop-color="#FFEDDC" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="98.8373443%" id="linearGradient-2">
+            <stop stop-color="#FFEDDC" offset="0%"></stop>
+            <stop stop-color="#FEBF95" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-3">
+            <stop stop-color="#FFF5EB" offset="0%"></stop>
+            <stop stop-color="#FFE3CA" offset="100%"></stop>
+        </linearGradient>
+        <path d="M36.3477331,48 C32.8260074,48 29.7175238,45.702014 28.6884102,42.3377483 L19.4450196,12.120264 L18.8680575,10.4879104 L18.3235298,8.98431516 L17.6479465,7.17981205 L17.179099,5.97665268 L16.742686,4.90225155 L16.3387074,3.95660868 L15.9671631,3.13972406 L15.9671631,3.13972406 L15.7374861,2.66666667 C14.8476085,0.888888889 13.6017798,0 12,0 L252,0 C250.487208,0 249.291916,0.792866941 248.414123,2.37860082 L248.262514,2.66666667 L247.973165,3.26692995 L247.973165,3.26692995 L247.661293,3.95660868 L247.257314,4.90225155 L246.820901,5.97665268 L246.352054,7.17981205 L245.67647,8.98431516 L245.131942,10.4879104 L244.55498,12.120264 L235.31159,42.3377483 C234.314636,45.5968807 231.366242,47.8553346 227.981167,47.9933052 L227.652267,48 L36.3477331,48 Z" id="path-4"></path>
+        <linearGradient x1="31.9103423%" y1="50%" x2="116.595982%" y2="40.2632541%" id="linearGradient-5">
+            <stop stop-color="#FFFFFF" stop-opacity="0" offset="0%"></stop>
+            <stop stop-color="#FFFFFF" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="31.9103423%" y1="50%" x2="116.595982%" y2="25.9561988%" id="linearGradient-6">
+            <stop stop-color="#FFFFFF" stop-opacity="0" offset="0%"></stop>
+            <stop stop-color="#FFFFFF" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="32.6562266%" y1="50%" x2="113.850054%" y2="24.9439381%" id="linearGradient-7">
+            <stop stop-color="#FFFFFF" stop-opacity="0" offset="0%"></stop>
+            <stop stop-color="#FFDCC1" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="32.6562266%" y1="50%" x2="113.850054%" y2="24.9439381%" id="linearGradient-8">
+            <stop stop-color="#FFFFFF" stop-opacity="0" offset="0%"></stop>
+            <stop stop-color="#FFFFFF" offset="99.0459736%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="PC-每日任务" transform="translate(-828.000000, -943.000000)">
+            <g id="编组-2" transform="translate(828.000000, 943.000000)">
+                <path d="M12.1059297,0 L251.89407,0 C252.725796,-2.41336029e-14 253.50306,0.413634928 253.967663,1.10349905 L264,16 L264,16 L0,16 L10.0323374,1.10349905 C10.4969397,0.413634928 11.2742039,1.52785558e-16 12.1059297,0 Z" id="矩形备份" fill="url(#linearGradient-1)"></path>
+                <g id="路径">
+                    <use fill="url(#linearGradient-2)" xlink:href="#path-4"></use>
+                    <use fill="url(#linearGradient-3)" xlink:href="#path-4"></use>
+                </g>
+                <polygon id="矩形备份-2" fill="url(#linearGradient-5)" opacity="0.300000012" points="128.931034 0 190 0 174.068966 48 113 48"></polygon>
+                <polygon id="矩形备份-3" fill="url(#linearGradient-6)" opacity="0.300000012" points="67.8918919 0 101 0 85.1081081 48 52 48"></polygon>
+                <polygon id="矩形" fill="url(#linearGradient-7)" opacity="0.500152229" points="172.114286 0 203 0 186.885714 48 156 48"></polygon>
+                <polygon id="矩形备份-4" fill="url(#linearGradient-8)" opacity="0.500152229" points="107.114286 0 138 0 121.885714 48 91 48"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>

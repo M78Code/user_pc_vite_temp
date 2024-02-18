@@ -1,0 +1,285 @@
+
+{
+  "leftmenu": {
+    "level": 1,
+    "menuName": "项目说明"
+  },
+  "project": [
+    {
+      "category": "scripts",
+      "script": "dev-self-use-version",
+      "descriptions": [
+        "常规开发 ， 自用项目本地开发 启动命令",
+        "当前项目日常开发，最常用命令"
+      ]
+    },
+    {
+      "category": "scripts",
+      "script": "dev-self-use-version-inner",
+      "descriptions": [
+        "常规开发 ， 自用项目本地开发 内部命令",
+        "当前项目日常开发，最常用命令"
+      ]
+    },
+    {
+      "category": "scripts",
+      "script": "build-self-use-version-inner",
+      "descriptions": ["常规开发 ， 自用项目生产构建打包的 核心内部命令"]
+    },
+    {
+      "category": "scripts",
+      "script": "copy-oss",
+      "descriptions": ["拉取线上的OSS文件到本地代码内 public/oss 目录内"]
+    },
+    {
+      "category": "scripts",
+      "script": "copy-oss-2",
+      "descriptions": [
+        "拉取线上的OSS文件到 打包后的 文件 版本目录外层 的 OSS   目录内"
+      ]
+    },
+   
+    {
+      "category": "scripts",
+      "script": "remove-dist",
+      "descriptions": ["删除 服务器上可能的历史版本构建输出的缓存，确保不出错"]
+    },
+    {
+      "category": "scripts",
+      "script": "export-build-version",
+      "descriptions": ["创建 本次构建打包的 客户端版本 号"]
+    },
+    {
+      "category": "scripts",
+      "script": "copy-html",
+      "descriptions": ["复制打包后的 html 文件到外层目录"]
+    },
+    {
+      "category": "scripts",
+      "script": "build-self-use-version",
+      "descriptions": ["常规开发 ， 自用项目生产构建打包的 入口命令"]
+    },
+    {
+      "category": "scripts",
+      "script": "export-build-in-config",
+      "descriptions": ["输出最终的各个环境的基础项目配置"]
+    },
+    {
+      "category": "scripts",
+      "script": "export-full-doc",
+      "descriptions": ["提取代码内的 *.doc.json 文件生成 单一 全量 json"]
+    },
+    {
+      "category": "scripts",
+      "script": "export-merchant-config",
+      "descriptions": [
+        "合并输出商户配置",
+        "单独使用的时候需要后面跟上 -MERCHANT-CONFIG-VERSION=指定的商户配置版本号"
+      ]
+    },
+    {
+      "category": "scripts",
+      "script": "dev-development-document-inner",
+      "descriptions": [
+        "项目内部开发文档-内部命令",
+        "需要前置执行生成全量文档json 命令 : export-full-doc,确保代码内有最新文档"
+      ]
+    },
+    {
+      "category": "scripts",
+      "script": "dev-development-document-alert",
+      "descriptions": ["项目内部开发文档-警告信息"]
+    },
+    {
+      "category": "scripts",
+      "script": "dev-development-document",
+      "descriptions": [
+        "项目内部开发文档",
+        "项目目标解释、架构、规范、技术选型、组件对接文档"
+      ]
+    },
+    {
+      "category": "scripts",
+      "script": "dev-custom-version-inner",
+      "descriptions": ["本地开发自定义版本项目-内部命令"]
+    },
+    {
+      "category": "scripts",
+      "script": "custom-merchant-config-version-alert",
+      "descriptions": ["本地开发自定义版本项目-警告信息"]
+    },
+    {
+      "category": "scripts",
+      "script": "dev-custom-version",
+      "descriptions": [
+        "本地开发自定义版本项目",
+        "这个命令需要配合 设置  MERCHANT-CONFIG-VERSION 后使用 "
+      ]
+    },
+    {
+      "category": "scripts",
+      "script": "build-custom-version-inner",
+      "descriptions": ["生产打包自定义版本项目-内部命令"]
+    },
+    {
+      "category": "scripts",
+      "script": "build-custom-version",
+      "descriptions": [
+        "生产打包自定义版本项目",
+        "这个命令需要配合 设置  MERCHANT-CONFIG-VERSION 后使用 ",
+        "本地 模拟构建  : 先设置  MERCHANT-CONFIG-VERSION 的值 然后  npm run build-custom-version",
+        "linux jenkins  生产构建  ：需要设置   MERCHANT-CONFIG-VERSION 的值 各种方式都行，看具体设置 。如： export MERCHANT-CONFIG-VERSION=${MERCHANT-CONFIG-VERSION}",
+        "linux jenkins  生产构建  ：运行示例：  npm run build-custom-version"
+      ]
+    },
+    {
+      "category": "scripts",
+      "script": "build-custom-sdk-inner",
+      "descriptions": ["生产打包自定义版本SDK-内部命令"]
+    },
+    {
+      "category": "scripts",
+      "script": "build-custom-sdk",
+      "descriptions": [
+        "生产打包自定义版本SDK",
+        "这个命令需要配合 设置  MERCHANT-CONFIG-VERSION 后使用 ",
+        "本地 模拟构建  : 先设置  MERCHANT-CONFIG-VERSION 的值 然后    npm run build-custom-sdk",
+        "linux jenkins  生产构建  ：需要设置   MERCHANT-CONFIG-VERSION 的值 各种方式都行，看具体设置 。如： export MERCHANT-CONFIG-VERSION=${MERCHANT-CONFIG-VERSION}",
+        "linux jenkins  生产构建  ：运行示例：  npm run build-custom-sdk"
+      ]
+    },
+    {
+      "category": "scripts",
+      "script": "dev-full-version",
+      "descriptions": ["本地开发全量版本项目"]
+    },
+    {
+      "category": "scripts",
+      "script": "dev-full-version-inner",
+      "descriptions": ["本地开发全量版本项目-内部命令"]
+    },
+    {
+      "category": "scripts",
+      "script": "build-full-version",
+      "descriptions": ["生产打包全量版本项目"]
+    },
+    {
+      "category": "scripts",
+      "script": "build-full-sdk",
+      "descriptions": ["生产打包全量版本SDK"]
+    },
+    {
+      "category": "scripts",
+      "script": "dev-check-sdk-esm",
+      "descriptions": [
+        "本地开发检查验证打包后的  SDK ： es 版本 的项目 ,vite cli 项目 "
+      ]
+    },
+    {
+      "category": "scripts",
+      "script": "dev-check-sdk-umd",
+      "descriptions": [
+        "本地开发检查验证打包后的  SDK ： umd 版本 的项目 ,vite cli项目"
+      ]
+    },
+    {
+      "category": "scripts",
+      "script": "dev-check-sdk-umd-html",
+      "descriptions": [
+        "本地开发检查验证打包后的  SDK ： umd 版本 的项目，原生 html 项目"
+      ]
+    },
+    {
+      "category": "scripts",
+      "script": "dev-postmessage-test",
+      "descriptions": ["本地开发检查 消息通讯，在线调试工具的自测版本"]
+    },
+    {
+      "category": "scripts",
+      "script": "export-full-version-open",
+      "descriptions": ["输出全量版本: 开启"]
+    },
+    {
+      "category": "scripts",
+      "script": "export-full-version-close",
+      "descriptions": ["输出全量版本: 关闭"]
+    },
+  
+    {
+      "category": "scripts",
+      "script": "divider-line",
+      "descriptions": ["占位警告：json 内部注释性 代码 占位"]
+    },
+  
+  
+  
+  
+    {
+      "category": "scripts",
+      "script": "dev",
+      "descriptions": ["命令别名：同 dev-self-use-version"]
+    },
+    {
+      "category": "scripts",
+      "script": "build",
+      "descriptions": ["命令别名：同 build-self-use-version "]
+    },
+    {
+      "category": "scripts",
+      "script": "emc",
+      "descriptions": ["命令别名：同 export-merchant-config "]
+    },
+    {
+      "category": "scripts",
+      "script": "ddd",
+      "descriptions": ["命令别名：同 dev-development-document "]
+    },
+    {
+      "category": "scripts",
+      "script": "dfv",
+      "descriptions": ["命令别名：同 dev-full-version "]
+    },
+    {
+      "category": "scripts",
+      "script": "dcv",
+      "descriptions": [
+        "命令别名：同 dev-custom-version " 
+      
+      ]
+    },
+    {
+      "category": "scripts",
+      "script": "efvo",
+      "descriptions": [
+        "命令别名：同 export-full-version-open " 
+      ]
+    },
+    {
+      "category": "scripts",
+      "script": "efvc",
+      "descriptions": [
+        "命令别名：同 export-full-version-close " 
+      ]
+    },
+  
+    {
+      "category": "scripts",
+      "script": "eec",
+      "descriptions": [
+        "命令别名：同 export-build-in-config " 
+      ]
+    },
+    {
+      "category": "scripts",
+      "script": "eeca",
+      "descriptions": [
+        "命令别名：同 export-build-in-config  携带 all 参数" 
+      ]
+    },
+    {
+      "category": "scripts",
+      "script": "echo",
+      "descriptions": ["占位警告 ，无其他用处"]
+    }
+  ]
+}

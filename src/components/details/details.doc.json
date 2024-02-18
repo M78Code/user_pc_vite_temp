@@ -1,0 +1,17 @@
+{
+  "bet_record": {
+    "level": 2,
+    "menuName": "客户端H5详情页模板组件",
+    "sonName": "H5-详情页模板组件"
+  },
+  "category": "Details",
+  "component-name": "Details",
+  "support-customization": "1",
+  "descriptions": ["详情页模板组件"],
+  "optional-component": [
+    {
+      "component-name": "Menu_1",
+      "descriptions": ["详情页模板组件-版本1"]
+    }
+  ]
+}

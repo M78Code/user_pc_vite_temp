@@ -1,0 +1,125 @@
+<!--
+ * @Desc: 浏览器版本低的提示页，目前没用到
+ * @Author: Router
+ * @Date: 2020-08-28 11:02:55
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>亚洲在线体育竞猜投注</title>
+    <style>
+        body,
+        html {
+            margin: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        p {
+            margin: 0;
+        }
+
+        .change_version {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            color: #a5a9b3;
+        }
+
+        .change_version a {
+            text-decoration: none;
+            color: #a5a9b3;
+        }
+
+        .change_version span {
+            margin-top: 2px;
+        }
+
+        .content {
+            width: 70%;
+            max-width: 3.75rem;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .content p:first-child {
+            font-size: 0.14rem;
+            letter-spacing: 0;
+            line-height: 0.22rem;
+        }
+
+        .content p:nth-child(2) {
+            font-size: 0.12rem;
+            letter-spacing: 0;
+            line-height: 0.2rem;
+            padding: 0.16rem 0;
+        }
+
+        .content div {
+            display: flex;
+            justify-content: space-between;
+            margin: 0.2rem;
+        }
+
+        .content>div p {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        p>img {
+            width: 0.4rem;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 浏览器版本低，提示更新浏览器页 -->
+    <div class="change_version">
+        <div class="content">
+            <p>抱歉，您的浏览器版本过低暂时无法访问本站点</p>
+            <p>为了给你带来更好的投注体验，我们强烈建议您升级到以下浏览器后进行下注</p>
+            <div>
+                <a href="https://www.google.cn/chrome/" target="_blank">
+                    <!-- <p><img src="../../../assets/bw3/svg/f_guge.svg" alt=""><span> 谷歌</span> </p> -->
+                    <p><img src="../svg/f_guge.svg" alt=""><span> 谷歌</span> </p>
+                </a>
+                <a href="https://www.firefox.com.cn" target="_blank">
+                    <p><img src="../svg/f_huohu.svg" alt=""><span> 火狐</span> </p>
+                </a>
+                <a href="https://browser.qq.com/" target="_blank">
+                    <p><img src="../svg/f_qq.svg" alt=""><span> QQ</span> </p>
+                </a>
+            </div>
+            <div>
+                <a href="http://mse.sogou.com" target="_blank">
+                    <p><img src="../svg/f_shoug.svg" alt=""><span> 搜狗</span> </p>
+                </a>
+                <a href="https://mse.360.cn/m/index.html" target="_blank">
+                    <p><img src="../svg/f_360.svg" alt=""><span> 360安全</span> </p>
+                </a>
+                <a href="https://www.uc.cn" target="_blank">
+                    <p><img src="../svg/f_uc.svg" alt=""><span> UC</span> </p>
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    function on_resize() {
+        var winWidth = window.innerWidth, limit = 170;
+        var font_size = 100 * winWidth / 375;
+        if (font_size > limit) font_size = limit;
+        document.documentElement.style.fontSize = `${font_size}px`;
+    }
+    window.onresize = on_resize;
+    window.onload = on_resize;
+</script>
+
+</html>

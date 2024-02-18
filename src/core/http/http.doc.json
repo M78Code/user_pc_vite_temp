@@ -1,0 +1,100 @@
+{
+  "leftmenu": {
+    "level": 2,
+    "menuName": "客户端PC",
+    "sonName": "基础HTTP请求类"
+  },
+  "props": {
+    "category": "http",
+    "directory-name": "http",
+    "descriptions": ["axios htpp请求类"],
+    "type": "js",
+    "remark": "基础HTTP请求类",
+    "items": [
+      {
+        "filename": "axios-warpper.js",
+        "type": "js",
+        "descriptions": ["基础axios请求类"],
+        "export": {
+          "default": {}
+        },
+        "methods": {
+          "POST": {
+            "url": {
+              "type": "string",
+              "descriptions": "请求的url"
+            },
+            "params": {
+              "type": "object",
+              "descriptions": "请求接口要传递的参数"
+            },
+            "config": {
+              "type": "object",
+              "descriptions": "axios 配置类"
+            }
+          },
+          "GET": {
+            "url": {
+              "type": "string",
+              "descriptions": "请求的url"
+            },
+            "params": {
+              "type": "object",
+              "descriptions": "请求传参会带在url上"
+            },
+            "config": {
+              "type": "object",
+              "descriptions": "axios 配置类"
+            }
+          }
+        }
+      },
+      {
+        "filename": "axios-interceptors.js",
+        "type": "js",
+        "descriptions": ["axios 拦截器 包括分流"]
+      },
+      {
+        "filename": "debounce-module",
+        "directory-name": "debounce-module",
+        "type": "js",
+        "descriptions": [
+          "接口 缓存、限频、节流   相关的 类",
+          " 在 http 单个接口请求的时候 延迟 封装"
+        ],
+        "items": [
+          {
+            "filename": "index.js",
+            "type": "js",
+            "descriptions": ["导出所有要  缓存、限频、节流的相关类"]
+          },
+          {
+            "filename": "axios-debounce-cache.js",
+            "type": "js",
+            "descriptions": ["debounce基础类"]
+          }
+        ]
+      },
+      {
+        "filename": "http-log.js",
+        "type": "js",
+        "descriptions": ["http日志类"]
+      },
+      {
+        "filename": "axios-loop.js",
+        "type": "js",
+        "descriptions": ["http请求循环类"]
+      },
+      {
+        "filename": "gtag-tag.js",
+        "type": "js",
+        "descriptions": ["Google gtag类"]
+      },
+      {
+        "filename": "zhuge-tag.js",
+        "type": "js",
+        "descriptions": ["诸葛埋点 tag类"]
+      }
+    ]
+  }
+}

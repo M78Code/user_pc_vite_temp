@@ -1,0 +1,184 @@
+{
+    "activityId": "10007,10008,10010",
+    "activityList": [
+        {
+            "activityId": "10007",
+            "endTime": null,
+            "h5Url": "group1/M00/15/C2/CgURtmJGfTmAfLG-AAChk0JTn7o692.png",
+            "id": "1323",
+            "inEndTime": "1703952000000",
+            "inStartTime": "1632412800000",
+            "maintainStatus": null,
+            "name": "每日任务",
+            "pcUrl": "group1/M00/15/C3/CgURtWJGfT-ABbXtAAA2DscP7Dg590.png",
+            "period": 2,
+            "startTime": null,
+            "status": 1,
+            "type": 1
+        },
+        {
+            "activityId": "10008",
+            "endTime": null,
+            "h5Url": "group1/M00/15/C2/CgURtmJGfTmAfLG-AAChk0JTn7o692.png",
+            "id": "1325",
+            "inEndTime": "1703952000000",
+            "inStartTime": "1632412800000",
+            "maintainStatus": null,
+            "name": "成长任务",
+            "pcUrl": "group1/M00/15/C3/CgURtWJGfT-ABbXtAAA2DscP7Dg590.png",
+            "period": 2,
+            "startTime": null,
+            "status": 1,
+            "type": 1
+        },
+        {
+            "activityId": "10010",
+            "endTime": null,
+            "h5Url": "group1/M00/15/C2/CgURtmJGfTmAfLG-AAChk0JTn7o692.png",
+            "id": "1524",
+            "inEndTime": "0",
+            "inStartTime": "1647263209000",
+            "maintainStatus": null,
+            "name": "老虎机活动",
+            "pcUrl": "group1/M00/15/C3/CgURtWJGfT-ABbXtAAA2DscP7Dg590.png",
+            "period": 2,
+            "startTime": null,
+            "status": 1,
+            "type": 2
+        }
+    ],
+    "addition2": "",
+    "callbackUrl": "https://user-pc-entry.sportxxxmu3g.com/#/",
+    "chatRoomSwitch": 1,
+    "configVO": {
+        "appDefault": 1,
+        "bannerUrl": "group1/M00/0D/00/CgURtWC4ej6ADZPTAADn5qPga5g121.png",
+        "bookBet": 1,
+        "bookMarketSwitch": 1,
+        "bookMarketSwitchBasketball": 1,
+        "compatLogoUrl": "group1/M00/18/90/CgURt2QIZDyAd0QtAAA201kvKuY582.png",
+        "configMap": {
+            "1": "group1/M00/18/90/CgURtmQIZCyADtiOAADz0FmPZAw703.png",
+            "2": "group1/M00/18/90/CgURtmQIZB-AU92XAADz0FmPZAw906.png"
+        },
+        "filterLeague": "386",
+        "filterSport": "2,3,4,5,6",
+        "h5Default": 2,
+        "inlineWidth": null,
+        "leagueLogoUrl": "group1/M00/0D/00/CgURt2C4egGARimTAAAF1d4kQS8379.png",
+        "loadLogoUrl": "group1/M00/0C/FF/CgURtmC4ee2AD95qAACny32pR5U246.gif",
+        "marketConfigKey": "reservedBettingSwitch",
+        "marketConfigValue": 1,
+        "marketDefault": 2,
+        "maxSeriesNum": 10,
+        "minSeriesNum": 2,
+        "nociceTag": 1,
+        "pcLogoUrl": "group1/M00/18/90/CgURtmQIZDiACpgxAAA201kvKuY047.png",
+        "profesTag": 1,
+        "standardTag": 2,
+        "title": "PM体育-亚洲在线体育竞猜投注",
+        "titleMap": {
+            "tw": "PM體育-亞洲在線體育競猜投注",
+            "vi": "Thể thao PM - Nhà cái cá cược thể thao trực tuyến Châu Á",
+            "ad": "PM Sports - Taruhan Olahraga Online Asia",
+            "th": "PM Sports - การเดิมพันกีฬาออนไลน์ในเอเชีย",
+            "en": "PM Sports-Asian Online Gaming Platform",
+            "zh": "PM体育-亚洲在线体育竞猜投注"
+        },
+        "videoLogoUrl": "group1/M00/15/1B/CgURtWG18PiAUSyfAAAoIlm2eTA094.png"
+    },
+    "cvo": {
+        "series": {
+            "code": "1",
+            "min": 5,
+            "qfi": 500,
+            "qfo": 200,
+            "qon": 10,
+            "qsi": 1000,
+            "qth": 100,
+            "qtw": 50
+        },
+        "single": {
+            "code": "1",
+            "min": 10,
+            "qfi": 5000,
+            "qfo": 2000,
+            "qon": 100,
+            "qth": 1000,
+            "qtw": 500
+        }
+    },
+    "gr": "common",
+    "inActivity": true,
+    "isNewUser": false,
+    "jumpfrom": "null",
+    "jumpsupport": "null",
+    "languageList": "zh,en,tw,vi,th,ms,ad,ad,ms",
+    "languageName": "zh",
+    "languages": "",
+    "loginUrl": "https://user-pc-bw30.sportxxxwo8.com?token=307993366175f768f965d8c5cd898646d3eda7b1&gr=common&tm=1&lg=zh&mk=EU&stm=blue&api=F44HJ+atFdYQqXLm85ADtiugr0ZrwutNsM85t6cxNP9Hzf/22TCB/6e++ProM/DCOtWXfg8JnJSNy6Cnjhqp1g==",
+    "mId": "2",
+    "maintainTime": null,
+    "maintaining": false,
+    "maintainingContent": "尊敬的用户您好，为了给您更好的服务，2022年11月28日 12:00 - 2022年12月26日 15:00服务器维护升级，您所拥有的奖券不受任何影响，请安心游戏，感谢您的谅解与支持。",
+    "maintainingH5Url": "group1/M00/15/01/CgURt2GmD0SAe0k9AAB1adcgZrg854.png",
+    "maintainingPCUrl": "group1/M00/15/01/CgURtWGmD0uAQos1AAGvVmeFgFU357.png",
+    "maintainingTime": "1671951653227",
+    "maintainingTitle": "维护通知",
+    "marketLevel": 0,
+    "matchId": null,
+    "merchantCode": "",
+    "merchantEventSwitchVO": {
+        "configKey": "merchantEventSwitch",
+        "configValue": "1",
+        "cornerEvent": 1,
+        "eventSwitch": 1,
+        "penaltyEvent": 1
+    },
+    "merchantName": "obsport",
+    "nickName": "TYTesRouter",
+    "openEsport": 1,
+    "openVrSport": 1,
+    "oss": {
+        "api": [
+            "https://api.lkjklkyi.com"
+        ],
+        "chatroomHttpUrl": [
+            "https://prohw-livechat-ai.uwaj0ve.com"
+        ],
+        "chatroomUrl": [
+            "wss://wss.cplivechat.eib2iiw.com:8084/mqtt"
+        ],
+        "img": [
+            "https://image.bricblogy.com"
+        ],
+        "live_h5": "https://proliveh5.sportxxx13ky.com",
+        "live_pc": "https://prolivepc.sportxxx13ky.com",
+        "loginUrl": "https://user-pc-bw30.sportxxxwo8.com?token=307993366175f768f965d8c5cd898646d3eda7b1&gr=common&tm=1&lg=zh&mk=EU&stm=blue&api=F44HJ+atFdYQqXLm85ADtiugr0ZrwutNsM85t6cxNP9Hzf/22TCB/6e++ProM/DCOtWXfg8JnJSNy6Cnjhqp1g==",
+        "loginUrlArr": [
+            "https://user-pc-bw4.bricblogy.com/?token=307993366175f768f965d8c5cd898646d3eda7b1&gr=common&tm=1&lg=zh&mk=EU&stm=blue&api=F44HJ+atFdYQqXLm85ADtiugr0ZrwutNsM85t6cxNP9Hzf/22TCB/6e++ProM/DCOtWXfg8JnJSNy6Cnjhqp1g=="
+        ]
+    },
+    "pcs": 0,
+    "pullMsgRate": 6,
+    "settleSwitch": 1,
+    "sportId": null,
+    "stm": "",
+    "storeFlag": null,
+    "tournamentId": null,
+    "userBetPrefer": 2,
+    "userId": "240640929772138496",
+    "userMarketPrefer": "EU",
+    "userName": "TYTesRouter",
+    "videoManageVo": {
+        "closedWithoutOperation": 1,
+        "configKey": "videoControlSwitch",
+        "configValue": "1",
+        "customViewTime": 5,
+        "merchantCode": "oubao",
+        "noBackgroundPlay": 1,
+        "videoSettings": 1,
+        "videoSwitch": 1,
+        "viewingTime": null
+    }
+}

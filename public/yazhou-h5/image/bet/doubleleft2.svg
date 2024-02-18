@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="10px" height="12px" viewBox="0 0 10 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 58 (84663) - https://sketch.com -->
+    <title>icon/doubleleft2</title>
+    <desc>Created with Sketch.</desc>
+    <g id="专业版" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="投注区切图" transform="translate(-331.000000, -412.000000)">
+            <g id="icon/doubleleft2" transform="translate(336.000000, 418.000000) scale(1, -1) rotate(90.000000) translate(-336.000000, -418.000000) translate(328.000000, 410.000000)">
+                <rect id="Rectangle" fill="#000000" fill-rule="nonzero" opacity="0" x="0" y="0" width="16" height="16"></rect>
+                <g id="编组-4" transform="translate(8.000000, 8.000000) scale(-1, 1) translate(-8.000000, -8.000000) translate(2.500000, 3.000000)" fill="#999999">
+                    <g id="Common/Icon/Icon_ArrowDown_Grey" transform="translate(8.000000, 5.000000) rotate(-90.000000) translate(-8.000000, -5.000000) translate(3.000000, 2.000000)">
+                        <path d="M3.81066017,3 L7.78033009,-0.780638013 C8.0732233,-1.05958394 8.0732233,-1.51184464 7.78033009,-1.79079056 C7.48743687,-2.06973648 7.01256313,-2.06973648 6.71966991,-1.79079056 L2.21966991,2.49492373 C1.9267767,2.77386965 1.9267767,3.22613035 2.21966991,3.50507627 L6.71966991,7.79079056 C7.01256313,8.06973648 7.48743687,8.06973648 7.78033009,7.79079056 C8.0732233,7.51184464 8.0732233,7.05958394 7.78033009,6.78063801 L3.81066017,3 Z" id="Path" transform="translate(5.000000, 3.000000) rotate(-90.000000) translate(-5.000000, -3.000000) "></path>
+                    </g>
+                    <g id="Common/Icon/Icon_ArrowDown_Grey" transform="translate(3.000000, 5.000000) rotate(-90.000000) translate(-3.000000, -5.000000) translate(-2.000000, 2.000000)">
+                        <path d="M3.81066017,3 L7.78033009,-0.780638013 C8.0732233,-1.05958394 8.0732233,-1.51184464 7.78033009,-1.79079056 C7.48743687,-2.06973648 7.01256313,-2.06973648 6.71966991,-1.79079056 L2.21966991,2.49492373 C1.9267767,2.77386965 1.9267767,3.22613035 2.21966991,3.50507627 L6.71966991,7.79079056 C7.01256313,8.06973648 7.48743687,8.06973648 7.78033009,7.79079056 C8.0732233,7.51184464 8.0732233,7.05958394 7.78033009,6.78063801 L3.81066017,3 Z" id="Path" transform="translate(5.000000, 3.000000) rotate(-90.000000) translate(-5.000000, -3.000000) "></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

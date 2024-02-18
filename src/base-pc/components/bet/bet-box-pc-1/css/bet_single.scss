@@ -1,0 +1,1346 @@
+/*
+ * @Description: 单关投注记录夜间版样式
+ */
+
+ body {
+  /***************************************单关投注部分  **************************************/
+  .c-main-menu {
+    color: var(--q-gb-t-c-6);
+    font-weight: 500;
+  }
+  .bet-view {
+    /**单关投注*/
+    .bet-single {
+      padding-left: 5px;
+      padding-right: 5px;
+      /**投注卡片*/
+      .bet-card {
+        padding: 15px;
+        margin-bottom: 5px;
+        background: var(--q-bet-box-5);
+        .q-card__section{
+          padding: 0 !important;
+        }
+        // background: var(--q-gb-bg-c-22);
+        /* *蒙层* */
+        .cathectic-appoint {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          top: 0;
+          bottom: 0;
+          right: 0;
+          z-index: 10;
+          background: var(--qq--theme-cathectic-appoint)
+        }
+        /**********************************单关投注内容部分 start**********************************/
+        .bet-name-info2, .bet-outweight {
+          font-size: 13px;
+          color: var(--q-gb-t-c-6);
+          font-weight: 600;
+          line-height: 1.3;
+          margin-bottom: 10px;
+        }
+        /**赛事时间*/
+        .match-time {
+           color: var(--q-gb-t-c-6);
+          margin-bottom: 6px;
+        }
+        /**下注内容*/
+        .bet-content {
+          padding: 8px;
+          background: var(--q-bet-box-6);
+          // border: 0.5px solid var(--q-gb-bd-c-7);//rgba(65,70,85,1)
+          border: none;
+          border-radius: 6px;
+           /**盘口名称 玩法名称*/
+          .bet-match-playing,
+          .bet-handicap-name {
+            font-size: 12px;
+            color: var(--q-gb-t-c-7);
+            font-weight: 400;
+          }
+          .bet-match-playing {
+            margin-right: 5px;
+          }
+          /**盘口名称*/
+          .bet-handicap-name {
+            margin-left: 5px;
+          }
+          /*  玩法文本         */
+          .bet-play-text {
+            font-size: 12px;
+             color: var(--q-gb-t-c-6);
+            font-weight: 400;
+          }
+          /*  投注项名称 */
+          .bet-play-team {
+            word-break: break-all;
+            padding-top: 6px;
+            padding-bottom: 8px;
+            font-weight: 400;
+            /*  投注项盘口样式 */
+            .bet-team-handicap {
+              font-size: 14px;
+              color: var(--q-gb-t-c-16);
+              font-weight: 400;
+              label {
+                /**盘口名称*/
+                &.handicap {
+                   color: var(--q-gb-t-c-6);
+                  font-weight: 400;
+                }
+                /*  盘口样式 */
+                &.bet-handicap {
+                  background: #9ba3b0;
+                  color: #f3f4f5;
+                  border-radius: 2px;
+                  font-weight: 400;
+                }
+              }
+            }
+            /**队伍名称*/
+            .ranking-team-name {
+              color: var(--q-gb-t-c-16);
+            }
+          }
+          /* *赔率的样式* */
+          .bet-odds-value {
+            font-size: 14px;
+             color: var(--q-gb-t-c-6);
+            text-align: left;
+            font-weight: 700;
+            line-height: 1.4;
+             /* *赔率* */
+            .odds-value {
+              color: var(--q-gb-t-c-3);
+              border-radius: 2px;
+              span {
+                position: relative;
+                top: -1px;
+                margin-right: 4px;
+              }
+            }
+            /*  显示红升时的样式 */
+            &.up-red {
+              .odds-value {
+                background: #FF4040;
+                color: var(--q-gb-t-c-1);
+              }
+            }
+
+            /*  显示绿降时的样式 */
+            &.down-green {
+              .odds-value {
+                background: #64C258;
+                color: var(--q-gb-t-c-1);
+              }
+            }
+          }
+          /*  赔率无效样式 */
+          .invalid {
+            display: inline-block;
+            text-align: center;
+            width: 48px;
+            height: 20px;
+            line-height: 20px;
+            color: var(--q-gb-t-c-1);
+            background: var(--qq--theme-bg-invalid);
+            border: var(--qq--theme-bd-invalid);
+            padding: 0 10px;
+            border-radius: 20px;
+          }
+        }
+         /* *预约的样式* */
+        .appoint {
+          position: relative;
+          padding: 3px 8px;
+          font-size: 12px;
+          color: var(--q-gb-t-c-16);
+          text-align: center;
+          background: var(--q-bet-box-9);
+          border: 0.5px solid var(--q-bet-box-2);
+          border-radius: 10px;
+        }
+         //预约投注内容
+        .book-content {
+          color: var(--q-gb-t-c-16);
+          .input-number {
+            display: flex;
+             //预约加
+            .sub-number {
+              font-size: 16px;
+              color:var(--qq--theme-text-color-handicap);
+              text-align: center;
+              width: 22px;
+              height: 26px;
+              line-height: 26px;
+              margin-left: 2px;
+              background: var(--qq--theme-bg-add-sub);
+              border: 0.5px solid var(--q-gb-bd-c-7);
+              border-radius: 4px 0px 0px 4px;
+            }
+            //预约投注输入框样式
+            input {
+              color: var(--qq--theme-text-color-handicap);
+              border-radius: 0;
+              background-color: var(--q-gb-bg-c-21);
+              border: 0.5px solid var(--q-gb-bd-c-7);
+              border-left: 0;
+              border-right: 0;
+              width: 74px;
+              height: 26px;
+              text-align: center;
+              outline: none;
+            }
+            //预约减
+            .add-number {
+              font-size: 16px;
+              color:var(--qq--theme-text-color-handicap);
+              text-align: center;
+              width: 22px;
+              height: 26px;
+              line-height: 26px;
+              background: var(--qq--theme-bg-add-sub);
+              border: 0.5px solid var(--q-gb-bd-c-7);
+              border-radius: 0px 4px 4px 0px;
+            }
+          }
+          //预约删除图标样式
+          .icon-delete {
+            margin-top: 5px;
+            color: #999999;
+          }
+        }
+        //分数
+        .score {
+          margin-left: 3px;
+           color: var(--q-gb-t-c-6);
+          font-weight: 400;
+        }
+        //框联赛名字
+        .bet-league-name {
+          font-size: 13px;
+          color: var(--q-bet-box-1);
+          font-weight: 600;
+          line-height: 1.3;
+          padding-right: 10px;
+        }
+
+        /* *限额及最大可赢区域的公共样式* */
+        .bet-against {
+          font-size: 12px;
+          line-height: 1.3;
+          word-break: break-all;
+          font-weight: 400;
+          margin-top: 6px;
+          margin-bottom: 6px;
+          /*  主队 vs 客队 */
+          .home-vs-away {
+             color: var(--q-gb-t-c-6);
+            font-weight: 400;
+            .bet-pk {
+               color: var(--q-gb-t-c-6);
+              margin-left: 5px;
+              margin-right: 5px;
+            }
+          }
+          /* *比分的样式* */
+          .score {
+            margin-right: 0;
+          }
+        }
+        .bet-outweight {
+          color: var(--qq--theme-text-bet-outweight);
+          margin-bottom: 10px;
+          font-weight: 600;
+        }
+
+        /*  删除按钮列的样式 */
+        .col-delete {
+          /*  删除按钮 */
+          .bet-del {
+            cursor: pointer;
+            color: var(--q-gb-t-c-18);
+            transform: scale(1);
+            z-index: 20;
+             /* *按钮划过的样式* */
+            &:hover {
+              .icon-del::before {
+                color: var(--q-gb-t-c-18);
+              }
+            }
+          }
+        }
+
+        /*  单关输入框样式 */
+        .bet-single-input {
+           /* *输入框的样式* */
+          input {
+            background: var(--q-bet-box-6);
+            // border: 0.5px solid var(--q-gb-bd-c-7);
+            border: none;
+            border-radius: 6px;
+             color: var(--q-gb-t-c-6);
+            font-size: 16px;
+            caret-color: var(--q-gb-t-c-16);
+          }
+          // .input-money {
+          //   background: var(--q-gb-bg-c-11);
+          //   border: 0.5px solid rgba(255,255,255,1);
+          // }
+           /* *输入框边框的样式* */
+          .input-border {
+            &:focus {
+              background: var(--q-bet-box-6);
+              border: 0.5px solid var(--q-bet-box-2);
+              border-radius: 6px;
+              color: var(--q-gb-t-c-6);
+            }
+          }
+          //默认输入框里面说明字体颜色
+          input::-webkit-input-placeholder {
+            font-size: 14px;
+            color: rgba(108,123,168,0.5);
+          }
+          //默认输入框里面说明字体颜色
+          input::-moz-placeholder {
+            font-size: 14px;
+            color: rgba(108,123,168,0.5);
+          }
+          //默认输入框里面说明字体颜色
+          input:-moz-placeholder {
+            font-size: 14px;
+            color: rgba(108,123,168,0.5);
+          }
+          //默认输入框里面说明字体颜色
+          input:-ms-input-placeholder {
+            font-size: 14px;
+            color: rgba(108,123,168,0.5);
+          }
+          /*  输入边框获取焦点时的样式 */
+          /*  校验错误时显示红色边框样式 */
+          .input-border-red {
+            border: 1px solid #FF4040 !important;
+          }
+
+          /*  输入框无效时的背景色 */
+          &.bet-lapse-val {
+            background: #F5F7FA;
+          }
+
+          /*  输入框中的关闭按钮样式 */
+          .bet-input-close {
+            .icon-failure:before {
+              opacity: 0.9;
+              color: var(--q-gb-t-c-1);
+            }
+            &:hover {
+              .icon-failure:before {
+                opacity: 0.9;
+                color: #0086F3;
+              }
+            }
+          }
+        }
+        .bet-win {
+           color: var(--q-gb-t-c-6);
+          /*  错误提示的样式 */
+          .valid-color {
+            color: #FF4040;
+          }
+          .df-jb {
+            color: var(--qq-theme-color-df-jb);
+            font-weight: 400;
+          }
+        }
+        /*  可赢额 */
+        .bet-win-value {
+           color: var(--q-gb-t-c-6);
+        }
+        .bet-win-money {
+           color: var(--q-gb-t-c-6);
+        }
+      }
+      .bet-no-effect {
+        // background: var(--q-gb-bg-c-22);
+        background-image: var(--qq--background-gradient-2);
+        .bet-content {
+          background: var(--q-gb-bg-c-11);
+        }
+      }
+      .bet-multiple {
+        &.bet-card {
+          padding: 15px;
+          /* *蒙层* */
+          .cathectic-appoint {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            z-index: 10;
+            background: var(--qq--theme-cathectic-appoint)
+          }
+          .line {
+            background: var(--q-gb-t-c-16);
+            width: 2px;
+            height: 12px;
+            margin-top: 0px;
+            margin-right: 8px;
+            border-radius: 1.5px;
+          }
+          .bet-count {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            font-size: 12px;
+             color: var(--q-gb-t-c-6);
+            .operation-symbol {
+              margin-top: 3px;
+            }
+          }
+          .right-input {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            width: 88%;
+          }
+          // 单关输入框样式
+          .bet-multiple-input {
+            margin-top: 8px;
+            margin-bottom: 10px;
+            //输入金额的样式
+            input {
+              width: 100%;
+              padding: 4px 6px;
+              margin-top: 2px;
+              height: 32px;
+              line-height: 18px;
+              outline: none;
+              border-radius: 4px;
+              font-size: 16px;
+              background: var(--q-gb-bg-c-11);
+              border: 0.5px solid var(--q-gb-bd-c-7);
+              border-radius: 6px;
+               color: var(--q-gb-t-c-6);
+              caret-color: var(--q-gb-t-c-16);
+              // 输入金额时的样式
+              &.bet-input-money {
+                outline: none;
+              }
+            }
+            //默认输入框里面说明字体颜色
+            input::-webkit-input-placeholder {
+              font-size: 14px;
+              color: rgba(108,123,168,0.5);
+            }
+            //默认输入框里面说明字体颜色
+            input::-moz-placeholder {
+              font-size: 14px;
+              color: rgba(108,123,168,0.5);
+            }
+            //默认输入框里面说明字体颜色
+            input:-moz-placeholder {
+              font-size: 14px;
+              color: rgba(108,123,168,0.5);
+            }
+            //默认输入框里面说明字体颜色
+            input:-ms-input-placeholder {
+              font-size: 14px;
+              color: rgba(108,123,168,0.5);
+            }
+            .input-money {
+              background: var(--q-gb-bg-c-11);
+              border: 0.5px solid rgba(255,255,255,1);
+            }
+            // 输入边框获取焦点时的样式
+            .input-border {
+              &:focus {
+                background: var(--q-gb-bg-c-11);
+                border: 0.5px solid rgba(0,134,243,1);
+                border-radius: 6px;
+                 color: var(--q-gb-t-c-6);
+              }
+            }
+            // 校验错误时显示红色边框样式
+            .input-border-red {
+              border: 1px solid #FF4040;
+            }
+          // 输入框中的关闭按钮样式
+            .bet-input-close {
+              position: absolute;
+              top: 35px;
+              right: 10px;
+              cursor: pointer;
+              width: auto;
+              height: auto;
+              .icon-failure:before {
+                opacity: 0.9;
+                color: var(--q-gb-t-c-1);
+              }
+              &:hover {
+                .icon-failure:before {
+                  opacity: 0.9;
+                  color: #0086F3;
+                }
+              }
+            } 
+          }
+
+          // 校验错误时显示红色边框样式
+          .input-border-red {
+            border: 1px solid #FF4040;
+          }
+          // 输入框中的关闭按钮样式
+          .bet-input-close {
+            position: absolute;
+            top: 32px;
+            right: 10px;
+            cursor: pointer;
+            width: auto;
+            height: auto;
+            .icon-failure:before {
+              opacity: 0.9;
+              color: var(--q-gb-t-c-1);
+            }
+            &:hover {
+              .icon-failure:before {
+                opacity: 0.9;
+                color: #0086F3;
+              }
+            }
+          }
+          .bet-win {
+            margin-bottom: 10px;
+          }
+          // 投注键盘区域
+          .bet-keyboard-zone {
+            padding-top: 8px;
+            margin-left: -10px;
+            margin-right: -10px;
+          }
+        }
+        .odds-wrap {
+            justify-content: space-between;
+            align-items: center;
+        }
+      }
+    }
+    .bet-mix {
+      .bet-toggle,
+      .bet-toggle-up,
+      .bet-toggle-down {
+        margin-left: 5px;
+        margin-right: 5px;
+        background: var(--q-gb-bg-c-22);
+        color: var(--q-gb-t-c-6);
+        font-size: 13px;
+        .bet-toggle-text {
+
+          font-size: 13px;
+          color: var(--q-gb-t-c-6);
+          &.disabled-toggle {
+            opacity: .3;
+          }
+          /*  活动时的样式 */
+          &.active {
+            color: var(--q-gb-t-c-6);
+          }
+        }
+        /*  箭头向下样式 */
+        .icon-pull-down:before {
+          color: var(--q-gb-t-c-6);
+          font-weight: bold;
+        }
+        /*  箭头向上样式 */
+        .icon-pull-up:before {
+          color: var(--q-gb-t-c-16);
+          font-weight: bold;
+        }
+        .disabled-toggle {
+          .icon-pull-down:before {
+            opacity: .3;
+          }
+          .icon-pull-up:before {
+            opacity: .3;
+          }
+        }
+      }
+      .bet-toggle-down {
+        border-radius: 0px 0px 6px 6px;
+      }
+      .bet-toggle-up {
+        color: var(--q-gb-t-c-6);
+      }
+
+      .bet-single-mix-input{
+        margin-left: 5px;
+        margin-right: 5px;
+        margin-bottom: 0;
+        border: 0px;
+        // background: var(--q-gb-bg-c-22);
+        border-radius: 0 0 6px 6px;
+        .bet-single-input{
+          margin-top: 0;
+          padding: 17px 10px 15px 10px;
+          border-top: 1px solid var(--q-gb-bd-c-8) ;
+        }
+      }
+      .bet_input_defaut_one{
+        margin-left: 5px;
+        margin-right: 5px;
+        margin-bottom: 0;
+        border: 0px;
+        background: var(--q-gb-bg-c-22);
+        border-bottom: 0.5px solid var(--q-gb-bd-c-8);
+        .bet-single-input{
+          margin-top: 0;
+          padding: 17px 10px 15px 10px;
+        }
+        .bet-input-failure{
+          width: 100%;
+        }
+      }
+
+
+      /*  卡片样式 */
+      .bet-mix-item-card {
+        margin-left: 5px;
+        margin-right: 5px;
+        margin-bottom: 0;
+        border: 0px;
+        background: var(--q-bet-box-3);
+        border-bottom: 0.5px solid var(--q-gb-bd-c-8);
+        /* *卡片组件样式重写* */
+        .q-card__section {
+          .row {
+            .bet-name-info2 {
+              line-height: 1.3;
+              margin-bottom: 10px;
+            }
+            .bet-league-name,.bet-name-info2 {
+              font-size: 13px;
+              color: var(--q-gb-t-c-6);
+              font-weight: 600;
+              line-height: 1.3;
+            }
+            .match-time {
+              margin-bottom: 6px;
+            }
+            .bet-against {
+              font-size: 12px;
+              color: var(--q-gb-t-c-6);
+              line-height: 1.3;
+              word-break: break-all;
+              font-weight: 400;
+              margin-top: 6px;
+              margin-bottom: 6px;
+              /*  主队 vs 客队 */
+              .home-vs-away {
+                .bet-pk {
+                  color: var(--q-gb-t-c-6);
+                  margin-left: 5px;
+                  margin-right: 5px;
+                }
+              }
+            }
+          }
+          .bet-content {
+            padding: 8px;
+            background: var(--q-bet-box-6);
+            // border: 0.5px solid var(--q-gb-bd-c-7);//rgba(65,70,85,1)
+            border-radius: 6px;
+            margin-bottom: 15px;
+            /*  盘口名称设置 */
+            .bet-match-playing,
+            .bet-handicap-name {
+              font-size: 13px;
+              color: var(--q-gb-t-c-7);
+            }
+            .bet-match-playing {
+              margin-right: 5px;
+            }
+            .bet-handicap-name {
+              margin-left: 0;
+            }
+            /*  队伍名称 */
+            .bet-play-team {
+              font-size: 14px;
+              color: var(--q-gb-t-c-16);
+              word-break: break-all;
+              padding-top: 6px;
+              padding-bottom: 8px;
+              /*  盘口值 */
+              .bet-team-handicap {
+                label {
+                  &.handicap {
+                    color: var(--q-gb-t-c-6);
+                  }
+                  &.bet-handicap {
+                    background: #9ba3b0;
+                    color: #f3f4f5;
+                    border-radius: 2px;
+                  }
+                }
+              }
+            }
+            /*  赔率的样式 */
+            .bet-odds-value {
+              font-size: 14px;
+              font-weight: 700;
+              text-align: left;
+              line-height: 1.7;
+              /*  默认赔率 */
+              .odds-value {
+                color: var(--q-gb-t-c-6);
+                border-radius: 2px;
+                span {
+                  position: relative;
+                  top: -1px;
+                  margin-right: 4px;
+                }
+              }
+              /*  红升样式 */
+              &.up-red {
+                .odds-value {
+                  background: #FF4040;
+                  color: var(--q-gb-t-c-1);
+                }
+              }
+              /*  绿降样式 */
+              &.down-green {
+                .odds-value {
+                  background: #64C258;
+                  color: var(--q-gb-t-c-1);
+                }
+              }
+            }
+            /*  赔率无效样式 */
+            .invalid {
+              display: inline-block;
+              text-align: center;
+              height: 20px;
+              line-height: 20px;
+              // color: var(--q-gb-t-c-1);
+              // background: var(--qq--theme-bg-invalid);
+              // border: var(--qq--theme-bd-invalid);
+              color: #fff;
+              background: #E93D3D;
+              padding: 0 10px;
+              border-radius: 20px;
+
+            }
+          }
+        }
+        /*  删除按钮  */
+        .bet-del {
+          cursor: pointer;
+          color: #5a6074;
+          transform: scale(1);
+          z-index: 20;
+          &:hover {
+            .icon-del::before {
+              color: var(--q-gb-t-c-18);
+            }
+          }
+        }
+      }
+      .bet-mix-item-card {
+        border-radius: 0px;
+      }
+      .bet-mix-item-one {
+        margin-top: 5px;
+        border-radius: 6px;
+      }
+    }
+    .bet-mix-item-first {
+      margin-top: 5px;
+      &.bet-mix-item-card {
+        border-radius: 6px 6px 0px 0px;
+      }
+    }
+    .bet-mix-item-last {
+      border: 0px;
+    }
+  }
+}
+/**********************************单关投注提部分 end**********************************/
+body {
+  .bet-view {
+    .bet-single {
+      .bet-single-record {
+        // background: var(--q-gb-bg-c-22);
+        .row {
+          margin: 0;
+          padding-left: 10px;
+          padding-right: 10px;
+          &.first-row {
+            // padding-top: 15px;
+          }
+          .col {
+            padding: 0;
+          }
+          .bet-name-info2, .bet-outweight{
+            font-size: 13px;
+             color: var(--q-gb-t-c-6);
+            font-weight: 600;
+            margin-bottom: 10px;
+            line-height: 1.3;
+          }
+          .match-time {
+             color: var(--q-gb-t-c-6);
+            margin-bottom: 6px;
+          }
+        }
+        /*  单关投注记录标题 */
+        .bet-record-title {
+          font-size: 13px;
+           color: var(--q-gb-t-c-6);
+        }
+        .bet-item {
+          border-radius: 4px;
+          .bet-icon-info {
+            .icon-success:before {
+              color: #64C258;
+            }
+            .icon-failure:before {
+              color: #FF4040;
+            }
+          }
+          .bet-league-name {
+            margin-top: 0px;
+             color: var(--q-gb-t-c-6);
+            font-weight: 600;
+            line-height: 1.3;
+          }
+          /*  队伍名称 */
+          .bet-play-team {
+            color: var(--q-gb-t-c-16);
+            font-size: 14px;
+            word-break: break-all;
+            font-weight: 400;
+          }
+          .bet-content {
+            padding: 8px 0px;
+            margin-left: 10px;
+            margin-right: 10px;
+            background: var(--q-bet-box-6);
+            // border: 0.5px solid var(--q-gb-bd-c-7);
+            border-radius: 6px;
+            /*  盘口名称 */
+            .bet-match-playing,
+            .bet-handicap-name {
+              font-size: 13px;
+               color: var(--q-gb-t-c-6);
+            }
+            .bet-match-playing {
+              margin-right: 5px;
+            }
+            .bet-handicap-name {
+              margin-left: 5px;
+            }
+            .part-one {
+              color: var(--q-gb-t-c-16);
+            }
+            .part-two {
+              margin-left: 5px;
+               color: var(--q-gb-t-c-6);
+              white-space: nowrap;
+            }
+            /*  赔率样式 */
+            .bet-odds-value {
+              font-size: 14px;
+              font-weight: 700;
+              /*  赔率不变时的样式 */
+              .odds-value {
+                 color: var(--q-gb-t-c-6);
+                border-radius: 2px;
+                span {
+                  position: relative;
+                  top: -1px;
+                  margin-right: 4px;
+                }
+              }
+              /*  赔率升高时的样式 */
+              &.up-red {
+                .odds-value {
+                  background: #FF4040;
+                  color: var(--q-gb-t-c-1);
+                }
+              }
+              /*  赔率下降时的样式 */
+              &.down-green {
+                .odds-value {
+                  background: #50c042;
+                  color: var(--q-gb-t-c-1);
+                }
+              }
+            }
+          }
+          /*  限额及最大可赢区域的公共样式 */
+          .bet-against {
+            font-size: 12px;
+             color: var(--q-gb-t-c-6);
+            line-height: 1.3;
+            word-break: break-all;
+            font-weight: 400;
+            margin-top: 6px;
+            margin-bottom: 6px;
+            /*  主队 vs 客队 */
+            .home-vs-away {
+              .bet-pk {
+                 color: var(--q-gb-t-c-6);
+                margin-left: 5px;
+                margin-right: 5px;
+              }
+            }
+          }
+          /*  最高可赢额文本 */
+          .bet-win {
+             color: var(--q-gb-t-c-6);
+            margin-top: 10px;
+          }
+          /*  最高可赢额值 */
+          .bet-win2 {
+            padding-bottom: 15px;
+            /*  返还金额 */
+            .black-money-text {
+               color: var(--q-gb-t-c-6);
+            }
+          }
+          /*  最高可赢额金额  */
+          .bet-win-money {
+             color: var(--q-gb-t-c-6);
+            /*  走水金额 */
+            .bet-addition {
+              color: #FF4040;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+/**********************************单关投注结果部分 start***************************************/
+
+body {
+  .big-cathectic-zone {
+    .mt5 {
+      margin-top: 5px;
+    }
+    .bet-top-separator {
+      height: 2px;
+      background: var(--qq--theme-bg-menu-line-active);
+    }
+    .right {
+      font-size: 10px;
+      .balance {
+        font-size: 14px;
+        color: var(--q-gb-t-c-16);
+      }
+    }
+    .bet-card {
+      line-height: 0 !important;
+      background: #474747;
+      /* *蒙层* */
+      .cathectic-shade {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        z-index: 10;
+        opacity: 0;
+      }
+      /**联赛名称**/
+      .bet-league-name {
+        font-size: 12px;
+        color: var(--q-gb-t-c-1);
+        font-weight: 500;
+      }
+      /**投注项删除按钮**/
+      .col-delete {
+        display: flex;
+        align-items: flex-start;
+        top: -3px;
+        .bet-del {
+          z-index: 20;
+          font-size: 6px;
+          transform: scale(1);
+          cursor: pointer;
+          z-index: 20;
+          &::before {
+            color: #999999 !important;
+          }
+          &:hover {
+            .icon-del {
+              &::before {
+                color: #999999 !important;
+              }
+            }
+          }
+        }
+      }
+      /* *限额及最大可赢区域的公共样式* */
+      .bet-against {
+        margin-top: 5px;
+        margin-bottom: 5px;
+        .home-vs-away {
+          line-height: 1.3;
+          word-break: break-all;
+          color: #999999;
+          font-weight: 400;
+          .bet-pk {
+            margin-left: 5px;
+            margin-right: 5px;
+          }
+        }
+        .score {
+          color: #999999;
+        }
+      }
+      /**投注项名称及盘口样式**/
+      .bet-play-team {
+        display: flex;
+        align-items: flex-start;
+        margin-top: 5px;
+        padding-right: 5px;
+        .bet-team-handicap {
+          display: block;
+          word-break: break-all;
+          line-height: 1;
+          color: var(--q-gb-t-c-1);
+          label {
+            margin-left: 5px;
+            word-break: break-word;
+            &.bet-handicap {
+              text-align: center;
+              padding: 0px 5px;
+            }
+            &.margin-left-0 {
+              margin-left: 0px;
+            }
+          }
+        }
+      }
+      /* *玩法及队名部分样式* */
+      .bet-play-game {
+        display: flex;
+        align-items: flex-start;
+        color: var(--q-gb-t-c-1);
+        word-break: break-word;
+        .bet-play-text {
+          line-height: 1.3;
+          .bet-match-playing {
+            margin-right: 5px;
+            white-space: nowrap;
+          }
+          .bet-handicap-name {
+            color: var(--q-gb-t-c-7);
+          }
+        }
+      }
+      /* *赔率的样式* */
+      .bet-odds-value {
+        display: inline-block;
+        text-align: right;
+        .odds-value {
+          font-size: 16px;
+          color: var(--q-gb-t-c-1);
+          font-weight: 700;
+          span {
+            position: relative;
+            top: -1px;
+            margin-right: 5px;
+          }
+        }
+        &.up-red {
+          .odds-value {
+            color: var(--q-gb-t-c-164);
+          }
+        }
+        &.down-green {
+          .odds-value {
+            color: #50C042;
+          }
+        }
+        .invalid {
+          font-size: 14px;
+          color: var(--q-gb-t-c-1);
+          background: #E93D3D;
+          padding: 2px 5px;
+          display: inline-block;
+          text-align: center;
+          width: 48px;
+          height: 20px;
+          line-height: 20px;
+        }
+      }
+
+      .bet-win {
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        align-items: center;
+        color: #999999;
+        .win-money {
+          color: var(--q-gb-t-c-16);
+          font-weight: 600;
+        }
+      }
+      .bet-win-valid {
+        line-height: 1;
+        margin-top: 3px;
+      }
+      .df-jb {
+        height: 12px;
+        display: flex;
+        align-items: center;
+      }
+    }
+    .bet-keyboard-zone {
+      padding-top: 8px;
+      margin-left: -10px;
+      margin-right: -10px;
+      .bet-keyboard-content {
+        margin-left: 13px;
+        margin-right: 13px;
+        .keyboard-btn {
+          border-radius: 5px;
+          background: #515151;
+          border: 0;
+          width: 68px;
+          .icon-add:before {
+            font-size: 16px;
+            color: var(--q-gb-t-c-1);
+            font-weight: 700;
+          }
+          &:hover {
+            background: rgba(40,131,249,0.06) !important;
+            border: 0.5px solid var(--qq--theme-bd-bet-btn-cancel);
+            .keyboard-btn-add,
+            .keyboard-btn-text {
+              font-size: 16px;
+              color: var(--q-gb-t-c-1);
+              font-weight: 700;
+            }
+          }
+          &.key-btn-click {
+            background: var(--qq--y0-bg-prepend);
+            .keyboard-btn-add,
+            .keyboard-btn-text {
+              font-size: 16px;
+              color: var(--q-gb-t-c-1);
+              font-weight: 700;
+            }
+          }
+          .keyboard-btn-text {
+            font-size: 16px;
+            color: var(--q-gb-t-c-1);
+            .text-disable {
+              font-size: 16px;
+              color: var(--q-gb-t-c-1);
+              font-weight: 700;
+            }
+          }
+        }
+        .keyboard-btn-blur {
+          &:hover {
+            background: #515151;
+            .icon-plus:before {
+              font-size: 16px;
+              color: var(--q-gb-t-c-1);
+              font-weight: 700;
+            }
+            .keyboard-btn-text {
+              font-size: 16px;
+              color: var(--q-gb-t-c-1);
+              font-weight: 700;
+            }
+          }
+        }
+        .disable-key-btn {
+          pointer-events: none;
+          background: rgba(0,0,0,0.15);
+          color: #999999;
+          .keyboard-btn-add,
+          .keyboard-btn-text {
+            color: #999999;
+            font-size: 16px;
+            font-weight: 700;
+          }
+          &:hover {
+            background: rgba(0,0,0,0.15) !important;
+            font-size: 16px;
+            color: #999999;
+            cursor: pointer;
+            .keyboard-btn-add,
+            .keyboard-btn-text {
+              color: #999999;
+              font-size: 16px;
+              font-weight: 700;
+            }
+          }
+        }
+      }
+    }
+    .check-bet-prefer,.check-box {
+      display: flex;
+      color: #999999;
+      .check-wrap {
+        margin-right: 5px;
+        border: 1px solid rgba(127,129,127,1);
+        &.active {
+          border: 0;
+          background-color:var(--q-gb-t-c-16);
+          &::before {
+            border-color: var(--q-gb-bd-c-3);
+          }
+        }
+      }
+    }
+    .check-bet-prefer {
+      border-top: 1px solid #555555;
+      border-bottom: 1px solid #555555;
+      margin-left: -15px;
+      margin-right: -15px;
+      margin-bottom: -15px;
+      padding: 15px 15px 0px;
+      .check-wrap {
+        position: relative;
+        top: -7px;
+      }
+    }
+    .check-bet-prefer {
+      margin-top: 10px;
+    }
+    .ie-browser {
+      .bet-input-close {
+        top: 9.5px;
+      }
+    }
+    .bet-single-record {
+      &.q-card {
+        padding: 0 20px 15px;
+      }
+      .row {
+        margin: 0;
+        &.first-row {
+          padding-top: 15px;
+        }
+        .col {
+          padding: 0;
+        }
+      }
+      &.bet-fail-bg {
+        background-image: linear-gradient(90deg, var(--qq--yb-bg-color13) 0%, #FF6565 130%);
+      }
+      &.bet-success-bg {
+        background-image: linear-gradient(90deg, var(--qq--yb-bg-color13) 1%, #64C258 130%);
+      }
+      &.bet-confirm-bg {
+        background-image: linear-gradient(90deg, var(--qq--yb-bg-color13) 0%, var(--qq--yb-bg-color2) 130%);
+      }
+      .icon-failure:before {
+        color: var(--q-gb-t-c-164);
+      }
+      .icon-success:before {
+        color: #64C258;
+      }
+      .bet-league-name {
+        color: var(--q-gb-t-c-1);
+      }
+      .bet-against {
+        font-size: 12px;
+        color: #999999;
+        margin-top: 5px;
+        .home-vs-away {
+          line-height: 1.3;
+          word-break: break-all;
+          .bet-pk {
+            margin-left: 10px;
+            margin-right: 10px;
+            color: #999999;
+          }
+        }
+      }
+      .bet-play-text {
+        font-size: 14px;
+        color: var(--q-gb-t-c-1);
+        .bet-handicap-name {
+          color: var(--q-gb-t-c-7);
+        }
+        .bet-match-playing,
+        .bet-match-playing {
+          margin-right: 5px;
+          margin-top: 2px;
+          color: var(--q-gb-t-c-1);
+        }
+      }
+
+      .bet-play-team {
+        margin-top: 5px;
+        margin-bottom: 10px;
+        padding-right: 5px;
+        color: var(--q-gb-t-c-1);
+        font-size: 14px;
+        font-weight: bold;
+        word-break: break-all;
+      }
+      .bet-odds-value {
+        font-size: 14px;
+        font-weight: 500;
+        text-align: right;
+        .odds-value {
+          position: relative;
+          top: 10px;
+          font-size: 14px;
+          font-weight: 500;
+          color: var(--q-gb-t-c-1);
+          border-radius: 2px;
+          span {
+            position: relative;
+            top: -1px;
+            margin-right: 5px;
+          }
+        }
+        &.up-red {
+          .odds-value {
+            padding: 1px 5px;
+            background: #E93D3D;
+            color: var(--q-gb-t-c-1);
+          }
+        }
+        &.down-green {
+          .odds-value {
+            padding: 1px 5px;
+            background: #50C042;
+            color: var(--q-gb-t-c-1);
+          }
+        }
+      }
+
+      .bet-win {
+        color: var(--q-gb-t-c-1);
+      }
+      .black-money-text {
+        color: var(--q-gb-t-c-164);
+        font-weight: 600;
+      }
+      .money-text {
+        color: var(--q-gb-t-c-1);
+      }
+      .bet-win-money {
+        color: var(--q-gb-t-c-1);
+        .bet-addition {
+          color: var(--q-gb-t-c-164);
+          font-weight: 600;
+        }
+      }
+    }
+  }
+}
+

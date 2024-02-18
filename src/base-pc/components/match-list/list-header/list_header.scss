@@ -1,0 +1,298 @@
+/*
+ * @Author: Cable
+ * @Date: 2020-09-19 11:06:36
+ * @Description: 赛事列表头部主题样式
+ */
+
+body {
+  /* 列表头部 */
+  .c-match-list-header {
+    background-image: var(--q-gb-bg-lg-18);
+    border-radius: 6px 6px 0px 0px;
+    border: 1px solid var(--q-gb-bd-c-6);
+    border-bottom: 1px solid var(--q-gb-bd-c-8);
+    &.today-champion{
+      border-radius: 6px;
+      border-color: var(--q-gb-bd-c-6);
+    }
+    /*收藏按钮*/
+    .col-left {
+      .list-title {
+        .title-text {
+          font-weight: 550;
+          color: var(--q-gb-t-c-5);
+          &.search {
+            color: #595f73;
+          }
+        }
+      }
+      .btn-wrap {
+        background-image: var(--q-gb-bg-c-14);
+        color: var(--q-gb-t-c-5);
+        &:nth-child(2) {
+          width: 48px;
+        }
+        &.match-btn {
+          border-radius: 13px 0 0 13px !important;
+          border: 1px solid var(--q-gb-bd-c-8);
+          border-right:0;
+          &.collect-btn{
+            border-radius: 13px !important;
+          }
+        }
+        &.collect-btn {
+          border: 1px solid var(--q-gb-bd-c-8);
+          border-radius: 0 13px 13px 0 !important;
+          border-left: 0;
+        }
+        &.active {
+          background: #179CFF;
+          // background-image: var(--q-gb-bg-lg-12);
+          color: var(--q-gb-t-c-18);
+          .number {
+            color: var(--q-gb-t-c-18);
+          }
+          &.collect-btn {
+            .active {
+              &.icon-star:before {
+                color: var(--q-gb-t-c-18) !important;
+              }
+            }
+          }
+        }
+        .number {
+          color: var(--q-gb-t-c-3);
+        }
+      }
+    }
+    /* 联赛筛选 */
+    .col-right {
+      .yb-hover-bg{
+        color: var(--q-gb-t-c-9);
+        &:hover {
+          background: var(--q-gb-bg-c-14);
+        }
+      }
+      .list-sort{
+        .list-sort-item {
+          &.active{
+            background-color:  var(--q-gb-t-c-16);
+            color: var(--q-gb-t-c-18);
+            border: 0;
+          }
+        }
+      }
+      .select-btn {
+        background-image: var(--q-gb-bg-c-14);
+        border: 1px solid var(--q-gb-bd-c-8) !important;
+        color: var(--q-gb-t-c-5);
+        &.leagues-btn {
+          .status {
+            color: var(--q-gb-t-c-5);
+          }
+          &.active {
+            color: var(--q-gb-t-c-8);
+            border: 1px solid var(--q-gb-bd-c-11) !important;
+          }
+        }
+        &.sort-btn {
+          .icon-sort_league {
+            &:before {
+              color: var(--q-gb-t-c-5);
+            }
+          }
+        }
+        .icon-balance_refresh{
+          span{
+            font-size: 18px;
+            &::before{
+              color: #727d8a;
+            }
+          }
+        }
+        .icon-sort:before {
+          color: var(--q-gb-t-c-5);
+        }
+      }
+      .search-wrap {
+        .icon-search {
+          &:before {
+            color: 'inherit';
+          }
+        }
+        input {
+          &::-webkit-input-placeholder {            
+            color: var(--q-gb-t-c-8);
+          }
+          &::-moz-placeholder {            
+            color: var(--q-gb-t-c-8);
+          }
+          &:-moz-placeholder {            
+            color: var(--q-gb-t-c-8);
+          }
+          &:-ms-input-placeholder {            
+            color: var(--q-gb-t-c-8);
+          }
+          &.search-input {
+            color: var(--q-gb-t-c-5);
+            background: var(--q-gb-bg-c-14);
+            caret-color: var(--q-gb-t-c-7);
+            border: 0.5px solid var(--q-gb-bd-c-8);
+            &:hover,
+            &:focus {
+              border: 0.5px solid var(--q-gb-bd-c-11);
+            }
+          }
+        }
+      }
+      .unfold-btn {
+        background-color: var(--q-gb-t-c-16)!important;
+        color: var(--q-gb-t-c-18) !important;
+        i::before {
+          color: var(--q-gb-t-c-18) !important;
+        }
+      }
+    }
+  }
+
+  /** 联赛排序 -S*/
+  .match-sort-wrap {
+    background-color: var(--q-gb-bg-c-14) !important;
+    color: var(--q-gb-t-c-5);
+    .triangle {
+      background-color: var(--q-gb-bg-c-14);
+    }
+    .item-wrap {
+      &.active {
+        background-color: #454855;
+        color: var(--q-gb-bd-c-11);
+        .q-icon:before {
+          color: var(--q-gb-bd-c-11);
+        }
+      }
+    }
+  }
+
+
+  /* 滚球  球种筛选 */
+  .c-match-list-filter {
+    background: var(--q-gb-bg-c-11);
+    border-left: 1px solid var(--q-gb-bd-c-6);
+    border-right: 1px solid var(--q-gb-bd-c-6);
+    color: var(--q-gb-t-c-5);
+    &.date-filter{
+      border-bottom: 1px solid var(--q-gb-bd-c-6);
+      border-radius: 0 0 6px 6px;
+      position: relative;
+      &::before{
+          content: "";
+          position: absolute;
+          bottom: -5px;
+          left: -1px;
+          right: -1px;
+          height: 10px;
+          background-color: var(--q-gb-bg-c-22);
+          z-index: -1;
+      }
+      .tab-wrap{
+        position: absolute;
+        height: 50px !important;
+        background-color: rgba(0,0,0,0);
+        .left-btn{
+          border-top: 1px solid var(--q-gb-bd-c-8);
+        }
+        .right-btn{
+          border-bottom: 1px solid var(--q-gb-bd-c-8);
+        }
+      }
+    }
+   
+    .hot-item {
+      .hot-img {
+        background-image: var(--qq--bg-image-url49);
+      }
+      .hot-img-active{
+        background-image: var(--qq--bg-image-url50) !important;
+      }
+      .active{
+        background-image: var(--qq--bg-image-url50) !important;
+      }
+      .no-active {
+        .hot-img {
+          background-image: var(--qq--bg-image-url46);
+        }
+      }
+      
+    }
+
+    .more-btn {
+      background-color: var(--q-gb-bg-c-14);
+      &:hover{
+        background-color: var(--q-gb-bg-c-14);
+      }
+    }
+    .filter-sports {
+      .item {
+        .icon-wrap {
+          .icon:before {
+            color: var(--q-gb-t-c-6);
+          }
+        }
+        .name {
+          color: var(--q-gb-t-c-5);
+        }
+
+        .text-no-active{
+          color:var(--q-gb-bg-c-2);
+        }
+
+        .menu-inline{
+          display: 'inline-block';
+        }
+        .name-margin-left{
+          margin-left: '5px';
+        }
+
+        &:hover .icon-wrap .icon:before {
+          color: var(--q-gb-bd-c-12);
+        }
+        &.active {
+          font-weight: 500;
+          background: var(--q-gb-bg-lg-20);
+          border-radius: 25px !important;
+          
+          .name {
+            color: var(--q-gb-t-c-18);
+          }
+          .count{
+            font-weight: 400;
+          }
+        }
+        /* 未选中球种icon       */
+        &.no-active {
+          background: var(--q-gb-bg-lg-4);
+          border-radius: 25px !important;
+          border: 0.5px solid  var(--q-gb-bd-c-6);
+          .sport-img,
+          .sport-all {
+            background-image: var(--qq--bg-image-url3);
+          }
+          &:hover .sport-img {
+            opacity: 1;
+          }
+        }
+        &.no-active:hover{
+          background: var(--q-gb-bg-lg-5) !important;
+        }
+      }
+    }
+    &.date-filter {
+      background: var(--q-gb-bg-c-11);
+    }
+    .tab-wrap {
+      background: var(--q-gb-bg-c-11);
+      border-radius: 0 0 6px 6px;
+    }
+  }
+  
+}

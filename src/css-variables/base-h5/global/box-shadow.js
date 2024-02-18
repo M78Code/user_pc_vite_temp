@@ -1,0 +1,21 @@
+export default {
+    'gb-b-s-1': '0 0.04rem 0.02rem -0.02rem #d2d6dc',
+    'gb-b-s-2': '0 0 10px 0 rgba(0, 0, 0, 0.15)',
+    'gb-b-s-3': '0 4px 0.04rem 0 rgba(0, 0, 0, 0.07)',
+    'gb-b-s-4': '0 0.02rem 0.05rem 0 rgba(0, 0, 0, 0.04)',        
+    'gb-b-s-5': '0 0 0.1rem 0 rgba(0, 0, 0, 0.2)',
+    'gb-b-s-6': '0 4px 5px 0 rgba(0, 0, 0, 0.08)',
+    'gb-b-s-7': '0 2px 4px 0 rgba(0, 0, 0, 0.1)',
+    'gb-b-s-8': '0 0 0.08rem 0 rgba(0, 0, 0, 0.1)',
+    'gb-b-s-9': '0 2px 4px 0 rgba(153, 153, 153, 0.06)',
+    'gb-b-s-10': '0 0 6px 0 rgba(0, 0, 0, 0.1)',
+    'gb-b-s-11': '0 1px 2px #f5f5f5 inset',
+    'gb-b-s-12': '0 2px 6px 0 rgba(0, 0, 0, 0.05)',
+    'gb-b-s-13': '-0.05rem 0 0.1rem -0.01rem rgba(0, 0, 0, 0.08)',
+    'gb-b-s-14': '0 0.01rem 0.02rem 0 rgba(0, 0, 0, 0.1)',        
+    'gb-b-s-15': '0px 1px 3px 0px rgba(102, 102, 102, 0.1)',      
+    'gb-b-s-16': '0px -2px 4px 0px rgba(153,153,153,0.1)',
+    'gb-b-s-17': '0 0 0.12rem 0 rgba(0, 0, 0, 0.1)',
+    'gb-b-s-18': '0 0.38rem 0.1rem rgba(66, 66, 66, 0.8) inset',
+    'gb-b-s-19': '0 2px 5px 0 rgba(0, 0, 0, 0.05)'
+  }

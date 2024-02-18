@@ -1,0 +1,54 @@
+/*
+ * @Author: router
+ * @Description: bw3新版混合过关投注选项 白色版样式
+ */
+
+  .bet-mix-detail {
+    color: var(--q-gb-t-c-3);
+    &.bet-mix-detail2 {
+      &::after {
+        display: none;
+      }
+    }
+    .content-box2 {
+      background-color: var(--q-gb-bd-c-6) !important;
+    }
+    .content-b2 {
+      border: 1px solid  var(--q-color-border-color-13) !important;
+    }
+    .yellow-color {
+      color: var(--q-color-fs-color-116);
+    }
+    .red-color {
+      color:var(--q-color-com-fs-color-9);
+      border-color: var(--q-color-com-border-color-14);
+    }
+    .content-b {
+      border: 1px solid var(--q-gb-t-c-1);
+      background:var(--q-gb-bd-c-15);
+    }
+    .set-opacity {
+      opacity: 0.2;
+    }
+    .money-span {
+      background: var(--q-gb-bd-c-13);
+    }
+    .money-span2 {
+      background: transparent !important;
+    }
+    .content-t {
+      p:nth-child(1) {
+        &::after {
+          background:var(--q-gb-bd-c-13);
+        }
+      }
+
+      p:nth-child(2) {
+        color: var(--q-gb-t-c-6);
+      }
+    }
+    .limit-txt {
+      color:  var(--q-color-fs-color-17);
+    }
+  }
+

@@ -1,0 +1,395 @@
+/* **************主菜单容器********************************** -S*/
+[class*=theme0] {
+    .-page-container- {
+        background: var(--q-color-page-bg-color-1);
+
+        &.esport {
+            background: transparent;
+        }
+    }
+
+    .shadow-down {
+        box-shadow: var(--q-color-com-box-shadow);
+    }
+
+    /* **************主菜单样式********************************** -S*/
+    .menu {
+        width: 101%;
+        height: auto;
+
+        .menu-inner-wrap {
+            &.effect {
+                box-shadow: var(--q-color-com-box-shadow);
+            }
+
+            .settings-container-w {
+                background-color: var(--q-color-page-bg-color-38);
+
+                &.effect {
+                    opacity: 1;
+                }
+
+                .s-c-w-inner {
+                    background: var(--q-color-page-bg-color-2);
+
+                    &.effect {
+                        transform: translate3d(0, 0, 0);
+                    }
+
+                    .s-c-w-item {
+                        .title {
+                            color: var(--q-color-fs-color-17);
+
+                            &.focus {
+                                color: var(--q-color-fs-color-7);
+
+                                .t_1 {
+                                    color: var(--q-color-fs-color-6);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        /* **************主菜单容器********************************** -S*/
+        .main-wrap {
+            color: var(--q-color-fs-color-7);
+            background: var(--q-gb-bg-c-15);
+
+            .goback-icon-wrapper {
+                [class*=theme0] {
+                    display: block;
+                }
+            }
+
+            .iocn {
+                &:before {
+                    color: var(--q-color-fs-color-14);
+                }
+            }
+
+            .sport-selector {
+                color: var(--q-color-fs-color-14);
+            }
+
+            .main-menu-container {
+                background: var(--q-gb-bg-c-15);
+
+                .cursor {
+                    background: var(--q-color-page-bg-color-50);
+
+                    &.is-favorite {
+                        background: var(--q-color-page-bg-color-50);
+                    }
+                }
+
+                .m-menu-item {
+                    color: var(--q-color-fs-color-7);
+
+                    &.esport {
+                        color: var(--q-gb-t-c-14);
+                    }
+
+                    &.current {
+                        color: var(--q-gb-t-c-3);
+
+                        .dir-triangle {
+                            border-top-color: var(--q-gb-bd-c-2);
+                        }
+
+                        .count {
+                            color: var(--q-gb-t-c-3) !important;
+                        }
+
+                        .i-title {
+                            &:after {
+                                background: var(--q-color-page-bg-color-50);
+                            }
+                        }
+                    }
+
+                    .m-menu-count {
+                        .count {
+                            color: var(--q-color-fs-color-7);
+
+                            &.esport {
+                                color: var(--q-color-com-fs-color-50);
+                            }
+                        }
+                    }
+
+                    .dir-triangle {
+                        border-top: 0.04rem solid var(--q-gb-bd-c-2);
+                    }
+                }
+            }
+
+            .filter-icon-wrapper {
+                .thme01 {
+                    display: inline;
+                }
+            }
+        }
+
+        .sport-m-container {
+            background: var(--q-gb-bg-c-15);
+
+            .virtual-sports-results {
+                background-color: var(--q-color-page-bg-color-2);
+
+                .tab-item {
+                    color: var(--q-color-fs-color-13);
+                    background-color: var(--q-color-page-bg-color-10);
+                    border: 1px solid var(--q-color-border-color-29);
+
+                    &.active {
+                        color: var(--q-color-fs-color-6);
+                        border: 1px solid var(--q-color-border-color-30);
+                        background-color: var(--q-color-page-bg-color-76);
+                    }
+                }
+            }
+        }
+
+        .s-menu-container {
+            .sport-menu-item {
+                &.current {
+                    .inner-w {
+                        color: var(--q-color-fs-color-3);
+
+                        &.favorite {
+                            color: var(--q-color-fs-color-6);
+
+                            &:after {
+                                background: var(--q-color-com-bg-color-7);
+                            }
+                        }
+
+                        .sport-match-count {
+                            color: var(--q-gb-t-c-3) !important;
+                            // font-weight: 700;
+                        }
+                    }
+
+                    .inner-w {
+                        .s-w-i-title {
+                            color: var(--q-gb-t-c-3);
+
+                            // font-weight: 700;
+                            &.esport {
+                                color: var(--q-gb-t-c-14);
+                            }
+                        }
+                    }
+                }
+
+                .inner-w {
+                    .s-w-i-title {
+                        color: var(--q-gb-t-c-3);
+                    }
+
+                    .sport-w-icon {
+                        .sport-match-count {
+                            color: var(--q-gb-t-c-3);
+                        }
+                    }
+                    &.current{
+                        .s-w-i-title {
+                            &.esport {
+                                color: var(--q-gb-t-c-14);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .dir-btn- {
+            &:before {
+                background-color: var(--q-color-page-bg-color-21);
+            }
+
+            img[class*=theme0] {
+                display: block;
+            }
+        }
+
+        .main-m-selector-w {
+            background-color: var(--q-color-page-bg-color-39);
+            backdrop-filter: var(--q-color-backdrop-filter-bg-1);
+
+            .selector-w-inner {
+                background: var(--q-gb-bg-c-15);
+                backdrop-filter: blur(5px);
+
+                &.hairline-border {
+                    border-radius: 0;
+
+                    &::after {
+                        border-radius: 0;
+                        border-width: 1px 0 0 0 !important;
+                    }
+                }
+
+                .main-m-select-item {
+                    background: var(--q-color-page-bg-color-47);
+
+                    &>div {
+                        &.m-menu-name-m {
+                            color: var(--q-color-fs-color-3);
+                        }
+
+                        &.m-count-match {
+                            color: var(--q-color-fs-color-131);
+                        }
+                    }
+
+                    &.current {
+                        background: var(--q-gb-bg-lg-5);
+
+                        &.is-favorite {
+                            background: var(--q-color-page-bg-color-115);
+                        }
+
+                        &>div {
+                            &:first-child {
+                                color: var(--q-gb-t-c-18);
+                            }
+
+                            &:last-child {
+                                color: var(--q-gb-t-c-18);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        /* **************主菜单容器********************************** -E*/
+
+        /* **************主菜单背景********************************** -S*/
+        .main_menu_background {
+            &:before {
+                background-color: var(--q-color-page-bg-color-17);
+            }
+        }
+
+        /* **************主菜单背景********************************** -E*/
+
+        /* **************日期菜单********************************** -S*/
+        .d-c-wrapper {
+            background-color: var(--q-gb-bg-c-15);
+        }
+
+        .date-container {
+
+            /* **************日期菜单********************************** -S*/
+            .date-menu-item {
+                color: var(--q-color-fs-color-7);
+
+                &.focus {
+                    color: var(--q-gb-t-c-1);
+
+                    &.is-favorite {
+                        color: var(--q-color-fs-color-6);
+                    }
+
+                    &:after {
+                        background-color: var(--q-gb-t-c-1);
+                    }
+
+                    span {
+                        color: var(--q-color-fs-color-6);
+                    }
+                }
+
+                &.focus2 {
+                    color: var(--q-gb-t-c-14) !important;
+                    border-bottom: 2px solid var(--q-color-com-border-color-13);
+                }
+
+                span {
+                    color: var(--q-color-fs-color-7);
+                }
+            }
+        }
+
+        /* **************日期菜单********************************** -E*/
+
+        /* **************体育类型菜单********************************** -S*/
+        .sport-menu-container2 {
+            .sport-selector {
+                color: var(--q-gb-t-c-14) !important;
+            }
+        }
+
+        /* **************体育类型菜单********************************** -E*/
+
+        /* **************二级菜单********************************** -S*/
+        .section-title {
+            border-top: 1px solid var(--q-color-com-border-color-5);
+            border-left: 0.04rem solid var(--q-color-com-border-color-6);
+            box-shadow: var(--q-color-com-box-shadow-9);
+            background: var(--q-color-page-bg-color-2);
+
+            .date-value {
+                color: var(--q-color-fs-color-14);
+            }
+        }
+
+        /* **************二级菜单********************************** -E*/
+    }
+
+    /* **************黑夜模式********************************** -S*/
+    .no-shadow2 {
+        background: var(--q-color-com-bg-color-10) !important;
+        border-top: 1px solid var(--q-color-com-border-color-7) !important;
+
+        span {
+            color: var(--q-color-fs-color-14);
+        }
+    }
+
+    .no-shadow3 {
+        background: transparent !important;
+        border-top: 1px solid var(--q-color-com-border-color-8) !important;
+        border-bottom: 1px solid var(--q-color-com-border-color-8) !important;
+    }
+
+    .no-shadow3 * {
+        color: var(--q-gb-t-c-14) !important;
+    }
+
+    .theme-div .date-menu-item:not(.focus) {
+        color: var(--q-color-com-fs-color-3) !important;
+    }
+
+    .tab {
+        box-shadow: var(--q-color-com-box-shadow-10);
+        color: var(--q-color-com-fs-color-4);
+        background: var(--q-color-page-bg-color-2);
+
+        &.no-shadow {
+            box-shadow: none;
+            background-color: var(--q-color-page-bg-color-2);
+        }
+
+        .actived {
+            span {
+                color: var(--q-color-fs-color-14);
+                border-bottom: 2px solid var(--q-color-border-color-21);
+            }
+        }
+
+        .actived2 {
+            span {
+                color: var(--q-gb-t-c-14) !important;
+                border-bottom: 2px solid var(--q-color-border-color-19) !important;
+            }
+        }
+    }
+
+    /* **************黑夜模式********************************** -E*/
+}

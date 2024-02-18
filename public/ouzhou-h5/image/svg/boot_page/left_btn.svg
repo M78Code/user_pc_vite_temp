@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="10px" height="12px" viewBox="0 0 10 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 61.2 (89653) - https://sketch.com -->
+    <title>矩形</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="84.5117188%" y1="50%" x2="0.976988303%" y2="50%" id="linearGradient-1">
+            <stop stop-color="#EFDECE" offset="0%"></stop>
+            <stop stop-color="#D2B79C" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="画板" transform="translate(-114.000000, -324.000000)" fill="url(#linearGradient-1)">
+            <path d="M114,324 L119,324 L122.933026,328.719631 C123.551103,329.461323 123.551103,330.538677 122.933026,331.280369 L119,336 L119,336 L114,336 L114,324 Z" id="矩形"></path>
+        </g>
+    </g>
+</svg>

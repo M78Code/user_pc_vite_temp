@@ -1,0 +1,93 @@
+{
+  "leftmenu": {
+    "level": 2,
+    "menuName": "客户端PC",
+    "sonName": "websocket推送管理"
+  },
+  "props": {
+    "category": "ws",
+    "directory-name": "ws",
+    "descriptions": [
+      "websocket推送管理"
+    ],
+    "type": "js",
+    "remark": " ",
+    "items": [
+      {
+        "filename": "index.js",
+        "type": "js",
+        "descriptions": [
+          ""
+        ]
+      },
+      {
+        "filename": "ws.js",
+        "type": "js",
+        "descriptions": [
+          "ws 使用消息队列实现 削峰、分流",
+          "我们不同的消息推送需要增加订阅对象，在组件或者页面销毁的时候去移除订阅对象",
+          "在不同的业务中需要定义不同的入参对象然后发送命令给后端"
+        ]
+      },
+      {
+        "filename": "ws-send-manger.js",
+        "type": "js",
+        "descriptions": [
+          "ws消息发送管理"
+        ]
+      },
+      {
+        "filename": "wsCtr.js",
+        "type": "js",
+        "descriptions": [
+          "ws通信接收消息类"
+        ]
+      },
+      {
+        "filename": "wsCmd.js",
+        "type": "js",
+        "descriptions": [
+          "ws通信消息定义类"
+        ]
+      },
+      {
+        "filename": "wsQueue.js",
+        "type": "js",
+        "descriptions": [
+          "ws 消息队列"
+        ]
+      },
+      {
+        "category": "chatroom",
+        "directory-name": "chatroom",
+        "descriptions": [
+          "聊天室管理"
+        ],
+        "type": "js",
+        "item": [
+          {
+            "filename": "chatroom_eventcenter.js",
+            "type": "js",
+            "descriptions": [
+              "消息管理中心"
+            ]
+          },
+          {
+            "filename": "chatroom_msgtype.js",
+            "type": "js",
+            "descriptions": [
+              "聊天室推送类型"
+            ]
+          },
+          {
+            "filename": "chatroom_ws.js",
+            "type": "js",
+            "descriptions": [
+              "聊天室管理类"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

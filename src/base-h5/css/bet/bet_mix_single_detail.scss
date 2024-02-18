@@ -1,0 +1,62 @@
+/*
+ * @Author: router
+ * @Description: bw3新版混合过关投注选项 白色版样式
+ */
+[class*=theme0] {
+  .bet_mix_single_detail{
+    color: var(--q-gb-t-c-3);
+    border-bottom: 1px solid  var(--q-color-border-color-15);
+    .locked-shadow {
+      background:  var(--q-gb-bd-c-2);
+    }
+    &.bet-mix-detail2{
+      border-bottom: none !important;;
+    }
+    .content-box2{
+      background-color:  var(--q-color-page-bg-color-21) !important;
+    }
+    .content-b2{
+      border: 1px solid  var(--q-color-border-color-13) !important;
+    }
+    .yellow-color{
+      color: var(--q-color-fs-color-16);
+    }
+    .red-color{
+      color: var(--q-color-com-fs-color-9);
+      border-color: var(--q-color-com-border-color-14);
+    }
+    .content-b{
+      border: 1px solid var(--q-color-border-color-3);
+      background:var(--q-gb-bd-c-15);
+    }
+    .set-opacity{
+      opacity: 0.2;
+    }
+    .money-span{
+      background: var(--q-gb-bd-c-13);
+    }
+    .money-span2{
+      background: transparent !important;
+    }
+    .money-span3{
+      background: transparent;
+    }
+    .content-t{
+      p:nth-child(1){
+        &.black-color{
+          color:  var(--q-color-fs-color-18);
+        }
+        &::after{
+          background-color: var(--q-gb-bd-c-13);
+        }
+      }
+      p:nth-child(2){
+        color: var(--q-gb-t-c-6);
+      }
+    }
+    //限额字体颜色
+    .limit-txt{
+      color:  var(--q-color-fs-color-17);
+    }
+  }
+}

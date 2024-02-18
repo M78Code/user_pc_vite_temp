@@ -1,0 +1,44 @@
+/*
+ * @Description: 详情页
+ */
+// [class*=theme0] {
+  .dialog-header {
+    // background:var(--q-color-page-bg-color-2);
+    background:var(--q-match-page-bg-color-103);
+    :deep(.triangle-down) {
+      //detials-color-6
+      border-color: transparent transparent  #414655 transparent;
+    }
+  }
+  .dialog-header-icon {
+    color:  var(--q-color-fs-color-14);
+  }
+
+  /*************** 返回图标icon *************** -S*/
+  .back-icon {
+    color:  var(--q-color-fs-color-14);
+  }
+
+  /*************** 返回图标icon *************** -E*/
+  .details-dialog {
+     background: var(--q-gb-bg-c-23);
+    .details-dialog-bg {
+
+    }
+    .new-dialog-item {
+      color:  var(--q-gb-t-c-18);
+    }
+    .active {
+      background: var(--q-color-com-bg-color-2);
+      color:  var(--q-color-fs-color-14) !important;
+    }
+    .marquee-wrap {
+      color:  var(--q-color-fs-color-40)
+    }
+  }
+  .result-details-dialog{
+    .marquee-wrap {
+      color:  var(--q-color-fs-color-40)
+    }
+  }
+// }

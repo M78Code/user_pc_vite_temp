@@ -1,0 +1,52 @@
+.lock {
+  width: 16px;
+  height: 16px;
+  position: relative;
+  top: 2px;
+}
+
+.on-text {
+  color: var(--q-gb-t-c-4);
+  text-align: center;
+}
+
+.ov-text {
+  color: var(--q-gb-t-c-1);
+  margin: 0 8px;
+}
+
+.is-active {
+  background: linear-gradient(0deg, rgba(255, 112, 0, 0.10) 0%, rgba(255, 112, 0, 0.10) 100%), #FFF !important;
+
+  .ov-text {
+    // color: var(--q-gb-t-c-2) !important;
+    margin: 0 6px;
+  }
+}
+
+.textOverflow1 {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.textOverflow2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-word;
+  -webkit-line-clamp: 2;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
+
+.onePxBorder{
+  background-color: var(--q-gb-bg-c-2);
+  border: 1px solid var(--q-gb-bd-c-10);
+}
+
+.lockBox{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+}

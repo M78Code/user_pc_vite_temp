@@ -1,0 +1,42 @@
+{
+  "leftmenu": {
+    "level": 2,
+    "menuName": "客户端PC",
+    "sonName": "用户配置"
+  },
+  "props": {
+    "category": "user-config",
+    "directory-name": "user-config",
+    "descriptions": [
+      "用户配置"
+    ],
+    "type": "js",
+    "remark": "用户配置",
+    "items": [
+      {
+        "filename": "index",
+        "type": "js",
+        "descriptions": [
+          "用户配置吗默认引入文件"
+        ]
+      },
+      {
+        "filename": "base-user-info",
+        "type": "js",
+        "descriptions": [
+          "用户信息配置类"
+        ]
+      },
+      {
+        "filename": "user-ctr",
+        "type": "js",
+        "descriptions": [
+          "用户相关的控制类 实体对象 单个实例",
+          "全局接口相关的配置",
+          "主题色相关",
+          "商户相关"
+        ]
+      }
+    ]
+  }
+}

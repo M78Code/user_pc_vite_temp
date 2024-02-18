@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>A</title>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="画板" transform="translate(-690.000000, -198.000000)">
+            <g id="A" transform="translate(690.000000, 198.000000)">
+                <rect id="矩形" fill="#5A6074" x="0" y="0" width="20" height="20" rx="10"></rect>
+                <path d="M7.87304688,14 L8.45898438,12.2421875 L11.5410156,12.2421875 L12.1328125,14 L14.0019531,14 L10.8085938,5.46875 L9.1796875,5.46875 L6.00390625,14 L7.87304688,14 Z M11.0664062,10.8183594 L8.93359375,10.8183594 L9.99414062,7.625 L11.0664062,10.8183594 Z" fill="#FFFFFF" fill-rule="nonzero"></path>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="22px" height="6px" viewBox="0 0 22 6" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>形状结合备份</title>
+    <defs>
+        <linearGradient x1="28.8380528%" y1="53.6983949%" x2="95.2039506%" y2="46.3016051%" id="linearGradient-1">
+            <stop stop-color="#696D72" offset="0%"></stop>
+            <stop stop-color="#383B3E" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="PC-幸运盲盒" transform="translate(-1021.000000, -1130.000000)" fill="url(#linearGradient-1)">
+            <g id="编组-5" transform="translate(877.000000, 1117.000000)">
+                <g id="编组" transform="translate(143.000000, 13.000000)">
+                    <g id="形状结合备份" transform="translate(11.500000, 3.000000) scale(-1, 1) translate(-11.500000, -3.000000) ">
+                        <path d="M21.1229368,4.61538462 L18.83,5.065 L18.6555325,6 L5.64070183,6 L5.89934952,4.61538462 L21.1229368,4.61538462 Z M21.5920806,2.30769231 L19.292,2.76 L19.1068532,3.69230769 L2.35669486,3.69230769 L2.63316567,2.30769231 L21.5920806,2.30769231 Z M22.0612245,0 L19.904,0.424 L19.7040418,1.38461538 L2.66453526e-14,1.38461538 L0.288310934,2.88546964e-13 L22.0612245,0 Z" id="形状结合"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

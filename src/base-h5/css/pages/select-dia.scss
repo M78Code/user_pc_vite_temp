@@ -1,0 +1,29 @@
+/*  ��ɫ */
+
+.select-mask {
+  background: var(--q-color-page-bg-color-78) !important;
+  backdrop-filter: var(--q-color-backdrop-filter-bg-1);
+
+}
+.select-dia {
+  background: var(--q-gb-bg-c-15) !important;
+  backdrop-filter: blur(5px);
+
+  .select-box {
+    background: var(--q-color-page-bg-color-95);
+
+    .composite {
+      .filter-trn {
+        color: var(--q-gb-t-c-3);
+
+        &.t_color {
+          color: var(--q-gb-t-c-1) !important;
+
+          &:after {
+            background: var(--q-gb-t-c-1);
+          }
+        }
+      }
+    }
+  }
+}

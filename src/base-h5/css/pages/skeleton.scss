@@ -1,0 +1,52 @@
+[class*=theme0] {
+  .skeleton-wrap {
+    &.record {
+      background: var(--q-gb-bg-c-17);
+    }
+    &.match_result {
+      background: var(--q-gb-bg-c-17);
+    }
+    &.wrap {
+      background: var(--q-gb-bg-c-17);
+    }
+    .center {
+      background:var(--q-color-page-bg-color-2);
+    }
+  }
+  .record {
+    .item {
+       background-color:var(--q-color-page-bg-color-2);
+    }
+  }
+  .list {
+    background: var(--q-gb-bg-c-17);
+  }
+  .tab {
+    background:var(--q-color-page-bg-color-2);
+  }
+  .skeleton {
+    background-image: -webkit-gradient(
+      linear,
+      left top,
+      right top,
+      color-stop(25%, var(--q-color-skeleton-bg-1)),
+      color-stop(37%, var(--q-color-skeleton-bg-2)),
+      color-stop(63%, var(--q-color-skeleton-bg-1))
+    );
+    background-image: -o-linear-gradient(left, var(--q-color-skeleton-bg-1) 25%, var(--q-color-skeleton-bg-2) 37%, var(--q-color-skeleton-bg-1) 63%);
+    background-image: linear-gradient(90deg, var(--q-color-skeleton-bg-1) 25%, var(--q-color-skeleton-bg-2) 37%, var(--q-color-skeleton-bg-1) 63%);
+  }
+  .version_biaozhun {
+    .item {
+       background-color:var(--q-color-page-bg-color-2);
+    }
+  }
+  .version_jian {
+    .item {
+       background-color:var(--q-color-page-bg-color-2);
+    }
+  }
+  .detail_wrap-header {
+    background: var(--q-color-skeleton-bg-3);
+  }
+}

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="84px" height="40px" viewBox="0 0 84 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>选中</title>
+    <defs>
+        <path d="M81.5,4 L81.5,37.99287 L81.5,37.99287 C81.4808244,38.530297 81.5741578,38.966007 81.78,39.3 C81.9858422,39.633993 82.3925089,39.8673264 83,40 L0,40 C0.623667737,39.7914117 1.02785193,39.5580784 1.21255259,39.3 C1.39725324,39.0419216 1.49306904,38.6062116 1.5,37.99287 L1.5,4 C1.5,1.790861 3.290861,-3.82769592e-17 5.5,0 L77.5,0 C79.709139,-8.49901461e-16 81.5,1.790861 81.5,4 Z" id="path-1"></path>
+        <linearGradient x1="48.1310381%" y1="59.3463316%" x2="48.1310381%" y2="-42.6190703%" id="linearGradient-3">
+            <stop stop-color="#FFFFFF" stop-opacity="0" offset="0.00819493007%"></stop>
+            <stop stop-color="#FF9124" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-4">
+            <stop stop-color="#FFB001" offset="0%"></stop>
+            <stop stop-color="#FFB001" stop-opacity="0" offset="100%"></stop>
+        </linearGradient>
+        <filter x="-52.6%" y="-375.0%" width="205.3%" height="850.0%" filterUnits="objectBoundingBox" id="filter-5">
+            <feGaussianBlur stdDeviation="10" in="SourceGraphic"></feGaussianBlur>
+        </filter>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="赛马排行备份" transform="translate(-85.000000, -100.000000)">
+            <g id="选中" transform="translate(85.000000, 100.000000)">
+                <g id="路径备份-+-路径-蒙版" transform="translate(0.500000, 0.000000)">
+                    <mask id="mask-2" fill="white">
+                        <use xlink:href="#path-1"></use>
+                    </mask>
+                    <use id="蒙版" fill="#FFFFFF" xlink:href="#path-1"></use>
+                    <path d="M81.5,4.00019059 L81.5,16.0001906 L81.5,16.0001906 L1.5,16.0001906 L1.5,4.00019059 C1.5,1.79105159 3.290861,0.000190586265 5.5,0.000190586265 L77.5,0.000190586265 C79.709139,0.000190586265 81.5,1.79105159 81.5,4.00019059 Z" id="路径备份" fill="url(#linearGradient-3)" mask="url(#mask-2)"></path>
+                    <path d="M12.5,0 C12.5,4.418278 25.2598846,8 41,8 C56.7401154,8 69.5,4.418278 69.5,0" id="路径" fill="url(#linearGradient-4)" filter="url(#filter-5)" mask="url(#mask-2)"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

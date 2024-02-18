@@ -1,0 +1,58 @@
+/*
+ * @Author: Cable
+ * @Date: 2020-09-21 15:32:23
+ * @Description: 下划线跟随移动的tab组件 主题样式
+ */
+
+ body {
+  .site-nav{
+    .tab-wrap{
+      .item-wrap{
+        .line-wrap{
+          height: 3px;
+          .line {
+            border-radius: 1.5px;
+            background: var(--q-gb-bg-c-1);
+            &::before,&::after{
+              background-image: none;
+            }
+          }
+        }
+      }
+    }
+  }
+  .tab-wrap {
+    color: var(--q-gb-t-c-8);
+    .item-wrap {
+      .line-wrap {
+        .line {
+          background-color: var(--q-header-search-color-7);
+          border-top-right-radius: 40px;
+          border-top-left-radius: 40px;
+        }
+      }
+      .line-wrap-dz {
+        .line {
+          background-color: var(--q-gb-bg-c-1);
+          border-top-right-radius: 40px;
+          border-top-left-radius: 40px;
+        }
+      }
+    }
+    .tab-item {
+      color: var(--q-gb-t-c-5);
+      &.active {
+        font-weight: 600;
+        color: var(--q-gb-bg-c-1);
+      }
+      .match-count {
+        opacity: 1 !important;
+      }
+    }
+
+    /*  左右切换按钮  */
+    .btn {
+      background-color: var(--q-gb-bg-c-11);
+    }
+  }
+}

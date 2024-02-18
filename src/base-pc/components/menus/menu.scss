@@ -1,0 +1,409 @@
+$basic-color:#FF7000;    //基本颜色
+$menu-bc-color:#3C3C3C;    //菜单背景颜色
+$q-page-container-background: #E2E2E2;    //容器背景颜色
+
+
+
+/*
+ * @Author         : lane jstylane@itcom888.com
+ * @Date           : 2023-06-30 11:28:37
+ * @LastEditors    : lane jstylane@itcom888.com
+ * @LastEditTime   : 2023-07-05 17:26:50
+ * @FilePath       : \user-pc-vue3\src\components\bet-box\bet\bet.scss
+ * @Description    : 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
+
+// 看属性的最后一个单词的首字母 就是样式名称
+// f == flex  c == center  e == end  s == start  b == between
+// 垂直居中
+.f-c-c{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// 两端顶部对齐
+.f-b-s{
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+// 两端中间对齐
+.f-b-c{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+// 两端底部对齐
+.f-b-e{
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+// 左侧顶部对齐
+.f-s-s{
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+// 左侧中部对齐
+.f-s-c{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+// 左侧底部对齐
+.f-s-e{
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+}
+
+// 右侧顶部对齐
+.f-e-s{
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+}
+
+// 右侧中部对齐
+.f-e-c{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+// 右侧底部对齐
+.f-e-e{
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+// 换行
+// 左侧两端对齐
+.fw-s-b{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-content: space-between;
+}
+// 左侧顶部对齐
+.fw-s-s{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-content: flex-start;
+}
+// 左侧中部对齐
+.fw-s-c{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-content: center;
+}
+// 左侧中部对齐
+.fw-s-e{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-content: flex-end;
+}
+
+// 中间两端对齐
+.fw-c-b{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: space-between;
+}
+// 中间顶部对齐
+.fw-c-s{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: flex-start;
+}
+// 中间中部对齐
+.fw-c-c{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+}
+// 中间底部对齐
+.fw-c-e{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: flex-end;
+}
+
+// 右侧两端对齐
+.fw-e-b{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-content: space-between;
+}
+// 右侧顶部对齐
+.fw-e-s{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-content: flex-start;
+}
+// 右侧中部对齐
+.fw-e-c{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-content: center;
+}
+// 右侧中部对齐
+.fw-e-e{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-content: flex-end;
+}
+
+
+.w-100{
+  width: 100%;
+}
+.w-80{
+  width: 80%;
+}
+.w-50{
+  width: 50%;
+}
+.w-25{
+  width: 25%;
+}
+.w-20{
+  width: 20%;
+}
+
+.h12{
+  height: 12px;
+}
+.h15{
+  height: 15px;
+}
+.h52{
+  height: 52px;
+}
+
+.font12{
+  font-size: 12px;
+}
+.font13{
+  font-size: 13px;
+}
+.font14{
+  font-size: 14px;
+}
+.font15{
+  font-size: 15px;
+}
+.font16{
+  font-size: 16px;
+}
+
+.font300{
+  font-weight: 300;
+}
+.font400{
+  font-weight: 400;
+}
+.font500{
+  font-weight: 500;
+}
+.font600{
+  font-weight: 600;
+}
+.font700{
+  font-weight: 700;
+}
+
+.text-white{
+  color: var(--q-gb-t-c-1);
+}
+.text-ff7{
+  color: var(--q-gb-t-c-2);
+}
+.text-009{
+  color: #0094FF;
+}
+.text-1a1{
+  color: var(--q-gb-t-c-5);
+}
+.text-8a8{
+  color: #8a8a8a;
+}
+
+.mx-4{
+  margin-left: 4px;
+  margin-right: 4px;
+}
+.mx-6{
+  margin-left: 6px;
+  margin-right: 6px;
+}
+
+.my-4{
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+
+.mt-4{
+  margin-top: 4px;
+}
+.mt-8{
+  margin-top: 8px;
+}
+
+.mr-4{
+  margin-right: 4px;
+}
+.mr-10{
+  margin-right: 10px;
+}
+
+
+ul{
+  margin: 0;
+  padding: 0;
+}
+li{
+  list-style: none;
+}
+
+
+.left-container {
+    width: 240px !important;
+    height: calc(100vh - 76px);
+    overflow-y: auto;
+    background: var(--q-gb-bg-c-2) !important;
+    // &:deep(.q-drawer){
+    //         background:$menu-bc-color!important;
+    //         top:76px !important;
+    //         width:240px !important
+    //     }
+    &:deep(.q-item__section--avatar) {
+      min-width: 0px;
+    }
+    &:deep(.q-item__section--side) {
+      padding-right: 8px;
+    }
+    &:deep(.q-separator) {
+      background: var(--q-gb-bg-c-6);
+      opacity: 0.1;
+      //  margin:20px 0;
+    }
+    &:deep(.q-item) {
+      min-height: 40px;
+      &:hover {
+        background-color: #4b4b4b;
+      }
+    }
+    // 菜单点击背景颜色
+    .active-menu {
+      background-color: #4b4b4b;
+    }
+    .menu-text {
+      color: var(--q-gb-t-c-3);
+    }
+    .menu-label {
+      margin-top: 16px;
+      margin-left: 16px;
+      font-weight: 600;
+      color: $basic-color;
+    }
+    //收藏
+    .icon-star {
+      font-size: 16px;
+      &::before {
+        color: #777777;
+      }
+    }
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+  
+  .menu-nav-li{
+    width: 100%;
+    p{
+      font-family: "Roboto";
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: 0px;
+      text-align: left;
+      color: var(--q-gb-t-c-2);
+      padding: 12px 0 1px 20px;
+      margin: 0;
+    }
+    .menu-list{
+      width: 100%;
+      li{
+        height: 44px;
+        padding-left: 19px;
+        font-family: "Roboto";
+        font-size: 16px;
+        font-weight: 400;
+        letter-spacing: 0px;
+        text-align: left;
+        color: var(--q-gb-t-c-3);
+        cursor: pointer;
+        transition: .03s;
+        .icon{
+          margin-right: 12px;
+        }
+        &:hover{
+          font-weight: 500;
+          color: var(--q-gb-t-c-1);
+          background: #4B4B4B;
+        }
+        &.menu_checked{
+          font-weight: 500;
+          color: var(--q-gb-t-c-1);
+          background: #4B4B4B;
+        }
+      }
+      &.menu-favouritse{
+        padding: 10px 0 8px;
+       li{
+        height: 44px;
+        &.active{
+          background: #4B4B4B;
+          color: var(--q-gb-t-c-1);
+          font-weight: 500;
+          i.icon-star{
+            &:before{
+              color: var(--q-gb-t-c-2);
+            }
+          }
+        }
+       }
+      }
+    }
+  }
+
+  .menu-nav-line{
+    width: 100%;
+    height: 1px;
+    background: var(--q-gb-bg-c-6);
+    opacity: 0.1;
+  }
+
+  .menu-line{
+    width: 100%;
+    height: 64px;
+  }

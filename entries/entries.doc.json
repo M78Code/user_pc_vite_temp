@@ -1,0 +1,158 @@
+{
+    "leftmenu": {
+        "level": 1,
+        "menuName": "项目版本"
+    },
+    "entriesdoc": [
+            {
+                "category": "entries",
+                "directory-name": "self-use-version",
+                "type": "项目",
+                "scripts": [
+                    "npm run  dev",
+                    "npm run  dev-self-use-version",
+                    "npm run  build",
+                    "npm run  build-self-use-version"
+                ],
+                "descriptions": [
+                    "自用版本项目",
+                    "常规开发 ，生产自用项目打包 入口",
+                    "默认组件，支持配置合并， 不支持同功能性组件其他版本切换",
+                    "可能会有一写内部专用的功能不能给出去使用的，特色内容"
+                ]
+            },
+            {
+                "category": "entries",
+                "directory-name": "custom-version",
+                "type": "项目",
+                "descriptions": [
+                    "定制化版本项目",
+                    "商户定制化",
+                    "支持根据选择的组件定制化输出 zip",
+                    "理论上会有一些特色功能，不支持定制，也不支持对外，只能自己独家"
+                ]
+            },
+            {
+                "category": "entries",
+                "directory-name": "custom-sdk",
+                "type": "脚本",
+                "descriptions": [
+                    "定制化版本 打包sdk",
+                    "构建出 es 和 umd 版本的 sdk",
+                    "全量版本：用于对接文档内调 试 定制版本：用于商户引入使用",
+                    "理论上会有一些特色功能，不支持定制，也不支持对外，只能自己独家"
+                ]
+            },
+            {
+                "category": "entries",
+                "directory-name": "full-version",
+                "type": "项目",
+                "descriptions": [
+                    "全量组件 项目",
+                    "全量组件 ",
+                    "在线合并配置 "
+                ]
+            },
+            {
+                "category": "entries",
+                "directory-name": "full-sdk",
+                "type": "脚本",
+                "descriptions": [
+                    "全量组件 打包 sdk",
+                    "全量组件 ",
+                    "在线合并配置，对接文档在线调试"
+                ]
+            },
+            {
+                "category": "entries",
+                "directory-name": "check-sdk-esm",
+                "type": "项目",
+                "descriptions": [
+                    "自测检查sdk es 版本",
+                    "需要适配： 全量/定制化 （cli）",
+                    "全量版本：自测+对接文档内用 定制版本：用于商户对接demo演示"
+                ]
+            },
+            {
+                "category": "entries",
+                "directory-name": "check-sdk-umd",
+                "type": "项目",
+                "descriptions": [
+                    "自测检查sdk umd 版本",
+                    "需要适配： 全量/定制化（cli）",
+                    "全量版本：自测+对接文档内用 定制版本：用于商户对接demo演示"
+                ]
+            },
+            {
+                "category": "entries",
+                "directory-name": "check-sdk-umd-html",
+                "type": "项目",
+                "descriptions": [
+                    "自测检查sdk umd 版本 html",
+                    "需要适配： 全量/定制化(html)",
+                    "全量版本：自测+对接文档内用 定制版本：用于商户对接demo演示"
+                ]
+            },
+            {
+                "category": "entries",
+                "directory-name": "development-document",
+                "type": "项目",
+                "scripts": [
+                    "npm run  ddd",
+                    "npm run  dev-development-document"
+                ],
+                "descriptions": [
+                    "项目内部开发文档",
+                    "根据组件配置自动生成内部文档",
+                    "需要支持对比线上旧版差异 需要支持配置字段上报对接文档",
+                    "一些规范定义，和文档参照指引",
+                    "项目目标解释、架构、规范、技术选型"
+                ]
+            },
+            {
+                "category": "entries",
+                "directory-name": "postmessage-test",
+                "type": "项目",
+                "descriptions": [
+                    "在线调试，消息通讯自测",
+                    "在线调试工具的自测版本",
+                    "消息通讯自测验证辅助 工具 定义消息通讯规范格式和主题"
+                ]
+            },
+            {
+                "category": "entries",
+                "directory-name": "config-middleware",
+                "type": "脚本",
+                "descriptions": [
+                    "配置中间件",
+                    "配置集散",
+                    "商户配置，环境配置，上报配置"
+                ]
+            },
+            {
+                "category": "entries",
+                "directory-name": "full-version",
+                "type": "项目",
+                "descriptions": [
+                    "全量组件",
+                    "我们自己的全量组件页面，进入页面后，在线合并配置",
+                    "对接文档植入试玩环境全量页面在线调试",
+                    "注意全量版本项目：需要给定预留挂载字段",
+                    "注意全量版本项目：需要两次拷贝商户配置文件,类似OSS文件策略",
+                    "注意全量版本项目：使用时需要读取url参数,加载商户配置文件,读取挂载到预留字段"
+                ]
+            },
+            {
+                "category": "entries",
+                "directory-name": "full-sdk",
+                "type": "脚本",
+                "descriptions": [
+                    "全量组件",
+                    "SDK版本，商户在自己开发的页面内在线合并配置，切换配置",
+                    "对接文档植入SDK在线调试",
+                    "注意全量版本SDK：需要给定预留挂载字段",
+                    "注意全量版本SDK：使用时需要引入商户配置文件,读取挂载到预留字段"
+                ]
+            }
+        ]
+}

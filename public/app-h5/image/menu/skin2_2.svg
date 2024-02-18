@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>编组 57@2x</title>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="24" height="24" rx="12"></rect>
+        <filter x="-18.8%" y="-18.8%" width="137.5%" height="137.5%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="0" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="1.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.3 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="编组-57" transform="translate(3.000000, 3.000000)">
+            <g id="换肤按钮备份-4">
+                <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                <use fill="#2D2D2D" fill-rule="evenodd" xlink:href="#path-1"></use>
+            </g>
+            <path d="M9.56695811,5.0008518 C9.47125364,5.46475145 9.42097356,5.94525032 9.42097356,6.43749274 C9.42097356,10.3441108 12.5879132,13.5110504 16.4945313,13.5110504 C17.3768677,13.5110504 18.2214722,13.3495007 19.0003796,13.0543663 C18.3368008,16.2711828 15.4876407,18.6899052 12.0735577,18.6899052 C8.16693966,18.6899052 5,15.5229655 5,11.6163475 C5,8.66645223 6.80572278,6.13830612 9.37212703,5.07695047 Z" id="换肤-月亮备份-2" fill="#FFB001"></path>
+        </g>
+    </g>
+</svg>

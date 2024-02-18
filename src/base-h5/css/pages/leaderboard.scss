@@ -1,0 +1,100 @@
+[class*=theme0] {
+  .ranking_list {
+     background-color:var(--q-color-page-bg-color-2);
+    &::after {
+      border-color: var(--q-color-border-color-5) !important;
+    }
+    .navigation-title {
+      color: var(--q-color-fs-color-3);
+      &:before {
+        background:var(--q-color-page-bg-color-50);
+      }
+    }
+
+    /*  ͷ�� */
+    .header {
+      background: var(--q-color-page-bg-color-9);
+      color:  var(--q-color-fs-color-9);
+      > div {
+        color: var(--q-color-fs-color-13);
+      }
+    }
+    .group-name {
+      color: var(--q-color-com-bg-color-6);
+    }
+    .team-item {
+      div {
+        color: var(--q-color-fs-color-119);
+      }
+      &:nth-child(-n + 3) {
+        div {
+          color: var(--q-color-fs-color-119);
+        }
+      }
+    }
+
+
+  }
+  .ranking_list_satrt {
+    .navigation-title {
+      color: var(--q-color-fs-color-3);
+      border-bottom: 1px solid var(--q-color-border-color-11);
+      background-image: var(--q-color-linear-gradient-bg-8);
+      border-radius: 0.08rem;
+      &:before {
+        background:var(--q-color-page-bg-color-50);
+      }
+      &::after {
+        border-color: var(--q-color-border-color-5) !important;
+      }
+    }
+    .ranking-item {
+      color: var(--q-color-fs-color-7);
+       background-color:var(--q-color-page-bg-color-2);
+      border-bottom: 1px solid var(--q-color-border-color-11);
+      > div {
+        &.ranking-item-top {
+          .left {
+            > span {
+              &:nth-child(1) {
+                color:var(--q-color-com-fs-color-8);
+              }
+              &:nth-child(2) {
+                color: var(--q-color-fs-color-3);
+              }
+            }
+          }
+          .right {
+            > span {
+              color: var(--q-color-fs-color-7);
+              &:nth-child(1) {
+                color: var(--q-color-fs-color-7);
+              }
+            }
+            .virtual-progress-bg {
+              background: var(--q-color-page-bg-color-86);
+              .virtual-progress-bar {
+                background:var(--q-color-page-bg-color-50);
+              }
+            }
+          }
+        }
+        &.ranking-item-bottom {
+          .score-number {
+            color: var(--q-color-fs-color-6);
+          }
+          .right {
+            .q-rating {
+              .q-rating__icon {
+                color: var(--q-color-com-fs-color-2) !important;
+                &.q-rating__icon--active {
+                  color:var(--q-color-fs-color-6) !important;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

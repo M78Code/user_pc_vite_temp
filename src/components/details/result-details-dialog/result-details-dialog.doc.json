@@ -1,0 +1,14 @@
+{
+  "leftmenu": {
+    "level": 2,
+    "menuName": "客户端PC",
+    "sonName": "详情赛果赛事下拉,赛事列表组件(包括引入的dialog-header子组件"
+  },
+  "props": {
+    "match-data": {
+      "type": [ "Object", "Array" ],
+      "default": [],
+      "description": "详情赛果赛事下拉,赛事列表组件(包括引入的dialog-header子组件"
+    }
+  }
+}

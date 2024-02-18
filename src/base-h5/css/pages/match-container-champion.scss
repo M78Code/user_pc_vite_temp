@@ -1,0 +1,47 @@
+[class*=theme0] {
+  .champion-wrap {
+    .league-container {
+      // background:var(--q-gb-bg-c-15);
+      .league-wrapper {
+        .league-title {
+          color:  var(--q-color-fs-color-14);
+        }
+      }
+      .league-title-text{
+        color:  var(--q-color-fs-color-38);
+      }
+    }
+    .limit-time {
+      color: var(--q-gb-t-c-3);
+      .limit-t-i {
+        background-color: var(--q-color-page-bg-color-9);
+      }
+    }
+    .hps-wrap {
+      // background:var(--q-gb-bg-c-10);
+      .match-title {
+        //background: var(--q-match-page-bg-color-10);
+        &:before {
+          background:var(--q-gb-bd-c-10);
+        }
+        &.is-favorite {
+          &:before {
+            background-color: var(--q-gb-bd-c-13)
+          }
+        }
+      }
+      .ol-list-wrap {
+        .ol-li-item {
+          background-color: var(--q-gb-bd-c-1);
+          border-radius: 8px;
+        }
+      }
+    }
+  }
+  .active-item {
+    .on,
+    .odds {
+      color:var(--q-gb-t-c-18) !important;
+    }
+  }
+}

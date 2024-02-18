@@ -1,0 +1,104 @@
+/*
+ * @Author: router
+ * @Description: bw3新版投注弹框 白色版样式
+ */
+[class*=theme0] {
+  .bet-mix-box {
+    max-width:3.78rem;
+    .dele-wrap {
+      background-color:  var(--q-gb-bd-c-6);
+      color: var(--q-match-fs-color-13);
+    }
+    .err-msg3 {
+      background-color: var(--q-color-page-bg-color-75);
+      color:var(--q-gb-t-c-13);
+    }
+    .content-box {
+      background:var(--q-gb-bd-c-15);
+    }
+    .bet-add {
+      background-image: var(--q-color-img-bg-59);
+    }
+    .full-shadow {
+      background: var(--q-color-com-bg-color-20);
+    }
+    .order-ok {
+      color: var(--q-gb-t-c-4);
+      border-top: 1px solid  var(--q-color-border-color-14);
+
+      .moey-p {
+        color:  var(--q-color-fs-color-16);
+      }
+    }
+    .full-shadow2 {
+      background-color: var(--q-color-page-bg-color-2);
+    }
+    // 其他主题没有这个box-shadow
+    .err-msg {
+      color:var(--q-color-com-fs-color-9);
+      box-shadow: var(--q-color-box-shadow-color-11);
+    }
+    .err-msg2 {
+      color:var(--q-gb-t-c-13);
+      box-shadow: var(--q-color-box-shadow-color-11);
+
+      .opacity-m {
+        opacity: 0.4 !important;
+      }
+    }
+    .linkUp_text_color{
+      background: var(--q-color-page-bg-color-122);
+    }
+    .bet-linkUp{
+      background: var(--q-color-page-bg-color-123);
+    }
+
+    .add-box {
+      color:var(--q-match-fs-color-150);
+      background-color: var(--q-color-page-bg-color-79);
+      border-color: var(--q-color-border-color-48);
+    }
+    .add-box2 {
+      color: var(--q-gb-t-c-3);
+      border-color:  var(--q-color-border-color-6);
+      background-color: transparent;
+    }
+    .add-box3 {
+      opacity: 0.5;
+    }
+    .set-opacity {
+      background: var(--q-gb-bg-c-17);
+
+    }
+    .bet-box {
+      color:var(--q-gb-t-c-18);
+      background: var(--q-color-linear-gradient-bg-21);
+    }
+    .mix-show-box:nth-last-child(1) .content_box {
+      border-bottom: 1px solid transparent !important;
+    }
+    .auto-text {
+      color: var(--q-match-fs-color-13);
+    }
+    .bottom-bar {
+      color: var(--q-gb-t-c-3);
+      .bottom-bar-sp {
+        color: var(--q-color-fs-color-108);
+      }
+    }
+    .img3{
+      background-image: var(--q-color-img-bg-94);
+    }
+
+    @supports (backdrop-filter: blur(5px)) or (-webkit-backdrop-filter: blur(5px)) {
+      .full-shadow {
+        -webkit-backdrop-filter: blur(5px);
+        backdrop-filter: blur(5px);
+        background: var(--q-color-com-bg-color-20);
+      }
+    }
+    .arrow {
+      background-image: var(--q-color-img-bg-95);
+    }
+  }
+}

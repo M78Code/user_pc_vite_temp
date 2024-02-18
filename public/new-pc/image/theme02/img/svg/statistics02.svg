@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>统计02@1x</title>
+    <defs>
+        <linearGradient x1="100%" y1="50%" x2="0%" y2="50%" id="linearGradient-1">
+            <stop stop-color="#B3BFD0" offset="0%"></stop>
+            <stop stop-color="#717B88" offset="100%"></stop>
+        </linearGradient>
+        <polygon id="path-2" points="0 0 7.11565399 0 7.11565399 7.11576799 0 7.11576799"></polygon>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="画板备份-2" transform="translate(-35.000000, -36.000000)">
+            <g id="统计02" transform="translate(35.000000, 36.000000)">
+                <circle id="蒙版" fill="url(#linearGradient-1)" cx="8" cy="8" r="8"></circle>
+                <g id="编组" transform="translate(4.000000, 4.000000)">
+                    <g transform="translate(0.000000, 0.884232)">
+                        <mask id="mask-3" fill="white">
+                            <use xlink:href="#path-2"></use>
+                        </mask>
+                        <g id="Clip-2"></g>
+                        <path d="M3.1082,0.00344798894 C1.3546,0.230247989 -0.000199999999,1.72944799 -0.000199999999,3.54464799 C-0.000199999999,5.51504799 1.6006,7.11584799 3.571,7.11584799 C5.3862,7.11584799 6.885,5.76104799 7.1122,4.00744799 C7.1438,3.76224799 6.9546,3.54504799 6.7074,3.54504799 L3.571,3.54504799 L3.571,0.408247989 C3.571,0.161447989 3.353,-0.0281520111 3.1082,0.00344798894" id="Fill-1" fill="#FFFFFF" mask="url(#mask-3)"></path>
+                    </g>
+                    <path d="M4.86132,0 C4.64012,0 4.45492,0.1808 4.45492,0.4088 L4.45492,3.1368 C4.45492,3.3624 4.63732,3.5452 4.86332,3.5452 L7.59132,3.5452 C7.83652,3.5452 8.02772,3.33 7.99652,3.0864 C7.79052,1.4812 6.51892,0.2092 4.91372,0.0032 C4.89612,0.0012 4.87852,0 4.86132,0 M5.21692,0.8404 C6.15772,1.1036 6.89652,1.842 7.15972,2.7832 L5.21692,2.7832 L5.21692,0.8404" id="Fill-3" fill="#FFFFFF"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

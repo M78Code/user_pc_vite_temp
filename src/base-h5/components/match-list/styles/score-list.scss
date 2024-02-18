@@ -1,0 +1,255 @@
+
+.score-section {
+  font-size: 0.12rem;
+  height: 0.14rem;
+  bottom: 0;
+  right: 0;
+  line-height: 1;
+  display: flex;
+  justify-content: flex-end;
+  z-index: 2;
+  position: relative;
+  padding: 0 0 0 0.08rem;
+  align-items: center;
+
+  &.standard {
+    justify-content: flex-start;
+    padding-left: 0.21rem !important;
+  }
+
+  &.result {
+    justify-content: flex-end;
+    padding-left: 0 !important;
+  }
+
+  &.flex-star {
+    justify-content: flex-start;
+  }
+
+  .score-scroll-fixed {
+    line-height: 1;
+    display: flex;
+    flex-shrink: 0;
+
+    &.is-baseball {
+      margin-left: 0.05rem;
+    }
+
+    .baseball-poi-ia {
+      width: 1.92rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .baseball-poi-w {
+        width: 0.14rem;
+        height: 0.14rem;
+        display: flex;
+        flex-wrap: wrap;
+        overflow: hidden;
+        align-content: flex-start;
+        transform: translateX(-0.02rem) translateY(0.04rem) rotateZ(45deg);
+
+        .poi {
+          width: 0.05rem;
+          height: 0.05rem;
+          margin: 0 1px 1px 0;
+          flex-shrink: 0;
+          background: var(--q-color-com-bg-color-46);
+
+          &.p {
+            background: var(--q-color-com-bg-color-23);
+          }
+        }
+
+        .icon-b {
+          width: 100%;
+          height: 100%;
+        }
+      }
+
+      .poi-des {
+        color: var(--q-color-com-fs-color-40);
+        height: auto;
+        display: flex;
+        align-items: flex-start;
+        font-size: 0.12rem;
+        margin-left: 0.04rem;
+      }
+    }
+  }
+
+  .scroll-container-w {
+    position: relative;
+    flex-shrink: 0;
+
+    .scroll-cover-f {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 0.07rem;
+      z-index: 10;
+
+      &.simple {
+        height: 0.08rem;
+      }
+    }
+
+    &.left_scroll {
+      &:before {
+        visibility: visible;
+      }
+    }
+
+    &.right_scroll {
+      &:after {
+        visibility: visible;
+      }
+    }
+
+    &:before, &:after {
+      content: ' ';
+      width: 0;
+      height: 0;
+      visibility: hidden;
+      top: 50%;
+      transform: translateY(-50%);
+      border-top: 0.03rem solid transparent;
+      border-bottom: 0.03rem solid transparent;
+      position: absolute;
+    }
+
+    &:before {
+      left: -0.04rem;
+    }
+
+    &:after {
+      right: -0.04rem;
+    }
+  }
+
+  .score-se-inner {
+    height: 0.3rem;
+    line-height: 1;
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    &.result {
+      max-width: 2.33rem;
+      width: auto !important;
+    }
+
+    &.standard {
+      height: 0.23rem;
+      width: auto !important;
+    }
+
+    &.is-volley-ball {
+      max-width: 1.8rem;
+    }
+
+    &.is-foot-ball {
+      max-width: 2.07rem;
+    }
+
+    &.is-tennis {
+      max-width: 1.8rem;
+    }
+
+    &.is-basket-ball {
+      max-width: 1.8rem;
+    }
+
+    &.is-table-tennis {
+      max-width: 1.8rem;
+    }
+
+    .score-se-inner2 {
+      width: auto;
+      height: 100%;
+      line-height: 1;
+      display: flex;
+      flex-shrink: 0;
+
+      .basket-ball {
+        color: var(--q-color-com-fs-color-29);
+        flex-shrink: 0;
+        font-size: 0.1rem;
+      }
+
+      .score-fle-container-1 {
+        flex-wrap: nowrap;
+        flex-shrink: 0;
+
+        &.result {
+          .score {
+            &:last-child {
+              color: var(--q-color-com-fs-color-29) !important;
+            }
+          }
+        }
+      }
+
+      .b-score-wrapper {
+        margin-left: 0.05rem;
+      }
+    }
+
+    .score {
+      flex-shrink: 0;
+      margin-right: 0.1rem;
+      font-size: 0.1rem;
+      color: var(--q-color-com-fs-color-29);
+      align-items: center;
+
+      .score-value {
+        font-size: 0.1rem;
+        font-weight: 600;
+        line-height: 0.1rem;
+      }
+
+      .kk-icon {
+        margin-right: 0.06rem;
+        width: 0.14rem;
+      }
+
+      &.last {
+        margin-right: 0;
+      }
+
+      &:last-child {
+        border: none !important;
+        font-size: 0.1rem;
+        margin-right: 0.02rem;
+      }
+    }
+
+    .kk-icon {
+      margin-right: 0.06rem;
+    }
+
+    &.last {
+      margin-right: 0;
+    }
+
+    &:last-child {
+      border: none !important;
+      font-size: 0.1rem;
+      margin-right: 0.02rem;
+    }
+  }
+
+  .score-important {
+    height: 0.1rem;
+
+    border: none !important;
+  }
+
+  .score-important2 {
+
+    border: none !important;
+  }
+
+  /* ******比分区域样式********* -E*/
+}

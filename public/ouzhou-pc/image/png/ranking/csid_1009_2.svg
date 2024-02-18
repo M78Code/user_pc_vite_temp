@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>2</title>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="泥地摩托车" transform="translate(-254.000000, -348.000000)">
+            <g id="2" transform="translate(254.000000, 348.000000)">
+                <rect id="矩形备份-22" stroke-opacity="0.25" stroke="#000000" fill="#E8E8E8" x="0.5" y="0.5" width="23" height="23" rx="2"></rect>
+                <path d="M15.1575,18 L15.1575,16.635 L10.8075,16.635 L14.1525,12.54 C14.8125,11.73 15.1575,11.175 15.1575,10.23 C15.1575,8.385 13.8975,7.23 12.0675,7.23 C10.2525,7.23 8.9625,8.43 8.9625,10.245 L10.4925,10.245 C10.4925,9.045 11.2575,8.595 12.0675,8.595 C13.0575,8.595 13.6275,9.255 13.6275,10.215 C13.6275,10.755 13.4625,11.145 13.0575,11.64 L8.9475,16.635 L8.9475,18 L15.1575,18 Z" fill="#000000" fill-rule="nonzero"></path>
+            </g>
+        </g>
+    </g>
+</svg>

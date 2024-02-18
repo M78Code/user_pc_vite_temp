@@ -1,0 +1,226 @@
+.may_also_like {
+  padding-bottom: 0.06rem;
+
+  >.title {
+    height: 0.4rem;
+    line-height: 0.4rem;
+    padding-left: 0.24rem;
+    font-family: PingFangSC-Medium;
+    font-size: 0.14rem;
+
+    letter-spacing: 0;
+    font-weight: 700;
+    position: relative;
+
+    &:before {
+      content: "";
+      width: 0.03rem;
+      height: 0.12rem;
+      position: absolute;
+      left: 0.16rem;
+      top: 0.14rem;
+
+      border-radius: 1.5px;
+    }
+  }
+
+  & :deep(.q-card) {
+    background: initial;
+    box-shadow: initial;
+    border-radius: initial;
+  }
+}
+
+.scroll-list {
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  flex-wrap: nowrap;
+
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.card2 {
+  padding-left: 0.06rem;
+  scroll-snap-align: start;
+
+  &:last-child {
+    padding-right: 0.06rem;
+  }
+
+  &:nth-child(3n-1) {
+    .card {
+      background: var(--q-color-com-img-bg-15) no-repeat center / 100% 100%;
+    }
+  }
+
+  &:nth-child(3n) {
+    .card {
+      background: var(--q-color-com-img-bg-16) no-repeat center / 100% 100%;
+    }
+  }
+
+  &:nth-child(3n+1) {
+    .card {
+      background: var(--q-color-com-img-bg-17) no-repeat center / 100% 100%;
+    }
+  }
+}
+
+.card {
+  min-width: 2.96rem !important;
+  max-width: 2.96rem !important;
+  height: 1.08rem;
+
+  border-radius: 0.04rem;
+  padding: 0.1rem 0.08rem 0 0.08rem;
+
+  .card-title {
+    opacity: 0.8;
+    font-family: PingFangSC-Regular;
+    font-size: 0.1rem;
+
+    line-height: 0.12rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 0.1rem;
+
+    .right-time {
+      height: .12rem;
+    }
+
+    img {
+      width: 0.18rem;
+      margin-left: 0.08rem;
+    }
+
+    >.ellipsis {
+      width: 1.2rem;
+    }
+
+    >div {
+      position: relative;
+      display: flex;
+
+      >div:nth-child(1) {
+        margin-right: 0.05rem;
+      }
+    }
+
+    :deep(.counting-down-wrap) {
+      width: 0.8rem;
+      right: 100%;
+      left: unset;
+      font-size: 0.1rem;
+
+      .counting {
+        // color: var(--q-color-com-fs-color-38);
+        color: var(--q-gb-t-c-18);
+        margin-left: 0.05rem;
+      }
+
+      .title-space-1 {
+        padding: unset;
+        margin: unset;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+    }
+
+    .no-timer-card {
+      .counting-down-wrap {
+        position: unset;
+      }
+    }
+
+    :deep(.special) {
+      color: var(--q-gb-t-c-18);
+      padding-top: 1px;
+    }
+  }
+
+  .card-content {
+    margin-top: 0.1rem;
+
+    .card-team-time {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      &:nth-child(1) {
+        min-height: 0.26rem;
+        margin-bottom: 0.06rem;
+      }
+
+      >div {
+        font-weight: 500;
+        font-size: 0.12rem;
+        display: flex;
+        align-items: center;
+
+        .ellipsis {
+          width: 1.36rem;
+        }
+
+        &.Handicap {
+          width: 0.88rem;
+          height: 0.26rem;
+          background: var(--q-color-com-bg-color-12);
+          border-radius: 0.03rem;
+          display: flex;
+          align-items: center;
+          justify-content: space-around;
+          padding: 0 0.05rem;
+
+          >span {
+            &:nth-child(1) {
+              width: 0.28rem;
+              opacity: 0.75;
+              font-family: dinMedium;
+              font-size: 0.1rem;
+              color: var(--q-color-com-fs-color-39);
+              margin-right: 0.04rem;
+            }
+
+            &:nth-child(2) {
+              font-family: dinMedium;
+              font-size: 0.12rem;
+              color: var(--q-color-com-fs-color-1);
+              text-align: center;
+            }
+          }
+
+          img {
+            width: 12px;
+            height: 13px;
+          }
+        }
+
+        :deep(.team-img-s) {
+          width: unset;
+          height: unset;
+          margin: 0 auto;
+          display: unset;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          img {
+            width: 0.14rem;
+            height: 0.14rem;
+            margin-right: 0.03rem;
+            position: relative;
+          }
+        }
+      }
+
+      >span {
+        font-size: 0.1rem;
+        line-height: 1;
+      }
+    }
+  }
+}

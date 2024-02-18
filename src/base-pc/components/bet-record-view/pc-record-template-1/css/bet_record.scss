@@ -1,0 +1,317 @@
+
+body {
+  .bet-record-card {
+    margin-top: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    border-radius: 0px;
+    background: none;
+    .border-shadow {
+      margin-bottom: 10px;
+      border-radius: 4px;
+      box-shadow: 0 1px 5px rgba(113, 113, 113, 0.3);
+    }
+    /*  标题样式设置  */
+    .bet-record-title {
+      color: var(--qq--theme-color-record-title);
+      .bet-valid-text {
+        color: var(--q-gb-t-c-10);
+      }
+      /* "确认中" */
+      .bet-confirm-text {
+        color: var(--qq--y0-text-color1);
+      }
+      /* "投注失败" */
+      .lose-color {
+        color: var(--q-gb-t-c-3);
+      }
+    }
+    .bet-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .icon-triangle {
+      font-weight: bold;
+      transform: rotate(180deg);
+      &:before {
+        color: var(--q-gb-t-c-6);
+      }
+    }
+
+    /*  投注项背景设置 */
+    .q-card__section {
+      background: var(--q-gb-bg-c-11);
+      /*  投注记过项设置 */
+      &.bet-item-result {
+        border: 0;
+        border-radius: 0 0 4px 4px;
+        /*  投注额,可赢额文本设置 */
+        .bet-money {
+          color: var(--qq--theme-text-is-clear-unclick);
+        }
+        /*  显示金额样式 */
+        .bet-value {
+          // color: var(--qq--theme-color-bet-keyboard);
+           /*  红色字体显示 */
+          &.red-text {
+            color: var(--q-gb-t-c-16);
+          }
+        }
+        /*  走水设置   */
+        &.bet-win-money {
+          font-size: 10px;
+          .bet-addition {
+            color: #FF4040;
+          }
+        }
+
+        .bet-result-separator {
+          margin-left: -10px;
+          margin-right: -10px;
+          border-bottom: 0.6px solid var(--qq--match-border-color2);
+        }
+        .bet-compute-money {
+          .vue-slider {
+            .vue-slider-rail {
+              .vue-slider-process {
+                background: var(--qq--theme-color-pre-over);
+              }
+              .vue-slider-marks {
+                .vue-slider-mark {
+                  .custom-label {
+                    color: var(--q-gb-t-c-6);
+                  }
+                }
+              }
+              .vue-slider-dot-handle {
+                background: var(--qq--theme-color-pre-over);
+              }
+              .vue-slider-dot-handle-focus {
+                box-shadow: 1px 1px 4px 2px var(--q-gb-t-c-6);
+              }
+            }
+          }
+        }
+        .bet-pre-confirm-btn {
+          color: var(--q-gb-t-c-6);
+          background-image: linear-gradient(90deg, #569ffd 1%, #9ac6ff 99%);
+        }
+        .bet-pre-confirming-btn,
+        .bet-pre-complete-btn {
+          color: var(--q-gb-t-c-6);
+          background-image: linear-gradient(225deg, var(--qq--background-gradient-color-1-s) 0%, var(--qq--background-gradient-color-1-e) 100%);
+          border-radius: 22px;
+          .bet-pre-left {
+            div {
+              color: var(--qq--yb-bg-color9);
+            }
+          }
+        }
+        .orange {
+          color: var(--qq--y0-text-color1);
+        }
+        .order-copy {
+          .order-no {
+            color: var(--qq--y0-text-color1);
+          }
+          .icon-icon_copy {
+            &:hover {
+              &:before {
+                color: var(--qq--y0-text-color1);
+              }
+            }
+          }
+        }
+        .bet-detail-info {
+          .row {
+            background: var(--qq--theme-bg-bet-detail);
+          }
+        }
+      }
+      .match-time {
+        margin: 6px 0;
+        // color: var(--qq--theme-text-bet-outweight);
+        color: var(--q-gb-t-c-21);
+      }
+      .bet-content {
+        padding: 8px;
+        background: var(--q-gb-bg-c-30);
+        // border: 0.5px solid var(--q-gb-bd-c-8);//rgba(65,70,85,1)
+        border-radius: 6px;
+        word-break: break-all;
+         /*  玩法及队名部分样式  */
+        .bet-play-game {
+          /*  盘口部分样式 */
+          .bet-play-handicap {
+            color: var(--q-gb-t-c-6);
+            line-height: 1.5;
+            /*  盘口名称 */
+            .bet-handicap-name,.sport-name {
+              color: var(--q-gb-t-c-16);
+            }
+            .sport-name {
+              margin-right: 5px;
+            }
+          }
+          .bet-play-text {
+            color: var(--q-gb-t-c-6);
+            line-height: 1.3;
+            /*  盘口名称 */
+            .bet-handicap-name,.sport-name {
+              color: var(--q-gb-t-c-16);
+            }
+            .sport-name {
+              margin-right: 5px;
+            }
+          }
+        }
+        .bet-play-team {
+          color: var(--q-gb-t-c-6);
+          margin-top: 8px;
+          .part-one {
+            color: var(--q-gb-t-c-16);
+          }
+
+          .part-two {
+            margin-left: 5px;
+            white-space: nowrap;
+          }
+        }
+        .bet-odds-value {
+          font-size: 14px;
+          color: var(--q-gb-t-c-3);
+          font-weight: 700;
+          span {
+            position: relative;
+            top: -1px;
+            margin-right: 4px;
+          }
+        }
+      }
+      .row {
+        &.bet-win-input {
+          margin-top: 6px;
+        }
+        .bet-money {
+          font-size: 12px;
+        }
+        .bet-value {
+          font-size: 12px;
+        }
+        .bet-name-info,.bet-league-name,.champion {
+          margin-top: 10px;
+          color: var(--q-gb-t-c-6);
+          font-size: 13px;
+          font-weight: 600;
+        }
+        .champion {
+          margin-bottom: 10px;
+        }
+        .bet-against {
+          font-size: 12px;
+          line-height: 1.3;
+          word-break: break-all;
+          font-weight: 400;
+          margin-top: 6px;
+          margin-bottom: 6px;
+          .home-vs-away {
+            color: var(--q-gb-t-c-6);
+            .bet-pk {
+              color: var(--q-gb-t-c-6);
+              margin-left: 5px;
+              margin-right: 5px;
+            }
+          }
+        }
+        /*  投注结果样式 */
+        .bet-result {
+          /*  输的样式 */
+          span {
+            &.lose {
+              opacity: 0.8;
+              background: var(--q-gb-bg-c-2);
+              border-radius: 4px;
+              color: var(--q-gb-t-c-18);
+              padding: 3px;
+            }
+          }
+          /*  赢的样式 */
+          span {
+            &.win {
+              opacity: 0.8;
+              background: var(--q-gb-bg-c-16);
+              border-radius: 4px;
+              color: var(--q-gb-t-c-18);
+              padding: 3px;
+            }
+          }
+        }
+      }
+    }
+    .q-card__actions {
+      margin-top: 5px;
+      color: var(--q-gb-t-c-6);
+      border-radius: 4px 4px 0 0;
+      border: 0;
+    }
+  }
+  .toast {
+    background: #000;
+    color: #d1d1d1;
+  }
+
+  /* 预约结算 */
+  .appoint-status {
+    .col {
+      flex: 4;
+      padding-top: 15px;
+      padding-left: 5px;
+      margin-left: -5px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--qq--y0-text-color1);
+      &.right {
+        flex: 1;
+        text-align: right;
+      }
+    }
+  }
+
+  // 取消预约投注弹出窗
+  .book-dialog {
+    width: 320px;
+    padding-top: 36px;
+    padding-bottom: 20px;
+    border-radius: 6px;
+    background: var(--qq--yb-bg-color22);
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.3);
+    .book-record {
+      width: 126px;
+      height: 36px;
+      line-height: 36px;
+      border-radius: var(--qq--theme-bd-radius-bet-submit);
+      font-size: 16px;
+      text-align: center;
+      font-weight: 400;
+      margin: 0 10px;
+    }
+    .book-msg {
+      margin: 0 auto;
+      font-size: 14px;
+      text-align: center;
+      line-height: 24px;
+      font-weight: 400;
+      color: var(--qq--bet-dialog-text-color1);
+
+    }
+    .book-record-cancel {
+      color: var(--qq--bet-dialog-text-color2);
+      background: var(--qq--yb-bg-color7);
+    }
+    .book-record-submit {
+      background-image: linear-gradient(225deg, var(--qq--background-gradient-color-1-s) 0%, var(--qq--background-gradient-color-1-e) 100%);
+      color: var(--q-gb-t-c-1);
+    }
+  }
+}

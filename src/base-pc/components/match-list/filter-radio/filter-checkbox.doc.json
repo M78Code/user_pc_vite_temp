@@ -1,0 +1,14 @@
+{
+  "filter-checkbox": {
+    "level": 2,
+    "menuName": "客户端PC",
+    "sonName": "联赛筛选选择框组件"
+  },
+  "props": {
+    "match-data": {
+      "type": [ "Object", "Array" ],
+      "default": [],
+      "description": "赛事卡片组件"
+    }
+  }
+}

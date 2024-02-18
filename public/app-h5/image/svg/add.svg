@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="14px" height="14px" viewBox="0 0 14 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 58 (84663) - https://sketch.com -->
+    <title>添加比赛</title>
+    <desc>Created with Sketch.</desc>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="单关-输入金额" transform="translate(-26.000000, -741.000000)" fill="#9AA4C2">
+            <g id="编组-3">
+                <g id="btn" transform="translate(26.000000, 721.000000)">
+                    <g id="Group-30">
+                        <g id="Group-2">
+                            <path d="M7,20 C7.55228475,20 8,20.4477153 8,21 L8,26 L13,26 C13.5522847,26 14,26.4477153 14,27 C14,27.5522847 13.5522847,28 13,28 L7.999,28 L8,33 C8,33.5522847 7.55228475,34 7,34 C6.44771525,34 6,33.5522847 6,33 L5.999,28 L1,28 C0.44771525,28 6.76353751e-17,27.5522847 0,27 C-6.76353751e-17,26.4477153 0.44771525,26 1,26 L6,26 L6,21 C6,20.4477153 6.44771525,20 7,20 Z" id="添加比赛"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

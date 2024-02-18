@@ -1,0 +1,55 @@
+[class*=theme0] {
+  .v-match-container {
+    .v-m-b-container {
+      .data-item-w {
+        background:var(--q-color-page-bg-color-2);
+      }
+      .sport-icon {
+        background-color: var(--q-color-page-bg-color-54);
+        border: 0.01rem solid  var(--q-color-border-color-11);
+      }
+      .v-league {
+        color: var(--q-color-fs-color-32);
+      }
+      .league-row {
+        background-image: var(--q-color-linear-gradient-bg-8);
+        border-bottom: 0.01rem solid var(--q-color-border-color-1);
+      }
+      .v-football-data {
+        border-color: var(--q-gb-bd-c-3);
+        background-color: var(--q-color-page-bg-color-2);
+      }
+      .team-title {
+        color: var(--q-match-fs-color-1);
+      }
+      .match-time,
+      .match-type {
+        color: var(--q-match-fs-color-1);
+      }
+      .t-score {
+        color: var(--q-match-fs-color-1);
+        &.winner {
+          color:var(--q-color-fs-color-50);
+        }
+      }
+      .data-title-w,
+      .data-item-w {
+        color: var(--q-match-fs-color-1);
+      }
+      .data-title-w {
+        border-bottom: 0.01rem solid var(--q-color-border-color-1);
+      }
+      .data-item-w {
+        &.last {
+          border-bottom: 0.01rem solid var(--q-color-border-color-1);
+        }
+        .date-number {
+          color: var(--q-match-fs-color-1);
+          &:first-child {
+            color: var(--q-match-fs-color-1);
+          }
+        }
+      }
+    }
+  }
+}

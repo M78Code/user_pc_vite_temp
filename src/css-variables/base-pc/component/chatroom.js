@@ -1,0 +1,15 @@
+export default{
+"chatroom-text-orange-1":"#FF7100",
+"chatroom-text-blue-1":"#556BEC",
+"chatroom-bg-orange-1":"#FF7100",
+"chatroom-bg-blue-1":"#556BEC",
+"chatroom-text-color-1":"#4276fb",
+"chatroom-text-color-2":"#fc2222",
+"chatroom-text-color-3":"#2d2d2d",
+"chatroom-bd-color-1":"#dce0e5",
+"chatroom-bd-color-2":"#d9d9d9",
+"chatroom-bd-color-3":"rgba(66, 118, 251, 0.5)",
+"chatroom-bd-color-4":"#4276fb",
+"chatroom-bg-color-1":"#d8d8d8",
+"chatroom-bg-color-2":"#ecf1ff",
+}

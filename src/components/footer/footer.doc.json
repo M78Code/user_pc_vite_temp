@@ -1,0 +1,17 @@
+{
+  "bet_record": {
+    "level": 2,
+    "menuName": "H5-底部菜单组件",
+    "sonName": "H5-底部菜单组件"
+  },
+  "category": "Footer",
+  "component-name": "Footer",
+  "support-customization": "1",
+  "descriptions": ["菜单组件"],
+  "optional-component": [
+    {
+      "component-name": "Menu_1",
+      "descriptions": ["菜单组件-版本1"]
+    }
+  ]
+}

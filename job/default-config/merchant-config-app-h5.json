@@ -1,0 +1,24 @@
+{
+  "component": {
+    "detail": {
+      "TestComponent": {
+        "use_component": "TestComponent_2",
+        "params": {
+          "tableClass": "bg-deep-purple-14"
+        }
+      },
+      "Menu": {
+        "use_component": "H5MenuTemplate1",
+        "params": {
+          "tableClass": "bg-deep-purple-14"
+        }
+      },
+      "BetBox": {
+        "use_component": "BetBoxAppH5_1",
+        "params": {
+          "tableClass": "bg-deep-purple-14"
+        }
+      }
+    }
+  }
+}

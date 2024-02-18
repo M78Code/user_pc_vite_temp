@@ -1,0 +1,35 @@
+/*
+ * @Author: router
+ * @Description: 小键盘 白色版样式
+ */
+  .keyboard {
+     background-color:var(--q-color-page-bg-color-2);
+    color: var(--q-gb-t-c-4);
+    .shouqi {
+      color: var(--q-gb-t-c-3);
+    }
+    .key-cell {
+      flex: 1;
+      text-align: center;
+      border: 1px solid  var(--q-gb-bd-c-32);
+      background:  var(--q-color-page-bg-color-27);
+    }
+    .key-cell {
+      &:first-child {
+        color: var(--q-gb-t-c-3);
+        background-color:  var(--q-color-page-bg-color-28);
+      }
+    }
+    .del-key {
+      background: var(--q-color-page-bg-color-27) var(--q-color-img-bg-37) no-repeat center center;
+      opacity: 0.9;
+    }
+    .del-key_disable{
+      background: var(--q-color-page-bg-color-27) var(--q-color-img-bg-104) no-repeat center center;
+      opacity: 0.9;
+    }
+    .shadow-show {
+      color:  var(--q-color-fs-color-19) !important;
+    }
+  }
+

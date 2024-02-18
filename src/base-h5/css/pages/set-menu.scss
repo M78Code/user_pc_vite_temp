@@ -1,0 +1,118 @@
+/*
+ * @Author: Cable
+ * @Description: 设置菜单样式
+ */
+
+.set-menu {
+  color: var(--q-color-fs-color-23);
+
+  .border-bottom {
+    border-bottom: 1px solid var(--q-gb-bd-c-4);
+  }
+
+  .c-set-menu {
+    backdrop-filter: var(--q-color-backdrop-filter-bg-1);
+    background-color: var(--q-gb-bg-c-1) !important;
+
+    &.no-pointer-events {
+      backdrop-filter: none;
+    }
+  }
+
+  .filter-icon-wrapper {
+    .img {
+      background: var(--q-color-img-bg-9) no-repeat center;
+    }
+  }
+
+  .line {
+    background: var(--q-gb-bg-lg-12);
+  }
+
+  /*  关闭按钮 */
+  .close-wrap {
+    .img {
+      background: var(--q-color-img-bg-8) no-repeat center;
+    }
+  }
+
+  /*  用户信息 */
+  .user-info {
+    .balance-wrap {
+      color: var(--q-color-fs-color-156);
+    }
+
+    .refesh {
+      background: var(--q-color-img-bg-10) no-repeat center;
+    }
+  }
+
+  .menu-inner {
+    background: var(--q-gb-bg-c-15);
+  }
+
+  .set-item {
+    border-bottom: 1px solid var(--q-gb-bd-c-4);
+
+    &.no-border {
+      border-bottom: none;
+    }
+    .name {
+      color: var(--q-color-fs-color-60);
+    }
+
+    .option {
+      .op-item {
+        color: var(--q-color-fs-color-61);
+
+        &.active {
+          color: var(--q-color-fs-color-156);
+        }
+      }
+
+      .op-icon {
+        background: var(--q-color-img-bg-74) no-repeat center;
+      }
+
+      .op-icon2 {
+        background: var(--q-color-img-bg-75) no-repeat center;
+      }
+
+      .yb-icon-arrow:before {
+        border-color: var(--q-color-border-color-45);
+      }
+
+    }
+
+    /*  换肤 */
+    .skin-wrap {
+      border: 1px solid var(--q-color-border-color-44);
+
+      .skin-icon1 {
+        background: var(--q-color-img-bg-3) no-repeat center;
+      }
+
+      .skin-icon2 {
+        background: var(--q-color-img-bg-4) no-repeat center;
+      }
+    }
+  }
+
+  /*  语言包 */
+  .lang-wrap {
+    background-color: var(--q-color-page-bg-color-117);
+
+    .lang-item {
+      color: var(--q-color-fs-color-13);
+      border-bottom: 1px solid var(--q-color-com-border-color-16);
+
+      .icon {
+        background: var(--q-color-img-bg-76) no-repeat center;
+      }
+
+      &.active {
+        color: var(--q-color-fs-color-50);
+      }
+    }
+  }
+}

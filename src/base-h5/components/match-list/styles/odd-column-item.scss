@@ -1,0 +1,141 @@
+.odd-column-item {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  flex-shrink: 1;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+
+  &.first-radius {
+    // border-radius: 0.03rem 0 0 0.03rem;
+  }
+
+  &.last-radius {
+    // border-radius: 0 0.03rem 0.03rem 0;
+  }
+
+  &:after {
+    content: ' ';
+    display: block;
+    width: 0.01rem;
+    height: 0.24rem;
+    position: absolute;
+    left: 0;
+    top: 0.16rem;
+  }
+
+  &.is-jiaoqiu, &.is-standard {
+    &:after {
+      display: none;
+    }
+  }
+
+  .odd-is-empty {
+    .icon-lock {
+      width: 0.14rem;
+      height: 0.14rem;
+    }
+  }
+
+  .item-inner {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 2px;
+
+    .icon-lock {
+      width: 0.14rem;
+      height: 0.14rem;
+
+      &.standard {
+        width: 0.12rem;
+        height: 0.15rem;
+      }
+    }
+  }
+
+  &.is-double-row {
+    height: 50%;
+  }
+
+  &.is-trible-row {
+    height: 31%;
+
+    .odd-title {
+      margin-bottom: 0.02rem;
+    }
+
+    .icon-lock {
+      font-size: 0.12rem !important;
+    }
+  }
+
+  .odd-value {
+    font-size: 0.16rem;
+    display: flex;
+    align-items: center;
+    line-height: 1;
+    position: relative;
+    min-height: 0.16rem;
+    color: var(--q-color-fs-color-115);
+
+    &.standard {
+      font-size: 0.1rem;
+    }
+
+    &.three {
+      font-size: 0.1rem;
+    }
+  }
+  .fontbold{
+    font-weight: 700;
+    font-family: Akrobat;
+    font-size: 12px;
+  }
+
+  .odd-title {
+    word-break: break-all;
+    text-align: center;
+    margin-bottom: 0.09rem;
+    font-size: 0.14rem;
+    line-height: 1;
+
+    &.standard {
+      margin-bottom: 0.03rem;
+      font-size: 0.12rem;
+    
+    }
+
+    &.three {
+      font-size: 0.1rem;
+    }
+  }
+
+  .change-icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: -0.12rem;
+    width: 0.06rem;
+    height: 0.05rem;
+    display: inline-block;
+    margin-right: 0.03rem;
+    background-repeat: no-repeat;
+    background-size: contain;
+
+    &.icon-green {
+      background-image: var(--q-color-com-img-bg-18);
+    }
+
+    &.icon-red {
+      background-image: var(--q-color-com-img-bg-19);
+    }
+  }
+}
+
+.flag-random {
+  display: none;
+}

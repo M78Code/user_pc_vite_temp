@@ -1,0 +1,50 @@
+/*
+ * @Author: router
+ * @Date: 2020-08-20 18:35:53
+ * @Description: bw3新版自动接受更好赔率规则弹框 白色版样式
+ */
+[class*=theme0] {
+  .accept-rules {
+    .content-box {
+       background-color:var(--q-gb-bd-c-15);
+    }
+    .content-box > p {
+      color: var(--q-gb-t-c-3);
+    }
+    .content-box > header {
+      color:  var(--q-color-fs-color-14);
+    }
+    .content-box > footer {
+      color:var(--q-gb-t-c-13);
+    }
+
+    p > span:not(.chu) {
+      color:var(--q-gb-t-c-18);
+      background-color: var(--q-gb-bd-c-13);
+    }
+    .chu {
+      color: var(--q-gb-t-c-4);
+    }
+  }
+  .combine-tips {
+    .main-box {
+      background:var(--q-gb-bd-c-15);
+      header {
+        color: var(--q-color-fs-color-14);
+      }
+      p {
+        color: var(--q-gb-t-c-3);
+      }
+      footer {
+        color:var(--q-color-fs-color-149);
+      }
+    }
+  }
+}
+
+// 夜间版几个弹框的背景需要给背景模糊
+[class*=theme02] {
+  .accept-rules, .info-rules, .combine-tips {
+    backdrop-filter: blur(5px);
+  }
+}

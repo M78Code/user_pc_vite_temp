@@ -1,0 +1,22 @@
+{
+  "leftmenu": {
+    "level": 2,
+    "menuName": "客户端PC",
+    "sonName": "赛事详情-detail"
+  },
+  "props": {
+    "category": "match-detail",
+    "directory-name": "match-detail",
+    "descriptions": [
+      "赛事详情页通用逻辑",
+      "玩法集， 玩法过滤，玩法模板，数据分析，比分榜，动画等"
+    ],
+    "type": "js",
+    "remark": "",
+    "item": [
+      {
+        "filename": ""
+      }
+    ]
+  }
+}

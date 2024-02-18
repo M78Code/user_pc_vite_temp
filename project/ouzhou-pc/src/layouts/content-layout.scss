@@ -1,0 +1,268 @@
+/*
+ * @Description: 主内容夜间版样式
+ */
+html, body {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  /*  主内容滚动条样式 */
+  .c-main-scroll::-webkit-scrollbar {
+    height: 14px;
+    background-color: var(--q-layout-color-6);
+
+    &-thumb:horizontal {
+      background-color: var(--q-layout-color-4);
+    }
+  }
+
+  .c-content-bg {
+    background-color: var(--q-layout-color-5);
+    border-top: 4px solid var(--q-layout-color-6);
+    margin-top: 1px;
+  }
+
+  /* *蒙层* */
+  .cathectic-shade {
+    position: absolute;
+    width: 220px;
+    height: 100%;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    background: var(--q-layout-color-8);
+    opacity: 0.9;
+
+    .shade-fixed {
+      // position: fixed;
+      // margin-left: 85px;
+      height: 100%;
+
+      // top: 40%;
+      .loading-wrap {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: var(--q-layout-color-2);
+        margin-top: 100%;
+        padding-top: 50%;
+
+        .img-loading {
+          position: relative;
+          margin-bottom: 10px;
+          width: 50px;
+          height: 50px;
+          background-size: 100%;
+          background-image: var(--qq--bg-image-url10); // TODO: loading_theme01.gif
+        }
+      }
+    }
+  }
+
+  /*  模拟垂直滚动条 bar 的色调 */
+  .v-scroll-area:after {
+    background: var(--q-layout-color-5);
+    border-color: var(--q-layout-color-5);
+  }
+
+  /*  真实滚动条的 拖动条 样式 */
+  .q-scrollarea__thumb {
+    background: var(--q-layout-color-7);
+    z-index: 200;
+  }
+
+  /* *** 直滚动条样式 ************ -E */
+
+  /** 数据加载组件 -S*/
+  .load-data-wrap {
+    color: var(--q-layout-color-1);
+    width: 100%;
+    /* 列表右侧暂无数据 */
+    .list_right_empty {
+      .img {
+        background-image: var(--qq--bg-image-url38); // TODO: new_empty.svg
+      }
+    }
+    .loading-wrap{
+      height: 100%;
+      width: 100%;
+      justify-content: center;
+    background-color: var(--q-gb-bg-c-4);
+    }
+    /* 暂无数据 */
+    .empty-wrap {
+      display: flex;
+      flex-direction: column;
+      background-color: var(--q-gb-bg-c-4);
+      height: 100%;
+      width: 100%;
+      align-items: center;
+      justify-content: center;
+      .img {
+        background-image: var(--qq--public-bg-image2); // TODO: png/no_data_01.png
+      }
+      &.esports-size {
+        .text-center {
+          color: var(--q-gb-t-c-8);
+        }
+
+        .img {
+          background-image: var(--qq--public-bg-image3); // TODO: no_data_es_01.png
+          background-repeat: no-repeat;
+        }
+      }
+    }
+
+    /* 暂无数据 */
+    .empty-wrap.filter_img {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      .img {
+        height: 160px !important;
+        padding-bottom: 0%;
+        background-image: var(--qq--public-bg-image7); // TODO: filter_no_data_01.png
+        background-repeat: no-repeat;
+      }
+    }
+
+    /* loading */
+    .loading-text {
+      color: var(--q-layout-color-1) !important;
+    }
+
+    .img-loading {
+      // background-image: url($SCSSPROJECTPATH+"/image/loading1.gif");
+    }
+
+    .refresh {
+      color: var(--q-layout-color-1);
+      display: flex;
+      background-color: var(--q-gb-bg-c-4);
+      .img404 {
+        background-image: var(--qq--public-bg-image5); // TODO: png/page404_01.png
+      }
+
+      .refresh-img {
+        // background-image: var(--qq--public-bg-image6); // TODO: png/refresh_01.png
+      }
+
+      .btn {
+        color: var(--q-gb-t-c-16);
+        border: 1px solid var(--q-gb-t-c-16);
+
+        &:hover {
+          background-color: var(--q-gb-t-c-16);
+          color: #fff;
+        }
+      }
+    }
+
+    .user_api_limited {
+      .img {
+        background-image: var(--qq--public-bg-image1); // TODO: user_api_limited.png
+      }
+
+      .btn {
+        color: var(--q-gb-t-c-16);
+        border: 1px solid var(--q-gb-t-c-16);
+
+        &:hover {
+          background-color: var(--q-gb-t-c-16);
+          color: var(--q-layout-color-1);
+        }
+      }
+    }
+
+    .record_api_limited {
+      color: var(--q-gb-t-c-8);
+      background-color: var(--q-gb-bg-c-4);
+      text-align: center;
+
+      .img {
+        width: 180px;
+        height: 130px;
+        // background-image: var(--qq--public-bg-image2); // TODO: png/no_data_01.png
+        background-size: 100%;
+        background-repeat: no-repeat;
+      }
+    }
+  }
+
+  /** 数据加载组件 -E*/
+
+  /* 视频icon */
+  .unfold {
+    background-image: var(--qq--bg-image-url26); // TODO: unfold_close_thme01.svg
+
+    &.open {
+      background-image: var(--qq--bg-image-url27); // TODO:  unfold_open_them01.svg
+    }
+  }
+
+  .video-icon {
+    background-image: var(--qq--bg-image-url12); // TODO: video0.svg
+
+    &.active {
+      background-image: var(--qq--bg-image-url13) !important; // TODO: video2.svg)
+    }
+  }
+
+  .animation-icon {
+    background-image: var(--qq--bg-image-url14); // TODO: animation0.svg
+
+    &.active {
+      background-image: var(--qq--bg-image-url15) !important; // TODO: animation2.svg
+    }
+  }
+
+  .switch-icon {
+    background-image: var(--qq--bg-image-url16); // TODO: switch0.svg
+    background-repeat: no-repeat;
+
+    &.active {
+      background-image: var(--qq--bg-image-url17); // TODO: switch2.svg
+    }
+  }
+
+  //演播室
+  .studio-icon {
+    background-image: var(--qq--bg-image-url18); // TODO: live_studio02.svg
+
+    &.active {
+      background-image: var(--qq--bg-image-url19); // TODO: live_studio01.svg
+    }
+  }
+
+  //主播
+  .anchor-icon {
+    background-image: var(--qq--bg-image-url20); // TODO: anchor02.svg
+
+    &.active {
+      background-image: var(--qq--bg-image-url21); // TODO: anchor01.svg
+    }
+  }
+
+  //专题
+  .topic-icon {
+    background-image: var(--qq--bg-image-url22);  // TODO: topic02.svg
+
+    &.active {
+      background-image: var(--qq--bg-image-url23); // TODO: topic01.svg
+    }
+  }
+
+  /* 球队logo  */
+  img[class*="team-logo-"] {
+    background-image: var(--qq--bg-image-url24); // TODO: team_logo_01.png
+  }
+
+  .team-logo-logo[src^="data"] {
+    background-image: var(--qq--bg-image-url25); // TODO: team_logo/logo.svg
+  }
+}

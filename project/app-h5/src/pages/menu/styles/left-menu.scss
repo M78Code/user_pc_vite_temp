@@ -1,0 +1,97 @@
+.menu_container {
+  h5 {
+    color: $main_color;
+  }
+  .menu_item {
+    line-height: 30px;
+    &.active {
+      color: $main_color;
+    }
+  }
+}
+// 侧边栏样式
+.left_drawer_page {
+  font-family: "Roboto";
+  .q-list-content {
+    padding: 0 !important;
+    .sports-genre {
+      padding: 29px 0 29px 18px;
+    }
+    .menu_container {
+      padding: 20px 0 20px 20px;
+    }
+    .popular {
+      padding: 22px 0 17px 20px;
+    }
+    .sports-genre {
+      .item {
+        display: flex;
+        align-items: center;
+        div {
+          font-size: 16px;
+          color: #3d3b37;
+          font-size: 16px;
+          font-weight: 400;
+          line-height: 19px;
+          letter-spacing: 0px;
+          text-align: left;
+        }
+      }
+    }
+    .esports {
+      margin-bottom: 24px;
+    }
+    .esports span,
+    .vr-sports span {
+      // width: 20px;
+      // height: 20px;
+      display: inline-block;
+      margin-right: 11px;
+      // background-image: url('src/project-ouzhou/assets/common/icon_sports@3_min.png');
+      // background-size: 220px 220px;
+    }
+  }
+
+  // 分割线
+  .segmentation {
+    width: 100%;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  .popular,
+  .menu_container {
+    h5 {
+      font-size: 16px;
+      margin: 0;
+      height: 19px;
+      line-height: 19px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      //color: rgba(255, 112, 0, 1);
+      color: var(--q-gb-t-c-11);
+    }
+  }
+  .popular .item,
+  .menu_container .menu_item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: 16px;
+    span {
+      // width: 18px;
+      // height: 18px;
+      margin-right: 11px;
+      display: inline-block;
+      // background-image: url('src/project-ouzhou/assets/common/icon_sports@3_min.png');
+      // background-size: 198px 198px;
+    }
+    div {
+      height: 19px;
+      line-height: 19px;
+      font-weight: 400;
+      color: rgba(61, 59, 55, 1) var(--q-gb-t-c-14);
+    }
+  }
+  .popular .item:last-child {
+    margin-bottom: 0 !important;
+  }
+}

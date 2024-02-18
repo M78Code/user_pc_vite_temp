@@ -1,0 +1,27 @@
+{
+    "leftmenu": {
+        "level": 2,
+        "menuName": "客户端",
+        "sonName": "SimpleHeader组件"
+    },
+    "category": "component",
+    "component-name": "Tab",
+    "support-customization": "1",
+    "descriptions": [
+        "SimpleHeader组件"
+    ],
+    "optional-component": [
+        {
+            "component-name": "simple-header-pc",
+            "descriptions": [
+                "simple-header-pc组件-版本1"
+            ]
+        },
+        {
+            "component-name": "simple-header-h5",
+            "descriptions": [
+                "simple-header-h5组件-版本1"
+            ]
+        }
+    ]
+}

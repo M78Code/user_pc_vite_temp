@@ -1,0 +1,168 @@
+.m-o-p-wrapper {
+  width: 100%;
+  height: auto;
+  padding: 0 0.07rem;
+  position: relative;
+  .wsl_flag_777{
+    position: absolute;
+    color: red;
+    top: .24rem;
+    //left: 1.08rem;
+  }
+
+  .tab-m-o-w {
+    //width: 3.58rem;
+    /*height: 0.44rem;*/
+    margin: 0 auto;
+    padding-left: 0.02rem;
+    flex-wrap: nowrap;
+    overflow: scroll;
+
+    .tab-item-h {
+      width: auto;
+      height: 0.24rem;
+      margin-right: 0.05rem;
+      padding: 0 0.084rem;
+      border-radius: 0.04rem;
+      margin-bottom: 0.12rem;
+      flex-wrap: nowrap;
+      white-space: nowrap;
+      flex-shrink: 0;
+      font-size: 12px;
+
+      &:last-child {
+        margin-right: 0;
+      }
+
+      &.pena {
+        margin-left: 0.2rem;
+      }
+
+      .league-collapse-dir {
+        width: 0.1rem;
+        height: 0.04rem;
+        margin-left: 0.07rem;
+        display: block;
+        transform: rotateZ(180deg);
+        transition: transform 0.2s ease-in;
+        &.collapsed {
+          transform: rotateZ(0);
+        }
+      }
+    }
+  }
+
+  .odd-l-head-w {
+    width: 1.84rem;
+    height: 0.48rem;
+    overflow: hidden;
+
+    .o-w-h-c {
+
+      height: 100%;
+      flex-shrink: 0;
+      flex-wrap: nowrap;
+
+      .hpl-t {
+        position: relative;
+        width: 0.6rem;
+        height: 100%;
+        line-height: 1;
+        transition: transform 0.2s;
+        padding: 0 0.02rem;
+        margin-right: 0.02rem;
+
+        &:nth-child(n + 4) {
+          margin-right: 0;
+        }
+
+        &.status2 {
+          transform: translateX(-1.84rem);
+        }
+
+        .div-inner-2 {
+          width: 0.05rem;
+          height: 100%;
+          background-color: var(--q-color-com-bg-color-12);
+          position: absolute;
+          top: 0;
+          right: -0.05rem;
+          z-index: 1;
+        }
+      }
+    }
+  }
+
+  .team-title-container {
+    .team-t-title-w {
+      width: 1.30rem;
+      margin-left: 0.20rem;
+      height: 0.31rem;
+      font-size: 0.14rem;
+      display: flex;
+      align-items: center;
+      position: relative;
+
+      &.is-handicap {
+        font-weight: bold;
+      }
+
+      &.fight-type {
+        font-size: 0.12rem;
+     //   margin-left: 0.04rem;
+
+        img {
+          display: block;
+          /*width: 0.14rem;*/
+          /*height: 0.14rem;*/
+          margin-right: 0.055rem;
+          margin-left: -0.17rem;
+
+          margin-bottom: 0.02rem
+        }
+      }
+
+      .team-title {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 1.07rem;
+      }
+
+      .way-score {
+        position: absolute;
+        right: 0;
+      }
+    }
+  }
+
+  .title-15min  {
+    text-align: left;
+    display: flex;
+    width: 1.4rem;
+    display: flex;
+    color:var(--p-theme-color) ;
+    align-items: center;
+    font-size: .12rem
+  }
+
+  .transition-w-odd {
+    font-size: 0.1rem;
+    max-height: 0;
+
+    &.expanded {
+      height: auto;
+      max-height: none;
+      padding-bottom: 0.06rem;
+      &.five_minutes_wanfa {
+        padding-bottom: 0.085rem;
+      }
+      &.bodan_wanfa{
+        padding-bottom: 0.44rem!important;
+      }
+      &.bodan_wanfa_small{
+        padding-bottom: 0.12rem!important;
+      }
+    }
+  }
+}

@@ -1,0 +1,807 @@
+/* ************** 单项玩法集合 *************** -S */
+
+/** 置顶操作时增加动画*****/
+// @include keyframes(keyframe_heart) {
+//   from,
+//   20%,
+//   40%,
+//   60%,
+//   80%,
+//   to {
+//     -webkit-animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+//     animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+//   }
+//   0% {
+//     opacity: 0;
+//     -webkit-transform: scale3d(0.3, 0.3, 0.3);
+//     transform: scale3d(0.3, 0.3, 0.3);
+//   }
+//   30% {
+//     -webkit-transform: scale3d(1.3, 1.3, 1.3);
+//     transform: scale3d(1.3, 1.3, 1.3);
+//   }
+//   60% {
+//     opacity: 1;
+//     -webkit-transform: scale3d(1.03, 1.03, 1.03);
+//     transform: scale3d(1.03, 1.03, 1.03);
+//   }
+//   80% {
+//     -webkit-transform: scale3d(0.97, 0.97, 0.97);
+//     transform: scale3d(0.97, 0.97, 0.97);
+//   }
+
+//   to {
+//     opacity: 1;
+//     -webkit-transform: scale3d(1, 1, 1);
+//     transform: scale3d(1, 1, 1);
+//   }
+// }
+
+/*  收藏 icon 动画（心跳） */
+.animation-heart {
+  animation-duration: calc(0.5s * 0.75);
+  animation-name: keyframe_heart;
+}
+
+/*  记录动画 */
+.transition-play-list-leave-to {
+  opacity: 0;
+}
+
+.transition-play-list-enter, .transition-play-list-leave-to {
+  transform: translate(0, 0);
+}
+
+.transition-play-list-leave-active {
+  position: absolute;
+  right: -1px;
+}
+
+.tournament-play {
+  position: relative;
+  min-width: 3.75rem;
+  height: auto;
+  background-color: #f5f5f5;//var(--q-gb-bg-c-15);
+  transition: transform 0.6s, opacity 0.1s;
+}
+
+/* ************** 单项玩法集合 *************** -E */
+/* ************** 玩法title栏 *************** -S */
+.play-name {
+  &.vir-mar {
+
+  }
+}
+
+
+/* ************** 玩法title栏 *************** -E */
+/* ************** 玩法名前的icon图标 *************** -S */
+.line-style {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+}
+
+
+/* ************** 玩法名前的icon图标 *************** -E */
+/* ************** 玩法名称 *************** -S */
+.text-color {
+  font-size: 0.14rem;
+  letter-spacing: 0;
+}
+
+/* ************** 玩法名称 *************** -E */
+/* ************** 置顶按钮 *************** -S */
+.icon_zd_select {
+  width: 0.14rem;
+  height: 0.14rem;
+  background: url($SCSSPROJECTPATH + "/image/detail/set_top_active.png") no-repeat center / 100% 100%;
+}
+
+.icon_zd_default {
+  width: 0.14rem;
+  height: 0.14rem;
+  background: url($SCSSPROJECTPATH + "/image/detail/set_top.png") no-repeat center / 100% 100%;
+}
+
+/* ************** 置顶按钮 *************** -E */
+/* ************** 玩法名下面的单横线 *************** -S */
+.bottom-style {
+  position: relative;
+}
+
+
+/* ************** 玩法名下面的单横线 *************** -E */
+.play-wrapper {
+  transition: max-height 0.3s;
+  overflow: hidden;
+}
+
+.text-right {
+  margin-left: 0.16rem;
+}
+
+.special-style {
+  width: 1.9rem;
+  font-size: 0.12rem;
+}
+
+.font-weg {
+  padding-left: 0.04rem;
+  font-weight: bold;
+  max-width: 2.8rem;
+  position: relative;
+}
+
+.base-font-weg {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  min-height: 0.49rem;
+  line-height: 1.3;
+  font-weight: bold;
+  max-width: 2.8rem;
+  position: relative;
+
+  // &:after {
+  //   content: ' ';
+  //   background: url($SCSSPROJECTPATH + "/image/svg/title_tag.svg") no-repeat center  !important;
+  //   display: block;
+  //   position: absolute;
+  //   width: 2px;
+  //   height: 0.16rem;
+  //   top: calc(50% - 0.08rem);
+  //   left: -0.18rem;
+  //   border-radius: 1.5px;
+  // }
+}
+
+.corner-ball-weg {
+  display: flex;
+  align-items: center;
+  padding-left: 0.04rem;
+  font-weight: bold;
+  max-width: 2.8rem;
+  position: relative;
+
+  &:after {
+    content: ' ';
+    display: block;
+    position: absolute;
+    width: 2px;
+    height: 0.16rem;
+    top: 0.035rem;
+    left: -0.18rem;
+    border-radius: 1.5px;
+    background: url($SCSSPROJECTPATH + "/image/svg/title_tag.svg") no-repeat center  !important;
+  }
+
+  i {
+    display: inline-block;
+    width: 0.14rem;
+    height: 0.14rem;
+  }
+
+  .information-icon-gray {
+    background: var(--q-color-com-img-bg-94) no-repeat center / cover;
+  }
+}
+
+.fat-sty {
+  flex: 1;
+  padding-left: 0.04rem;
+  position: relative;
+  font-weight: bold;
+  font-size: 0.15rem;
+
+  &:after {
+    content: ' ';
+    display: block;
+    position: absolute;
+    width: 3px;
+    height: 0.14rem;
+    top: calc(50% - 0.08rem);
+    left: -0.06rem;
+    border-radius: 1.5px;
+  }
+}
+
+.dis-block {
+  text-align: center;
+  flex: 1;
+}
+
+.corner-ball {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0.075rem 0;
+  max-width: 2.8rem;
+  position: relative;
+}
+
+.basic-score {
+  padding-left: 0.04rem;
+  font-size: 0.13rem;
+  line-height: 13px;
+}
+
+.vir-sport {
+  height: 0.49rem;
+  line-height: 0.49rem;
+}
+
+.penalty-card {
+  height: 0.14rem;
+  margin-left: 0.1rem;
+}
+
+.penalty-card-no {
+  top: 28%;
+}
+
+.mat-info {
+  width: 2.19rem;
+  position: fixed;
+  right: -0.33rem;
+  top: 0.38rem;
+  z-index: 999;
+  border-radius: 0.04rem;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+  &:before{
+    content: "";
+    width: 0px;
+    height: 0px;
+    border-left: 0.1rem solid transparent;
+    border-right: 0.1rem solid transparent;
+    border-bottom: 0.1rem solid var(--q-color-border-color-42);
+    position: absolute;
+    top: -0.1rem;
+    // left: 0.11rem;
+    left: var(--q-position-left-before);
+  }
+
+  &:after{
+    content: "";
+    width: 0px;
+    height: 0px;
+    border-left: 0.095rem solid transparent;
+    border-right: 0.095rem solid transparent;
+    border-bottom: 0.095rem solid var(--q-color-page-bg-color-2);
+    position: absolute;
+    top: -0.09rem;
+    // left: 0.115rem;
+    left: var(--q-position-left-after);
+  }
+}
+.mat-info2 {
+  width: 2.19rem;
+  position: fixed;
+  right: -0.33rem;
+  top: 0.38rem;
+  z-index: 999;
+  border-radius: 0.04rem;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+  &:before{
+    content: "";
+    width: 0px;
+    height: 0px;
+    border-left: 0.1rem solid transparent;
+    border-right: 0.1rem solid transparent;
+    border-top: 0.1rem solid var(--q-color-border-color-42);
+    position: absolute;
+    bottom: -0.1rem;
+    // left: 0.11rem;
+    left: var(--q-position-left-before);
+
+
+  }
+
+  &:after{
+    content: "";
+    width: 0px;
+    height: 0px;
+    border-left: 0.095rem solid transparent;
+    border-right: 0.095rem solid transparent;
+    border-top: 0.095rem solid var(--q-color-page-bg-color-2);
+    position: absolute;
+    bottom: -0.09rem;
+    // left: 0.115rem;
+    left: var(--q-position-left-after);
+  }
+}
+
+.penalty {
+  width: 1.85rem;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  padding: 0.12rem 0 0.08rem 0;
+}
+
+.ply-cd {
+  font-size: 0.14rem;
+  line-height: 0.14rem;
+}
+
+.info-content {
+  width: 1.85rem;
+  margin: auto;
+  font-size: 0.12rem;
+  padding: 0 0 0.12rem 0;
+  line-height: 0.18rem;
+}
+
+.triangle-icon {
+  width: 0.1rem;
+  height: 0.06rem;
+  position: absolute;
+  top: -0.06rem;
+  left: 0.19rem;
+  background-image: var(--q-color-com-img-bg-14);
+  &.is_rotate{
+    bottom: -0.06rem;
+    top: unset;
+    transform: rotate(180deg) ;
+  }
+}
+
+.tournament-play {
+  &.tournament-play-outer {
+    .play-name-outer-wrapper {
+      padding: 0 0.1rem 0.04rem 0.1rem;
+    }
+    :deep(.hairline-border,), :deep(.item-wrap) {
+      // background-color: #ffffff;
+    }
+    .play-name {
+      position: relative;
+      min-width: 3.55rem;
+
+      padding: 0 0.12rem 0 0.18rem;
+      background-image: linear-gradient(180deg, #ffffff 22.04%, #f7f8ff 100%);// var(--q-color-linear-gradient-bg-20);
+      border-radius: 0.08rem;
+
+      &::after {
+        content: "";
+        pointer-events: none;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 200%;
+        height: 200%;
+        -webkit-transform: scale(0.5);
+        transform: scale(0.5);
+        -webkit-transform-origin: left top;
+        transform-origin: left top;
+        border: 1px solid #cfcfcf;// var(--q-color-border-color-24);
+        border-radius: 0.16rem;
+        overflow: hidden;
+      }
+    }
+
+    .font-weg {
+      padding-left: 0;
+    }
+
+    .base-font-weg {
+      min-height: 0.34rem;
+      // color: var((--q-gb-t-c-18));
+      color: var(--q-gb-t-c-4);
+      font-size: 0.16rem;
+      font-weight: 500;
+      font-family: Roboto;
+    }
+    .corner-ball-weg{
+      color: var(--q-gb-t-c-18);
+    }
+
+    .vir-sport {
+      height: 0.34rem;
+      line-height: 0.34rem;
+      color: var((--q-gb-t-c-18))
+    }
+
+    .corner-ball-weg {
+      padding-left: 0;
+
+      &::after {
+        left: -0.18rem;
+      }
+    }
+
+    .basic-score {
+      padding-left: 0;
+      color: var((--q-gb-t-c-19))
+    }
+
+    :deep([class^=temp]) {
+      // padding-bottom: 0.04rem;
+
+      .rad-style {
+        position: relative;
+        // background-color: var(--q-match-page-bg-color-107);
+        overflow: initial;
+      }
+
+      .play-box {
+        //margin-bottom: 0;
+        color: var(--q-gb-t-c-19);
+        margin: 0.04rem;
+        background: var(--q-gb-bg-c-28);
+      }
+
+      .play-box,
+      .play-box-sty,
+      .play-box-style {
+        &.win {
+          // background-color: var(--q-color-page-bg-color-14) !important;
+        }
+        &.details-bg5 {
+          background: var(--q-gb-bg-c-37) !important;
+        }
+      }
+
+      .title-style {
+        border-radius: 0.08rem 0.08rem 0 0;
+      }
+
+      .title-style, .content > .tittle {
+        height: 0.35rem;
+        line-height: 0.35rem;
+        margin-bottom: 0;
+        background-color: var(--q-match-page-bg-color-105);
+        color: var(--q-gb-t-c-19);
+      }
+
+      .fam {
+        height: 0.35rem;
+        line-height: 0.35rem;
+      }
+
+      .item-wrap {
+        border-radius: 0;
+      }
+
+      .bor-style {
+        border-bottom: 1px solid var(--q-gb-bd-c-5);
+      }
+
+      .margin-other {
+        .play-box-style {
+          border-top: 1px solid var(--q-gb-bd-c-5);
+          justify-content: center;
+
+          .details_t_color6 {
+            margin-right: 0.1rem;
+            color: var(--q-gb-t-c-11);
+          }
+        }
+      }
+
+      .item-wrap, &:not(.temp5) > .row:not(.title-style) {
+        position: relative;
+        overflow: initial;
+
+        &::after {
+          content: "";
+          pointer-events: none;
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 200%;
+          height: 200%;
+          -webkit-transform: scale(0.5);
+          transform: scale(0.5);
+          -webkit-transform-origin: left top;
+          transform-origin: left top;
+          // border: 1px solid var(--q-gb-bd-c-5);
+          border-radius: 0; //复刻版不需要 圆角 todo
+          overflow: hidden;
+        }
+      }
+
+      .show-more.play-box-style {
+        border-radius: 0 0 0.08rem 0.08rem;
+      }
+
+      .item-col > div:last-child {
+        .bor-style {
+          border-bottom: 0 !important;
+        }
+      }
+
+      .item-col > .bor-style {
+        border-bottom: 0 !important;
+      }
+
+      .bet-box-bg {
+        height: 0.52rem;
+      }
+    }
+
+    :deep(.temp0) {
+      // background-color: var(--q-gb-bg-c-29);
+
+      .bor-style {
+        border-bottom: 0;
+        border-radius: 4px;
+
+        &.has-more {
+          border-radius: 4px 4px 0 0;
+        }
+      }
+
+      .show-more {
+        margin-top: 0;
+      }
+    }
+
+    :deep(.temp1) {
+      .item-wrap {
+        > div {
+          border-radius: 4px;
+          overflow: hidden;
+        }
+      }
+    }
+
+    :deep(.temp3) {
+      .hairline-border {
+        .item-wrap {
+          border-radius: 4px;
+          overflow: hidden;
+
+          &::after {
+            border: 0;
+          }
+        }
+      }
+
+      .bor-style {
+        border-bottom: 0;
+      }
+    }
+
+    :deep(.temp5), .temp6 {
+      .col {
+        .play-box-style {
+          margin-bottom: 0;
+        }
+
+        > div {
+          // margin-bottom: 1px;
+        }
+      }
+
+      .content-wrapper {
+        border-radius: 4px;
+        overflow: hidden;
+      }
+    }
+
+    :deep(.temp4) {
+      background-color: transparent;
+
+      .item-wrap {
+        border-bottom-left-radius: 4px;
+        border-bottom-right-radius:4px;
+        overflow: hidden;
+
+        &::after {
+          border: 0;
+        }
+      }
+
+      .remark {
+
+        flex: 0 0 auto;
+        margin-right: 0.1rem;
+        color: var(--q-gb-t-c-19);
+      }
+
+      .is-like-bodan-play {
+        .remark {
+          margin-right: 0;
+        }
+        .odds-wrap {
+          flex: 0 0 .2rem;
+        }
+      }
+
+      .odds-wrap {
+        width: unset;
+        flex: 0 0 0.31rem;
+      }
+    }
+
+    :deep(.temp5) {
+      .head {
+        height: 0.34rem;
+        line-height: 0.34rem;
+        margin-bottom: 0;
+        background-color: var(--q-match-page-bg-color-105);
+      }
+
+      > .row::after {
+        border: 0;
+      }
+
+      .play-box-style {
+
+      }
+
+      .col {
+        .play-box-style {
+          // margin-bottom: 1px;
+          border-bottom: 1px solid var(--q-gb-bd-c-5);
+          background: var(--q-gb-bg-c-28);
+        }
+      }
+    }
+
+    :deep(.temp6) {
+      .item-wrap {
+        border-radius: 0 0 4px 4px;
+        overflow: hidden;
+        &::after {
+          border: 0;
+        }
+      }
+    }
+
+    :deep(.temp7) {
+      .item-wrap {
+        border-radius: 0 0 4px 4px;
+        overflow: hidden !important;
+
+        &::after {
+          border: 0;
+        }
+      }
+    }
+
+    :deep(.temp9) {
+      > .row::after {
+        border: 0 !important;
+      }
+
+      .virtual-bet-wrapper {
+        padding: 0.1rem 0.08rem;
+        border-radius: 4px;
+        overflow: hidden !important;
+      }
+    }
+
+    :deep(.temp10) {
+      .virtual-bet-wrapper {
+        padding: 0.1rem 0.08rem;
+      }
+    }
+
+    :deep(.temp11) {
+      .virtual-bet-wrapper {
+        padding: 0.1rem 0.08rem;
+      }
+    }
+
+    :deep(.temp13) {
+      .rad-style {
+        border-radius: 4px;
+        overflow: hidden;
+        // background-color: var(--q-gb-bg-c-28);
+        ::after {
+          border: 0;
+        }
+      }
+
+      .bor-style {
+        // border-bottom: 0;
+      }
+    }
+
+    :deep(.temp14) {
+      background-color: transparent;
+
+      .content {
+        border-radius: 0;
+
+        &:first-child {
+          border-top-left-radius: 4px;
+          border-top-right-radius: 4px;
+        }
+
+        &:last-child {
+          border-bottom-left-radius: 4px;
+          border-bottom-right-radius: 4px;
+        }
+
+        .row-bet-wrapper {
+          border-radius: 0;
+        }
+      }
+
+      > .content:not(:last-child) {
+        margin-bottom: 0.04rem;
+      }
+
+      .row-bet-wrapper {
+        border-radius: 0 0 4px 4px;
+        overflow: hidden;
+      }
+    }
+
+    :deep(.temp15) {
+      > .hairline-border {
+
+        .sigle-item-border{
+          border-radius: 4px;
+        }
+        .many-item-border {
+          background: var(--q-match-page-bg-color-104);
+          &:first-child{
+            border-radius: 4px 4px 0 0;
+          }
+          &:last-child{
+            border-radius: 0 0 4px 4px;
+          }
+        }
+
+        > .row {
+          overflow: hidden;
+        }
+      }
+    }
+
+    :deep(.temp16) {
+      background-color: transparent;
+
+      .content {
+        border-radius: 0;
+
+        &:first-child {
+          border-top-left-radius: 4px;
+          border-top-right-radius: 4px;
+        }
+
+        &:last-child {
+          border-bottom-left-radius:4px;
+          border-bottom-right-radius:4px;
+        }
+
+        .row-bet-wrapper {
+          border-radius: 0;
+          background: var(--q-match-page-bg-color-104);
+        }
+      }
+
+      > .content:not(:last-child) {
+        margin-bottom: 0.04rem;
+      }
+
+      .row-bet-wrapper {
+        border-radius: 0 0 4px 4px;
+        overflow: hidden;
+      }
+    }
+
+    &.esports-play {
+      :deep([class^=temp]) {
+        background-color: transparent;
+
+        &:not(.temp5) > .row:not(:first-child) {
+          margin-top: 0.04rem;
+        }
+      }
+    }
+
+    &.result-details {
+      :deep([class^=temp]) {
+        .bor-style {
+          // border-bottom: 0;
+        }
+      }
+    }
+  }
+}

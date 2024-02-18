@@ -1,0 +1,856 @@
+/*
+ * @Description: 详情页模板集合
+ */
+// [class*=theme0] {
+  .night-style {
+    color: var(--q-color-fs-color-123);
+  }
+  .category {
+    .match-recommend-wrapper {
+      background: var(--q-gb-bg-c-17);
+    }
+
+    /* ************** 单项玩法集合 *************** -S */
+    .tournament-play-outer {
+      background: var(--q-gb-bg-c-17);
+    }
+
+    /* ************** 单项玩法集合 *************** -E */
+
+    /* ************** 玩法名称 *************** -S */
+    .text-color {
+      color: var(--q-gb-t-c-18);
+      .mat-info, .mat-info2 {
+        background-color: var(--q-match-page-bg-color-104);
+        border: .01rem solid var(--q-color-border-color-42);
+        color: var(--q-color-fs-color-38);
+      }
+    }
+
+    /* ************** 玩法名称 *************** -E */
+
+    /* ************** 玩法名下面的单横线 *************** -S */
+    .bottom-style {
+      &:after {
+        border-bottom: 1px solid var(--q-color-border-color-46);
+      }
+    }
+
+    /* ************** 玩法名下面的单横线 *************** -E */
+    .special-style {
+      color: var(--q-color-fs-color-26);
+    }
+    .base-font-weg {
+      &:after {
+        background: var(--q-gb-bd-c-13);
+      }
+    }
+    .corner-ball-weg {
+      &:after {
+        background: var(--q-gb-bg-c-13);
+      }
+    }
+    .fat-sty {
+      &:after {
+        background: var(--q-gb-bd-c-13);
+      }
+    }
+    .basic-score {
+      color: var(--q-color-com-fs-color-11);
+    }
+  }
+  /*************** temp0开始 *************** -S*/
+  :deep(.temp0) {
+    .play-box-style {
+      background:var(--q-color-page-bg-color-2);
+    }
+    .bor-btm {
+      border-bottom: 1px solid var(--q-gb-bd-c-5);
+    }
+    .remark {
+      color:  var(--q-match-fs-color-13);
+    }
+    .active {
+      background: var(--q-color-com-bg-color-3) !important;
+    }
+    .lock-style { 
+      background: var(--q-color-com-bg-color-26);
+    }
+    .size-color {
+      color:  var(--q-color-fs-color-25);
+    }
+    .gray {
+      color:var(--q-gb-t-c-13);
+    }
+    .white_text {
+      color:var(--q-gb-t-c-18);
+    }
+    .details_color {
+      background:var(--q-gb-bg-c-28);
+    }
+    .win .odds-new2 {
+      color: var(--q-gb-t-c-21) !important;
+    }
+    .size-color-imp {
+      color:var(--q-gb-t-c-13) !important;
+    }
+    .odds-on {
+      color:var(--q-gb-t-c-11);
+    }
+  }
+  .tournament-play-outer {
+    .temp0 {
+      .pack-up {
+        border-top: 1px solid var(--q-color-border-color-46);
+      }
+    }
+  }
+  /*************** temp0结束 *************** -E*/
+
+  /*************** temp1开始 *************** -S*/
+  .temp1 {
+    .play-box-style {
+      background:var(--q-color-page-bg-color-2);
+    }
+    .remark {
+      color: var(--q-color-fs-color-26);
+    }
+    .active {
+      background: var(--q-color-com-bg-color-3);
+    }
+    .lock-style {
+      background: var(--q-color-com-bg-color-26);
+    }
+    .white_text {
+      .led {
+        color:var(--q-gb-t-c-18) !important;
+      }
+
+      color:var(--q-gb-t-c-18) !important;
+    }
+    .details_color {
+      background:var(--q-color-page-bg-color-2);
+    }
+    .led {
+      color: var(--q-match-fs-color-13);
+    }
+    .win {
+      .led {
+        color:  var(--q-color-fs-color-42);
+      }
+    }
+    .os-led {
+      color: var(--q-color-com-fs-color-11);
+    }
+    .warp {
+      &:after {
+        background:  var(--q-gb-bd-c-8);
+      }
+    }
+    .first-rad {
+      &:after {
+        background: var(--q-color-page-bg-color-12);
+      }
+    }
+    .result-style {
+      border-bottom: 0.01rem solid var(--q-color-border-color-1);
+    }
+    .win .odds-new2 {
+      color: var(--q-gb-t-c-21) !important;
+    }
+  }
+
+  /*************** temp1结束 *************** -E*/
+
+  /*************** temp2开始 *************** -S*/
+  .temp2 {
+    .play-box {
+      background:var(--q-color-page-bg-color-2);
+      .ellipsis {
+        color:var(--q-match-fs-color-13);
+      }
+    }
+    .active_play {
+      color:var(--q-gb-t-c-18);
+      background-color: var(--q-gb-bd-c-13) !important;
+      .size-color {
+        color:var(--q-gb-t-c-18);
+      }
+      .ellipsis {
+        color:var(--q-gb-t-c-18);
+      }
+    }
+  }
+  .temp51 {
+    .row {
+      &:not(:first-child) {
+        border-top: 1px solid var(--q-gb-bd-c-7);
+      }
+      .col:first-child {
+        border-right: 1px solid var(--q-gb-bd-c-7);
+      }
+    }
+  }
+  .result-details {
+    .temp2 {
+      .row:not(:first-child) {
+        border-top: 1px solid var(--q-gb-bd-c-7);
+      }
+    }
+  }
+  /*************** temp2结束 *************** -E*/
+
+  /*************** temp3开始 *************** -S*/
+  :deep(.temp3) {
+    .title-style {
+      color:  var(--q-color-fs-color-26);
+    }
+    .bor-style {
+      border-bottom: 1px solid var(--q-gb-bd-c-7);
+    }
+    .play-box-style {
+      background:var(--q-color-page-bg-color-2);
+    }
+    .play-box-sty {
+      background:var(--q-color-page-bg-color-2);
+    }
+    .active {
+      background: var(--q-color-com-bg-color-3);
+    }
+    .lock-style {
+      background: var(--q-color-com-bg-color-26);
+    }
+    .white_text {
+      color:var(--q-gb-t-c-18) !important;
+    }
+    // .details_color {
+    //   background:var(--q-color-page-bg-color-2);
+    // }
+    .details_t_color6 {
+      color: var(--q-gb-t-c-11);
+    }
+    .warp {
+      &:after {
+        background:  var(--q-gb-bd-c-8);
+      }
+    }
+    .first-rad {
+      &:after {
+        background: var(--q-color-page-bg-color-26);
+      }
+    }
+    .fam {
+      color: var(--q-gb-t-c-3);
+    }
+    .win .odds-new2 {
+      color: var(--q-gb-t-c-21) !important;
+    }
+  }
+  .tournament-play-outer {
+    .item-wrap {
+      > .item2 {
+        margin-right: 0;
+        border-right: 1px solid var(--q-gb-bd-c-7);
+        border-top: 1px solid var(--q-gb-bd-c-7);
+        &:first-child {
+          border-top: 0;
+        }
+        &:nth-child(2) {
+          border-top: 0;
+        }
+      }
+    }
+  }
+
+  /*************** temp3结束 *************** -E*/
+
+  /*************** temp4开始 *************** -S*/
+  :deep(.temp4) {
+    .title-style {
+      color:  var(--q-color-fs-color-26);
+    }
+    .play-box-style {
+      background:var(--q-color-page-bg-color-2);
+    }
+    .margin-other {
+      .details_t_color6 {
+        color:  var(--q-gb-t-c-11) !important;
+      }
+    }
+    .bor-style {
+      border-bottom: 1px solid var(--q-gb-bd-c-7);
+    }
+    .active {
+      background: var(--q-color-com-bg-color-3);
+    }
+    .lock-style {
+      background: var(--q-color-com-bg-color-26);
+    }
+    .white_text {
+      color:var(--q-gb-t-c-18) !important;
+    }
+    .details_color {
+      background:var(--q-gb-bg-c-28);
+    }
+    .warp {
+      &:after {
+        background:  var(--q-gb-bd-c-8);
+      }
+    }
+    .first-rad {
+      &:after {
+        background: var(--q-gb-bd-c-13);
+      }
+    }
+    .fam {
+      color: var(--q-match-fs-color-13);
+    }
+    .win  .odds-new2 {
+      color: var(--q-gb-t-c-21) !important;
+    }
+    .size-color {
+      color:var(--q-gb-t-c-11);
+    }
+    .size-color-imp {
+      // color:var(--q-gb-t-c-13) !important;
+    }
+  }
+
+  /*************** temp4结束 *************** -E*/
+
+  /*************** temp5开始 *************** -S*/
+  :deep(.temp5) {
+    .head {
+      color: var(--q-match-fs-color-13);
+    }
+    .play-box-style {
+      background: var(--q-gb-bg-c-28);
+      color: var(--q-gb-t-c-11) !important;
+    }
+    .font_color {
+      color:var(--q-gb-t-c-13);
+    }
+    .remark {
+      color: var(--q-color-com-fs-color-11);
+    }
+    .win  .odds-new2 {
+      color: var(--q-gb-t-c-21) !important;
+    }
+    .active-play {
+      color:var(--q-gb-t-c-18) ;
+      background-color: var(--q-match-page-bg-color-10) !important;
+
+    }
+  }
+  .tournament-play-outer {
+    .temp5 {
+      .content-wrapper {
+        .row:not(.head) {
+          background: var(--q-match-page-bg-color-107);
+        }
+        .play-box-style {
+           background-color:var(--q-match-page-bg-color-104);
+           color: var(--q-gb-t-c-13);
+        }
+      }
+    }
+  }
+  /*************** temp5结束 *************** -E*/
+
+  /*************** temp6开始 *************** -S*/
+  .temp6 {
+    .title-style {
+      color: var(--q-match-fs-color-13);
+    }
+    .play-box-style {
+      background:var(--q-color-page-bg-color-2);
+    }
+    .bor-style {
+      border-bottom: 1px solid #999999; // var(--q-detials-color-7) !important;
+    }
+    .remark {
+      color: var(--q-color-fs-color-26)
+    }
+    .active {
+      background: var(--q-color-com-bg-color-3);
+    }
+    .lock-style {
+      background: var(--q-color-com-bg-color-26);
+    }
+    .white_text {
+      color:var(--q-gb-t-c-18) !important;
+    }
+    .details_color {
+      background:var(--q-color-page-bg-color-2);
+    }
+    .warp {
+      &:after {
+        background:  var(--q-gb-bd-c-8);
+      }
+    }
+    .first-rad {
+      &:after {
+        background: var(--q-color-page-bg-color-12);
+      }
+    }
+    .win  .odds-new2 {
+      color: var(--q-gb-t-c-21) !important;
+    }
+    .size-color {
+      color: var(--q-color-com-fs-color-11);
+    }
+    .is-score {
+      color:var(--q-gb-t-c-13);
+    }
+    .item-col:first-child {
+      border-right: 1px solid var(--q-gb-bd-c-7);
+    }
+  }
+  .tournament-play-outer {
+    .temp6 {
+      .col.col-super-vip1 {
+        > div {
+          border-bottom: 1px solid var(--q-color-border-color-46);
+        }
+      }
+      .show-more.play-box-style {
+        border-top: 1px solid var(--q-color-border-color-46);
+      }
+    }
+  }
+  /*************** temp6结束 *************** -E*/
+
+  /*************** temp7开始 *************** -S*/
+  :deep(.temp7) {
+    .title-style {
+      color: var(--q-color-fs-color-26);
+    }
+    .play-box-style {
+      background:var(--q-color-page-bg-color-2);
+    }
+    .play-box-style {
+      background:var(--q-color-page-bg-color-2);
+    }
+    .play-box-style {
+      background:var(--q-color-page-bg-color-2);
+    }
+    .bor-style {
+      border-bottom: 1px solid var(--q-gb-bd-c-7);
+    }
+    .remark {
+      color: var(--q-color-fs-color-26);
+    }
+    .active {
+      background: var(--q-color-com-bg-color-3);
+    }
+    .lock-style {
+      background: var(--q-color-com-bg-color-26);
+    }
+    .white_text {
+      color:var(--q-gb-t-c-18) !important;
+    }
+    .details_color {
+      background:var(--q-gb-bg-c-28);
+    }
+    .warp {
+      &:after {
+        background:  var(--q-gb-bd-c-8);
+      }
+    }
+    .first-rad {
+      &:after {
+        background: var(--q-color-page-bg-color-12);
+      }
+    }
+    .fam {
+      color: var(--q-match-fs-color-13);
+    }
+    .win  .odds-new2 {
+      color: var(--q-gb-t-c-21) !important;
+    }
+    .size-color {
+      color:var(--q-gb-t-c-11);
+    }
+    .size-color-imp {
+      color:var(--q-gb-t-c-13) !important;
+    }
+  }
+
+  /*************** temp7结束 *************** -E*/
+
+  /*************** temp8开始 *************** -S*/
+  .temp8 {
+    /*************** 每项热门开始 *************** -S*/
+    .special {
+      // background:var(--q-color-page-bg-color-2);
+      background: var(--q-match-page-bg-color-104);
+      &::after {
+        border-color: var(--q-gb-bd-c-3) !important;
+      }
+    }
+
+    /*************** 每项热门结束 *************** -E*/
+    /*************** 每项team开始 *************** -S*/
+    .team-name {
+      color: var(--q-gb-t-c-4);
+    }
+
+    /*************** 每项team结束 *************** -E*/
+    /*************** 每项odds开始 *************** -S*/
+    .team-odds {
+      color: var(--q-gb-t-c-4);
+    }
+
+    /*************** 每项odds结束 *************** -E*/
+    .team-odds2 {
+      background-color: var(--q-gb-bg-c-17);
+      color:var(--q-gb-t-c-18);
+    }
+  }
+
+  /*************** temp8结束 *************** -E*/
+
+  /*************** temp9开始 *************** -S*/
+  .temp9 {
+    .champion-item {
+      background: var(--q-color-page-bg-color-119);
+      border-top: 1px solid  var(--q-gb-bd-c-7);
+      border-right: 1px solid  var(--q-gb-bd-c-7);
+      &:nth-child(2n) {
+        border-right: 0px solid  var(--q-color-border-color-38);
+      }
+      .temp9-name {
+        color: var(--q-gb-t-c-4);
+      }
+      .temp9-ov {
+        color: var(--q-gb-t-c-4);
+      }
+    }
+    .champion-item2 {
+      background-color: var(--q-gb-bg-c-17);
+      .temp9-name,
+      .temp9-ov {
+        color:var(--q-gb-t-c-18) !important;
+      }
+    }
+    .virtual-bet-wrapper {
+      background:var(--q-match-page-bg-color-104);
+    }
+  }
+  /*************** temp9结束 *************** -E*/
+
+  /*************** temp10开始 *************** -S*/
+  .temp10 {
+    background: var(--q-gb-bg-c-17);
+    .virtual-bet-wrapper {
+      // background:var(--q-color-page-bg-color-2);
+      background:var(--q-match-page-bg-color-104);
+      .item-height {
+        background: var(--q-color-page-bg-color-9);
+      }
+      .blue-color {
+        background-color: var(--q-gb-bd-c-13);
+      }
+    }
+    /*************** 白色下分割线开始 *************** -S*/
+    .border-bot {
+      border-top: 1px solid  var(--q-color-border-color-37);
+    }
+    /*************** 白色下分割线结束 *************** -E*/
+    /*************** 赔率开始 *************** -S*/
+    .odds-style {
+      color: var(--q-gb-t-c-4);
+    }
+    /*************** 赔率结束 *************** -E*/
+    .item-height {
+      border-right: 1px solid  var(--q-gb-bd-c-7);
+    }
+    .blue-color {
+      background: var(--q-gb-bg-c-17);
+      .odds-style {
+        color:var(--q-gb-t-c-18) !important;
+      }
+      .virtual-num2,
+      .virtual-num4 {
+        color:  var(--q-color-fs-color-10);
+      }
+    }
+  }
+  /*************** temp10结束 *************** -E*/
+
+  /*************** temp11开始 *************** -S*/
+  /*  背景色 */
+  .temp11 {
+    .virtual-bet-wrapper {
+      // background:var(--q-color-page-bg-color-2);
+      background:var(--q-match-page-bg-color-104);
+      .item-style2 {
+        background: var(--q-color-page-bg-color-9);
+      }
+      .blue-color {
+        background-color: var(--q-gb-bd-c-13);
+      }
+    }
+    /*************** 白色下分割线开始 *************** -S*/
+    .border-bot {
+      border-top: 1px solid  var(--q-color-border-color-37);
+    }
+
+    /*************** 白色下分割线结束 *************** -E*/
+    /*************** 赔率开始 *************** -S*/
+    .odds-style {
+      color: var(--q-gb-t-c-4);
+    }
+
+    /*************** 赔率结束 *************** -E*/
+    .item-style2 {
+      border-right: 1px solid  var(--q-gb-bd-c-7);
+    }
+    .blue-color {
+      background: var(--q-gb-bg-c-17);
+      .odds-style {
+        color:var(--q-gb-t-c-18) !important;
+      }
+    }
+  }
+  /*************** temp11结束 *************** -E*/
+
+  /*************** temp12开始 *************** -S*/
+  .temp12 {
+    .bor-style {
+      border-top: 1px solid var(--q-gb-bd-c-7);
+      // border-top: 1px solid var(--q-color-border-color-46);
+    }
+    .bgm-color {
+      background:var(--q-color-page-bg-color-2);
+    }
+    .troop-name {
+      color: var(--q-gb-t-c-3);
+    }
+    .player-name {
+      color: var(--q-color-com-fs-color-11);
+    }
+    .on-name-osn {
+      color: var(--q-color-com-fs-color-11);
+    }
+    .on-color {
+      color:var(--q-gb-t-c-13);
+    }
+    .bet-click {
+      background-color: var(--q-gb-bg-c-17) !important;
+      .on-color {
+        color:var(--q-gb-t-c-18) !important;
+      }
+    }
+    .win  .odds-new2 {
+      color: var(--q-gb-t-c-21) !important;
+    }
+  }
+  /*************** temp12结束 *************** -E*/
+  /*************** temp13开始 *************** -S*/
+  .temp13 {
+    .slide-wrap {
+      background:var(--q-color-page-bg-color-2);
+    }
+    .title-style {
+      color: var(--q-gb-t-c-3);
+    }
+    .play-box-style {
+      background:var(--q-color-page-bg-color-2);
+    }
+    .play-box-sty {
+      background:var(--q-color-page-bg-color-2);
+    }
+    .warp {
+      &:after {
+        background:  var(--q-gb-bd-c-8);
+      }
+    }
+    .remark {
+      color:var(--q-gb-t-c-13);
+    }
+    .remark-line1 {
+      color: var(--q-color-com-fs-color-11);
+    }
+    .odds-wrap {
+      background:var(--q-color-page-bg-color-2);
+      &:after {
+        background:  var(--q-gb-bd-c-8);
+      }
+    }
+    .first-rad {
+      &:after {
+        background: var(--q-color-page-bg-color-12);
+      }
+    }
+    .active {
+      background: var(--q-color-com-bg-color-3);
+    }
+    .play-box-style-line1 {
+       background-color:var(--q-color-page-bg-color-2) !important;
+    }
+    .details-color {
+      background:var(--q-color-page-bg-color-2);
+    }
+    .white_text {
+      color:var(--q-gb-t-c-18) !important;
+      .ver-ali-top {
+        color:var(--q-gb-t-c-18) !important;
+      }
+    }
+    .play-name {
+      background:var(--q-match-page-bg-color-104);
+      color: var(--q-match-fs-color-13) ;
+    }
+    .ver-ali-top {
+      color: var(--q-color-com-fs-color-11);
+    }
+    .win  .odds-new2 {
+      color: var(--q-gb-t-c-21) !important;
+    }
+    .bor11-style {
+      border-bottom: 1px solid red;
+    }
+    .odd-color {
+      color:var(--q-gb-t-c-13) !important;
+    }
+    .size-color {
+      color:var(--q-gb-t-c-13);
+    }
+    .size-color-wit {
+      color:var(--q-gb-t-c-18);
+    }
+    .size-color-imp {
+      color:var(--q-gb-t-c-13) !important;
+    }
+    [class*="slide_icon_"] {
+      background: url($SCSSPROJECTPATH + '/image/common/slide_icon_y0.svg') no-repeat  center / cover;  //todo
+    }
+  }
+  /*************** temp13结束 *************** -E*/
+  /*************** temp14开始 *************** -S*/
+  :deep(.temp14), :deep(.temp16) {
+    .content:not(:last-child) {
+      // border-bottom: 1px solid var(--q-gb-bd-c-7);
+      padding-bottom: 0.09rem;
+      margin-bottom: 0.2rem;
+    }
+    .tittle {
+      color: #999999; //var(--q-detials-color-7) ;
+    }
+    .play-box {
+      background:var(--q-gb-bg-c-28);
+    }
+    .item-son {
+      color: var(--q-gb-t-c-11);
+    }
+    .active {
+      background: var(--q-match-page-bg-color-10) !important;
+      .remark {
+        color:var(--q-gb-t-c-18);
+        span {
+          color:var(--q-gb-t-c-18);
+        }
+      }
+    }
+  }
+  .tournament-play-outer {
+    .temp14, .temp16 {
+      .row-bet-wrapper {
+        background-color: var(--q-match-page-bg-color-104);
+        .col {
+          // .bet-box-bg:not(:first-child) {
+          //   border-top: 1px solid var(--q-gb-bd-c-7);
+          // }
+          .play-box{
+            border-bottom: 1px solid var(--q-gb-bd-c-7);
+          }
+        }
+      }
+    }
+  }
+  /*************** temp14结束 *************** -E*/
+  /*************** temp15开始 *************** -S*/
+  .temp15 {
+    .remark {
+      color: var(--q-color-fs-color-50);
+    }
+    .win  .odds-new2 {
+      color: var(--q-gb-t-c-21) !important;
+    }
+    .play-box {
+      background:var(--q-color-page-bg-color-2);
+      // 修复：42811 【日常】【生产】【H5】【兼容】小米8赛事详情界面准确进球数的分隔线过粗，与其他分割线不一致，建议优化
+      border-bottom: 1px solid var(--q-gb-bd-c-7);
+    }
+    .active-play {
+      color:var(--q-gb-t-c-18);
+      background-color: var(--q-match-page-bg-color-10) !important;
+      & > div {
+        color:var(--q-gb-t-c-18);
+      }
+    }
+    .play-box.every5.border-top {
+      // 修复：42811 【日常】【生产】【H5】【兼容】小米8赛事详情界面准确进球数的分隔线过粗，与其他分割线不一致，建议优化
+      // border-top: 1px solid var(--q-gb-bd-c-7);
+      & ~ i.border-top {
+        // 修复：42811 【日常】【生产】【H5】【兼容】小米8赛事详情界面准确进球数的分隔线过粗，与其他分割线不一致，建议优化
+        // border-top: 1px solid var(--q-gb-bd-c-7);
+      }
+    }
+  }
+// }
+
+/*************** temp15结束 *************** -E*/
+// [class*=theme0] {
+  .virtual-sport {
+    .tournament-play-outer {
+    }
+  }
+  .tournament-play-outer {
+    [class^="temp"] {
+      .show-more.play-box-style {
+         background-color:var(--q-color-page-bg-color-2);
+      }
+      .bet-box-bg {
+        //  background-color:var(--q-color-page-bg-color-2);
+        background-color: var(--q-match-page-bg-color-104);
+      }
+      &.temp4,
+      &.temp5,
+      &.temp6,
+      &.temp14,
+      &.temp16
+      &.temp15 {
+        &::after {
+          border-color: var(--q-gb-bd-c-3) !important;
+        }
+      }
+      .item-wrap,
+      .rad-style {
+        &::after {
+          border-color: var(--q-gb-bd-c-3) !important;
+        }
+      }
+      &:not(.temp5) > .row:not(.title-style)::after {
+        border-color: var(--q-gb-bd-c-3) !important;
+      }
+      .play-name,
+      .slide-wrap,
+      .details-color,
+      .details_color,
+      .play-box {
+        //  background-color:var(--q-color-page-bg-color-2);
+        background:var(--q-match-page-bg-color-104);
+        // border-radius: 4px;
+      }
+    }
+    .temp14, .temp16 {
+      .content:not(:last-child) {
+        border-bottom: 0;
+        padding-bottom: 0;
+        margin-bottom: 0;
+      }
+    }
+  }
+// }

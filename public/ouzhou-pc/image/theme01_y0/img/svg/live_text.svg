@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="26px" height="12px" viewBox="0 0 26 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>live</title>
+    <defs>
+        <linearGradient x1="100%" y1="39.3491124%" x2="0%" y2="60.6508876%" id="linearGradient-1">
+            <stop stop-color="#3D72FA" offset="0%"></stop>
+            <stop stop-color="#62B6FF" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Y0蓝白版备份-3" transform="translate(-153.000000, -629.000000)">
+            <g id="编组-62备份" transform="translate(0.000000, 101.000000)">
+                <g id="编组-71" transform="translate(0.000000, 250.000000)">
+                    <g id="编组-51" transform="translate(0.000000, 266.000000)">
+                        <g id="编组-3" transform="translate(153.000000, 12.000000)">
+                            <rect id="矩形备份" fill="url(#linearGradient-1)" x="0" y="0" width="26" height="12" rx="6"></rect>
+                            <path d="M8.83005181,9 L8.83005181,7.95505618 L6.15233161,7.95505618 L6.15233161,3 L5,3 L5,9 L8.83005181,9 Z M10.919171,9 L10.919171,3 L9.76683938,3 L9.76683938,9 L10.919171,9 Z M14.442487,9 L16.3989637,3 L15.1968912,3 L14.011399,6.91011236 L12.8259067,3 L11.6321244,3 L13.5803109,9 L14.442487,9 Z M21,9 L21,7.95505618 L18.2642487,7.95505618 L18.2642487,6.49719101 L20.5937824,6.49719101 L20.5937824,5.45224719 L18.2642487,5.45224719 L18.2642487,4.04494382 L21,4.04494382 L21,3 L17.1119171,3 L17.1119171,9 L21,9 Z" id="LIVE" fill="#FFFFFF" fill-rule="nonzero"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,199 @@
+  :deep(.serach-wrap) {
+    .init-wrap .init-row .line,
+    .type-item .type-wrap .line {
+      background-color: var(--q-gb-t-c-16);
+    }
+
+
+    /* 暂无数据 */
+    .load-data-wrap .empty-wrap {
+      .text-center {
+        color: var(--q-gb-t-c-8); // #666666
+      }
+
+      .nodata-text2 {
+        color: var(--q-gb-t-c-10); // #888888
+      }
+    }
+
+    /*  搜索框包装器 */
+    .wrap-input {
+
+      // background-color: var(--q-gb-bg-c-11); // #fff
+      .search-icon-container {
+        background-color: transparent;
+      }
+
+      .search-icon {
+        color: rgb(171, 186, 200);
+      }
+
+      /*  搜索框内部容器 */
+      .input-wrap {
+
+        // .search-input {
+        //   color: #fff;
+        // }
+        .clear_input {
+          .clear_input_btn {
+            &::before {
+              color: var(--q-gb-t-c-10); // #888
+            }
+          }
+
+          &:hover {
+            .clear_input_btn {
+              &::before {
+                color: var(--q-gb-t-c-6); // #555
+              }
+            }
+          }
+        }
+      }
+    }
+
+    /*  搜索结果区域 */
+    .bottom-wrap {
+
+      // background-color: rgba(20, 23, 29, 0.8);
+      .serach-background {
+        background: var(--q-gb-bg-c-11); // #fff
+
+        .init-wrap {
+          .init-row {
+            color: var(--q-gb-t-c-8); // #666
+            border-bottom-color: var(--q-header-search-color-5);
+
+            .clear-history {
+              color: var(--q-gb-t-c-8);
+
+              &:hover {
+                color: var(--q-gb-t-c-8);
+              }
+            }
+          }
+        }
+
+        .histroy-item {
+          color: var(--q-gb-t-c-8);
+
+          .ellipsis {
+            color: var(--q-gb-t-c-8);
+          }
+
+          .search_deleteIcon {
+            &:before {
+              color: var(--q-gb-t-c-13); // #ccc
+            }
+          }
+
+          &:hover {
+            background-color: var(--q-header-search-color-5);
+            color: var(--q-gb-t-c-16);
+
+            .ellipsis {
+              color: var(--q-gb-t-c-16);
+            }
+
+            .search_deleteIcon {
+              &:before {
+                color: var(--q-gb-t-c-10); // #888
+              }
+            }
+          }
+        }
+
+        .type-item {
+          .type-wrap {
+            border-bottom-color: var(--q-header-search-color-5);
+
+            .type-name {
+              color: var(--q-gb-t-c-8);
+            }
+          }
+
+          .text-wrap {
+            .process-name {
+              color: var(--q-gb-t-c-8);
+            }
+
+            .score {
+              color: var(--q-gb-t-c-16);
+            }
+
+            .timer-layout {
+              color: var(--q-gb-t-c-8);
+            }
+          }
+
+          .league-item {
+            .league-wrap {
+              .name-wrap {
+                .league-name {
+                  color: var(--q-header-search-color-1); //var(--q-gb-t-c-8);
+
+                  &:hover {
+                    color: var(--q-gb-t-c-16);
+                  }
+                }
+
+                .league-total {
+                  color: var(--q-gb-t-c-8);
+                }
+              }
+            }
+
+            .match-item {
+              .team {
+                color: var(--q-gb-t-c-8); //var(--q-header-search-color-1);
+
+                &:hover {
+                  color: var(--q-gb-t-c-16);
+                }
+              }
+
+              .text-wrap {
+                .c-match-process {
+                  .date-wrap {
+                    color: var(--q-gb-t-c-8);
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
+      .c-keyword-related {
+        .item {
+          color: var(--q-gb-t-c-8);
+
+          .highlight {
+            color: var(--q-gb-t-c-16);
+          }
+
+          &:hover {
+            color: var(--q-gb-t-c-16);
+          }
+        }
+      }
+
+      /*  体育切换 */
+      .sports-tab {
+        background-color: var(--q-gb-bg-c-11); // #fff
+
+        // border-bottom-color: var(--q-header-search-color-5);
+        .tab-wrap {
+          .item-wrap {
+            .tab-item {
+              color: var(--q-gb-t-c-8);
+
+              &.active {
+                color: var(--q-header-search-color-1);
+              }
+            }
+          }
+        }
+      }
+    }
+  }

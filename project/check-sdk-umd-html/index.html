@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+ 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title> SDK 本地 调试   check-sdk-umd<</title>
+
+    <link rel="stylesheet" href="../../dist/client-sdk-build/style.css">
+  
+  </head>
+  <body>
+    <h1>本地开发检查验证打包后的  SDK ： umd 版本 的项目，原生 html 项目</h1>
+    <div id="ty-app-2" class="full-height"> </div>
+    <div id="ty-app-3" class="full-height"> </div>
+    <div id="ty-app-4" class="full-height"> </div>
+    <div id="ty-app-5" class="full-height"> </div>
+
+    <div id="ty-app" class="full-height"> </div>
+    <script src="../../dist/client-sdk-build/TY_JSSDK.umd.js"></script>
+    <script>
+      console.log('TY_JSSDK----------1111----',TY_JSSDK);
+     let ALL_COMPONENTS_NAMES =  TY_JSSDK.ALL_COMPONENTS_NAMES
+     console.log('ALL_COMPONENTS_NAMES----',ALL_COMPONENTS_NAMES);
+      TY_JSSDK.draw_component({
+        dom_id:"#ty-app-2" , component: ALL_COMPONENTS_NAMES[3], props:{}
+      })
+      TY_JSSDK.draw_component({
+        dom_id:"#ty-app-3" , component:ALL_COMPONENTS_NAMES[4], props:{}
+      })
+
+      TY_JSSDK.draw_component({
+        dom_id:"#ty-app-4" , component:ALL_COMPONENTS_NAMES[7], props:{}
+      })
+
+    </script>
+    <!-- <script type="module" src="./main.js"></script> -->
+  </body>
+</html>

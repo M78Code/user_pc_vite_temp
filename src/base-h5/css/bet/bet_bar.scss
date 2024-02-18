@@ -1,0 +1,22 @@
+[class*=theme0] {
+  .bet-bar {
+    background-color: var(--q-color-page-bg-color-72);
+    color:var(--q-color-fs-color-149);
+    background-image: var(--q-color-linear-gradient-bg-17);
+    .bet-num {
+      background-color: var(--q-color-page-bg-color-73);
+      color:  var(--q-color-fs-color-53);
+    }
+    .account-wrap {
+      &:after {
+        background:  var(--q-color-page-bg-color-20);
+      }
+    }
+    .account-p {
+      color:  var(--q-match-fs-color-15);
+    }
+    &::after {
+      background:  var(--q-color-page-bg-color-20);
+    }
+  }
+}

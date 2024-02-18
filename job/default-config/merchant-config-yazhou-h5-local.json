@@ -1,0 +1,33 @@
+{
+  "component":{
+    "TestComponent": {
+      "use_component": "TestComponent_2",
+       "params":{
+        "tableClass":"bg-deep-purple-14"
+       }
+    },
+    "Menu": {
+      "use_component": "H5MenuTemplate1",
+       "params":{
+        "tableClass":"bg-deep-purple-14"
+       }
+    }
+  },
+  "server_resource":{},
+  "css":{
+    "cathectic-text-color-4":{
+      "day":"",
+      "night":""
+    },
+    "chatroom-bd-color-3":{
+      "day":"",
+      "night":""
+    }
+  },
+  "assets":{
+    "pc-left-menu-bg-image":{
+      "day":"日间版素材地址",
+      "night":"夜间版素材地址"
+    }
+  }
+}

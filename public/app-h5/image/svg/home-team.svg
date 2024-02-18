@@ -1,0 +1,9 @@
+<svg width="24" height="30" viewBox="0 0 24 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path id="Ellipse 14" d="M24 12C24 18.6274 12 30 12 30C12 30 0 18.6274 0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12Z" fill="url(#paint0_linear_33163_118312)"/>
+<defs>
+<linearGradient id="paint0_linear_33163_118312" x1="12" y1="0" x2="12" y2="30" gradientUnits="userSpaceOnUse">
+<stop stop-color="#F4B762"/>
+<stop offset="1" stop-color="#E8750C"/>
+</linearGradient>
+</defs>
+</svg>

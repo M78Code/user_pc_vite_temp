@@ -1,0 +1,61 @@
+
+{
+  "component": {
+    "detail": {
+      "TestComponent": {
+        "use_component": "TestComponent_2",
+        "params": {
+          "tableClass": "bg-deep-purple-14"
+        }
+      },
+      "MatchListCard": {
+        "use_component": "MatchListCard_2",
+        "params": {
+          "tableClass": "bg-deep-purple-14"
+        }
+      },
+      "PlayMatchLeague": {
+        "use_component": "PlayMatchLeague_2",
+        "params": {
+          "tableClass": "bg-deep-purple-14"
+        }
+      },
+      "PlayMatchType": {
+        "use_component": "PlayMatchType_2",
+        "params": {
+          "tableClass": "bg-deep-purple-14"
+        }
+      },
+      "MatchCard": {
+        "use_component": "MatchCardTemplate2",
+        "params": {
+          "tableClass": "bg-deep-purple-14"
+        }
+      },
+      "MatchHandicap": {
+        "use_component": "MatchHandicap2",
+        "params": {
+          "tableClass": "bg-deep-purple-14"
+        }
+      },
+      "BetBox": {
+        "use_component": "BetBoxOuZhouPC_1",
+        "params": {
+          "tableClass": "bg-deep-purple-14"
+        }
+      },
+      "MatchTypeChampion": {
+        "use_component": "MatchTypeChampion2",
+        "params": {
+          "tableClass": "bg-deep-purple-14"
+        }
+      },
+      "MatchFooterScore": {
+        "use_component": "MatchFooterScore2",
+        "params": {
+          "tableClass": "bg-deep-purple-14"
+        }
+      }
+    }
+  }
+}

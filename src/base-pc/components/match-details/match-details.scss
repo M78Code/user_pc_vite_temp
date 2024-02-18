@@ -1,0 +1,1391 @@
+/*
+ * @
+ * @Author: Yellow
+ * @Description: 详情相关 夜间版
+ * @Date: 2020-09-18 11:38:43
+ */
+
+ body {
+    .wrap-hot .carousel,
+    .wrap-total .total_chart,
+    .wrap-recents .info,
+    .league-rank,
+    .group-rank,
+    .rank-title {
+      background: var(--q-gb-bg-c-32);
+      // background: var(--q-gb-bg-c-11);
+    }
+    .wrap-hot {
+      .info {
+        color: var(--q-gb-t-c-5) !important;
+      }
+    }
+    .league-rank {
+      .title {
+        background-image: var(--q-gb-bg-lg-17);
+        color: var(--q-gb-t-c-4);
+      }
+    }
+    /**列表头部 */
+    .yb-match-list {
+      .scroll-fixed-header {
+        border-radius: 6px 6px 0px 0px;
+      }
+    }
+    /* 详情页、虚拟体育、右侧视频区域玩法集 tab选项 */
+    .details,
+    .right_details_wrap,
+    .virtual_details {
+      .scroll-fixed-header {
+        background-image: var(--q-gb-bg-lg-15);
+        border-radius: 0px 0px 6px 6px;
+        border: 1px solid var(--q-gb-bd-c-8);
+        border-top: none;
+        .tabs-panel {
+          overflow: hidden;
+          // 下标线
+          .line-wrap {
+            display: none;
+          }
+          .item-wrap {
+            align-items: center;
+            padding-left: 15px;
+          }
+          .tab-item {
+            color: var(--q-gb-t-c-6);
+            font-size: 13px;
+            background-color: var(--q-gb-bg-lg-5);
+            border: 0.5px solid var(--q-gb-bd-c-8);
+            margin-right: 10px;
+            &:hover {
+              border: 0.5px solid var(--q-gb-bd-c-12);
+              background-color: var(--q-gb-bg-c-27);
+              color: var(--q-gb-t-c-1);
+            }
+            border-radius: 36px;
+            &.active {
+              color: var(--q-gb-t-c-18);
+              background-color: var(--q-gb-t-c-16);
+              // background-image: var(--q-gb-bg-lg-14);
+            }
+          }
+          .tabs-icons {
+            border-bottom: 1px solid var(--q-gb-bd-c-8);
+          }
+          .tabs-icons-left {
+            border-radius: 0 0 0 6px;
+          }
+          .tabs-icons-right {
+            border-radius: 0 0 6px 0;
+          }
+        }
+        .tabs-bar {
+          height: 100%;
+          .tabs-line {
+            display: none;
+          }
+          .tabs-item-wrap {
+            align-items: center;
+            padding-left: 16px;
+          }
+          .tabs-item {
+            color: var(--q-gb-t-c-1);
+            font-weight: 400;
+            min-width: 60px;
+            height: 24px;
+            line-height: 23px;
+            background-color: rgba(59, 67, 89, 0.2);
+            border: 0.5px solid rgba(61, 65, 82, 1);
+            border-radius: 15px;
+            margin-right: 10px;
+            &:hover {
+              border: 0.5px solid #2cb2ff;
+              background-color: rgba($color: #2cb2ff, $alpha: 0.06);
+              color: var(--q-gb-t-c-1);
+            }
+            &.active {
+              color: var(--q-gb-t-c-1);
+              font-weight: 600;
+              background-image: var(--q-gb-bg-lg-16);
+              border: none;
+              line-height: 24px;
+            }
+          }
+        }
+      }
+    }
+    .scroll-fixed-header {
+      .tabs-icons {
+        background: var(--q-gb-bg-c-22);
+      }
+    }
+    .wrap-icon {
+      .icon-signal:before,
+      .icon-star:before {
+        color: var(--q-gb-bg-c-8) !important;
+      }
+      .icon-star.active:before {
+        color: #569ffd;
+      }
+      &:hover {
+        .icon-signal:before {
+          color: var(--q-match-resluts-t-c-2) !important;
+        }
+      }
+    }
+    .wrap-template {
+      .handicap-item {
+        &.sub-title-2 {
+          //background: var(--q-gb-bg-c-14) !important;
+          color:var(--q-gb-t-c-16);
+          font-size: 12px;
+          font-weight: 500;
+        }
+        &.os-1:hover {
+          .c-bet-item {
+            .bet-item {
+              color: var(--q-gb-t-c-5);
+              .yb-family-odds {
+                //color: var(--q-gb-t-c-16);
+              }
+              .yb-family-odds.normal_color {
+                color: var(--q-gb-t-c-5);
+                .color {
+                  color: var(--q-gb-t-c-16);
+                }
+              }
+            }
+          }
+        }
+        .c-bet-item {
+          .bet-item {
+            font-size: 12px;
+            color: var(--q-gb-t-c-5);
+            .yb-family-odds {
+              color:#179cff;
+              font-weight: 500;
+            }
+            .yb-family-odds.normal_color {
+              color: var(--q-gb-t-c-5);
+              .color {
+                color: var(--q-gb-t-c-16);
+              }
+            }
+          }
+        }
+      }
+    }
+    /*  详情 */
+    .details {
+      .wrap-handicap {
+        border-right: none !important;
+      }
+      .esports-head-info-100 {
+        background-image: url($SCSSPROJECTPATH+"/image/jpg/sports_bg_02_100.jpg") !important;
+      }
+      .esports-head-info-101 {
+        background-image: url($SCSSPROJECTPATH+"/image/jpg/sports_bg_02_101.jpg") !important;
+      }
+      .esports-head-info-102 {
+        background-image: url($SCSSPROJECTPATH+"/image/jpg/sports_bg_02_102.jpg") !important;
+      }
+      .esports-head-info-103 {
+        background-image: url($SCSSPROJECTPATH+"/image/jpg/sports_bg_02_103.jpg") !important;
+      }
+    }
+    // 详情页顶部 title 公共样式
+    .wrap-title {
+      background: var(--q-gb-bg-lg-18);
+      //border: 1px solid var(--q-gb-bd-c-6); //bd-wrap-title
+      border-bottom: none;
+      .group-back {
+        i:before {
+          color: var(--q-gb-t-c-13) !important;
+        }
+      }
+      .title {
+        color: var(--q-gb-t-c-5);
+      }
+      .right-icon {
+        .refresh,
+        .sr-link-icon-w {
+          border-radius: 13px !important;
+          background-color: var(---q-gb-bg-c-22);
+          background-image: var(--q-gb-bg-c-20);
+          border: 1px solid var(--q-gb-bd-c-8) !important;
+          i {
+            color: var(--q-gb-t-c-1);
+            &::before {
+              color: var(--q-match-resluts-t-c-3) !important;
+            }
+          }
+          &:hover {
+            background: var(--q-gb-bg-c-22);
+          }
+          .icon-balance_refresh {
+            span {
+              font-size: 18px;
+              &::before {
+                color: #999;
+              }
+            }
+          }
+        }
+      }
+    }
+  
+    .details,
+    .virtual_details {
+      .scroll-header {
+        &::before {
+          content: "";
+          position: absolute;
+          width: 100%;
+          background-color: var(--q-gb-bg-c-22);
+          height: 6px;
+          z-index: -1;
+        }
+      }
+    }
+    .wrap-template {
+      //border: 1px solid var(--q-gb-bd-c-6);
+      background: var(--q-gb-bg-c-32);
+      .template-title {
+        //background: var(--q-gb-bg-lg-17);
+        // 详情玩法模版名称上划线
+        & + .handicap {
+           border-top: 1px solid var(--q-gb-bd-c-8);
+        }
+        .play-name {
+          color: var(--q-gb-t-c-5);
+          font-weight: 500;
+          font-size: 13px;
+          &::before {
+            background: var(--q-gb-bg-c-17);
+          }
+        }
+      }
+      .icon-set_top:before {
+        color: var(--q-gb-t-c-16);
+      }
+      /* 投注项 */
+      .handicap {
+        .no_border_bottom {
+          border-bottom: 0 none !important;
+        }
+        .handicap-item {
+          border-bottom: 1px solid var(--q-gb-bd-c-8);
+          background: var(--q-gb-bg-c-11);
+          &:not(:last-child) {
+            border-right: 1px solid var(--q-gb-bd-c-8);
+          }
+          .highlight {
+            color: var(--q-gb-t-c-16);
+          }
+          &.border-right {
+            border-right: 1px solid var(--q-gb-bd-c-8);
+          }
+        }
+        .c-bet-item {
+          &.active {
+            .highlight,
+            .item-label,
+            .bet_handicap {
+              color: var(--q-gb-t-c-18);
+              .color {
+                color: var(--q-gb-t-c-1);
+              }
+              .ellipsis-wrap {
+                color: var(--q-gb-bg-c-11) !important;
+              }
+            }
+          }
+          .odds {
+            span:hover {
+              //padding: 2px 4px;
+              
+            }
+          }
+        }
+      }
+      .handicap-sub-title {
+        border-top: 1px solid var(--q-gb-bd-c-8);
+      }
+      .sub-title-1 {
+        background: var(--q-match-details-body) !important;
+         border-bottom: 1px solid var(--q-gb-bd-c-8) !important;
+        color: var(--q-gb-t-c-5);
+        &:nth-child(2) {
+          border-top: 1px solid var(--q-gb-bd-c-8);
+        }
+      }
+      &.template7,
+      &.template2 {
+        .bet-item {
+          .yb-family-odds {
+            color: #179cff;
+          }
+        }
+      }
+      &.template3 {
+        .main-handicap {
+          &:not(:last-child) {
+            .handicap-item {
+              border-bottom: 1px solid rgba(40, 43, 55, 1);
+            }
+          }
+        }
+      }
+      &.template4,
+      &.template18 {
+        .sub-title {
+          color: var(--q-gb-t-c-5);
+          background: var(--q-match-details-body);
+          border-bottom: 1px solid var(--q-gb-bd-c-8);
+        }
+        .handicap-sub-title {
+          .handicap-item {
+            border-right: 1px solid var(--q-gb-bd-c-8);
+          }
+          .part-left {
+            background: var(--q-gb-bg-c-11);
+            .handicap-item {
+              border-right: 0;
+            }
+          }
+          .part-middle {
+            .handicap-item {
+              border-left: 1px solid var(--q-gb-bd-c-8);
+            }
+          }
+          .part-right {
+            background: var(--q-gb-bg-c-11);
+          }
+        }
+        .other-item {
+          justify-content: center;
+          .other {
+            background: transparent;
+          }
+          .placehold {
+            &:not(:last-child) {
+              display: none;
+            }
+            &:last-child {
+              flex: unset;
+              width: 33.33%;
+            }
+          }
+        }
+      }
+      &.template5 {
+        .handicap {
+          .handicap-item:not(:last-child) {
+            //border-right: 1px solid var(--q-gb-bd-c-8);
+          }
+        }
+      }
+      &.template6 {
+        .sub-title {
+          color: var(--q-gb-t-c-5);
+          border-bottom: 1px solid var(--q-gb-bd-c-8);
+          border-top: 1px solid var(--q-gb-bd-c-8);
+          background-color: var(--q-gb-bg-c-22) !important;
+        }
+        .other-wrap {
+          background: rgba(31, 34, 43, 0.5);
+          .other-item {
+            &:first-child {
+              border-right: 1px solid var(--q-gb-bd-c-8);
+            }
+          }
+        }
+        .main-handicap {
+          .group {
+            .flex-1:not(:last-child) {
+              .handicap-item {
+                border-right: 1px solid var(--q-gb-bd-c-8);
+              }
+            }
+            .flex-1:last-child {
+              .handicap-item {
+                border-right: none;
+              }
+            }
+            .handicap-item {
+              .on-text {
+                color: var(--q-gb-t-c-16);
+              }
+              .active {
+                .on-text {
+                  color: var(--q-gb-t-c-1);
+                }
+              }
+            }
+          }
+        }
+        .handicap {
+          .handicap-item:nth-child(odd) {
+            border-right: 1px solid var(--q-gb-bd-c-8);
+          }
+          .handicap-item:last-child {
+            border-bottom: none;
+          }
+        }
+      }
+      &.template9 {
+        .sub-title {
+          color: var(--q-gb-t-c-16);
+        }
+      }
+      &.template10 {
+        .handicap {
+          .handicap-layout:first-child,
+          .handicap-layout:nth-child(2) {
+            .handicap-item {
+              border-right: 1px solid var(--q-gb-bd-c-8);
+            }
+          }
+          .handicap-layout:nth-child(3) {
+            .handicap-item {
+              border-right: none;
+            }
+          }
+          .layout-line {
+            background: var(--q-gb-bg-c-11);
+            .handicap-item {
+              border-bottom: none;
+              &:not(:last-child) {
+                background: var(--q-gb-bg-c-11);
+                border-right: 1px solid var(--q-gb-bd-c-8);
+              }
+            }
+          }
+          .handicap-item {
+            .c-bet-item {
+              .bet-item {
+                color: var(--q-gb-t-c-16);
+                font-weight: 500;
+              }
+            }
+          }
+        }
+      }
+    }
+    .is_rang {
+      .handicap-item {
+        .c-bet-item {
+          .bet-item {
+            color: var(--q-gb-t-c-20);
+          }
+        }
+        &.os-1:hover {
+          .c-bet-item {
+            .bet-item {
+              color: var(--q-gb-t-c-5);
+            }
+            &.active {
+              .odds {
+                color: var(--q-gb-t-c-5) !important;
+              }
+            }
+          }
+        }
+      }
+    }
+    .v-scroll-area:after {
+      border-left: none;
+    }
+    .hot-title,
+    .recents-tilte,
+    .panel-title {
+      &::before {
+        background: var(--q-gb-bg-c-1);
+        // background: var(--q-gb-bg-c-17);
+        width: 3px !important;
+        border-radius: 1.5px;
+      }
+    }
+    .screen {
+      color: var(--q-gb-t-c-3);
+      // color: var(--q-gb-t-c-8) !important;
+      // color: var(--q-gb-t-c-8) !important;
+      //background: transparent;
+      .c-video-ctrl {
+        .ctrl-wrap {
+          .name {
+            color: var(--q-gb-t-c-1);
+          }
+        }
+      }
+      .right_details_header {
+        //border: 1px solid var(--q-gb-bd-c-6);
+        border-radius: 6px;
+        overflow: hidden;
+        background: var(--q-gb-bg-c-11);
+        &.is_esports {
+          border-radius: 6px 6px 0 0;
+        }
+        .show_row .process-name {
+          font-size: 10px;
+          word-wrap: break-word;
+          width: 62px;
+          line-height: 1;
+        }
+      }
+      .scroll-fixed-header {
+        //border-bottom: 1px solid var(--q-gb-bd-c-6) !important;
+      }
+      /*  比分扳 */
+      .head-info {
+        color: var(--q-gb-t-c-1);
+        /* 倒计时 */
+        .process-name,
+        .c-match-date {
+          color: var(--q-gb-bd-c-13);
+        }
+      
+        /* 隐藏按钮 */
+        .hide-btn {
+          color: var(--q-gb-t-c-1);
+          &:hover {
+            background: rgba(31, 33, 41, 0.8);
+          }
+        }
+      }
+      /* 玩法集tab条 */
+      .wrap-tabs {
+        background: var(--q-gb-bg-c-32);
+        //border: 1px solid var(--q-gb-bd-c-6);
+        border-top: none;
+        &.all_empty {
+          border-bottom: 1px solid var(--q-gb-bd-c-8);
+        }
+        .tabs-icons {
+          background: var(--q-gb-bg-c-22);
+          .yb-icon-arrow:before {
+            border-color: #2cb2ff;
+            border-top: 1px solid #2cb2ff;
+            border-right: 1px solid #2cb2ff;
+          }
+        }
+        .row {
+          i {
+            &:before {
+              color: var(--q-gb-t-c-13);
+            }
+            &.active:before {
+              color: var(--q-gb-t-c-16) !important;
+            }
+          }
+        }
+      }
+      /* 玩法列表名称 */
+      .template-title {
+        &.is_fold {
+          border-top: none;
+        }
+        .play-name {
+          &::before {
+            width: var(--q-match-resluts-width-1);
+            background: var(--q-gb-bg-c-17);
+          }
+        }
+      }
+  
+      /*  详情模板---"其他" 投注项 */
+      .other-item {
+        border-top: 1px solid var(--q-gb-bd-c-8);
+        background: var(--q-gb-bg-c-11);
+        .c-bet-item {
+          .bet_handicap {
+            color: var(--q-gb-t-c-16);
+            font-weight: 500;
+          }
+        }
+        .os-1 {
+          .active {
+            .bet_handicap {
+              color: var(--q-gb-t-c-1);
+            }
+          }
+          &:hover {
+            .c-bet-item {
+              border-color: transparent;
+              background: var(--q-gb-bg-c-22);
+            }
+            .c-bet-item.active {
+              .bet_handicap {
+                color: var(--q-gb-t-c-1);
+              }
+            }
+          }
+        }
+      }
+      .detail_right_model {
+        background: var(--q-gb-bg-c-22);
+        .baseball {
+          .wrap-up { 
+            .chart-round .item-warp .round-item.is_get {
+             background: var(--q-gb-bg-c-17);
+            }
+            .chart-rhombus .wrap-rhombus .rhombus-item.is_get {
+             background: var(--q-gb-bg-c-17);
+            }
+          }
+          .wrap-down .wrap-line .line-item.is_get {
+           background: var(--q-gb-bg-c-17);
+          }
+        }
+      }
+      /* 统计 */
+      .wrap-total {
+        background: transparent;
+        border: 1px solid var(--q-gb-bd-c-8);
+  
+        color: var(--q-gb-t-c-1);
+        .score-tips {
+          color: var(--q-gb-t-c-1);
+        }
+        .wrap-score {
+          color: var(--q-gb-t-c-10) !important;
+        }
+        .item-title {
+          background: var(--q-gb-bg-lg-19);
+          border-bottom: 1px solid var(--q-gb-bd-c-8);
+          i {
+            &::before {
+              color: var(--q-gb-t-c-16);
+            }
+          }
+          span {
+            color: var(--q-gb-t-c-3);
+            // color: var(--q-gb-t-c-4);
+          }
+        }
+        .status-tips,
+        .scale {
+          color: var(--q-gb-t-c-5) !important;
+        }
+        .baseball {
+          .desc {
+            color: var(--q-gb-t-c-1);
+          }
+        }
+      }
+      /*  热门推荐 */
+      .wrap-hot {
+        background: transparent;
+        border: 1px solid var(--q-gb-bd-c-8);
+  
+        color: var(--q-gb-t-c-1);
+        .item-title {
+          background: var(--q-gb-bg-lg-17);
+          border-bottom: 1px solid var(--q-gb-bd-c-8);
+          //color: var(--q-gb-t-c-4);
+          color: var(--q-gb-t-c-3);
+          i {
+            &::before {
+              color: var(--q-gb-t-c-16);
+            }
+          }
+        }
+        /* 对阵信息 */
+        .info {
+          color: var(--q-gb-t-c-10) !important;
+          .img-wrap {
+            background-color: var(--q-gb-bg-c-22);
+          }
+          .info-score {
+            .item {
+              color: var(--q-gb-t-c-16);
+            }
+          }
+        }
+        .carousel {
+          .handicap {
+            .handicap-item {
+              background: var(--q-gb-bg-c-22);
+              border: 0.5px solid var(--q-match-resluts-bd-c-1);
+              border-radius: 6px;
+              .c-bet-item {
+                .play-name {
+                  color: var(--q-gb-t-c-5);
+                }
+                .odds {
+                  color: var(--q-gb-t-c-5);
+                }
+              }
+            }
+          }
+          /* 跳转按钮 */
+          .more-handel {
+            div {
+              background: var(--q-gb-bg-c-22);
+              color: var(--q-gb-t-c-10);
+              border: 0.5px solid var(--q-match-resluts-bd-c-1);
+              border-radius: 6px;
+              &:hover {
+                color: var(--q-gb-t-c-8);
+                .set-color:before {
+                  color: var(--q-match-resluts-t-c-2);
+                }
+              }
+            }
+          }
+          .control {
+            .btn {
+              display: block;
+              background-image: url($SCSSPROJECTPATH+"/image/theme01/img/svg/arrow.svg");
+             // background-image: var(--qq--control-bg-img-url); //todo `url(${preffix}/image/yabo/theme01/img/svg/arrow.svg)`,
+              &:hover {
+                background-image: url($SCSSPROJECTPATH+"/image/theme01/img/svg/arrow_active.svg");
+                //background-image: var(--qq--control-bg-img-url-hover); //todo `url(${preffix}/image/yabo/theme01/img/svg/arrow_active.svg)`,
+              }
+            }
+            .control-item {
+              background: var(--q-gb-bd-c-8);
+              &.active {
+               background: var(--q-gb-bg-c-1);
+              //  background: var(--q-gb-bg-c-17);
+              }
+            }
+          }
+        }
+      }
+      /* 近期关注 */
+      .wrap-recents {
+        background: transparent;
+        border: 1px solid var(--q-gb-bd-c-8);
+        color: var(--q-match-resluts-t-c-4);
+        .title {
+          background: var(--q-gb-bg-c-11);
+          .wrap-img {
+            span {
+              color: var(--q-gb-t-c-4);
+              font-weight: 600;
+            }
+          }
+          .c-match-date {
+            color: var(--q-gb-t-c-5);
+          }
+        }
+        .score {
+          color: var(--q-gb-t-c-16);
+        }
+        .handicap {
+          .handicap-item {
+            background: var(--q-gb-bg-c-22);
+            border: 1px solid var(--q-match-resluts-bd-c-1);
+            border-radius: 6px;
+          }
+        }
+        .item-title {
+          background: var(--q-gb-bg-lg-17);
+          border-bottom: 1px solid var(--q-gb-bd-c-8);
+          color: var(--q-gb-t-c-4);
+          i {
+            &::before {
+              color: var(--q-gb-t-c-16);
+            }
+          }
+        }
+      }
+      /* 视频区域 */
+      .c-video-ctrl {
+        .ctrl-wrap {
+          background:var(--q-match-details-video-top-bg);  
+          border-bottom: 1px solid var(--q-gb-bd-c-8);
+          i {
+            color: var(--q-gb-t-c-3) !important;
+          }
+        }
+        .vs-team-container {
+          background: #f6f7fa !important;
+          border-top: none;
+        }
+      }
+      /*  点ing赛事列表 */
+      .c-esports-match-list {
+        background-color: var(--q-gb-bg-c-11);
+        border: 1px solid var(--q-gb-bd-c-6);
+        border-top: none;
+        .match-item {
+          border-top: 1px solid var(--q-gb-bd-c-6);
+          color: var(--q-gb-t-c-5);
+          &.active {
+            color: var(--q-gb-t-c-16);
+          }
+        }
+      }
+    }
+    .right_details_wrap,
+    .c-virtual-right {
+      .scroll-header {
+        &::before {
+          content: "";
+          position: absolute;
+          width: 100%;
+          height: 6px;
+          z-index: -1;
+          background-color: var(--q-gb-bg-c-22);
+        }
+      }
+    }
+    /*  虚拟体育 */
+    .virtual_details {
+      .wrap-title {
+        .c-match-process {
+          color: var(--q-gb-t-c-15);
+          .icon-timer {
+            color: var(--q-gb-t-c-15) !important;
+          }
+        }
+        .q-icon {
+          position: relative;
+          top: -1px;
+          &.icon-back {
+            &::before {
+              color: var(--q-gb-t-c-5);
+            }
+          }
+        }
+      }
+      .wrap-tabs {
+        color: var(--q-gb-t-c-18);
+        .tabs-handel {
+          .q-icon.active {
+            color: var(--q-gb-t-c-16) !important;
+          }
+        }
+        .row {
+          .q-icon {
+            color: var(--q-gb-t-c-13) !important;
+            &:hover:before {
+              color: var(--q-gb-t-c-13-hover);
+            }
+          }
+        }
+      }
+  
+      /* 比赛状态 */
+      .virtual_statu {
+        background: var(--q-gb-bg-c-22);
+      }
+    }
+    .vtable {
+      .vbody {
+        .vtr {
+          .vtd:nth-child(3) {
+            .progress {
+              .q-linear-progress {
+                color: var(--q-gb-t-c-16) !important;
+              }
+            }
+          }
+        }
+      }
+    }
+  
+    /*  篮球比分板---从组件提取出来 */
+    .basketball-after {
+      .time-node,
+      .common-score {
+        color: var(--q-gb-bd-c-13)
+      }
+      .info-data {
+        span {
+          color: var(--q-gb-bd-c-13) !important;
+        }
+      }
+      .score {
+        color: var(--q-gb-t-c-16) !important;
+      }
+      .stage-13 {
+        span {
+          &:nth-child(1) {
+            color: var(--q-gb-t-c-16) !important;
+          }
+        }
+      }
+      .stage-14,
+      .stage-301 {
+        span {
+          &:nth-child(2) {
+            color: var(--q-gb-t-c-16) !important;
+          }
+        }
+      }
+      .stage-15,
+      .stage-302 {
+        span {
+          &:nth-child(4) {
+            color: var(--q-gb-t-c-16) !important;
+          }
+        }
+      }
+      .stage-16,
+      .stage-303 {
+        span {
+          &:nth-child(5) {
+            color: var(--q-gb-t-c-16) !important;
+          }
+        }
+      }
+    }
+    .football-after {
+      .info-both {
+        .info-data {
+          span {
+            color: var(--q-gb-bd-c-13);
+          }
+        }
+        .mmp-active {
+          color: var(--q-gb-t-c-16);
+        }
+      }
+    }
+  
+    /*  比分板 */
+    .more-info {
+      color: var(--q-gb-t-c-1) !important;
+      .time-node {
+        .current_color {
+          color: var(--q-gb-t-c-16);
+        }
+      }
+      .score {
+        color: var(--q-gb-t-c-16);
+      }
+      .both-item {
+        .wrap-round {
+          .round {
+           background: var(--q-gb-bg-c-17);
+          }
+        }
+      }
+      .stage-13 {
+        span {
+          &:nth-child(1) {
+            color: var(--q-gb-t-c-16) !important;
+          }
+        }
+      }
+      .stage-14,
+      .stage-301 {
+        span {
+          &:nth-child(2) {
+            color: var(--q-gb-t-c-16) !important;
+          }
+        }
+      }
+      .stage-15,
+      .stage-302 {
+        span {
+          &:nth-child(3) {
+            color: var(--q-gb-t-c-16) !important;
+          }
+        }
+      }
+      .stage-16,
+      .stage-303 {
+        span {
+          &:nth-child(4) {
+            color: var(--q-gb-t-c-16) !important;
+          }
+        }
+      }
+    }
+    .basketball-chart {
+      .team-info,
+      .score-num {
+        color: var(--q-gb-t-c-6);
+        // color: var(--q-gb-t-c-5);
+      }
+      .stripe-left,
+      .stripe-right {
+        background-color: var(--q-gb-bg-c-22);
+      }
+      .score-more {
+        .stop {
+          .dot.default {
+            background-color: var(--q-gb-bg-c-22);
+          }
+        }
+      }
+    }
+    /*  返回顶部 */
+    .go-top-btn {
+      background: #3e414d !important;
+      color: #babdcc !important;
+      .icon-go_top:before {
+        color: #babdcc !important;
+      }
+      &:hover {
+        background: #535766 !important;
+        color: var(--q-gb-t-c-1) !important;
+        .icon-go_top:before {
+          color: var(--q-gb-t-c-1) !important;
+        }
+      }
+    }
+  
+    /* 聊天室 */
+    .panel-header {
+      opacity: 0.96;
+      background-image: var(--q-gb-bg-lg-19);
+      .panel-title {
+        color: var(--q-gb-t-c-4);
+      }
+    }
+    .wrap-chatroom {
+      background: var(--q-gb-bg-c-11);
+      color: var(--q-gb-t-c-4);
+      border: 1px solid var(--q-gb-bd-c-8);
+      .chat-scroll-area {
+        opacity: 0.96;
+        background-image: var(--q-gb-bg-lg-7);
+        border-top: 1px solid var(--q-gb-bd-c-8);
+        .q-message-name {
+          color: var(--q-gb-t-c-4);
+        }
+        .q-message-text-content {
+          color: var(--q-gb-t-c-4);
+        }
+        .q-message-text-content--sent {
+          color: var(--q-gb-t-c-1);
+        }
+        .q-message-text--sent {
+          background-color: #2ab980;
+          &:last-child::before {
+            border-top: 2px solid transparent;
+            border-left: 4px solid #2ab980;
+            border-bottom: 2px solid transparent;
+            border-right: 0;
+          }
+        }
+        .q-message-text--received {
+          background: var(--q-gb-bg-c-11);
+          box-shadow: 0px 1px 3px 0px rgba(102, 102, 102, 0.1);
+          &:last-child::before {
+            border-top: 2px solid transparent;
+            border-right: 4px solid var(--q-gb-bd-c-13);
+            border-bottom: 2px solid transparent;
+            border-left: 0;
+          }
+        }
+        .message-show-order {
+          .q-message-container > div {
+            > div:last-child {
+              background: var(--q-gb-bg-c-11);
+            }
+          }
+          .q-message-text {
+            background-image: linear-gradient(
+              180deg,
+              var(--q-gb-bg-c-17),
+              var(--q-gb-bg-c-18)
+            );
+          }
+          .show-bet-wrapper {
+            .item-top {
+              &::before {
+                background: var(--q-match-resluts-bd-c-2);
+              }
+              color: var(--q-match-resluts-t-c-4);
+            }
+            .item-middle {
+              background: var(--q-gb-bg-c-22);
+            }
+            .item-settlemented {
+              &.win {
+                background: var(--q-gb-bg-c-16);
+                border: 1px solid var(--q-gb-bd-c-9);
+                color: var(--q-gb-t-c-1);
+              }
+              &.lose {
+                background: var(--q-gb-bg-c-5);
+                border: 1px solid var(--q-gb-bd-c-1);
+                color: var(--q-gb-t-c-1);
+              }
+            }
+            .text-win {
+              color: #ff4040 !important;
+            }
+            .text-lose {
+              color: var(--q-match-resluts-t-c-4);
+            }
+          }
+          .item-bottom {
+            [class*="item-row-"] span {
+              &:first-child {
+                color: var(--q-match-resluts-t-c-4);
+              }
+              &:last-child {
+                color: var(--q-match-resluts-t-c-4);
+              }
+            }
+          }
+        }
+        .follow-order {
+          background-image: linear-gradient(
+            -40deg,
+            var(---q-gb-bg-c-18) 0%,
+            var(--q-gb-bg-c-17) 100%
+          );
+          box-shadow: 0px 2px 4px 0px rgb(61 114 250 / 50%) !important;
+        }
+        .item-bet-handicap {
+          color: var(--q-gb-t-c-4);
+        }
+        .item-bet-name {
+          color: var(--q-gb-t-c-16);
+          .part2 {
+            color: var(--q-gb-t-c-4);
+          }
+        }
+        .item-bet-odds {
+          color: var(--q-gb-t-c-4);
+        }
+        .follow-heart {
+          background-image: var(--qq--chatroom-icon-12); //todo `url(${preffix}/image/yabo/svg/like_order_day.svg)`,
+        }
+        .follow-count {
+          color: var(--q-match-resluts-t-c-4);
+        }
+        .is-like {
+          .follow-heart {
+            background-image: var(--qq--chatroom-icon-11); //todo `url(${preffix}/image/yabo/svg/like_order01.svg)`,
+          }
+          .follow-count {
+            color: var(--q-gb-t-c-16);
+          }
+        }
+      }
+      .more-msg {
+        background-image: var(--q-gb-bg-lg-12);
+        .icon-arrow-down {
+          background-image: var(--qq--chat-more-msg-arrow); //todo `url(${preffix}/image/wwwassets/yabo/svg/more-msg.svg)`,
+        }
+      }
+      .item-user-input {
+        border: 1px solid var(--q-match-resluts-bd-c-3) !important;
+        input {
+          color: #717b88;
+        }
+        .btn-send::before {
+          background-color: var(--q-gb-bg-c-10) !important;
+        }
+        .muted {
+          &:hover {
+            background-image: var(--qq--chatroom-icon-14) !important; //todo `url(${preffix}/image/yabo/theme01/img/svg/ask-icon.svg)`,
+          }
+        }
+        .muted_tips {
+          background: var(--q-match-resluts-bg-c-4);
+          border: 1px solid var(--q-match-resluts-bd-c-4);
+          &::after {
+            background: var(--q-match-resluts-bg-c-4);
+            border-right: 1px solid var(--q-match-resluts-bd-c-4);
+            border-bottom: 1px solid var(--q-match-resluts-bd-c-4);
+          }
+          .prohibited_text {
+            color: var(--q-gb-t-c-12);
+          }
+        }
+      }
+      .emoji-picker {
+        background-color: var(--q-gb-bg-c-11);
+        border: 1px solid var(--q-gb-bd-c-7);
+        .picker-button {
+          background-color: var(--q-gb-bg-c-11);
+          svg {
+            fill: #fff;
+          }
+        }
+      }
+      .icon-emoji {
+        background-image: var(--qq--chatroom-icon-2); //todo `url(${preffix}/image/yabo/theme01/img/svg/emoji01.svg)`,
+      }
+      .icon-emoji2 {
+        background-image: var(--qq--chatroom-icon-3); //todo `url(${preffix}/image/yabo/theme01/img/svg/emoji02.svg)`,
+      }
+      .icon-send {
+        background-image: var(--qq--chatroom-icon-4); //todo    `url(${preffix}/image/yabo/theme01/img/svg/send01.svg)`,
+      }
+      .icon-send2 {
+        background-image: var(--qq--chatroom-icon-5); //todo `url(${preffix}/image/yabo/theme01/img/svg/send02.svg)`,
+      }
+    }
+    .bet-saidan-list {
+      background: var(--q-gb-bg-c-11);
+      .header {
+        opacity: 0.96;
+        background-image: var(--q-gb-bg-lg-19);
+        border-bottom: 1px solid var(--q-gb-bd-c-8);
+        .right-span {
+          color: var(--q-gb-t-c-16);
+        }
+        .icon-arrow:before {
+          color: var(--q-gb-t-c-16);
+        }
+      }
+      .item-top {
+        //   color: #FFFFFF;
+        color: var(--q-gb-t-c-4);
+  
+        .home-vs-away {
+          // color: #FFFFFF;
+          color: var(--q-gb-t-c-4) !important;
+          &::before {
+            background: #4276fb !important;
+          }
+        }
+        .middle-span {
+          color: var(--q-gb-t-c-4) !important;
+        }
+      }
+      .show-bet-wrapper {
+        border: 1px solid var(--q-gb-bd-c-8);
+        .head_name {
+          // background: #45495C;
+        }
+        .content-middle-is-saidan {
+          background: var(--q-gb-bg-c-22) !important;
+        }
+        .content-middle {
+          background: var(--q-gb-bg-c-22);
+          .item-bottom {
+            background: var(--q-gb-bg-c-11);
+            border: 0.5px solid var(--q-gb-bd-c-8);
+            .item-row-left {
+              color: var(--q-gb-t-c-5);
+            }
+            .item-row-rght {
+              color: var(--q-gb-t-c-5);
+            }
+          }
+          .item-middle {
+            .item-row {
+              .item-row-left {
+                color: var(--q-gb-t-c-5);
+              }
+              .item-bet-name {
+                .part1 {
+                  color: var(--q-gb-t-c-16);
+                }
+              }
+            }
+          }
+        }
+        .content-bottom {
+          background: var(--q-gb-bg-c-11);
+          .bottom-left {
+            span {
+              color: var(--q-gb-t-c-5);
+            }
+          }
+          .bottom-right {
+            span {
+              color: var(--q-gb-t-c-5);
+            }
+          }
+        }
+      }
+      .is-select {
+        border: 1px solid var(--q-gb-bd-c-11) !important;
+        background-image: var(--qq--chatroom-bg-image1); //todo  `url(${preffix}/common/png/select_yellow.png)`,
+        background-repeat: no-repeat;
+        background-position: top right;
+        background-size: 16px 16px;
+      }
+      .btn-footer {
+        background: var(--q-gb-bg-c-11);
+        border-top: 1px solid var(--q-gb-bd-c-8);
+        .clear-btn {
+          background: var(--q-match-resluts-bg-c-1);
+          border: 0.5px solid var(--q-gb-bd-c-8);
+        }
+        .saidan-btn {
+          background-image: linear-gradient(
+            225deg,
+            var(--q-gb-bg-c-18) 0%,
+            var(--q-gb-bg-c-17) 100%
+          );
+          border: 0.5px solid var(--q-gb-bd-c-8);
+        }
+        .is-clear-unclick {
+          color: var(--q-match-resluts-t-c-4) !important;
+        }
+        .text {
+          color: var(--q-match-resluts-t-c-4) !important;
+        }
+        .is-saidan-unclick {
+          background: var(--q-gb-bg-c-14) !important;
+          color: var(--q-match-resluts-t-c-4) !important;
+        }
+      }
+    }
+    .icon-chatroom {
+      background-image: var(--qq--chatroom-icon-1); //todo `url(${preffix}/image/yabo/theme01/img/svg/chatroom01.svg)`,
+    }
+    .btn-normal-user-input {
+      background-image: var(--qq--chatroom-icon-6);//todo `url(${preffix}/image/yabo/theme01/img/svg/unmute_info.svg)`,
+    }
+    .btn-mute-user-input {
+      background-image: var(--qq--chatroom-icon-7);//todo `url(${preffix}/image/yabo/theme01/img/svg/mute_info.svg)`,
+    }
+    .icon-show-order {
+      background-image: var(--qq--chatroom-icon-8);//todo `url(${preffix}/image/yabo/theme01/img/svg/show_order01.svg)`,
+    }
+    .icon-ban-show-order {
+      background-image: var(--qq--chatroom-icon-9);//todo `url(${preffix}/image/yabo/theme01/img/svg/show_order02.svg)`,
+    }
+    .emoji-picker {
+      background-color: var(--q-gb-bg-c-4);
+      border: 1px solid var(--q-gb-bg-c-10);
+    }
+    .btn-normal-user-input {
+      .tips {
+        background: var(--q-match-resluts-bg-c-4);
+        border: 1px solid var(--q-match-resluts-bd-c-4);
+        &::before {
+          border-top-color: var(--q-match-resluts-bd-c-4) !important;
+        }
+        &::after {
+          border-top-color: var(--q-match-resluts-bg-c-4) !important;
+        }
+        .tips-text {
+          color: var(--q-gb-t-c-4);
+        }
+        .btn-cancel-tips {
+          background-image: linear-gradient(
+            -40deg,
+            var(---q-gb-bg-c-18) 0%,
+            var(--q-gb-bg-c-17) 100%
+          );
+          box-shadow: 0px 2px 4px 0px rgb(61 114 250 / 50%);
+          color: var(--q-gb-t-c-1);
+        }
+      }
+    }
+    .icon-cd-tips {
+      .chat-conditions-tips {
+        background: var(--q-match-resluts-bg-c-4);
+        border: 1px solid var(--q-match-resluts-bd-c-4);
+        color: var(--q-gb-t-c-4);
+        &::before {
+          border-top-color: var(--q-match-resluts-bd-c-4) !important;
+        }
+        &::after {
+          border-top-color: var(--q-match-resluts-bg-c-4) !important;
+        }
+        .tips-title {
+          &::before {
+            background-color: var(--q-gb-bg-c-17);
+          }
+        }
+      }
+    }
+  }
+  

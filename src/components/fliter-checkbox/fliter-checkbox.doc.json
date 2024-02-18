@@ -1,0 +1,17 @@
+{
+  "bet_record": {
+    "level": 2,
+    "menuName": "客户端PC",
+    "sonName": "PC-checkbox"
+  },
+  "category": "FliterCheckbox",
+  "component-name": "FliterCheckbox",
+  "support-customization": "1",
+  "descriptions": ["checkbox组件"],
+  "optional-component": [
+    {
+      "component-name": "FliterCheckbox_1",
+      "descriptions": ["checkbox组件"]
+    }
+  ]
+}

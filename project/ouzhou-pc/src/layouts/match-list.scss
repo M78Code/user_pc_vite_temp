@@ -1,0 +1,33 @@
+// 欧洲版主列表sass文件
+body {
+  /* 列表 */
+  .yb-match-list {
+    .match-tpl-101 {
+      .c-match-handicap-ouzhou {
+        height: 100%;
+      }
+    }
+  }
+}
+.handicap-col-ouzhou {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 0;
+  .bet-item-wrap-ouzhou {
+    text-align: center;
+  }
+}
+.play-name-ouzhou {
+  display: flex;
+  height: 100%;
+  .play-name-title-box {
+    display: flex;
+    align-items: center;
+    .play-name-item {
+      flex: 1;
+      text-align: center;
+      cursor: pointer;
+    }
+  }
+}
