@@ -1,6 +1,6 @@
 <template>
   <div class="bet-pre-appoint">
-    <div v-if="item.handicap_hv" class="row yb-flex-center book-content">
+    <div v-if="item.show_edit_market" class="row yb-flex-center book-content">
       <!--预-->
       <div class="col-2 center yb-fontsize12">{{ i18n_t('bet.bet_dish') }}</div>
       <!--此处为盘口区域，-->
@@ -92,11 +92,7 @@ const check_ball_min = (_item) =>{
       if(MARKET_RANG_FLAG_LIST.includes(_item.playId)){
         return -10
       }else{
-        if(_item.playOptions == 1){
-          return _item.score_home*1 + 0.5
-        }else{
-          return _item.score_away*1 + 0.5
-        }
+        return _item.score_home*1 + _item.score_away*1 + 0.5
       }
     }else{
       if(BASKETBALL_BY_APPOINTMENT_let.includes(_item.playId)){
@@ -112,7 +108,12 @@ const pre_input_handle = ()=>{
 }
 
 const appoint_odds_head_handle = ()=>{
-  ref_pre_book.appoint_ball_value = check_ball_max(props.item)
+  if( ref_pre_book.appoint_ball_value > check_ball_max(props.item)){
+    ref_pre_book.appoint_ball_value = check_ball_max(props.item)
+  }
+  if( ref_pre_book.appoint_ball_value < check_ball_min(props.item)){
+    ref_pre_book.appoint_ball_value = check_ball_min(props.item)
+  }
   ref_pre_book.appoint_ball_head = ref_pre_book.appoint_ball_value 
   
 }

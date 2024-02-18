@@ -95,13 +95,13 @@
         </template>
       </div>
       <!-- 是否接受更好赔率 常规金额 -->
-      <div class="bet-handle">
-        <div class="f-e-c" @click.prevent="set_is_accept_amount()">
-          <span v-if="BetData.bet_is_accept" class="icon-arrow icon-arrow-merge mr-4"></span>
+      <div class="bet-handle" v-if="BetViewDataClass.bet_order_status == 1">
+        <div class="f-e-c cursor" @click.prevent="set_bet_is_accept()">
+          <span v-if="UserCtr.user_bet_prefer == 1" class="icon-arrow icon-arrow-merge mr-4"></span>
           <span v-else class="merge-checkbox mr-4"></span>
           {{ i18n_t('bet.bet_auto_msg_1') }}
         </div>
-        <div v-if="BetData.bet_single_list.length == 1" class="f-e-c" @click.prevent="set_is_regular_amount()">
+        <div v-if="BetData.bet_single_list.length == 1 && BetData.is_bet_single" class="f-e-c cursor" @click.prevent="set_is_regular_amount()">
           <span v-if="BetData.is_regular_amount" class="icon-arrow icon-arrow-merge mr-4"></span>
           <span v-else class="merge-checkbox mr-4"></span> 
           {{ i18n_t('bet.common_amount') }}
@@ -151,9 +151,11 @@ const set_show_single = () =>{
 const set_is_regular_amount = () => {
   BetData.set_is_regular_amount()
 }
-// 是否接受更好赔率
-const set_is_accept_amount = () => {
-  BetData.set_bet_is_accept(!BetData.bet_is_accept)
+
+// 自动接受更好的赔率
+const set_bet_is_accept = () => {
+  let bet_prefer = UserCtr.get_user_bet_prefer()
+  UserCtr.set_api_user_bet_prefer(bet_prefer == 1 ? 2 : 1)
 }
 
 

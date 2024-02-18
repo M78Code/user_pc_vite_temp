@@ -30,6 +30,8 @@ import { MenuData } from 'src/output/project/index.js'
 import { LocalStorage, SessionStorage } from "src/core/utils/common/module/web-storage.js";
 import { calc_bifen } from "src/core/bet/common-helper/module/common-sport.js"
 import { nextTick } from "vue"
+import { MARKET_RANG_FLAG_LIST,MARKET_BIG_SMALL_PLAY_LIST } from "src/core/constant/common/module/play-mapping/market.js"
+import { BASKETBALL_BY_APPOINTMENT_total,BASKETBALL_BY_APPOINTMENT_let } from "src/core/constant/common/module/play-mapping/csid-2.js"
 
 const { PROJECT_NAME } = BUILDIN_CONFIG ;
 
@@ -389,7 +391,7 @@ const get_lastest_market_info = (type) => {
                         console.error('ws那边做了替换为最新的:', item.playOptionsId)
                         // playOptionsId 已经在 ws那边做了替换为最新的
                         let odds = market_odds_list.find(page=> page.oddsType == item.ot) || {}
-
+                        
                         if( odds.id ) {
                             // 替换新id
                             BetData.set_bet_oid_obj(item.playOptionsId,odds.id)
@@ -409,12 +411,12 @@ const get_lastest_market_info = (type) => {
                                 if( ( bet_item.odds != odds.oddsValue ) || ( bet_item.ot != odds.oddsType ) ){
                                     // bet_item.ol_os = 4
                                     // bet_item.hl_hs = 11
-                                    BetData.set_bet_is_accept(true)
+                                    // BetData.set_bet_is_accept(true)
                                     // 投注滑块重置到初始状态
                                     useMittEmit(MITT_TYPES.EMIT_INIT_SLIDER_CONFIG)
 
                                 }else{
-                                    BetData.set_bet_is_accept(false)
+                                    // BetData.set_bet_is_accept(false)
                                 }
                                 // console.error('sssssss',BetData.bet_is_accept)
                                 // 投注项id
@@ -426,10 +428,10 @@ const get_lastest_market_info = (type) => {
                                 // 最终赔率
                                 bet_item.oddFinally = compute_value_by_cur_odd_type(odds.oddsValue,obj.playId, item.odds_hsw, item.csisportIdd)
                                 
-                                clearTimeout(time_accept_out)
-                                time_accept_out = setTimeout(()=>{
-                                    BetData.set_bet_is_accept(false)
-                                },5000)
+                                // clearTimeout(time_accept_out)
+                                // time_accept_out = setTimeout(()=>{
+                                //     BetData.set_bet_is_accept(false)
+                                // },5000)
                             }
 
                             if(BetData.is_bet_pre){
@@ -871,6 +873,7 @@ const submit_handle_lastest_market = () => {
     // 测试投注失败
     // BetViewDataClass.set_bet_order_status(5)
     //return
+    BetViewDataClass.set_lock_mask(true)
     api_betting.post_submit_bet_list(params).then(res => {
         // BetViewDataClass.set_tip_message(res)
         // BetData.tipmsg=res.msg  // 不能这样处理 查看 BetViewDataClass.set_bet_before_message 方法
@@ -986,6 +989,7 @@ const set_submit_btn = () => {
     if(PROJECT_NAME.includes('new-pc')){
         useMittEmit( MITT_TYPES.EMIT_BET_LOADING,false)
     }
+    BetViewDataClass.set_lock_mask(false)
     setTimeout(()=>{
         submit_btn = false
     },500)
@@ -1005,12 +1009,11 @@ const set_error_message_config = (res ={},type,order_state) => {
     let playName = lodash_.get(res, 'data.orderDetailRespList[0].playName', '')
     // 是否需求清除投注信息
     let clear_time = true
-
     if(type == 'bet'){
         clearTimeout(time_out)
+        clear_time = false
         // 投注完成 不需要清除提示信息
         if(res.code == 200){
-            clear_time = false
             switch(order_state){
                 case 2:
                     obj = {
@@ -1272,7 +1275,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         device_type: BetData.deviceType, // 设备号
         odds_hsw: ol_obj._hsw, // 投注项支持的赔率
         ispo: ol_obj._ispo || 0, // 电竞赛事 不支持串关的赛事
-       
+        show_edit_market: get_show_edit_market({sportId: mid_obj.csid, hpid: hn_obj.hpid || ol_obj._hpid}) , // 预约中是否显示盘口值
         // oid, _hid, _hn, _mid, // 存起来 获取最新的数据 判断是否已失效
     }
 
@@ -1796,6 +1799,28 @@ const get_market_is_show = (obj={}) =>{
 
     return !!hl_obj.hid
 }
+
+// 是否可以显示预约盘口值
+const get_show_edit_market = ( obj = {} ) => {
+    let text = false
+    // 足球
+    if(obj.sportId == 1){
+        // 让球 大小
+        if( MARKET_RANG_FLAG_LIST.includes(obj.hpid) || MARKET_BIG_SMALL_PLAY_LIST.includes(obj.hpid) ){
+            text = true
+        }
+    } else
+    // 篮球
+    if(obj.sportId == 2){
+        // 总分 让分
+        if( BASKETBALL_BY_APPOINTMENT_total.includes(obj.hpid) || BASKETBALL_BY_APPOINTMENT_let.includes(obj.hpid) ){
+            text = true
+        }
+    }
+
+    return text
+}
+
 const go_to_bet = (ol_item, match_data_type) => {
     // console.log(MenuData)
     // 如果是赛果详情

@@ -6,9 +6,10 @@
   <div class="tip component bet-btn-item" v-if="BetViewDataClass.error_message">
     <div :class="{'bet-success':BetViewDataClass.error_code == 200, 'bet-loading':BetViewDataClass.error_code == '0000000', 'bet-error': ![200,'0000000'].includes(BetViewDataClass.error_code)}">
       <div class="displayflex">
-        <img class="icon_success" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/bet/success.svg`" alt=""  v-if="BetViewDataClass.bet_order_status == 7"/>
+        <img class="icon_loading" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/gif/icon_loading.gif`" alt="" v-if="BetViewDataClass.bet_order_status == 2"/>
+        <img class="icon_success" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/bet/success.svg`" alt=""  v-if="BetViewDataClass.bet_order_status == 3"/>
+        <img class="icon_component" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/bet/component.png`" alt=""  v-if="BetViewDataClass.bet_order_status == 4"/>
         {{ BetViewDataClass.error_code_list.includes(BetViewDataClass.error_code) ? i18n_t(BetViewDataClass.error_message) : BetViewDataClass.error_message }}
-        <img class="icon_loading" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/gif/icon_loading.gif`" alt=""  v-if="BetViewDataClass.bet_order_status == 2"/>
       </div>
     </div>
   </div> 
@@ -37,6 +38,7 @@ const pack_up = (val) => {
   BetData.set_bet_box_h5_show(false)
   BetData.set_clear_bet_info()
   BetViewDataClass.set_clear_bet_view_config()
+  BetData.set_is_bet_pre(false)
 }
 // 保留投注项
 const set_retain_selection = () => {
@@ -44,6 +46,12 @@ const set_retain_selection = () => {
     BetData.set_bet_amount(0)
     BetViewDataClass.set_bet_order_status(1)
     BetViewDataClass.set_bet_before_message({})
+    BetData.set_is_bet_pre(false)
+
+    // 常用金额 单关 单注 
+    if(!(BetData.is_regular_amount && BetData.is_bet_single && BetData.bet_single_list.length == 1)){
+      BetData.set_bet_play_options_amount()
+    }
 
     if(!BetData.is_bet_single){
       // 清空串关类型 的投注金额
@@ -65,6 +73,11 @@ const set_retain_selection = () => {
 }
 .icon_success{
   margin-right: .05rem;
+}
+.icon_component{
+  width: 18px;
+  height:16px;
+  margin: 10px 5px 0 0;
 }
 .displayflex{
   display: flex;

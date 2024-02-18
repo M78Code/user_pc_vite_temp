@@ -78,7 +78,7 @@ const cancel_book_msg = (match, msg) => {
   z-index: 99;
 }
 .tips-main {
-  width: 360px;
+  width: 400px;
   height: 200px;
   background-color: var(--q-gb-bg-c-4);
   padding: 20px;

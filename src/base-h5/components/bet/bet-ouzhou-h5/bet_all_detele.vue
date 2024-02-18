@@ -11,9 +11,11 @@
       <div class="del-info-name">{{ i18n_t('bet.delete_all') }}</div>
     </div>
     <div class="del-info-select" >
-      <img class="select select_a" @click.stop="switch_handle()" v-if="BetData.bet_is_accept" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/select_a.svg`" alt="" />
-      <img class="select select_b" @click.stop="switch_handle()" v-else :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/select_b.svg`" alt="" />
-      <span class="del-info-name select_del-info-name"  @click.stop="switch_handle()">{{ i18n_t('bet.bet_auto_msg_1') }}</span>
+      <div class="cursor f-c-c" @click.stop="set_bet_is_accept()">
+        <img class="select select_a" v-if="UserCtr.user_bet_prefer == 1 " :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/select_a.svg`" alt="" />
+        <img class="select select_b" v-else :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/select_b.svg`" alt="" />
+        <span class="del-info-name select_del-info-name">{{ i18n_t('bet.bet_auto_msg_1') }}</span>
+      </div>
 
       <div class="question_mark_box">
         <img class="question_mark" @click="question_handle()" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/question_mark.png`" alt="" />
@@ -32,9 +34,12 @@ const clear = () => {
   useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX, false);
 }
 
-const switch_handle = () => {
-  BetData.set_bet_is_accept(!BetData.bet_is_accept)
+// 自动接受更好的赔率
+const set_bet_is_accept = () => {
+  let bet_prefer = UserCtr.get_user_bet_prefer()
+  UserCtr.set_api_user_bet_prefer(bet_prefer == 1 ? 2 : 1)
 }
+
 
 const $q = useQuasar()
 
@@ -42,8 +47,8 @@ const question_handle = ()=>{
   useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, 
   {
     msg: `<ul>
-      <li>${i18n_t("bet.combine_bets_msg1")}</li>
-      <li>${i18n_t("bet.combine_bets_msg2")}</li>
+      <li style="margin-bottom: 10px;">${i18n_t("bet.combine_bets_msg1")}</li>
+      <li style="margin-bottom: 10px;">${i18n_t("bet.combine_bets_msg2")}</li>
       <li>${i18n_t("bet.combine_bets_msg3")}</li>
     </ul>
     `,
@@ -59,8 +64,9 @@ const question_handle = ()=>{
 
 </script>
 
-<style lang="scss" scoped>
 
+<style lang="scss" scoped>
+@import "./css/bet.scss";
 .del-info-name {
   margin-left: 0.16rem;
   color: var(--q-gb-bg-c-4);

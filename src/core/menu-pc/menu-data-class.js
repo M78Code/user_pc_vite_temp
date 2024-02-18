@@ -1052,7 +1052,7 @@ class MenuData {
   }
 
   is_esports_champion() {
-    return (this.match_list_api_config || {}).guanjun == "dianjing-guanjun";
+    return (this.match_list_api_config || {}).guanjun == "dianjing-guanjun" || this.mid_menu_result.md == "100";
   }
 
   // 是否是 featured

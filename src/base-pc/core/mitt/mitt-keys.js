@@ -511,3 +511,31 @@ export const EMIT_C201_HANDLE_BET_RECORD = "EMIT_C201_HANDLE_BET_RECORD";
 
 //移除玩法缓存remove_session_storage
 export const EMIT_SET_REMOVE_SESSION_STORAGE= "EMIT_SET_REMOVE_SESSION_STORAGE"
+
+// 获取到视频进程数据 , 初始化视频数据准备播放视频
+export const EMIT_VIDEO_PROCESS_DATA_GOT = "EMIT_VIDEO_PROCESS_DATA_GOT";
+// 所有赛事结束通知获取下一轮赛事数据
+export const EMIT_IS_ALL_END_NOTICE = "EMIT_IS_ALL_END_NOTICE";
+
+// 虚拟体育篮球倒计时到达时切换进行中或赛事赛事
+export const EMIT_BASKETBALL_TIME_ARRIVED = "EMIT_BASKETBALL_TIME_ARRIVED";
+// 虚拟篮球到达赛前状态时, 强行结束篮球倒计时并切换到赛前状态
+export const EMIT_FORCE_END_PLAYING_BASKETBALL = "EMIT_FORCE_END_PLAYING_BASKETBALL";
+// 虚拟篮球赛事结束时展示篮球赛果并且赛果显示倒计时到达时切换到下一轮虚拟篮球
+export const EMIT_INGAME_RESULT_SHOW_END = "EMIT_INGAME_RESULT_SHOW_END";
+// 虚拟体育倒计时还剩10秒开赛时通知赛事关盘
+export const EMIT_ARRIVED10 = "EMIT_ARRIVED10";
+// 虚拟足球获取到赛果数据时通知子组件显示赛果数据
+export const EMIT_MATCH_RESULT_DATA_LOADED = "EMIT_MATCH_RESULT_DATA_LOADED";
+// 拉取菜单接口重新统计菜单赛事数量(例如当页脚刷新时,或赛事结束移除列表时)
+export const EMIT_RE_STATISTICS_MATCH_COUNT = "EMIT_RE_STATISTICS_MATCH_COUNT";
+// 篮球早盘倒计时结束显示列表比分
+export const EMIT_PRE_COUNTING_EDN = "EMIT_PRE_COUNTING_EDN";
+// 虚拟体育获取到视频接口中的赛事数据同步状态到赛事列表 , 并根据接口数据更新视频播放进度
+export const EMIT_SYNC_VIDEO_DATA = "EMIT_SYNC_VIDEO_DATA";
+// 获取到视频进程接口数据 , 更新视频进度与赛事进度
+export const EMIT_CURRENT_VIDEO_PROCESS_INITED = "EMIT_CURRENT_VIDEO_PROCESS_INITED";
+// 虚拟体育拉取接口时通知显示loading动画
+export const EMIT_VIRTUAL_MATCH_LOADING = "EMIT_VIRTUAL_MATCH_LOADING";
+// 虚拟体育拉取接口时通知显示loading动画
+export const EMIT_MATCH_EDNED_STATUS2 = "EMIT_MATCH_EDNED_STATUS2";

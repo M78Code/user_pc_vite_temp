@@ -527,7 +527,7 @@
     "bet_book2": "Book",
     "bet_odds": "Odds",
     "bet_dish": "Dish",
-    "bet_book_cancel_msg": "cancel [x] booking?",
+    "bet_book_cancel_msg": "Cancel [x] Booking?",
     "bet_booked": "Booked",
     "bet_book_failed": "Book failed",
     "bet_booking": "Booking",
@@ -595,7 +595,7 @@
     "cancle_fail_tips": "You are trying too often, pls try again later",
     "cancle_fail_tips2": "Abnormal match status, can't cancel booking",
     "market_error_info": "It is already the min booking market value, pls adjust。",
-    "market_error_info_max": "It is already the min booking market value, pls adjust。",
+    "market_error_info_max": "It is already the max booking market value, pls adjust。",
     "market_error_info_low": "Can't be lower than min booked market value。"
   },
   "bet_record": {

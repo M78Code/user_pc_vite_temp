@@ -49,7 +49,7 @@
       >
         <div>
           <bet-item
-            v-if="is_mounted"
+            v-if="is_mounted && handicap_list[0]"
             :ol_data="handicap_list[0]"
             @oddsChange="
               (odds_lift_obj) => {
@@ -105,7 +105,7 @@
         <!-- <span class="common-text mr-8">{{ i18n_t("analysis.draw") }}</span> -->
         <span class="match-odd">
           <bet-item
-            v-if="is_mounted"
+            v-if="is_mounted && handicap_list[2]"
             @oddsChange="
               (odds_lift_obj) => {
                 lift_obj1 = odds_lift_obj;
@@ -113,7 +113,9 @@
             "
             ref="betItemDetail"
             :ol_data="handicap_list[2]"
-        /></span>
+          />
+          <span v-else>—</span>
+        </span>
       </div>
       <!-- 比分 -->
       <div class="match-score">
@@ -162,7 +164,7 @@
         <div>
           <span class="match-odd">
             <bet-item
-              v-if="is_mounted"
+              v-if="is_mounted && handicap_list[1]"
               @oddsChange="
                 (odds_lift_obj) => {
                   lift_obj2 = odds_lift_obj;
@@ -449,11 +451,11 @@ const click_popup = (e) =>{
 /** 监听赔率父节点的click, 调用赔率子节点的click事件处理器完成*/
 const onMatchNewHandicapClick = (refNodeName) => {
   if (refNodeName == 'betItemLeft') {
-    betItemLeft.value.bet_click_ol()
+    betItemLeft.value?.bet_click_ol()
   } else if (refNodeName == 'betItemRight') {
-    betItemRight.value.bet_click_ol()
+    betItemRight.value?.bet_click_ol()
   } else {
-    betItemDetail.value.bet_click_ol()
+    betItemDetail.value?.bet_click_ol()
   }
 }
 /**
