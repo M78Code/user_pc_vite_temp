@@ -92,11 +92,7 @@ const check_ball_min = (_item) =>{
       if(MARKET_RANG_FLAG_LIST.includes(_item.playId)){
         return -10
       }else{
-        if(_item.playOptions == 1){
-          return _item.score_home*1 + 0.5
-        }else{
-          return _item.score_away*1 + 0.5
-        }
+        return _item.score_home*1 + _item.score_away*1 + 0.5
       }
     }else{
       if(BASKETBALL_BY_APPOINTMENT_let.includes(_item.playId)){
