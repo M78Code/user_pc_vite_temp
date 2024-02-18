@@ -113,7 +113,9 @@
             "
             ref="betItemDetail"
             :ol_data="handicap_list[2]"
-        /></span>
+          />
+          <span v-else>—</span>
+        </span>
       </div>
       <!-- 比分 -->
       <div class="match-score">
@@ -449,11 +451,11 @@ const click_popup = (e) =>{
 /** 监听赔率父节点的click, 调用赔率子节点的click事件处理器完成*/
 const onMatchNewHandicapClick = (refNodeName) => {
   if (refNodeName == 'betItemLeft') {
-    betItemLeft.value.bet_click_ol()
+    betItemLeft.value?.bet_click_ol()
   } else if (refNodeName == 'betItemRight') {
-    betItemRight.value.bet_click_ol()
+    betItemRight.value?.bet_click_ol()
   } else {
-    betItemDetail.value.bet_click_ol()
+    betItemDetail.value?.bet_click_ol()
   }
 }
 /**

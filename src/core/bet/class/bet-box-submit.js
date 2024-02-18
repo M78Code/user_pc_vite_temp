@@ -30,6 +30,8 @@ import { MenuData } from 'src/output/project/index.js'
 import { LocalStorage, SessionStorage } from "src/core/utils/common/module/web-storage.js";
 import { calc_bifen } from "src/core/bet/common-helper/module/common-sport.js"
 import { nextTick } from "vue"
+import { MARKET_RANG_FLAG_LIST,MARKET_BIG_SMALL_PLAY_LIST } from "src/core/constant/common/module/play-mapping/market.js"
+import { BASKETBALL_BY_APPOINTMENT_total,BASKETBALL_BY_APPOINTMENT_let } from "src/core/constant/common/module/play-mapping/csid-2.js"
 
 const { PROJECT_NAME } = BUILDIN_CONFIG ;
 
@@ -1273,7 +1275,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         device_type: BetData.deviceType, // 设备号
         odds_hsw: ol_obj._hsw, // 投注项支持的赔率
         ispo: ol_obj._ispo || 0, // 电竞赛事 不支持串关的赛事
-       
+        show_edit_market: get_show_edit_market({sportId: mid_obj.csid, hpid: hn_obj.hpid || ol_obj._hpid}) , // 预约中是否显示盘口值
         // oid, _hid, _hn, _mid, // 存起来 获取最新的数据 判断是否已失效
     }
 
@@ -1797,6 +1799,28 @@ const get_market_is_show = (obj={}) =>{
 
     return !!hl_obj.hid
 }
+
+// 是否可以显示预约盘口值
+const get_show_edit_market = ( obj = {} ) => {
+    let text = false
+    // 足球
+    if(obj.sportId == 1){
+        // 让球 大小
+        if( MARKET_RANG_FLAG_LIST.includes(obj.hpid) || MARKET_BIG_SMALL_PLAY_LIST.includes(obj.hpid) ){
+            text = true
+        }
+    } else
+    // 篮球
+    if(obj.sportId == 2){
+        // 总分 让分
+        if( BASKETBALL_BY_APPOINTMENT_total.includes(obj.hpid) || BASKETBALL_BY_APPOINTMENT_let.includes(obj.hpid) ){
+            text = true
+        }
+    }
+
+    return text
+}
+
 const go_to_bet = (ol_item, match_data_type) => {
     // console.log(MenuData)
     // 如果是赛果详情
