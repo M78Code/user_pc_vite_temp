@@ -697,7 +697,9 @@
     "bet_book_valid": "Expired",
     "combine_bets_msg1": "When placing Rising，The system will default to you Accept to odds，lt doesn't interrupt you so the success rate will be improved.",
     "combine_bets_msg2": "When placing Reducing， The system will default to you Don't accept, lt interrupt you so that you need to confirm the odds and bet again.",
-    "combine_bets_msg3": "If This feature is not checked，The system will consider that you'Automatically accept any odds'.（That is，no matter how the odds change when placing a bet，the system will assume that you can accept it and will not interrupt your betting behavior）"
+    "combine_bets_msg3": "If This feature is not checked，The system will consider that you'Automatically accept any odds'.（That is，no matter how the odds change when placing a bet，the system will assume that you can accept it and will not interrupt your betting behavior）",
+    "bet_max_booked_odds": "已为最高预约赔率值，请重新调整",
+    "bet_min_booked_odds": "预约赔率不能低于所对应的盘口赔率"
   },
   "bet_message":{
     "success": "Successful Betting",

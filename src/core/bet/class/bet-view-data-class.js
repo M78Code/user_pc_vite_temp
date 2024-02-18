@@ -255,7 +255,7 @@ class BetViewData {
   set_bet_before_message({ code, message }) {
     this.error_message = message
     this.error_code = code
-
+    //console.error('ssssss',code,message)
     this.set_bet_view_version()
   }
   /**
@@ -572,6 +572,10 @@ class BetViewData {
       this.lock_mask = _BOOL
     }
     this.set_bet_view_version()
+  }
+
+  set_bet_play_options_amount(){
+    this.bet_special_series.filter(item=> item.bet_amount = '')
   }
 }
 export default new BetViewData();
