@@ -65,9 +65,13 @@
                           <!-- 盘口 -->
                           <div class="bet-odds-name">{{i18n_t('pre_record.handicap')}}</div>
                           <div class="bet-odds-edit">
-                            <span class="bet-odds-reduce" :class="{begray:ref_pre_book.appoint_ball_head <= check_ball_min(items) }" v-touch-repeat:0:300.mouse.enter.space="() => {sub_handle(items)}">-</span>
+                            <span class="bet-odds-reduce begray" v-if="ref_pre_book.appoint_ball_head <= check_ball_min(items)">-</span>
+                            <span class="bet-odds-reduce"  v-else v-touch-repeat:0:300.mouse.enter.space="() => {sub_handle(items)}">-</span>
+
                             <bet-input-info3 :items="items" :readonly="items.sportId == 1" :valueModel="ref_pre_book.appoint_ball_value" :index="'pre_handicap' + index"></bet-input-info3>
-                            <span class="bet-odds-add" :class="{begray:ref_pre_book.appoint_ball_head >= check_ball_max(items)}" v-touch-repeat:0:300.mouse.enter.space="() => {add_handle(items)}">+</span> 
+
+                            <span class="bet-odds-add begray" v-if="ref_pre_book.appoint_ball_head >= check_ball_max(items)">+</span> 
+                            <span class="bet-odds-add" v-else v-touch-repeat:0:300.mouse.enter.space="() => {add_handle(items)}">+</span> 
                           </div>
                           <!-- {{ ref_pre_book.appoint_ball_head }}-{{ check_ball_max(items) }}-{{ check_ball_min(items) }} -->
                         </div>                    
@@ -75,9 +79,13 @@
                           <!-- 赔率 -->
                           <div class="bet-odds-name">{{i18n_t('pre_record.odds')}}</div>
                           <div class="bet-odds-edit">
-                            <span class="bet-odds-reduce" :class="{begray:ref_pre_book.appoint_odds_value == ref_pre_book.min_odds_value}" v-touch-repeat:0:300.mouse.enter.space="() => {btn_reduce(items)}">-</span>
+                            <span class="bet-odds-reduce begray" v-if="ref_pre_book.appoint_odds_value <= ref_pre_book.min_odds_value" >-</span>
+                            <span class="bet-odds-reduce" v-else v-touch-repeat:0:300.mouse.enter.space="() => {btn_reduce(items)}">-</span>
+
                             <bet-input-info3 :items="items" :valueModel="ref_pre_book.appoint_odds_value" :index="'pre_odds' + index"></bet-input-info3>
-                            <span class="bet-odds-add" :class="{begray:ref_pre_book.appoint_odds_value >= 355}" v-touch-repeat:0:300.mouse.enter.space="() => {btn_add(items)}">+</span> 
+                            
+                            <span class="bet-odds-add begray" v-if="ref_pre_book.appoint_odds_value >= 355">+</span> 
+                            <span class="bet-odds-add" v-else v-touch-repeat:0:300.mouse.enter.space="() => {btn_add(items)}">+</span> 
                           </div>
                           <span class="delete-appoint icon-delete" @click="set_no_show_appoint()"></span>
                         </div>
@@ -126,15 +134,12 @@
 
   //
   const check_ball_min = (_item) =>{
+    console.error('ssss')
     if( _item.sportId == 1){
       if(MARKET_RANG_FLAG_LIST.includes(_item.playId)){
         return -10
       }else{
-        if(_item.playOptions == 1){
-          return _item.score_home*1 + 0.5
-        }else{
-          return _item.score_away*1 + 0.5
-        }
+        return _item.score_home*1 + _item.score_away*1 + 0.5
       }
     }else{
       if(BASKETBALL_BY_APPOINTMENT_let.includes(_item.playId)){

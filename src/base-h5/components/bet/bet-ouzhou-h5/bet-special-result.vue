@@ -28,7 +28,8 @@
 
             <div class="bet-right">
                 <div class="bet-odds">
-                    <span class="font14 font700 mr-10">@<span class="font22">{{ items.oddsValues }}</span></span>
+                    <span v-if="![2, 3].includes(BetViewDataClass.bet_order_status) " class="font14 font700 ">@</span>
+                    <span class="font22">{{ items.oddsValues }}</span>
                 </div>
             </div>
             </section>
@@ -81,6 +82,7 @@ const props = defineProps({
         .bet-odds {
             height: .24rem;
             line-height: 0.22rem;
+            padding-right: 10px;
         }
 
         .bet-right {
