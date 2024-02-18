@@ -38,7 +38,7 @@
       <div class="item ol-name" :alt="olName">
         <span v-if="route.name != 'virtual_sports' && !lodash.isArray(olName)"
           class="ol-name-span" :class="[{'ol-name-space':textOlOU}]">
-          <span v-if="txt_ol_mnae" class="ol-name-span2">{{ txt_ol_name }}</span>
+          <span v-if="txt_ol_name" class="ol-name-span2">{{ txt_ol_name }}</span>
           <span v-else-if="textOlOU" class="ol-name-ou">{{ textOlOU }}</span>
           <span v-else-if="isPlacehold" class="ol-name-placehold">0.x</span>
           <span>{{ olName }}</span>

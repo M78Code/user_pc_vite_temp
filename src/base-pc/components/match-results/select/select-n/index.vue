@@ -108,13 +108,22 @@ const option = computed(() => {
 })
 
 // 全局点击事件
-  watch(
-    () => GlobalSwitchClass.global_switch_version,
-    (new_) => {
-     optionsIsShow.value = false;
-    },
-    {deep:true, immediate: true }
-  );
+watch(
+  () => GlobalSwitchClass.global_switch_version,
+  (new_) => {
+  optionsIsShow.value = false;
+  },
+  {deep:true, immediate: true }
+);
+//初始化下拉框数据
+watch(
+  () => props.sportType,
+  (new_) => {
+    sport.value = new_;
+  },
+  {deep:true, immediate: true }
+);
+
 /**
  * 展示或隐藏下拉框
  */
@@ -150,6 +159,7 @@ const selectSport = lodash.throttle((item,index) => {
 //   useMittEmit(MITT_TYPES.EMIT_CHANGE_SPORT,{ currentItem: item, isChampion: props.isChampion })
 //   useMittEmit(MITT_TYPES.EMIT_SElECT_SPORT, props.isChampion);
 // };
+
 </script>
 <style lang="scss" scoped>
 html,body{

@@ -79,7 +79,7 @@
     <div class="row-item match-icon" v-if="show_type == 'all'">
       <!-- 提前结算 -->
       <div @click.stop="">
-        <div v-if="lodash.get(match, 'mearlys', 0) && match_style_obj.data_tpl_id != 12"
+        <div v-if="lodash.get(match, 'mearlys', 0) && match.tpl_id != 12"
           class="icon-wrap settlement-pre relative-position" v-tooltip="{ content: i18n_t('bet_record.settlement_pre') }">
           <img class="match_pre" :src="compute_local_project_file_path('/image/png/match_pre.png')" />
         </div>
@@ -122,7 +122,7 @@ import { useRouter, useRoute } from "vue-router";
 import lodash from 'lodash'
 import { get_match_status } from 'src/core/utils/common/index'
 import GlobalAccessConfig from "src/core/access-config/access-config.js"
-import { is_show_sr_flg, i18n_t, compute_local_project_file_path } from "src/output/index.js"
+import { is_show_sr_flg, i18n_t, compute_local_project_file_path, MenuData } from "src/output/index.js"
 import details from "src/core/match-list-pc/details-class/details.js"
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import { compute_css_obj } from 'src/core/server-img/index.js'

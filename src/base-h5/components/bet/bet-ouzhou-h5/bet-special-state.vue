@@ -5,9 +5,9 @@
         <div class="info-top row items-center justify-between">
             <p class="left-text"><span>{{items.seriesValue}}  x{{ items.seriesSum }} </span></p>
             <!-- 订单状态 0:投注失败 1: 投注成功 2: 订单确认中 -->
-            <p class="right-text" v-if="items.orderStatusCode == 1">投注成功</p>
-            <p class="right-text" v-if="items.orderStatusCode == 2">订单确认中</p>
-            <p class="right-text" v-if="items.orderStatusCode == 0">投注失败</p>
+            <p class="right-text" v-if="items.orderStatusCode == 1">{{i18n_t('bet_message.success')}}</p>
+            <p class="right-text" v-if="items.orderStatusCode == 2">{{i18n_t('bet_message.loading')}}</p>
+            <p class="right-text" v-if="items.orderStatusCode == 0">{{i18n_t('bet_message.error')}}</p>
         </div>
     </div>
 </template>

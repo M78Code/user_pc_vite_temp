@@ -469,7 +469,7 @@
             <div v-if="index == activeIndex" class="wrap-load">
               <!-- v-if="item.playBack&&show_play_back" -->
               <div v-if="item.playBack&&show_play_back" class="tab_change_content">
-                <q-tabs :value="current_events_type" :tabs="tab_list" @click="change_video_history_list"></q-tabs>
+                <tabs :value="current_events_type" :tabs="tab_list" @click="change_video_history_list"></tabs>
               </div>
               <!-- 精彩回放视频滚动列表 -->
               <div class="play_back_event" v-if="item.playBack&&show_play_back">
@@ -538,7 +538,7 @@ import loadData from "src/components/load_data/load_data.vue"
 import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
 import { IconWapper } from 'src/components/icon'
 import { format_second_ms } from "src/output/index.js";
-// import Tabs from "../components/playback_tabs.vue";
+import Tabs from "../select/components/playback_tabs.vue";
 import SliderX from "../select/components/playback_slider.vue";
 import no_data from "src/components/no_data/no_data";
 export default {
@@ -546,7 +546,7 @@ export default {
   components: {
     loadData,
     IconWapper,
-    // Tabs,
+    Tabs,
     SliderX,
     "no-data": no_data
   },
