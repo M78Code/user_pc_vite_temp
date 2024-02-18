@@ -9,7 +9,7 @@
         <span class="multiple-text" v-if="index == 0">@{{items.seriesOdds }}</span>
       </div>
      <div class="font14">
-      <span class="font400 item-left-btm">最高可赢</span>
+      <span class="font400 item-left-btm">{{ i18n_t("bet.total_win2") }}</span>
       <span v-if="items.seriesOdds">
         <em class="total-money number_family font500" > {{ formatMoney(mathJs.subtract(mathJs.multiply(items.bet_amount,items.seriesOdds), items.bet_amount)) }}</em>
       </span>
