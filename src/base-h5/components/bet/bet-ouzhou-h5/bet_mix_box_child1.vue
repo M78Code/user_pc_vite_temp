@@ -61,7 +61,7 @@
                       <div class="nonebox4-content-left-content-text-three" v-if="items.home">{{items.home}} v {{items.away}} {{items.matchType == 2? items.mark_score : ''}}</div>
 
                       <div v-if="ref_data.show_appoint" class="bet-odds">
-                        <div class="bet-appoint-box" v-if="items.handicap_hv">
+                        <div class="bet-appoint-box" v-if="items.show_edit_market">
                           <!-- 盘口 -->
                           <div class="bet-odds-name">{{i18n_t('pre_record.handicap')}}</div>
                           <div class="bet-odds-edit">
