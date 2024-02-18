@@ -15,20 +15,22 @@
                         </div>
                     </div>
                     <div class="text-flow-none" v-else>{{items.handicap}} <em v-if="items.handicap_hv" class="ty-span">{{items.handicap_hv}}</em></div> 
-
+                    <!-- 盘口 -->
+                    <span class="text-a1a text-flow-none text-009 font400" v-if="UserCtr.is_cur_odds(items.odds_hsw)">[{{ i18n_t(`odds.${UserCtr.odds.cur_odds}`) }}]</span> 
+                    <span class="text-a1a text-flow-none text-009 font400" v-else>[{{ i18n_t(`odds.EU`) }}]</span> 
                 </div>
                 <div class="w-100 handicap my-4">
                     <span class="mr-4 text-009 text-flow-none" v-if="items.matchType == 2">{{'[' + i18n_t("bet.bowls") + ']'}}</span>
                     <span class="text-a1a text-flow-none mr-4 font400 text-a1a-i">{{ items.playName }}
                         <span>{{items.matchType == 2 && [1,2,3,8,9].includes(items.sportId *1) ? items.mark_score : ''}}</span>
                     </span>
-                    <!-- 盘口 -->
-                    <span class="text-a1a text-flow-none text-009 font400" v-if="UserCtr.is_cur_odds(items.odds_hsw)">[{{ i18n_t(`odds.${UserCtr.odds.cur_odds}`) }}]</span> 
-                    <span class="text-a1a text-flow-none text-009 font400" v-else>[{{ i18n_t(`odds.EU`) }}]</span> 
+                    <!-- 预约 -->
+                    <span class="text-a1a text-flow-none text-009 font400 colorc16"
+                    v-if="ref_data.show_appoint && BetData.is_bet_single && BetData.bet_pre_list.includes(items.playOptionsId)">[{{ `${i18n_t('bet.bet_book2')}` }}]</span> 
                 </div>
                 <div class="w-100 fon12 font400 text-8a8">{{ items.tid_name }}</div>
                 <div class="w-100 fon12 font400 text-8a8" v-if="items.home">{{ items.home }} <span class="mx-4">v</span> {{ items.away }} {{ items.matchType == 2? items.mark_score : ''}}
-                    <span class="mx-4" v-show="items.bet_type != 'vr_bet'">({{ items.score_home_away }})</span>
+                    <span class="mx-4" v-show="items.bet_type != 'vr_bet' && items.score_home_away != 'undefined:undefined'">({{ items.score_home_away }})</span>
                 </div>
             
             </div>
@@ -292,6 +294,9 @@ watch(()=>UserCtr.odds.cur_odds,()=>{
     }
     .handicap{
         max-width: 190px;
+        .colorc16 {
+            color: var(--q-gb-t-c-16);
+        }
     }
     .text-flow-none{
         max-width: 84%;

@@ -166,7 +166,7 @@ const reduce_change_val = (val) => {
  */
 const add_handle = (item, index = 1) => {
   //球头加
-  let step = item.sportId == '1' ? 0.25 : 0.5;
+  let step = item.sportId == '1' ? 0.25 : 1;
   ref_pre_book.appoint_ball_head = math_js.add(ref_pre_book.appoint_ball_head, step);
   // console.error('球头加', ref_pre_book.appoint_ball_head);
   const max_rang = 10;
@@ -224,10 +224,12 @@ const computed_keyboard_odds = (val) => {
     let res = val
     if (val <= min_odds) {
       res = format_money(min_odds)
+      //console.error('sssss',i18n_t('bet.bet_min_booked_odds'))
       useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t('bet.bet_min_booked_odds'));
     }
     if (val >= max_odds) {
       res = format_money(max_odds)
+      //console.error('aaaaa',i18n_t('bet.bet_max_booked_odds'))
       useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t('bet.bet_max_booked_odds'));
     }
     ref_pre_book.appoint_odds_value = res
@@ -255,6 +257,7 @@ const football_head_handle = (val) => {
 }
 
 const basktball_head_handle = (val) => {
+  clearTimeout(appoint_time_out)
   let min_ball_head = 0
   let max_ball_head = 0
   if(BASKETBALL_BY_APPOINTMENT_let.includes(BetData.current_bet_pre_obj.playId)){ // 让分
@@ -268,17 +271,24 @@ const basktball_head_handle = (val) => {
     max_ball_head = 400.5;
   }
 
-  let res = val
-  if (val*1 <= min_ball_head) {
-    res = min_ball_head
-    useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('pre_record.market_error_info')}`)
-  }
-  if (val*1 >= max_ball_head) {
-    res = max_ball_head
-    useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('pre_record.market_error_info_max')}`)
-  }
-  ref_pre_book.appoint_ball_value = res
-  ref_pre_book.appoint_ball_head = res
+  ref_pre_book.appoint_ball_value = val
+  ref_pre_book.appoint_ball_head = val
+
+  appoint_time_out = setTimeout(() => {
+
+    let res = val
+    if (val*1 <= min_ball_head) {
+      res = min_ball_head
+      useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('pre_record.market_error_info')}`)
+    }
+    if (val*1 >= max_ball_head) {
+      res = max_ball_head
+      useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('pre_record.market_error_info_max')}`)
+    }
+    ref_pre_book.appoint_ball_value = res
+    ref_pre_book.appoint_ball_head = res
+
+  }, 1500);
 }
 
 /**
@@ -288,7 +298,7 @@ const basktball_head_handle = (val) => {
  * @return {undefined} undefined
  */
 const sub_handle = (item, index = 1) => {
-  let step = item.sportId == 1 ? 0.25 : 0.5;
+  let step = item.sportId == 1 ? 0.25 : 1;
   ref_pre_book.appoint_ball_head = math_js.subtract(ref_pre_book.appoint_ball_head, step);
   // console.error('market_type===', this.market_type);
   // console.error('basic_score===', ref_pre_book.basic_score);

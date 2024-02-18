@@ -695,9 +695,11 @@
     "bet_booking": "Booking",
     "bet_process": "Processing",
     "bet_book_valid": "Expired",
-    "combine_bets_msg1": "When betting, if the odds increase, the system will default to your acceptance of the odds, will not interrupt your betting behavior, improve the success rate of betting.",
-    "combine_bets_msg2": "When betting, if the odds are reduced, the system will default that you do not accept the odds, and interrupt your betting behavior, you need to confirm the odds and bet again.",
-    "combine_bets_msg3": "If this feature is not checked, the system will consider you 'automatically accept any odds'. That is, no matter how the odds change at the time of betting, the system will default to your acceptance and will not interrupt your betting behavior"
+    "combine_bets_msg1": "When placing Rising，The system will default to you Accept to odds，lt doesn't interrupt you so the success rate will be improved.",
+    "combine_bets_msg2": "When placing Reducing， The system will default to you Don't accept, lt interrupt you so that you need to confirm the odds and bet again.",
+    "combine_bets_msg3": "If This feature is not checked，The system will consider that you'Automatically accept any odds'.（That is，no matter how the odds change when placing a bet，the system will assume that you can accept it and will not interrupt your betting behavior）",
+    "bet_max_booked_odds": "已为最高预约赔率值，请重新调整",
+    "bet_min_booked_odds": "预约赔率不能低于所对应的盘口赔率"
   },
   "bet_message":{
     "success": "Successful Betting",
@@ -812,7 +814,7 @@
     "odds": "Odds",
     "book_bet_amount": "Booked bet amt",
     "confirm_cancle": "Confirm CXL",
-    "confirm_matchinfo": "cancel {0} booking?",
+    "confirm_matchinfo": "Cancel {0} booking?",
     "cancle_fail_tips": "You are trying too often, pls try again later",
     "cancle_fail_tips2": "Abnormal match status, can't cancel booking",
     "market_error_info": "It is already the min booking market value, pls adjust。",

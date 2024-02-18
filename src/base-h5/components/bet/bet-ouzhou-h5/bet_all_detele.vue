@@ -42,8 +42,8 @@ const question_handle = ()=>{
   useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, 
   {
     msg: `<ul>
-      <li>${i18n_t("bet.combine_bets_msg1")}</li>
-      <li>${i18n_t("bet.combine_bets_msg2")}</li>
+      <li style="margin-bottom: 10px;">${i18n_t("bet.combine_bets_msg1")}</li>
+      <li style="margin-bottom: 10px;">${i18n_t("bet.combine_bets_msg2")}</li>
       <li>${i18n_t("bet.combine_bets_msg3")}</li>
     </ul>
     `,

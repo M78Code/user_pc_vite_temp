@@ -575,11 +575,11 @@ get_quick_mid_obj_ref(mid){
    * @param {Object} match 赛事信息
    * @return {Object} {has_add1:false,has_add2:false}
    */
-  _get_has_add_n(match){
+  _get_has_add_n(match, hps_key='hpsData[0].hpsAdd'){
     let res = {has_add1:false,has_add2:false};
     try {
       // 获取附加盘数据 
-      let hps_add_n_data = lodash.get(match,'hpsData[0].hpsAdd');
+      let hps_add_n_data = lodash.get(match,hps_key);
       // 获取玩法的最大坑位
       let main_fun = function(item){
         // 坑位
@@ -930,7 +930,7 @@ get_quick_mid_obj_ref(mid){
       // 快速查询对象mid_obj增加数据
       many_obj.mid_obj[this.get_list_to_obj_key(item.mid,item.mid,'mid')] = item;
       // 需要解析的投注项赛事基础数据的路径
-      const hps_key_arr = ['hps','hpsAdd','hpsData[0].hps','hpsData[0].hpsAdd',"hpsBold","hpsOvertime","hps15Minutes","hps5Minutes","hpsCorner","hpsPunish","hpsPenalty","hpsPromotion","hpsOutright","odds_info","hpsCompose"];
+      const hps_key_arr = ['hps','hpsAdd','hpsData[0].hps','hpsData[0].hpsAdd','hpsData[1].hps','hpsData[1].hpsAdd',"hpsBold","hpsOvertime","hps15Minutes","hps5Minutes","hpsCorner","hpsPunish","hpsPenalty","hpsPromotion","hpsOutright","odds_info","hpsCompose"];
       // 角球开关----------------------hpsCorner
       // 罚牌开关----------------------hpsPunish
       // 冠军开关----------------------hpsOutright
@@ -950,11 +950,16 @@ get_quick_mid_obj_ref(mid){
       hps_key_arr.forEach(hps_key_str => {
         // 设置投注项赛事列表数据
         hps_data_arr = lodash.get(item, hps_key_str)
+        //特色玩法数据h5做特殊处理
+        if(hps_key_str = 'hpsCompose' && !BUILDIN_CONFIG.IS_PC){
+          hps_key_str = 'hpsCompose_h5';
+        }
         switch (hps_key_str) {
           // 主玩副盘口数据时
           case 'hpsData[0].hpsAdd':
+          case 'hpsData[1].hpsAdd':
           case 'hps':
-          case 'hpsCompose':
+          case 'hpsCompose_h5': // h5玩法的hpsCompose
           case 'hpsAdd':
           // 赛事详情所有玩法数据时
           case 'odds_info':
@@ -1145,7 +1150,7 @@ get_quick_mid_obj_ref(mid){
       try {
         // 需要解析的投注项赛事基础数据的路径
         const hps_key_arr =key_arr?key_arr:
-        ['hps','hpsAdd','hpsData[0].hps','hpsData[0].hpsAdd',"hpsBold","hpsOvertime","hps15Minutes","hps5Minutes","hpsCorner","hpsPunish","hpsPenalty","hpsPromotion","hpsOutright","odds_info","hpsCompose"];
+        ['hps','hpsAdd','hpsData[0].hps','hpsData[0].hpsAdd','hpsData[1].hps','hpsData[1].hpsAdd',"hpsBold","hpsOvertime","hps15Minutes","hps5Minutes","hpsCorner","hpsPunish","hpsPenalty","hpsPromotion","hpsOutright","odds_info","hpsCompose"];
         // 角球开关----------------------hpsCorner
         // 罚牌开关----------------------hpsPunish
         // 冠军开关----------------------hpsOutright
@@ -1165,11 +1170,16 @@ get_quick_mid_obj_ref(mid){
         hps_key_arr.forEach(hps_key_str => {
           // 设置投注项赛事列表数据
           hps_data_arr = lodash.get(item, hps_key_str)
+          //特色玩法数据h5做特殊处理
+          if(hps_key_str = 'hpsCompose' && !BUILDIN_CONFIG.IS_PC){
+            hps_key_str = 'hpsCompose_h5';
+          }
           switch (hps_key_str) {
             // 主玩副盘口数据时
             case 'hpsData[0].hpsAdd':
+            case 'hpsData[1].hpsAdd':
             case 'hps':
-            case 'hpsCompose':
+            case 'hpsCompose_h5': // h5玩法的hpsCompose
             case 'hpsAdd':
             // 赛事详情所有玩法数据时
             case 'odds_info':

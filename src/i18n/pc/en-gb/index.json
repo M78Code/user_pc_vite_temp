@@ -527,7 +527,7 @@
     "bet_book2": "Book",
     "bet_odds": "Odds",
     "bet_dish": "Dish",
-    "bet_book_cancel_msg": "cancel [x] booking?",
+    "bet_book_cancel_msg": "Cancel [x] Booking?",
     "bet_booked": "Booked",
     "bet_book_failed": "Book failed",
     "bet_booking": "Booking",

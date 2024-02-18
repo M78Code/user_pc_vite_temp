@@ -94,6 +94,19 @@
           
         </template>
       </div>
+      <!-- 是否接受更好赔率 常规金额 -->
+      <div class="bet-handle" v-if="BetViewDataClass.bet_order_status == 1">
+        <div class="f-e-c" @click.prevent="set_is_accept_amount()">
+          <span v-if="BetData.bet_is_accept" class="icon-arrow icon-arrow-merge mr-4"></span>
+          <span v-else class="merge-checkbox mr-4"></span>
+          {{ i18n_t('bet.bet_auto_msg_1') }}
+        </div>
+        <div v-if="BetData.bet_single_list.length == 1" class="f-e-c" @click.prevent="set_is_regular_amount()">
+          <span v-if="BetData.is_regular_amount" class="icon-arrow icon-arrow-merge mr-4"></span>
+          <span v-else class="merge-checkbox mr-4"></span> 
+          {{ i18n_t('bet.common_amount') }}
+        </div>
+      </div>
        
        <!-- 底部投注信息 -->
        <div v-show="BetData.bet_single_list.length || BetData.bet_s_list.length">
@@ -133,6 +146,16 @@ const set_show_single = () =>{
     ref_data.show_single = !ref_data.show_single
   }
 }
+
+// 常用金额
+const set_is_regular_amount = () => {
+  BetData.set_is_regular_amount()
+}
+// 是否接受更好赔率
+const set_is_accept_amount = () => {
+  BetData.set_bet_is_accept(!BetData.bet_is_accept)
+}
+
 
 // 单关/串关 切换
 const show_single_change = () => {
@@ -294,6 +317,13 @@ onMounted(() => {
 
   .bet-text{
     color: var(--q-gb-t-c-8);
+  }
+
+  .bet-handle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
   }
   
 </style>

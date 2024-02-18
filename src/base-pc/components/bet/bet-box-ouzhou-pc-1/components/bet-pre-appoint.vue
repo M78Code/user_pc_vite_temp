@@ -112,7 +112,12 @@ const pre_input_handle = ()=>{
 }
 
 const appoint_odds_head_handle = ()=>{
-  ref_pre_book.appoint_ball_value = check_ball_max(props.item)
+  if( ref_pre_book.appoint_ball_value > check_ball_max(props.item)){
+    ref_pre_book.appoint_ball_value = check_ball_max(props.item)
+  }
+  if( ref_pre_book.appoint_ball_value < check_ball_min(props.item)){
+    ref_pre_book.appoint_ball_value = check_ball_min(props.item)
+  }
   ref_pre_book.appoint_ball_head = ref_pre_book.appoint_ball_value 
   
 }

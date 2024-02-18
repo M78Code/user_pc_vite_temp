@@ -102,12 +102,12 @@ function compute_mi_400_sl_mi_csid(mi) {
  * 单个菜单按钮点击   滚球 的
  */
 function handle_click_menu_mi_1(detail = {}) {
-    
+    const csid = detail.mif?detail.mif*1 - 100:+detail.mi>2000 && +detail.mi<3000?+detail.mi-2000:+detail.mi-30000;
     let obj = {
         // 当前赛种 菜单id
         mid_menu_mi: detail.mi,  
         // 当前菜单的赛种id
-        csid: (detail.mif*1 - 100), 
+        csid:csid, 
         current_mi: detail.mi,
         lv1_mi:1
     } 

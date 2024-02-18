@@ -104,7 +104,7 @@ class UserCtr {
     this.balance = 0;
     //  用户余额是否展示状态
     this.show_balance = false;
-    //用户版本 移动端有简版 1 和标准版 2
+    //用户版本 移动端有简版 1 和标准版 2 对应 PC 新手 /专业
     this.standard_edition =LocalStorage.get("standard_edition",2) 
     // this.standard_edition = 1
     //登录弹窗状态

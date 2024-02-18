@@ -750,8 +750,21 @@ this.bet_appoint_ball_head= null */
     this[single_name] = lodash_.cloneDeep(single_list)
   }
 
+  // 清空投注项中的 投注金额
+  set_bet_play_options_amount(){
+    if(this.is_bet_single){
+      this.bet_single_list.filter(item=> item.bet_amount = '')
+    }else{
+      BetViewDataClass.set_bet_play_options_amount()
+    }
+    this.bet_amount = ''
+  }
+
   // 设置 切换单关/串关切换
   set_is_bet_single(state) {
+    // 切换串关模式 置空投注项金额
+    this.set_bet_play_options_amount()
+
     // 单关 切换到串关  
     if (this.is_bet_single && !this.is_bet_merge) {
       // 串关数据 == 单关数据 // 同赛事不能大于一个投注项
@@ -840,17 +853,22 @@ this.bet_appoint_ball_head= null */
 
   // 投注成功后 不保留投注项 需要清空投注数据 
   set_clear_bet_info() {
+    // this.bet_state_show = false
     this.bet_s_list = []
     this.single_list_copy = []
     this.bet_single_list = []
     this.bet_read_write_refer_obj = {}
     this.bet_oid_list = []
     this.bet_oid_obj = {}
-    this.set_bet_amount(0)
-    this.set_bet_data_class_version()
-    this.set_is_bet_pre(false)
-    this.set_bet_appoint_obj_playOptionId(0)
+    // this.set_bet_state_show(false)
+    this.bet_amount = 0;
+    this.is_bet_pre = false;
+    // this.set_bet_amount(0)
+    // this.set_is_bet_pre(false)
+    // this.set_bet_appoint_obj_playOptionId(0)
+    this.bet_pre_appoint_id = 0
     set_market_id_to_ws()
+    this.set_bet_data_class_version()
   }
 
   /**
@@ -1543,9 +1561,10 @@ this.bet_appoint_ball_head= null */
   set_options_state() {
     // 需要筛选出 某些状态不需要再去做投注项状态的改版
     // 目前 7 8 为预约投注后
-    if ([7, 8].includes(betViewDataClass.bet_order_status)) {
+    if (BetViewDataClass.bet_order_status != 1 ) {
       return
     }
+
     let single_name = ''
     if(this.is_bet_single){
       single_name = 'bet_single_list'

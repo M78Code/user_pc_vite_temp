@@ -29,7 +29,7 @@
 import UserCtr from 'src/core/user-config/user-ctr.js';
 import { api_account } from 'src/api/index';
 import { useRouter, useRoute } from "vue-router";
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, computed } from 'vue'
 import GoBackSvg from 'src/components/go_back/index.vue';
 import { loadLanguageAsync, useMittEmit, MITT_TYPES} from "src/output/index.js";
 import BaseData from "src/core/base-data/base-data.js";
@@ -45,14 +45,31 @@ const lang_default = {
   "ko": "한국인",
   "ru": "ру́сский язы́к",
 }
-// 语言项
-const lang_obj = ref(lang_default)
 // 当前语言
 const lang = ref(UserCtr.lang || 'zh')
 // 返回列表
 const go_back = () => {
   router.push({ name: "matchList" });
 }
+const lang_obj = computed(() => {
+  // 语言选项
+      let obj2 = {}
+      try {
+        let lang_str = lodash.get(UserCtr, "user_info.languageList") || lang_default
+        if (lang_str) {
+          let lang_arr = lang_str.split(",");
+          Object.keys(lang_default).forEach((item) => {
+            if (lang_arr.includes(item)) {
+              obj2[item] = lang_default[item];
+            }
+          });
+        }
+      } catch (error) {
+        // 若网络错误则默认展示所有可切换语种
+        return lang_default;
+      }
+      return obj2;
+    })
 // 语言项
 onMounted(() => {
   lang.value = UserCtr.lang == 'hk' ? 'zh' : UserCtr.lang

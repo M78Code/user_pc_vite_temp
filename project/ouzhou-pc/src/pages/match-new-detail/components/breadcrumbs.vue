@@ -90,7 +90,8 @@ const jumpToLeagues  = () => {
   localStorage.setItem('league_name', props.detail_info.tn)
   MenuData.set_mid_menu_result(mid_config)
   console.log("--------------------------------",MenuData.is_esports())
-  if(MenuData.is_esports()){
+  let { current_ball_type } = MenuData
+  if(MenuData.is_esports() ||( MenuData.is_scroll_ball() && current_ball_type>=100 && current_ball_type<400)){
     jumpTo()
   }else{
     router.push(`/league/${csid}/${tid}/2`)

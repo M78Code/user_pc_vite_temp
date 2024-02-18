@@ -94,11 +94,13 @@ const ref_data = reactive({
 			title: ('ouzhou.match.inplay'),
 			name: ('ouzhou.match.all_matches')
 		},
+		// 电竞tab 信息
 		esports:[
 			{ label: 'ouzhou.match.lol', value: 2100 },
 			{ label: 'ouzhou.match.dota', value: 2101 },
-			{ label: 'ouzhou.match.csgo', value: 2102 },
 			{ label: 'ouzhou.match.kog', value: 2103 },
+			{ label: 'ouzhou.match.csgo', value: 2102 },
+			
 		],
 		// vr_sports: [
       	// 	{ label: 'ouzhou.match.vr_football', value: 30301 }, //vr足球
@@ -393,7 +395,7 @@ function checked_current_tab(payload,type) {
 	width: 100%;
 	box-sizing: border-box;
 	border-bottom: 2px solid var(--q-gb-bd-c-1);
-	background: var(--q-gb-bg-lg-8);
+	background: linear-gradient(270.05deg, #aaa9a9 9.04%, #3B3B3B 90.96%);
 	position: relative;
 
 	.header_banner {
