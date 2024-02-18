@@ -46,6 +46,12 @@ const set_retain_selection = () => {
     BetViewDataClass.set_bet_order_status(1)
     BetViewDataClass.set_bet_before_message({})
     BetData.set_is_bet_pre(false)
+
+    // 常用金额 单关 单注 
+    if(!(BetData.is_regular_amount && BetData.is_bet_single && BetData.bet_single_list.length == 1)){
+      BetData.set_bet_play_options_amount()
+    }
+
     if(!BetData.is_bet_single){
       // 清空串关类型 的投注金额
       return BetViewDataClass.set_clear_bet_special()
