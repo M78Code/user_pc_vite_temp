@@ -15,7 +15,7 @@
   </div>
   <!-- 展开串关类型 -->
   <div class="open-crosstalk" v-if="BetViewDataClass.bet_order_status == 1" :class="{ 'active': BetData.special_type }" @click="set_special_type()" >
-    <span>{{i18n_t('bet.expand_the_string_type')}}</span>
+    <span style="white-space: nowrap">{{ i18n_t('bet.expand_the_string_type') }}</span>
     <img class='icon' :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/odds_down.png`" alt=""/>
   </div>
 </template>
