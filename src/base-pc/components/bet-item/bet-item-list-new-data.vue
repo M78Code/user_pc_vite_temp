@@ -4,7 +4,7 @@
     :class="[
       ol_data?.class,
       odds_state,
-      BetData.bet_oid_list.includes(ol_data?.oid) ? 'active' : '',
+      (BetData.bet_oid_list.includes(ol_data?.oid) && !['seal'].includes(odds_state)) ? 'active' : '',
       `csid${ol_data?.csid}`,
       odds_lift,
       { 'show-odds-icon': odds_state != 'seal' },
@@ -262,7 +262,7 @@ onMounted(() => {
 }
 
 .active {
-  background: var(--q-gb-t-c-16);
+  background: var(--q-gb-t-c-16) !important;
   color: var(--q-gb-t-c-18) !important;
 }
 </style>
