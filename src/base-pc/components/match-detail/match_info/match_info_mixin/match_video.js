@@ -351,7 +351,7 @@ export default {
         }
         
         // 视频、演播室、主播、专题等视频媒体相关状态处理
-        if(['video','studio','anchor','topic'].includes(media_type) && this.match_info.mid){
+        if(['video','studio','anchor','topic'].includes(media_type) && this.match_info?.mid){
           // isLogin接口触发时差调整（10s内触发的切断)
           if (
               last_mid === mid &&
