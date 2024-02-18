@@ -454,8 +454,9 @@ export const compute_style_template_by_matchinfo = (match) => {
 		// else if (template_id == 'esports') {
 		//   style_obj.total_height += style_obj.main_play_competition_height + 8
 		// }
-// 	  } else {
-		style_obj.total_height = 80 + 6
+		if(template_id != 18){
+			style_obj.total_height = 80 + 6
+		}
 	  }
 // 	}
 	return style_obj;
